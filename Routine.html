@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 ჩემი სისტემა — 3 თვე</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #16161f;
+  --card: #1a1a26;
+  --card2: #1e1e2e;
+  --border: #2a2a3e;
+  --accent: #7c6af7;
+  --accent2: #a78bfa;
+  --green: #34d399;
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --orange: #fb923c;
+  --blue: #60a5fa;
+  --pink: #f472b6;
+  --text: #e8e8f0;
+  --text2: #9898b8;
+  --text3: #5858788;
+  --glow: 0 0 40px rgba(124,106,247,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.1rem;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-tabs {
+  display: flex; gap: 0.25rem;
+}
+.nav-tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); background: var(--card); }
+.nav-tab.active { background: var(--accent); color: white; }
+
+/* MAIN */
+main { padding-top: 60px; }
+
+/* SECTIONS */
+.section { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* PAGE HERO */
+.hero {
+  text-align: center;
+  padding: 3rem 0 2rem;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(124,106,247,0.15);
+  border: 1px solid rgba(124,106,247,0.3);
+  color: var(--accent2);
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff 0%, var(--accent2) 50%, var(--pink) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.8rem;
+}
+.hero p { color: var(--text2); font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+/* CARDS */
+.grid { display: grid; gap: 1rem; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.card-icon { font-size: 1.2rem; }
+
+/* TIME BLOCKS */
+.time-block {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+.time-block:hover { border-color: var(--accent); background: var(--card); }
+.time-stamp {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent2);
+  min-width: 68px;
+  padding-top: 2px;
+}
+.time-content { flex: 1; }
+.time-title { font-weight: 500; font-size: 0.9rem; margin-bottom: 0.15rem; }
+.time-desc { color: var(--text2); font-size: 0.78rem; line-height: 1.4; }
+.time-tag {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tag-neuro { background: rgba(124,106,247,0.2); color: var(--accent2); }
+.tag-body { background: rgba(52,211,153,0.15); color: var(--green); }
+.tag-study { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.tag-mind { background: rgba(244,114,182,0.15); color: var(--pink); }
+.tag-rest { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+/* SECTION HEADER */
+.sec-head {
+  display: flex; align-items: center; gap: 0.7rem;
+  margin: 1.8rem 0 0.9rem;
+}
+.sec-head-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+.sec-head-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* TIMER */
+.timer-display {
+  text-align: center;
+  padding: 2.5rem;
+}
+.timer-circle {
+  position: relative;
+  width: 200px; height: 200px;
+  margin: 0 auto 1.5rem;
+}
+.timer-circle svg { transform: rotate(-90deg); }
+.timer-track { fill: none; stroke: var(--border); stroke-width: 8; }
+.timer-progress { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear; }
+.timer-text {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.timer-time {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.5rem; font-weight: 800;
+  color: var(--text);
+}
+.timer-label { color: var(--text2); font-size: 0.78rem; }
+.timer-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent2); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); color: white; }
+.btn-danger { border-color: rgba(248,113,113,0.4); color: var(--red); }
+.btn-danger:hover { background: rgba(248,113,113,0.1); }
+
+/* AFFIRMATIONS */
+.affirmation-card {
+  background: linear-gradient(135deg, var(--card), var(--card2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.affirmation-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top, rgba(124,106,247,0.08), transparent 70%);
+}
+.affirmation-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.8rem;
+}
+.affirmation-text {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+.affirmation-sub { color: var(--text2); font-size: 0.82rem; position: relative; }
+.affirmation-when {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(124,106,247,0.12);
+  border: 1px solid rgba(124,106,247,0.2);
+  color: var(--accent2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-top: 0.6rem;
+}
+
+/* RULES */
+.rule-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  margin-bottom: 0.5rem;
+  background: var(--bg3);
+}
+.rule-item.block { border-left-color: var(--red); }
+.rule-item.must { border-left-color: var(--green); }
+.rule-item.warn { border-left-color: var(--yellow); }
+.rule-icon { font-size: 1.1rem; min-width: 24px; }
+.rule-text { font-size: 0.88rem; line-height: 1.5; }
+.rule-text strong { color: var(--text); display: block; margin-bottom: 0.1rem; }
+.rule-text span { color: var(--text2); font-size: 0.8rem; }
+
+/* WEEKLY TRACKER */
+.week-grid {
+  display: grid;
+  grid-template-columns: 1fr repeat(7, 36px);
+  gap: 0.4rem;
+  align-items: center;
+}
+.wg-label { font-size: 0.82rem; color: var(--text2); padding-right: 0.5rem; }
+.wg-day {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--text2);
+  text-align: center;
+}
+.wg-check {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.15s;
+  color: transparent;
+}
+.wg-check:hover { border-color: var(--accent); }
+.wg-check.done { background: rgba(52,211,153,0.15); border-color: var(--green); color: var(--green); }
+
+/* PROGRESS BARS */
+.progress-wrap { margin-bottom: 1rem; }
+.progress-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+.progress-name { font-size: 0.84rem; color: var(--text); }
+.progress-val { font-size: 0.84rem; color: var(--accent2); font-weight: 600; }
+.progress-bar {
+  height: 6px; border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* TIMELINE */
+.month-block { margin-bottom: 2rem; }
+.month-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.month-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.week-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: start;
+}
+.week-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  color: var(--text2);
+  padding-top: 0.6rem;
+}
+.week-cell {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.4;
+}
+.week-cell strong { color: var(--text); display: block; margin-bottom: 0.15rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* STATS */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-label { color: var(--text2); font-size: 0.72rem; margin-top: 0.2rem; }
+
+/* SUPPLEMENT TABLE */
+.supp-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 1fr;
+  gap: 0.5rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+  font-size: 0.82rem;
+  align-items: center;
+}
+.supp-row:nth-child(even) { background: var(--bg3); }
+.supp-name { font-weight: 500; }
+.supp-dose { color: var(--accent2); font-weight: 600; }
+.supp-time { color: var(--text2); }
+.supp-why { color: var(--text2); font-size: 0.75rem; }
+.supp-head { color: var(--text2); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+
+/* FOOD */
+.food-pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  margin: 0.2rem;
+  transition: border-color 0.2s;
+}
+.food-pill:hover { border-color: var(--green); }
+
+/* ALERT */
+.alert {
+  background: rgba(251,191,36,0.07);
+  border: 1px solid rgba(251,191,36,0.25);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.83rem;
+  color: var(--text2);
+  margin-bottom: 1rem;
+}
+.alert strong { color: var(--yellow); }
+
+/* POMODORO PRESETS */
+.preset-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.preset-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.preset-btn:hover, .preset-btn.active { border-color: var(--accent); color: var(--accent2); background: rgba(124,106,247,0.1); }
+
+/* DAILY SCORE */
+.score-display {
+  font-family: 'Syne', sans-serif;
+  font-size: 4rem; font-weight: 800;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin: 1rem 0 0.3rem;
+}
+.score-label { text-align: center; color: var(--text2); font-size: 0.82rem; margin-bottom: 1.5rem; }
+
+/* QUOTE */
+.quote-block {
+  border-left: 3px solid var(--accent);
+  padding: 0.8rem 1.2rem;
+  background: rgba(124,106,247,0.05);
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text2);
+  font-size: 0.88rem;
+}
+
+/* USMLE RESOURCES */
+.resource-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+.resource-card:hover { border-color: var(--accent); background: var(--card); }
+.resource-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.resource-info { flex: 1; }
+.resource-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.15rem; }
+.resource-desc { color: var(--text2); font-size: 0.75rem; }
+.resource-badge {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .nav-tabs { gap: 0; }
+  .nav-tab { padding: 0.35rem 0.55rem; font-size: 0.72rem; }
+  .section { padding: 1rem; }
+  .week-grid { grid-template-columns: 1fr repeat(7, 30px); gap: 0.3rem; }
+  .wg-check { width: 30px; height: 30px; border-radius: 6px; }
+  .week-row { grid-template-columns: 45px 1fr; }
+  .week-row .week-cell:nth-child(3), .week-row .week-cell:nth-child(4) { display: none; }
+  .supp-row { grid-template-columns: 1fr 70px; }
+  .supp-row .supp-time, .supp-row .supp-why { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">🧠 ჩემი სისტემა</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('today')">დღეს</button>
+    <button class="nav-tab" onclick="showTab('routine')">რუტინა</button>
+    <button class="nav-tab" onclick="showTab('affirmations')">აფირმაცია</button>
+    <button class="nav-tab" onclick="showTab('tracker')">ტრეკერი</button>
+    <button class="nav-tab" onclick="showTab('usmle')">USMLE</button>
+    <button class="nav-tab" onclick="showTab('nutrition')">კვება</button>
+    <button class="nav-tab" onclick="showTab('rules')">წესები</button>
+    <button class="nav-tab" onclick="showTab('plan')">3 თვე</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════ TODAY ══════════════════════ -->
+<div id="tab-today" class="section active">
+  <div class="hero">
+    <div class="hero-badge">დღეს</div>
+    <h1 id="today-greeting">გამარჯობა 👋</h1>
+    <p id="today-date" style="color:var(--text2);margin-top:0.4rem;"></p>
+  </div>
+
+  <div class="stat-grid" id="today-stats">
+    <div class="stat-card">
+      <div class="stat-val" id="stat-day">—</div>
+      <div class="stat-label">დღე სისტემაში</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="stat-score">0%</div>
+      <div class="stat-label">დღის შესრულება</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="stat-streak">0🔥</div>
+      <div class="stat-label">სერია</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="stat-week">კვ.1</div>
+      <div class="stat-label">პროგრამის კვირა</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title"><span class="card-icon">✅</span>დღის ჩეკლისტი</div>
+    <div id="daily-checklist"></div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-title"><span class="card-icon">⏱️</span>ფოკუს ტაიმერი</div>
+      <div class="timer-display">
+        <div class="timer-circle">
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <circle class="timer-track" cx="100" cy="100" r="88"/>
+            <circle class="timer-progress" id="timer-ring" cx="100" cy="100" r="88"
+              stroke-dasharray="553" stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-text">
+            <div class="timer-time" id="timer-display">90:00</div>
+            <div class="timer-label" id="timer-label">მზადაა</div>
+          </div>
+        </div>
+        <div class="preset-row">
+          <button class="preset-btn active" onclick="setTimer(90,'ღრმა სამუშაო')">90 წთ</button>
+          <button class="preset-btn" onclick="setTimer(25,'პომოდორო')">25 წთ</button>
+          <button class="preset-btn" onclick="setTimer(20,'NSDR')">20 წთ</button>
+          <button class="preset-btn" onclick="setTimer(10,'მედიტაცია')">10 წთ</button>
+          <button class="preset-btn" onclick="setTimer(5,'სუნთქვა')">5 წთ</button>
+        </div>
+        <div class="timer-btns">
+          <button class="btn btn-primary" id="timer-btn" onclick="toggleTimer()">▶ დაწყება</button>
+          <button class="btn" onclick="resetTimer()">↺ განახლება</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="card-icon">💬</span>დღის აფირმაცია</div>
+      <div id="daily-affirmation" style="margin-bottom:1rem;"></div>
+      <button class="btn btn-primary" onclick="nextAffirmation()" style="width:100%">შემდეგი →</button>
+      <div style="margin-top:1rem;">
+        <div class="card-title" style="margin-bottom:0.6rem;"><span class="card-icon">✍️</span>დღიური — ახლა</div>
+        <textarea id="journal-entry" placeholder="3 გამარჯვება... ხვალის 3 პრიორიტეტი... 1 ახალი რამ..."
+          style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+          padding:0.8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;
+          resize:none;height:100px;outline:none;" oninput="saveJournal()"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ ROUTINE ══════════════════════ -->
+<div id="tab-routine" class="section">
+  <div class="hero">
+    <div class="hero-badge">ყოველდღიური</div>
+    <h1>დღის რუტინა</h1>
+    <p>ყოველ დღე, გამონაკლისის გარეშე</p>
+  </div>
+
+  <div sec-head-wrapper>
+    <div class="sec-head"><div class="sec-head-label">🌅 დილა — 07:00–09:00</div><div class="sec-head-line"></div></div>
+    <div class="time-block"><div class="time-stamp">07:00</div><div class="time-content"><div class="time-title">💧 გაღვიძება + 500 მლ წყალი</div><div class="time-desc">მაღვიძარა სხვა ოთახში. წყალი — მოამზადე წინა ღამეს.</div></div><span class="time-tag tag-body">სხეული</span></div>
+    <div class="time-block"><div class="time-stamp">07:05</div><div class="time-content"><div class="time-title">☀️ მზის შუქი — 10 წუთი</div><div class="time-desc">გარეთ ან ფანჯარასთან. ტელეფონი — დანება. ციკადული რიტმის "საათის გასწორება".</div></div><span class="time-tag tag-neuro">ნეირო</span></div>
+    <div class="time-block"><div class="time-stamp">07:15</div><div class="time-content"><div class="time-title">🏃 სირბილი — 20–30 წთ</div><div class="time-desc">Zone 2 (ლაპარაკი შეგიძლია). BDNF-ის ყველაზე ძლიერი სტიმულატორი.</div></div><span class="time-tag tag-body">სხეული</span></div>
+    <div class="time-block"><div class="time-stamp">07:45</div><div class="time-content"><div class="time-title">🚿 შხაპი — ბოლო 30 წამი ცივი</div><div class="time-desc">ნოეპინეფრინი +300%. ტვინი გაიღვიძებს.</div></div><span class="time-tag tag-neuro">ნეირო</span></div>
+    <div class="time-block"><div class="time-stamp">08:00</div><div class="time-content"><div class="time-title">🥚 საუზმე — კვერცხი + ავოკადო/კაკალი</div><div class="time-desc">ყავა მხოლოდ ახლა — 90 წუთი გავიდა გაღვიძებიდან. ადენოზინი გაიწმინდა.</div></div><span class="time-tag tag-body">კვება</span></div>
+    <div class="time-block"><div class="time-stamp">08:30</div><div class="time-content"><div class="time-title">🧘 მედიტაცია — 10 წთ + აფირმაციები 5 წთ</div><div class="time-desc">თვალები დახუჭე. სუნთქვაზე ფოკუსი. შემდეგ — 5 აფირმაცია ხმამაღლა.</div></div><span class="time-tag tag-mind">გონება</span></div>
+
+    <div class="sec-head"><div class="sec-head-label">📚 სწავლა #1 — 09:00–12:30</div><div class="sec-head-line"></div></div>
+    <div class="time-block"><div class="time-stamp">09:00</div><div class="time-content"><div class="time-title">📵 ტელეფონი — პირქვე. 90 წთ ბლოკი</div><div class="time-desc">First Aid — ახალი სექცია. Flow State პირობები: 0 შეფერხება.</div></div><span class="time-tag tag-study">სწავლა</span></div>
+    <div class="time-block"><div class="time-stamp">10:30</div><div class="time-content"><div class="time-title">⏸️ 20 წთ პაუზა — სეირნობა</div><div class="time-desc">არ — ტელეფონი. Panoramic Vision: შორს გახედე — პარასიმპათიკური სისტემა.</div></div><span class="time-tag tag-rest">დასვენება</span></div>
+    <div class="time-block"><div class="time-stamp">10:50</div><div class="time-content"><div class="time-title">🃏 Anki — 100–150 ბარათი</div><div class="time-desc">Spaced Repetition — ახლები + გამეორება. Retrieval Practice ამაგრებს 50%-ით.</div></div><span class="time-tag tag-study">სწავლა</span></div>
+    <div class="time-block"><div class="time-stamp">12:00</div><div class="time-content"><div class="time-title">❓ UWorld — 20 კითხვა</div><div class="time-desc">ყოველი შეცდომა — სრული ახსნა. არ გადახვიდე სანამ არ გაიგე.</div></div><span class="time-tag tag-study">სწავლა</span></div>
+
+    <div class="sec-head"><div class="sec-head-label">🍽️ შუადღე — 12:30–14:30</div><div class="sec-head-line"></div></div>
+    <div class="time-block"><div class="time-stamp">12:30</div><div class="time-content"><div class="time-title">🥗 ლანჩი — თევზი/ქათამი + ბოსტნეული</div><div class="time-desc">ჭარბი ნახშირწყლები — თავიდან ავიცილოთ. ენერგიის კრახი თავიდან.</div></div><span class="time-tag tag-body">კვება</span></div>
+    <div class="time-block"><div class="time-stamp">13:00</div><div class="time-content"><div class="time-title">😴 NSDR — 20 წთ</div><div class="time-desc">Yoga Nidra. დოპამინი +65%. ეს სამუშაოა — არა სისუსტე.</div></div><span class="time-tag tag-neuro">ნეირო</span></div>
+
+    <div class="sec-head"><div class="sec-head-label">📚 სწავლა #2 — 14:30–18:00</div><div class="sec-head-line"></div></div>
+    <div class="time-block"><div class="time-stamp">14:30</div><div class="time-content"><div class="time-title">📖 First Aid — გამეორება / Pathoma</div><div class="time-desc">სუსტი ადგილები. სისუსტეების სია — ჩაიწერე.</div></div><span class="time-tag tag-study">სწავლა</span></div>
+    <div class="time-block"><div class="time-stamp">16:20</div><div class="time-content"><div class="time-title">🧠 Anki + UWorld — მეორე სესია</div><div class="time-desc">კიდევ 50–100 ბარათი + 20 კითხვა UWorld.</div></div><span class="time-tag tag-study">სწავლა</span></div>
+
+    <div class="sec-head"><div class="sec-head-label">🌙 საღამო — 18:00–22:00</div><div class="sec-head-line"></div></div>
+    <div class="time-block"><div class="time-stamp">18:00</div><div class="time-content"><div class="time-title">🍽️ ვახშამი — ნახშირწყლები + ცილა</div><div class="time-desc">ნახშირწყლები საღამოს → სეროტონინი → მელატონინი → ძილი.</div></div><span class="time-tag tag-body">კვება</span></div>
+    <div class="time-block"><div class="time-stamp">20:00</div><div class="time-content"><div class="time-title">📵 ციფრული დეტოქსი სრულად</div><div class="time-desc">ინსტა/ფეისბუქი — დახურულია. 20:30–20:45 — Telegram/WhatsApp მხოლოდ.</div></div><span class="time-tag tag-mind">გონება</span></div>
+    <div class="time-block"><div class="time-stamp">21:00</div><div class="time-content"><div class="time-title">✍️ დღიური — 5 წუთი</div><div class="time-desc">3 გამარჯვება + ხვალის 3 პრიორიტეტი + 1 ახალი რამ.</div></div><span class="time-tag tag-mind">გონება</span></div>
+    <div class="time-block"><div class="time-stamp">22:00</div><div class="time-content"><div class="time-title">💤 ძილი — 18°C, სიბნელე</div><div class="time-desc">გლიმფური სისტემა იწყება. ტვინი ირეცხება. 7–8 საათი — მინიმუმი.</div></div><span class="time-tag tag-rest">ძილი</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ AFFIRMATIONS ══════════════════════ -->
+<div id="tab-affirmations" class="section">
+  <div class="hero">
+    <div class="hero-badge">ყოველდღე — 08:30</div>
+    <h1>აფირმაციები</h1>
+    <p>ხმამაღლა, სარკის წინ, 5 წუთი. ყოველ დილას.</p>
+  </div>
+
+  <div class="alert">
+    <strong>🧠 რატომ მუშაობს:</strong> ხმამაღლა წარმოთქმა ააქტიურებს პრეფრონტალურ კორტექსს + ვოკალურ ნეირობოჭკოებს. ტვინი "ისმენს" შენ სიტყვებს და რეალობად იღებს.
+  </div>
+
+  <div class="grid grid-2" id="affirmations-grid"></div>
+
+  <div class="sec-head"><div class="sec-head-label">🌅 განსაკუთრებულ დროს</div><div class="sec-head-line"></div></div>
+  <div class="grid grid-2" id="timed-affirmations"></div>
+</div>
+
+<!-- ══════════════════════ TRACKER ══════════════════════ -->
+<div id="tab-tracker" class="section">
+  <div class="hero">
+    <div class="hero-badge">ყოველდღიური</div>
+    <h1>პროგრეს ტრეკერი</h1>
+    <p>გულწრფელად. ყოველ კვირა.</p>
+  </div>
+
+  <div class="grid grid-2" style="margin-bottom:1.5rem;">
+    <div class="card">
+      <div class="card-title"><span class="card-icon">📊</span>კვირის სტატისტიკა</div>
+      <div id="weekly-stats"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="card-icon">📈</span>USMLE პროგრესი</div>
+      <div id="usmle-progress"></div>
+      <div style="margin-top:1rem;">
+        <div style="font-size:0.78rem;color:var(--text2);margin-bottom:0.5rem;">Anki ბარათები კვირაში</div>
+        <input type="number" id="anki-input" placeholder="მაგ: 750" min="0"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+          padding:0.6rem 0.8rem;color:var(--text);font-size:0.9rem;outline:none;font-family:'DM Sans';"
+          oninput="updateAnki(this.value)">
+        <div style="font-size:0.78rem;color:var(--text2);margin:0.5rem 0;">UWorld სიზუსტე (%)</div>
+        <input type="number" id="uworld-input" placeholder="მაგ: 62" min="0" max="100"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+          padding:0.6rem 0.8rem;color:var(--text);font-size:0.9rem;outline:none;font-family:'DM Sans';"
+          oninput="updateUworld(this.value)">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="card-icon">📅</span>კვირის ჩეკლისტი — <span id="current-week-label" style="color:var(--accent2)"></span></div>
+    <div class="week-grid" id="week-tracker-header"></div>
+    <div style="margin-top:0.5rem;" id="week-tracker-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════ USMLE ══════════════════════ -->
+<div id="tab-usmle" class="section">
+  <div class="hero">
+    <div class="hero-badge">Step 1 სტრატეგია</div>
+    <h1>USMLE გეგმა</h1>
+    <p>First Aid + Anki + UWorld — ყოველ დღე</p>
+  </div>
+
+  <div class="sec-head"><div class="sec-head-label">📚 მასალები</div><div class="sec-head-line"></div></div>
+  <div class="resource-card"><div class="resource-icon" style="background:rgba(251,191,36,0.15)">📖</div><div class="resource-info"><div class="resource-name">First Aid</div><div class="resource-desc">ბაზა. ყოველი გვერდი → Anki ბარათი. მინ. 2 სრული გავლა.</div></div><span class="resource-badge" style="background:rgba(251,191,36,0.15);color:var(--yellow)">🥇 პირველი</span></div>
+  <div class="resource-card"><div class="resource-icon" style="background:rgba(52,211,153,0.15)">🃏</div><div class="resource-info"><div class="resource-name">Anki — AnKing Deck</div><div class="resource-desc">100–150 ბარათი/დღე. გამოტოვება = დაგროვება = პანიკა.</div></div><span class="resource-badge" style="background:rgba(52,211,153,0.15);color:var(--green)">🥇 ყოველდღე</span></div>
+  <div class="resource-card"><div class="resource-icon" style="background:rgba(96,165,250,0.15)">❓</div><div class="resource-info"><div class="resource-name">UWorld</div><div class="resource-desc">40 კითხვა/დღე. ყოველი შეცდომა → სრული ახსნა. 65%+ = მზადაა.</div></div><span class="resource-badge" style="background:rgba(96,165,250,0.15);color:var(--blue)">🥇 ყოველდღე</span></div>
+  <div class="resource-card"><div class="resource-icon" style="background:rgba(244,114,182,0.15)">🎨</div><div class="resource-info"><div class="resource-name">Sketchy — Micro + Pharm</div><div class="resource-desc">ვიზუალური მეხსიერება. Pathology-სთვის — Pathoma.</div></div><span class="resource-badge" style="background:rgba(244,114,182,0.15);color:var(--pink)">🥈 დამხმარე</span></div>
+
+  <div class="sec-head"><div class="sec-head-label">📅 ყოველდღიური სტრუქტურა</div><div class="sec-head-line"></div></div>
+  <div class="time-block"><div class="time-stamp">09:00</div><div class="time-content"><div class="time-title">First Aid — ახალი მასალა</div><div class="time-desc">1.5 საათი. ჩაიწერე: რა გაივლი, რა გაიგე, რა გაიმახსოვრე.</div></div><span class="time-tag tag-study">90 წთ</span></div>
+  <div class="time-block"><div class="time-stamp">10:50</div><div class="time-content"><div class="time-title">Anki — 100–150 ბარათი</div><div class="time-desc">ახლები + გამეორება. Retrieval Practice = გრძელვადიანი მეხსიერება.</div></div><span class="time-tag tag-study">70 წთ</span></div>
+  <div class="time-block"><div class="time-stamp">12:00</div><div class="time-content"><div class="time-title">UWorld — 20 კითხვა + ახსნა</div><div class="time-desc">სიჩქარე კი არ — სიღრმე. ყოველი კითხვა — სწავლის შანსი.</div></div><span class="time-tag tag-study">30 წთ</span></div>
+  <div class="time-block"><div class="time-stamp">14:30</div><div class="time-content"><div class="time-title">First Aid გამეორება / Pathoma</div><div class="time-desc">სუსტი ადგილები. სისუსტეების სია ყოველ კვირა — განახლება.</div></div><span class="time-tag tag-study">90 წთ</span></div>
+  <div class="time-block"><div class="time-stamp">16:20</div><div class="time-content"><div class="time-title">UWorld — კიდევ 20 კითხვა</div><div class="time-desc">სულ 40/დღე = 1200/თვე. 3 თვეში: 3600+ კითხვა.</div></div><span class="time-tag tag-study">40 წთ</span></div>
+
+  <div class="sec-head"><div class="sec-head-label">🎯 Target Scores</div><div class="sec-head-line"></div></div>
+  <div class="grid grid-2">
+    <div class="card"><div class="card-title">📊 UWorld სიზუსტე</div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">თვე 1 ბოლო</span><span class="progress-val">40–50%</span></div><div class="progress-bar"><div class="progress-fill" style="width:45%;background:var(--red)"></div></div></div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">თვე 2 ბოლო</span><span class="progress-val">55–65%</span></div><div class="progress-bar"><div class="progress-fill" style="width:60%;background:var(--yellow)"></div></div></div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">თვე 3 ბოლო</span><span class="progress-val">65%+</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--green)"></div></div></div>
+    </div>
+    <div class="card"><div class="card-title">📋 NBME Score</div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">Baseline</span><span class="progress-val">—</span></div><div class="progress-bar"><div class="progress-fill" style="width:30%;background:var(--red)"></div></div></div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">თვე 2: 210+</span><span class="progress-val">210</span></div><div class="progress-bar"><div class="progress-fill" style="width:55%;background:var(--yellow)"></div></div></div>
+      <div class="progress-wrap"><div class="progress-header"><span class="progress-name">თვე 3: 230+</span><span class="progress-val">230+</span></div><div class="progress-bar"><div class="progress-fill" style="width:80%;background:var(--green)"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ NUTRITION ══════════════════════ -->
+<div id="tab-nutrition" class="section">
+  <div class="hero">
+    <div class="hero-badge">კვება + დანამატები</div>
+    <h1>ტვინის კვება</h1>
+    <p>მინიმალური ბიუჯეტი — მაქსიმალური ეფექტი</p>
+  </div>
+
+  <div class="alert"><strong>💡 პრინციპი:</strong> ძვირი დანამატი არ ანაცვლებს კარგ ძილს, სირბილს და ბაზისურ კვებას. ჯერ ეს — შემდეგ დანამატები.</div>
+
+  <div class="sec-head"><div class="sec-head-label">🥗 ყოველდღიური საკვები</div><div class="sec-head-line"></div></div>
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-title">🌅 საუზმე</div>
+      <div style="margin-bottom:0.5rem;"><span class="food-pill">🥚 კვერცხი ×3–4</span><span class="food-pill">🥑 ავოკადო</span><span class="food-pill">🫐 მოცვი</span><span class="food-pill">🥜 კაკალი</span></div>
+      <div style="color:var(--text2);font-size:0.78rem;">ქოლინი + ომეგა-3 + ანტიოქსიდანტი. დოპამინი და ნოეპინეფრინი.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">☀️ ლანჩი</div>
+      <div style="margin-bottom:0.5rem;"><span class="food-pill">🐟 თევზი/ქათამი</span><span class="food-pill">🥦 ბოსტნეული</span><span class="food-pill">🫒 ზეით. ზეთი</span></div>
+      <div style="color:var(--text2);font-size:0.78rem;">DHA + ანთების საწინ. + სისხლის მიმოქცევა. ნახშირწყლები — ნაკლები.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌆 ვახშამი</div>
+      <div style="margin-bottom:0.5rem;"><span class="food-pill">🍚 ბრინჯი</span><span class="food-pill">🥔 კარტოფილი</span><span class="food-pill">🫘 ლობიო</span><span class="food-pill">🐔 ქათამი</span></div>
+      <div style="color:var(--text2);font-size:0.78rem;">ნახშირწყლები საღამოს → სეროტონინი → მელატონინი → ღრმა ძილი.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 ყოველ დღე</div>
+      <div style="margin-bottom:0.5rem;"><span class="food-pill">🍫 მუქი შოკ. 85%+</span><span class="food-pill">🌿 კუერქუმა</span><span class="food-pill">💧 2+ ლ წყალი</span></div>
+      <div style="color:var(--text2);font-size:0.78rem;">კუერქუმა + შავი პილპილი (bioavailability ×20). ყავაში ჩაამატე.</div>
+    </div>
+  </div>
+
+  <div class="sec-head"><div class="sec-head-label">💊 დანამატები — პრიორიტეტით</div><div class="sec-head-line"></div></div>
+  <div class="supp-row supp-head"><span>დანამატი</span><span>დოზა</span><span>დრო</span><span>ეფექტი</span></div>
+  <div class="supp-row"><span class="supp-name">🐟 ომეგა-3 (DHA/EPA)</span><span class="supp-dose">1–2 გ</span><span class="supp-time">🌅 დილა</span><span class="supp-why">ნეირონების სტრუქტურა, მეხსიერება</span></div>
+  <div class="supp-row"><span class="supp-name">🌙 მაგნიუმი L-Threonate</span><span class="supp-dose">300 მგ</span><span class="supp-time">🌙 საღამო</span><span class="supp-why">ძილი + სინაფსური სიმჭიდროვე</span></div>
+  <div class="supp-row"><span class="supp-name">☀️ ვიტამინი D3+K2</span><span class="supp-dose">2000 IU</span><span class="supp-time">🌅 დილა</span><span class="supp-why">ნეიროპროტექცია, განწყობა</span></div>
+  <div class="supp-row"><span class="supp-name">🍄 Lion's Mane</span><span class="supp-dose">500–1000 მგ</span><span class="supp-time">🌅 დილა</span><span class="supp-why">NGF, ნეიროგენეზი, ფოკუსი</span></div>
+  <div class="supp-row"><span class="supp-name">⚡ კრეატინი</span><span class="supp-dose">3–5 გ</span><span class="supp-time">ნებისმიერ</span><span class="supp-why">ATP → ტვინის ენერგია, სამ. მეხსიერება</span></div>
+  <div class="supp-row"><span class="supp-name">☕ L-Theanine</span><span class="supp-dose">200 მგ</span><span class="supp-time">☕ ყავასთან</span><span class="supp-why">მშვიდი ფოკუსი, შფოთვა ↓</span></div>
+  <div class="supp-row"><span class="supp-name">🌿 Rhodiola Rosea</span><span class="supp-dose">200–400 მგ</span><span class="supp-time">🌅 დილა</span><span class="supp-why">სტრეს-რეზისტენტობა, გამძლეობა</span></div>
+</div>
+
+<!-- ══════════════════════ RULES ══════════════════════ -->
+<div id="tab-rules" class="section">
+  <div class="hero">
+    <div class="hero-badge">სისტემა</div>
+    <h1>წესები და შეზღუდვები</h1>
+    <p>ეს არ არის რეკომენდაციები — ეს სისტემაა</p>
+  </div>
+
+  <div class="sec-head"><div class="sec-head-label">⛔ აბსოლუტური აკრძალვები</div><div class="sec-head-line"></div></div>
+  <div class="rule-item block"><div class="rule-icon">📱</div><div class="rule-text"><strong>ინსტა/ფეისბუქი — წაშლილია</strong><span>Telegram/WhatsApp — მხოლოდ 20:30–20:45. სხვა დრო — არ არის.</span></div></div>
+  <div class="rule-item block"><div class="rule-icon">📺</div><div class="rule-text"><strong>Shorts / Reels / TikTok — სრულად</strong><span>დოპამინის ყველაზე სწრაფი დამანგრეველი. რეცეპტორები ვარდება.</span></div></div>
+  <div class="rule-item block"><div class="rule-icon">☕</div><div class="rule-text"><strong>ყავა გაღვიძებიდან 90 წუთამდე — არასდროს</strong><span>ადენოზინი ჯერ ვერ გაიწმინდა. ნაადრევი კოფეინი = შუადღის კრახი.</span></div></div>
+  <div class="rule-item block"><div class="rule-icon">🍭</div><div class="rule-text"><strong>ჭარბი შაქარი — გამორიცხულია</strong><span>სწრაფი დოპამინი → კრახი → ფოკუსი ნულზე. მოცვი + მუქი შოკ. — ჯობია.</span></div></div>
+  <div class="rule-item block"><div class="rule-icon">📱</div><div class="rule-text"><strong>ტელეფონი ძილამდე 30 წუთში — კატეგორიულად</strong><span>მელატონინი ბლოკირდება. ძილი ირღვევა. გლიმფური სისტემა ვერ მუშაობს.</span></div></div>
+
+  <div class="sec-head"><div class="sec-head-label">✅ სავალდებულო — გამონაკლისი არ არის</div><div class="sec-head-line"></div></div>
+  <div class="rule-item must"><div class="rule-icon">💧</div><div class="rule-text"><strong>2+ ლიტრი წყალი — ყოველ დღე</strong><span>დაიწყე გაღვიძებისთანავე. ტვინი 75% წყალია. დეჰიდრატაცია = კოგნიტიური ვარდნა.</span></div></div>
+  <div class="rule-item must"><div class="rule-icon">🏃</div><div class="rule-text"><strong>სირბილი — მინ. 20 წუთი</strong><span>BDNF. "არარსებული ამინდი" — არ მიიღება. 5 წუთი — ნამდვილად კმარა სტარტისთვის.</span></div></div>
+  <div class="rule-item must"><div class="rule-icon">🃏</div><div class="rule-text"><strong>Anki — მინ. 100 ბარათი</strong><span>ავად ხარ? 50. მაგრამ 0 — არ არის ვარიანტი. დაგროვება = პანიკა.</span></div></div>
+  <div class="rule-item must"><div class="rule-icon">💤</div><div class="rule-text"><strong>ძილი — 7+ საათი, ერთ დროს</strong><span>კვირაშიც. ეს ყველაზე მნიშვნელოვანი ფაქტორია. არარის კომპრომისი.</span></div></div>
+  <div class="rule-item must"><div class="rule-icon">✍️</div><div class="rule-text"><strong>დღიური — 5 წუთი, ყოველ საღამოს</strong><span>3 წინადადება კმარა. მეხსიერების კონსოლიდაცია + სტრეს ↓ + მოტივაცია ↑.</span></div></div>
+
+  <div class="sec-head"><div class="sec-head-label">⚠️ Never Miss Twice — ოქროს წესი</div><div class="sec-head-line"></div></div>
+  <div class="rule-item warn"><div class="rule-icon">1️⃣</div><div class="rule-text"><strong>ერთხელ გამოტოვე → ნორმალურია</strong><span>ეს ადამიანია. სისტემა მაინც მდგრადია.</span></div></div>
+  <div class="rule-item warn"><div class="rule-icon">2️⃣</div><div class="rule-text"><strong>ორჯერ გამოტოვე → საშიში</strong><span>ახალი "ჩვევა" ყალიბდება — გამოტოვების ჩვევა.</span></div></div>
+  <div class="rule-item block"><div class="rule-icon">3️⃣</div><div class="rule-text"><strong>სამჯერ → სისტემა ირღვევა</strong><span>გამოტოვების მიზეზი — ჩაიწერე. მოხსენი. მიეყენე.</span></div></div>
+</div>
+
+<!-- ══════════════════════ 3-MONTH PLAN ══════════════════════ -->
+<div id="tab-plan" class="section">
+  <div class="hero">
+    <div class="hero-badge">12 კვირა</div>
+    <h1>3-თვიანი გეგმა</h1>
+    <p>ნაბიჯ-ნაბიჯ. კვირა კვირაში.</p>
+  </div>
+
+  <div class="quote-block">
+    "ყველა ჩვევა ერთდროულად = წარუმატებლობა. 1 ჩვევა × 21 დღე = ავტომატიზმი."
+  </div>
+
+  <div class="month-block">
+    <div class="month-title"><div class="month-dot" style="background:var(--green)"></div>🟢 თვე 1 — საძირკველი</div>
+    <div class="week-row"><span style="font-size:0.68rem;color:var(--text2);padding-top:0.5rem;"></span><div class="week-cell"><strong>ჩვევები</strong></div><div class="week-cell"><strong>USMLE</strong></div><div class="week-cell"><strong>მიზანი</strong></div></div>
+    <div class="week-row"><div class="week-num">კვ.1</div><div class="week-cell"><strong>ბაზა</strong>გაღვიძება + მზე + წყალი + სირბილი + ძილი ერთ დროს</div><div class="week-cell"><strong>Biochemistry</strong>First Aid 1-ლი ნახევარი + Anki 50/დღე</div><div class="week-cell"><strong>კვ. ბოლოს</strong>ყოველ დღე ერთ დროს ადგები — 7 დღე</div></div>
+    <div class="week-row"><div class="week-num">კვ.2</div><div class="week-cell"><strong>+ დღიური</strong>საღამოს 5 წთ + Anki 100/დღე</div><div class="week-cell"><strong>Biochem დასრ.</strong>First Aid დასრულება + Anki 100/დღე</div><div class="week-cell"><strong>100 Anki</strong>ყოველ დღე — გამონაკლისის გარეშე</div></div>
+    <div class="week-row"><div class="week-num">კვ.3</div><div class="week-cell"><strong>+ მედ/ცივი შხ.</strong>მედიტაცია 5 წთ + ცივი შხაპი 30 წამი</div><div class="week-cell"><strong>Immunology</strong>First Aid + Anki 100/დღე + UWorld 20/დღე</div><div class="week-cell"><strong>პირველი UWorld</strong>20 კითხვა — შედეგი ჩაიწერე</div></div>
+    <div class="week-row"><div class="week-num">კვ.4</div><div class="week-cell"><strong>+ NSDR + დეტოქსი</strong>NSDR 20 წთ + ციფრ. დეტოქსი 20:00-დან</div><div class="week-cell"><strong>Microbiology</strong>First Aid + UWorld 40/დღე</div><div class="week-cell"><strong>NBME Baseline</strong>პირველი სიმულაცია — შედეგი ჩაიწერე</div></div>
+  </div>
+
+  <div class="month-block">
+    <div class="month-title"><div class="month-dot" style="background:var(--yellow)"></div>🟡 თვე 2 — ღრმა სამუშაო</div>
+    <div class="week-row"><div class="week-num">კვ.5</div><div class="week-cell"><strong>+ Wim Hof</strong>სუნთქვის პრაქტიკა დილით, ცარიელ კუჭზე</div><div class="week-cell"><strong>Micro + Pathology</strong>First Aid + Pathoma + Anki 150/დღე</div><div class="week-cell"><strong>150 Anki/დღე</strong>სწრაფი გამეორება ჩამოყალიბებულია</div></div>
+    <div class="week-row"><div class="week-num">კვ.6</div><div class="week-cell"><strong>+ ვიზ. ფოკუსი</strong>60 წამი ერთ წერტილზე სამუშაოს წინ</div><div class="week-cell"><strong>Pathology</strong>First Aid + UWorld Pathology 40/დღე</div><div class="week-cell"><strong>UWorld 40%+</strong>NBME კვირაში 1-ჯერ</div></div>
+    <div class="week-row"><div class="week-num">კვ.7</div><div class="week-cell"><strong>Elite სრული</strong>ყველა ბლოკი — სტაბილური</div><div class="week-cell"><strong>Pharmacology</strong>First Aid + Sketchy Pharm + Anki</div><div class="week-cell"><strong>NBME 210+</strong>სიმულაცია — ზუსტ პირობებში</div></div>
+    <div class="week-row"><div class="week-num">კვ.8</div><div class="week-cell"><strong>Elite სრული</strong>Zone 2 კარდიო 45 წთ კვირ. 3–4-ჯერ</div><div class="week-cell"><strong>Physiology</strong>First Aid + UWorld Physiology</div><div class="week-cell"><strong>UWSA სიმ.</strong>შედეგი ჩაიწერე — პროგრესი?</div></div>
+  </div>
+
+  <div class="month-block">
+    <div class="month-title"><div class="month-dot" style="background:var(--red)"></div>🔴 თვე 3 — ინტენსიური</div>
+    <div class="week-row"><div class="week-num">კვ.9</div><div class="week-cell"><strong>Elite + Zone 2</strong>45 წთ Zone 2 კარდიო კვირ. 4-ჯერ</div><div class="week-cell"><strong>Organ Systems</strong>UWorld ორგანო სისტ. + სისუსტ. გამეო.</div><div class="week-cell"><strong>FA მე-2 გავლა</strong>First Aid — სრული მე-2 გავლა იწყება</div></div>
+    <div class="week-row"><div class="week-num">კვ.10</div><div class="week-cell"><strong>+ Dual N-Back</strong>20 წთ/დღე — სამუშაო მეხსიერება</div><div class="week-cell"><strong>FA გამეო.</strong>UWorld სისუსტეები + First Aid X-ref</div><div class="week-cell"><strong>NBME სიმ.</strong>ზუსტი პირობები — ტაიმერით</div></div>
+    <div class="week-row"><div class="week-num">კვ.11</div><div class="week-cell"><strong>Elite სრული</strong>ყველა სისტემა — სტაბილური</div><div class="week-cell"><strong>High-Yield</strong>სისუსტეების ბოლო დახურვა</div><div class="week-cell"><strong>UWorld 65%+</strong>სამი სესია/დღე High-Yield</div></div>
+    <div class="week-row"><div class="week-num">კვ.12</div><div class="week-cell"><strong>ძილი 8 საათი</strong>კვირა 12-ში ძილი — პრიორიტეტი #1</div><div class="week-cell"><strong>UWorld Random</strong>NBME/UWSA სიმულაცია</div><div class="week-cell"><strong>NBME 230+</strong>3 თვის შეფასება — ჩაიწერე ყველაფერი</div></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+
+const HABITS = [
+  { id:'water',   label:'💧 წყალი (500 მლ გაღვიძებისას)' },
+  { id:'sun',     label:'☀️ მზის შუქი (10 წთ)' },
+  { id:'run',     label:'🏃 სირბილი (20+ წთ)' },
+  { id:'shower',  label:'🚿 ცივი შხაპი (30 წამი)' },
+  { id:'meditate',label:'🧘 მედიტაცია + აფირმაციები' },
+  { id:'anki',    label:'🃏 Anki (100+ ბარათი)' },
+  { id:'uworld',  label:'❓ UWorld (20+ კითხვა)' },
+  { id:'fa',      label:'📖 First Aid (სწავლა)' },
+  { id:'nsdr',    label:'😴 NSDR (20 წთ)' },
+  { id:'detox',   label:'📵 ციფრული დეტოქსი 20:00-დან' },
+  { id:'journal', label:'✍️ დღიური' },
+  { id:'sleep',   label:'💤 ძილი 22:00-მდე' },
+];
+
+const AFFIRMATIONS = [
+  { text:"ჩემი ტვინი ყოველ დღე უფრო ძლიერი ხდება", sub:"BDNF იზრდება — ნეიროპლასტიკობა რეალობაა", when:"🌅 დილა — გაღვიძებისთანავე", color:"var(--accent)" },
+  { text:"მე ვარ სამედიცინო სტუდენტი, რომელიც USMLE-ს ჩააბარებს", sub:"ვინაობა → ქცევა. ეს ნეირომეცნიერებაა.", when:"🌅 დილა — სარკის წინ", color:"var(--green)" },
+  { text:"ყოველი Anki ბარათი ახალ სინაფსს ქმნის", sub:"Retrieval Practice = ფიზიკური ცვლილება ტვინში", when:"📚 სწავლის წინ", color:"var(--yellow)" },
+  { text:"სირბილი ჩემს ტვინს BDNF-ით ავსებს", sub:"ფიზიკური ვარჯიში = ნეიროგენეზი ჰიპოკამპში", when:"🏃 სირბილამდე", color:"var(--blue)" },
+  { text:"ძილი ჩემი ტვინის ყველაზე ძლიერი ინსტრუმენტია", sub:"გლიმფური სისტემა ამ დროს მუშაობს", when:"🌙 ძილის წინ", color:"var(--pink)" },
+  { text:"მე ვარ სისტემა — არა განწყობა", sub:"Discipline = Freedom. მოტივაცია მოდის, ჩვევა რჩება.", when:"😔 მოტივაციის ვარდნისას", color:"var(--orange)" },
+  { text:"ყოველი გამოტოვება ასწავლის, არა ანადგურებს", sub:"Never Miss Twice. ხვალ — სრულად.", when:"😟 გამოტოვების შემდეგ", color:"var(--accent2)" },
+  { text:"ჩემი ფოკუსი ჩემი ყველაზე ძვირფასი რესურსია", sub:"ყოველი სქროლი იპარავს — ყოველი სამუშაო ქმნის", when:"📱 ციფრული ცდუნებისას", color:"var(--red)" },
+  { text:"22 წლის ვარ. ყველა ცვლილება ახლა ხდება", sub:"ნეიროპლასტიკობა მაქსიმუმზეა 18–25 წლამდე", when:"🌅 ყოველ დილა", color:"var(--green)" },
+  { text:"UWorld-ის ყოველი შეცდომა ჩემი მასწავლებელია", sub:"Errors = Learning Opportunities", when:"📚 UWorld-ის შემდეგ", color:"var(--yellow)" },
+];
+
+const DAYS = ['ორ','სამ','ოთხ','ხუთ','პარ','შაბ','კვ'];
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem('brain_system') || '{}'); } catch(e) { return {}; }
+}
+function setState(data) {
+  localStorage.setItem('brain_system', JSON.stringify({...getState(), ...data}));
+}
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function getWeekKey() {
+  const d = new Date();
+  const jan1 = new Date(d.getFullYear(), 0, 1);
+  return d.getFullYear() + '-W' + Math.ceil(((d - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// TODAY PAGE
+// ═══════════════════════════════════════
+
+function initToday() {
+  const now = new Date();
+  const h = now.getHours();
+  let greeting = h < 12 ? 'გამარჯობა 🌅' : h < 17 ? 'გამარჯობა ☀️' : 'გამარჯობა 🌙';
+  document.getElementById('today-greeting').textContent = greeting;
+
+  const days = ['კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი'];
+  const months = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
+  document.getElementById('today-date').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  // Day count
+  const s = getState();
+  const start = s.startDate || getTodayKey();
+  if (!s.startDate) setState({startDate: start});
+  const dayNum = Math.floor((new Date(getTodayKey()) - new Date(start)) / 86400000) + 1;
+  document.getElementById('stat-day').textContent = dayNum;
+  document.getElementById('stat-week').textContent = 'კვ.' + Math.ceil(dayNum/7);
+
+  // Streak
+  document.getElementById('stat-streak').textContent = (s.streak || 0) + '🔥';
+
+  // Daily checklist
+  buildDailyChecklist();
+  updateScore();
+
+  // Daily affirmation
+  showDailyAffirmation();
+
+  // Journal
+  const j = (s.journals || {})[getTodayKey()] || '';
+  document.getElementById('journal-entry').value = j;
+}
+
+function buildDailyChecklist() {
+  const s = getState();
+  const todayChecks = (s.checks || {})[getTodayKey()] || {};
+  const el = document.getElementById('daily-checklist');
+  el.innerHTML = '';
+  HABITS.forEach(h => {
+    const done = todayChecks[h.id] || false;
+    const div = document.createElement('div');
+    div.style.cssText = `display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.8rem;
+      border-radius:8px;margin-bottom:0.35rem;cursor:pointer;transition:all 0.15s;
+      background:${done ? 'rgba(52,211,153,0.08)' : 'var(--bg3)'};
+      border:1px solid ${done ? 'rgba(52,211,153,0.3)' : 'var(--border)'};`;
+    div.innerHTML = `
+      <div style="width:22px;height:22px;border-radius:6px;border:1.5px solid ${done ? 'var(--green)' : 'var(--border)'};
+        background:${done ? 'var(--green)' : 'transparent'};display:flex;align-items:center;justify-content:center;
+        flex-shrink:0;font-size:0.75rem;">${done ? '✓' : ''}</div>
+      <span style="font-size:0.85rem;color:${done ? 'var(--text2)' : 'var(--text)'};
+        text-decoration:${done ? 'line-through' : 'none'}">${h.label}</span>`;
+    div.onclick = () => toggleHabit(h.id);
+    el.appendChild(div);
+  });
+}
+
+function toggleHabit(id) {
+  const s = getState();
+  const checks = s.checks || {};
+  const today = getTodayKey();
+  checks[today] = checks[today] || {};
+  checks[today][id] = !checks[today][id];
+  setState({checks});
+  buildDailyChecklist();
+  updateScore();
+  updateStreak();
+}
+
+function updateScore() {
+  const s = getState();
+  const todayChecks = ((s.checks || {})[getTodayKey()]) || {};
+  const done = Object.values(todayChecks).filter(Boolean).length;
+  const pct = Math.round((done / HABITS.length) * 100);
+  document.getElementById('stat-score').textContent = pct + '%';
+}
+
+function updateStreak() {
+  const s = getState();
+  const checks = s.checks || {};
+  const today = getTodayKey();
+  const todayChecks = checks[today] || {};
+  const allDone = HABITS.every(h => todayChecks[h.id]);
+  if (allDone) {
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yKey = yesterday.toISOString().slice(0,10);
+    const yChecks = checks[yKey] || {};
+    const yDone = HABITS.every(h => yChecks[h.id]);
+    setState({streak: (yDone ? (s.streak || 0) : 0) + 1});
+    document.getElementById('stat-streak').textContent = ((s.streak || 0) + 1) + '🔥';
+  }
+}
+
+function saveJournal() {
+  const s = getState();
+  const journals = s.journals || {};
+  journals[getTodayKey()] = document.getElementById('journal-entry').value;
+  setState({journals});
+}
+
+// ═══════════════════════════════════════
+// AFFIRMATIONS
+// ═══════════════════════════════════════
+
+let affIdx = 0;
+
+function showDailyAffirmation() {
+  const a = AFFIRMATIONS[new Date().getDay() % AFFIRMATIONS.length];
+  renderAffirmationSmall(a, 'daily-affirmation');
+}
+
+function nextAffirmation() {
+  affIdx = (affIdx + 1) % AFFIRMATIONS.length;
+  const a = AFFIRMATIONS[affIdx];
+  renderAffirmationSmall(a, 'daily-affirmation');
+}
+
+function renderAffirmationSmall(a, targetId) {
+  document.getElementById(targetId).innerHTML = `
+    <div style="background:rgba(124,106,247,0.06);border:1px solid rgba(124,106,247,0.2);
+      border-radius:10px;padding:1rem;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+        color:var(--text);margin-bottom:0.4rem;line-height:1.4">"${a.text}"</div>
+      <div style="color:var(--text2);font-size:0.75rem;margin-bottom:0.5rem;">${a.sub}</div>
+      <span style="background:rgba(124,106,247,0.12);border:1px solid rgba(124,106,247,0.2);
+        color:var(--accent2);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.72rem;">${a.when}</span>
+    </div>`;
+}
+
+function initAffirmations() {
+  const grid = document.getElementById('affirmations-grid');
+  const timed = document.getElementById('timed-affirmations');
+  grid.innerHTML = '';
+  timed.innerHTML = '';
+
+  AFFIRMATIONS.slice(0,6).forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'affirmation-card';
+    div.innerHTML = `
+      <div class="affirmation-number">აფირმაცია ${i+1}</div>
+      <div class="affirmation-text">"${a.text}"</div>
+      <div class="affirmation-sub">${a.sub}</div>
+      <div><span class="affirmation-when">${a.when}</span></div>`;
+    grid.appendChild(div);
+  });
+
+  AFFIRMATIONS.slice(6).forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'affirmation-card';
+    div.innerHTML = `
+      <div class="affirmation-number">სპეციალური ${i+1}</div>
+      <div class="affirmation-text">"${a.text}"</div>
+      <div class="affirmation-sub">${a.sub}</div>
+      <div><span class="affirmation-when">${a.when}</span></div>`;
+    timed.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════
+
+let timerDuration = 90 * 60;
+let timerRemaining = 90 * 60;
+let timerRunning = false;
+let timerInterval = null;
+let timerName = 'ღრმა სამუშაო';
+
+function setTimer(mins, name) {
+  resetTimer();
+  timerDuration = mins * 60;
+  timerRemaining = mins * 60;
+  timerName = name;
+  document.getElementById('timer-label').textContent = name;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerRemaining / 60);
+  const s = timerRemaining % 60;
+  document.getElementById('timer-display').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const circ = 2 * Math.PI * 88;
+  const offset = circ * (1 - timerRemaining / timerDuration);
+  document.getElementById('timer-ring').style.strokeDashoffset = offset;
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-btn').textContent = '▶ გაგრძელება';
+    document.getElementById('timer-label').textContent = 'პაუზა';
+  } else {
+    timerRunning = true;
+    document.getElementById('timer-btn').textContent = '⏸ პაუზა';
+    document.getElementById('timer-label').textContent = timerName;
+    timerInterval = setInterval(() => {
+      timerRemaining--;
+      updateTimerDisplay();
+      if (timerRemaining <= 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timer-btn').textContent = '▶ დაწყება';
+        document.getElementById('timer-label').textContent = '✅ დასრულდა!';
+        document.getElementById('timer-ring').style.stroke = 'var(--green)';
+        if (Notification.permission === 'granted') {
+          new Notification('⏰ ' + timerName + ' დასრულდა!', {body: 'გააკეთე პაუზა. შენ კარგად გამართლე.'});
+        }
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerRemaining = timerDuration;
+  document.getElementById('timer-btn').textContent = '▶ დაწყება';
+  document.getElementById('timer-label').textContent = 'მზადაა';
+  document.getElementById('timer-ring').style.stroke = 'var(--accent)';
+  updateTimerDisplay();
+}
+
+// ═══════════════════════════════════════
+// TRACKER
+// ═══════════════════════════════════════
+
+function initTracker() {
+  const s = getState();
+  const now = new Date();
+  // Get start of current week (Monday)
+  const dow = now.getDay();
+  const diff = now.getDate() - dow + (dow === 0 ? -6 : 1);
+  const monday = new Date(now.setDate(diff));
+
+  document.getElementById('current-week-label').textContent =
+    monday.getDate() + '/' + (monday.getMonth()+1) + ' – ' +
+    new Date(monday.getTime() + 6*86400000).getDate() + '/' +
+    (new Date(monday.getTime() + 6*86400000).getMonth()+1);
+
+  // Header
+  const header = document.getElementById('week-tracker-header');
+  header.innerHTML = '<div class="wg-label"></div>';
+  DAYS.forEach(d => header.innerHTML += `<div class="wg-day">${d}</div>`);
+
+  // Body
+  const body = document.getElementById('week-tracker-body');
+  body.innerHTML = '';
+  const wk = getWeekKey();
+
+  HABITS.forEach(h => {
+    const row = document.createElement('div');
+    row.className = 'week-grid';
+    row.style.marginBottom = '0.4rem';
+    row.innerHTML = `<div class="wg-label">${h.label}</div>`;
+    for (let d = 0; d < 7; d++) {
+      const dateKey = new Date(monday.getTime());
+      // reset monday
+      const m2 = new Date();
+      const dow2 = m2.getDay();
+      const diff2 = m2.getDate() - dow2 + (dow2 === 0 ? -6 : 1);
+      m2.setDate(diff2);
+      const dayDate = new Date(m2.getTime() + d * 86400000);
+      const dk = dayDate.toISOString().slice(0,10);
+      const done = ((s.checks || {})[dk] || {})[h.id] || false;
+      const cell = document.createElement('div');
+      cell.className = 'wg-check' + (done ? ' done' : '');
+      cell.textContent = done ? '✓' : '';
+      cell.onclick = () => {
+        const s2 = getState();
+        const checks = s2.checks || {};
+        checks[dk] = checks[dk] || {};
+        checks[dk][h.id] = !checks[dk][h.id];
+        setState({checks});
+        initTracker();
+        buildDailyChecklist();
+        updateScore();
+      };
+      row.appendChild(cell);
+    }
+    body.appendChild(row);
+  });
+
+  // Stats
+  const ws = document.getElementById('weekly-stats');
+  const checks = s.checks || {};
+  let totalDone = 0, totalPossible = 0;
+  for (let d = 0; d < 7; d++) {
+    const m2 = new Date();
+    const dow2 = m2.getDay();
+    const diff2 = m2.getDate() - dow2 + (dow2 === 0 ? -6 : 1);
+    m2.setDate(diff2);
+    const dayDate = new Date(m2.getTime() + d * 86400000);
+    const dk = dayDate.toISOString().slice(0,10);
+    const dc = checks[dk] || {};
+    totalDone += HABITS.filter(h => dc[h.id]).length;
+    if (dayDate <= new Date()) totalPossible += HABITS.length;
+  }
+  const pct = totalPossible > 0 ? Math.round(totalDone / totalPossible * 100) : 0;
+  ws.innerHTML = `
+    <div style="text-align:center;margin-bottom:1rem;">
+      <div style="font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
+        background:linear-gradient(135deg,var(--accent),var(--pink));
+        -webkit-background-clip:text;-webkit-text-fill-color:transparent;">${pct}%</div>
+      <div style="color:var(--text2);font-size:0.78rem;">კვირის შესრულება</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span class="progress-name">ჩვევები</span>
+        <span class="progress-val">${totalDone}/${totalPossible}</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--pink))"></div>
+      </div>
+    </div>`;
+
+  // USMLE progress
+  const up = document.getElementById('usmle-progress');
+  const anki = s.ankiWeek || 0;
+  const uw = s.uworldAcc || 0;
+  up.innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-header"><span class="progress-name">Anki (კვ. მიზ: 700)</span><span class="progress-val">${anki}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(anki/700*100,100)}%;background:var(--yellow)"></div></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-header"><span class="progress-name">UWorld სიზუსტე</span><span class="progress-val">${uw}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${uw}%;background:${uw>=65?'var(--green)':uw>=50?'var(--yellow)':'var(--red)'}"></div></div>
+    </div>`;
+  document.getElementById('anki-input').value = anki || '';
+  document.getElementById('uworld-input').value = uw || '';
+}
+
+function updateAnki(v) { setState({ankiWeek: parseInt(v)||0}); }
+function updateUworld(v) { setState({uworldAcc: parseInt(v)||0}); }
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+  initToday();
+  initAffirmations();
+  initTracker();
+  updateTimerDisplay();
+
+  if (Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+});
+</script>
+</body>
+</html>
