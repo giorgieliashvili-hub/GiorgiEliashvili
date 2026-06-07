@@ -1,6 +1,3 @@
-bash
-
-cat > /mnt/user-data/outputs/apex_mobile.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="ka">
 <head>
@@ -149,7 +146,6 @@ main {
 }
 .bn-icon {
   font-size:1.3rem;line-height:1;transition:transform 0.15s;
-  /* force emoji rendering on dark background */
   -webkit-text-stroke:0px transparent;
   text-rendering:auto;
   filter:none;
@@ -380,12 +376,6 @@ main {
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border2);border-radius:0; }
 
-/* COUNTDOWN */
-.countdown-strip { display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:1.25rem; }
-.cd-cell { background:var(--card);border:1px solid var(--border);border-bottom:2px solid var(--primary);border-radius:6px;padding:0.75rem 0.5rem;text-align:center; }
-.cd-num { font-family:'Crimson Pro',serif;font-size:1.7rem;color:var(--primary2);line-height:1;font-weight:600; }
-.cd-unit { font-size:0.56rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;font-weight:700; }
-
 .j-entry { padding:0.75rem 0.9rem;border:1px solid var(--border);border-radius:6px;margin-bottom:0.4rem;cursor:pointer;background:var(--bg3); }
 .journal-prompts { display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.6rem; }
 .prompt-pill { font-size:0.65rem;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:0.2rem 0.6rem;font-weight:700; }
@@ -430,7 +420,6 @@ main {
     <h1 id="greeting">გამარჯობა</h1>
     <p id="today-date"></p>
   </div>
-  <div class="countdown-strip" id="countdown-strip"></div>
   <div class="stat-row">
     <div class="stat"><div class="stat-val" id="s-day">1</div><div class="stat-label">დღე სისტემაში</div></div>
     <div class="stat"><div class="stat-val" id="s-score">0%</div><div class="stat-label">დღის შესრულება</div></div>
@@ -717,7 +706,6 @@ main {
 // ── CONSTANTS ──────────────────────────────────────────────
 // Program runs June 8 → July 4, 2026
 const FIXED_START  = new Date('2026-06-08T00:00:00');
-const TARGET_DATE  = new Date('2026-07-04T07:00:00');
 const TOTAL_DAYS   = 27;
 
 const HABITS = [
@@ -764,18 +752,15 @@ function initLockscreen() {
   const now = new Date();
   const h = now.getHours();
 
-  // Only show lockscreen if it's before 07:00
   if (h >= 7) {
     document.getElementById('lockscreen').style.display = 'none';
     return;
   }
 
-  // Show lockscreen
   document.getElementById('lockscreen').style.display = 'flex';
 
   const target = new Date();
   target.setHours(7, 0, 0, 0);
-  // total seconds from midnight to 7am = 7*3600 = 25200
   const totalSecs = 7 * 3600;
   const C = 2 * Math.PI * 88;
 
@@ -799,7 +784,6 @@ function initLockscreen() {
     document.getElementById('lock-time').textContent =
       String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
 
-    // Ring fills as night progresses toward 7am
     const remSecs = diff / 1000;
     const progress = 1 - (remSecs / totalSecs);
     document.getElementById('lock-ring').style.strokeDashoffset = C * (1 - progress);
@@ -816,26 +800,6 @@ function showTab(id, btn) {
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   document.getElementById('main-scroll').scrollTop = 0;
-}
-
-// ── COUNTDOWN ──────────────────────────────────────────────
-function renderCountdown() {
-  const now = new Date();
-  const diff = TARGET_DATE - now;
-  const strip = document.getElementById('countdown-strip');
-  if (diff <= 0) {
-    strip.innerHTML = '<div style="grid-column:1/-1;text-align:center;font-family:\'Crimson Pro\',serif;font-size:1.2rem;color:var(--primary2);">🎉 მიაღწიე!</div>';
-    return;
-  }
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const mins  = Math.floor((diff % 3600000) / 60000);
-  const secs  = Math.floor((diff % 60000) / 1000);
-  strip.innerHTML = `
-    <div class="cd-cell"><div class="cd-num">${days}</div><div class="cd-unit">დღე</div></div>
-    <div class="cd-cell"><div class="cd-num">${String(hours).padStart(2,'0')}</div><div class="cd-unit">საათი</div></div>
-    <div class="cd-cell"><div class="cd-num">${String(mins).padStart(2,'0')}</div><div class="cd-unit">წუთი</div></div>
-    <div class="cd-cell"><div class="cd-num">${String(secs).padStart(2,'0')}</div><div class="cd-unit">წამი</div></div>`;
 }
 
 // ── TODAY ──────────────────────────────────────────────────
@@ -855,8 +819,6 @@ function initToday() {
   document.getElementById('top-day-badge').textContent = 'დღე ' + day;
 
   buildChecklist(); updateScore(); showTodayAffirm();
-  renderCountdown();
-  setInterval(renderCountdown, 1000);
 }
 
 // ── CHECKLIST ──────────────────────────────────────────────
@@ -1120,5 +1082,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-HTMLEOF
-echo "done"
