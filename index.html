@@ -8,245 +8,417 @@ cat > /mnt/user-data/outputs/apex_mobile.html << 'HTMLEOF'
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>APEX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0c0f0a;
-  --bg2: #111410;
-  --bg3: #161a12;
-  --card: #1a1f15;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --primary: #a8c57a;
-  --primary2: #c8e09a;
-  --primary-dim: rgba(168,197,122,0.12);
-  --primary-dim2: rgba(168,197,122,0.06);
-  --amber: #d4a853;
-  --amber-dim: rgba(212,168,83,0.12);
-  --red: #c4655a;
-  --red-dim: rgba(196,101,90,0.1);
-  --blue: #6b9fd4;
-  --blue-dim: rgba(107,159,212,0.1);
-  --text: #e8ebe2;
-  --text2: #8a9080;
-  --text3: #4a5040;
+  --bg:  #0b0d12;
+  --bg2: #0f1218;
+  --bg3: #141820;
+  --card: #181d27;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --primary: #c9a84c;
+  --primary2: #e0c070;
+  --primary-dim: rgba(201,168,76,0.13);
+  --primary-dim2: rgba(201,168,76,0.06);
+  --blue: #4a7fa8;
+  --blue2: #6a9fc8;
+  --blue-dim: rgba(74,127,168,0.13);
+  --slate: #8090a8;
+  --red: #b05050;
+  --red-dim: rgba(176,80,80,0.12);
+  --text: #d8dde8;
+  --text2: #7a8498;
+  --text3: #3d4558;
   --nav-h: 56px;
-  --bottom-h: 64px;
+  --bottom-h: 68px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { height:100%; overflow:hidden; }
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'Barlow Condensed',sans-serif;
+  overscroll-behavior:none; letter-spacing:0.01em;
+}
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(74,127,168,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,127,168,0.03) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none; z-index:0;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; }
-body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overscroll-behavior: none; }
+/* LOCKSCREEN */
+#lockscreen {
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:2rem;
+  transition:opacity 0.8s ease;
+}
+#lockscreen.fade-out { opacity:0; pointer-events:none; }
+.lock-logo {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;font-size:2.2rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--primary2);margin-bottom:0.4rem;
+}
+.lock-sub {
+  font-size:0.66rem;font-weight:700;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--text3);margin-bottom:2.5rem;
+}
+.lock-ring-wrap {
+  position:relative;width:200px;height:200px;margin-bottom:1.75rem;
+}
+.lock-ring-wrap svg { transform:rotate(-90deg); }
+.lock-ring-track { fill:none;stroke:var(--bg3);stroke-width:5; }
+.lock-ring-fill { fill:none;stroke:var(--primary);stroke-width:5;stroke-linecap:butt;transition:stroke-dashoffset 1s linear; }
+.lock-inner {
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;
+}
+.lock-time {
+  font-family:'Crimson Pro',serif;font-size:2.8rem;font-weight:600;
+  color:var(--text);line-height:1;
+}
+.lock-label {
+  font-size:0.6rem;font-weight:700;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text3);
+}
+.lock-date {
+  font-family:'Crimson Pro',serif;font-size:1.05rem;
+  color:var(--text2);margin-bottom:1.25rem;text-align:center;
+}
+.lock-msg {
+  font-size:0.78rem;color:var(--text3);text-align:center;
+  line-height:1.8;letter-spacing:0.04em;max-width:260px;font-weight:600;
+}
+.lock-msg strong { color:var(--primary);font-weight:700; }
+.lock-divider { width:40px;height:1px;background:var(--border2);margin:1.5rem 0; }
+.lock-affirm {
+  font-family:'Crimson Pro',serif;font-style:italic;
+  font-size:0.95rem;color:var(--text2);text-align:center;
+  max-width:280px;line-height:1.6;
+}
 
+/* TOPBAR */
 .top-bar {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--nav-h);
-  background: rgba(12,15,10,0.95);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.25rem; z-index: 100;
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+  background:rgba(11,13,18,0.97);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(201,168,76,0.18);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.25rem;z-index:100;
 }
-.nav-logo { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.2rem; color: var(--primary2); }
-.nav-day-badge { font-size: 0.7rem; font-weight: 600; color: var(--text3); letter-spacing: 0.08em; }
+.nav-logo {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;font-size:1.35rem;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--primary2);
+}
+.nav-day-badge {
+  font-size:0.68rem;font-weight:700;color:var(--text3);
+  letter-spacing:0.14em;text-transform:uppercase;
+  border:1px solid var(--border2);padding:0.2rem 0.6rem;border-radius:4px;
+}
 
 main {
-  position: fixed; top: var(--nav-h); bottom: var(--bottom-h); left: 0; right: 0;
-  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+  position:fixed;top:var(--nav-h);bottom:var(--bottom-h);left:0;right:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;z-index:1;
 }
 
-.section { display: none; padding: 1.25rem 1rem 1.5rem; animation: up 0.2s ease; min-height: 100%; }
-.section.active { display: block; }
-@keyframes up { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.section { display:none;padding:1.25rem 1rem 1.5rem;animation:up 0.2s ease;min-height:100%; }
+.section.active { display:block; }
+@keyframes up { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
 
+/* BOTTOM NAV */
 .bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: var(--bottom-h);
-  background: rgba(12,15,10,0.97);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-around;
-  padding: 0 0.25rem; padding-bottom: env(safe-area-inset-bottom); z-index: 100;
+  position:fixed;bottom:0;left:0;right:0;height:var(--bottom-h);
+  background:rgba(11,13,18,0.98);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(201,168,76,0.15);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 0.25rem;padding-bottom:env(safe-area-inset-bottom);z-index:100;
 }
 .bn-tab {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 0.4rem 0.5rem; border-radius: 10px; border: none;
-  background: transparent; cursor: pointer; transition: all 0.15s;
-  min-width: 44px; min-height: 44px; justify-content: center;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:0.4rem 0.5rem;border-radius:6px;border:none;
+  background:transparent;cursor:pointer;transition:all 0.15s;
+  min-width:44px;min-height:52px;justify-content:center;
 }
-.bn-icon { font-size: 1.3rem; line-height: 1; transition: transform 0.15s; }
-.bn-label { font-size: 0.58rem; font-weight: 600; color: var(--text3); letter-spacing: 0.04em; font-family: 'Space Grotesk', sans-serif; transition: color 0.15s; }
-.bn-tab.active .bn-icon { transform: scale(1.1); }
-.bn-tab.active .bn-label { color: var(--primary); }
-.bn-tab.active { background: var(--primary-dim); }
+.bn-icon {
+  font-size:1.3rem;line-height:1;transition:transform 0.15s;
+  /* force emoji rendering on dark background */
+  -webkit-text-stroke:0px transparent;
+  text-rendering:auto;
+  filter:none;
+}
+.bn-label {
+  font-size:0.58rem;font-weight:700;color:var(--text3);
+  letter-spacing:0.1em;text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;transition:color 0.15s;
+}
+.bn-tab.active .bn-icon { transform:scale(1.1); }
+.bn-tab.active .bn-label { color:var(--primary); }
+.bn-tab.active { background:var(--primary-dim); }
 
-.hero { padding: 0.75rem 0 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
-.hero-eyebrow { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--primary); margin-bottom: 0.4rem; }
-.hero h1 { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.15; color: var(--text); margin-bottom: 0.35rem; }
-.hero p { color: var(--text2); font-size: 0.82rem; line-height: 1.5; }
+/* HERO */
+.hero { padding:0.75rem 0 1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem; }
+.hero-eyebrow { font-size:0.64rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue2);margin-bottom:0.4rem; }
+.hero h1 { font-family:'Crimson Pro',serif;font-size:2rem;font-weight:600;line-height:1.15;color:var(--text);margin-bottom:0.35rem; }
+.hero p { color:var(--text2);font-size:0.82rem;line-height:1.5;font-weight:400; }
 
-.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
-.stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem; }
-.stat-val { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; color: var(--primary2); line-height: 1; margin-bottom: 0.25rem; }
-.stat-label { font-size: 0.65rem; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
+/* STATS */
+.stat-row { display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1.25rem; }
+.stat {
+  background:var(--card);border:1px solid var(--border);
+  border-top:2px solid var(--primary);border-radius:6px;padding:0.9rem;
+}
+.stat-val { font-family:'Crimson Pro',serif;font-size:2rem;font-weight:600;color:var(--primary2);line-height:1;margin-bottom:0.2rem; }
+.stat-label { font-size:0.62rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;font-weight:700; }
 
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem; margin-bottom: 0.85rem; }
-.card-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
-.card-label .cl-icon { font-size: 0.9rem; }
+/* CARDS */
+.card { background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.1rem;margin-bottom:0.85rem; }
+.card-label {
+  font-size:0.62rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--blue2);margin-bottom:0.85rem;
+  display:flex;align-items:center;gap:0.5rem;
+  border-bottom:1px solid var(--border);padding-bottom:0.6rem;
+}
 
-.check-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 0.6rem; border-radius: 10px; margin-bottom: 0.25rem; cursor: pointer; transition: background 0.1s; min-height: 48px; }
-.check-item:active { background: rgba(255,255,255,0.04); }
-.check-item.done { background: var(--primary-dim2); }
-.check-box { width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-size: 0.75rem; color: transparent; }
-.check-item.done .check-box { background: var(--primary); border-color: var(--primary); color: #0c0f0a; }
-.check-text { font-size: 0.88rem; transition: color 0.15s; line-height: 1.3; }
-.check-item.done .check-text { color: var(--text3); text-decoration: line-through; }
+/* CHECKLIST */
+.check-item {
+  display:flex;align-items:center;gap:0.8rem;
+  padding:0.7rem 0.5rem;border-radius:6px;
+  margin-bottom:0.2rem;cursor:pointer;transition:background 0.1s;min-height:48px;
+}
+.check-item:active { background:rgba(255,255,255,0.03); }
+.check-item.done { background:rgba(201,168,76,0.05); }
+.check-box {
+  width:22px;height:22px;border-radius:3px;flex-shrink:0;
+  border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;font-size:0.7rem;color:transparent;
+}
+.check-item.done .check-box { background:var(--primary);border-color:var(--primary);color:var(--bg); }
+.check-text { font-size:0.9rem;font-weight:500;transition:color 0.15s;line-height:1.3; }
+.check-item.done .check-text { color:var(--text3);text-decoration:line-through; }
 
-.timer-wrap { text-align: center; padding: 0.75rem 0 0.5rem; }
-.timer-ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 1rem; }
-.timer-ring-wrap svg { transform: rotate(-90deg); }
-.ring-track { fill: none; stroke: var(--border2); stroke-width: 5; }
-.ring-fill { fill: none; stroke: var(--primary); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
-.timer-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.timer-num { font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--text); }
-.timer-sub { font-size: 0.68rem; color: var(--text2); margin-top: 2px; }
-.preset-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.85rem; }
-.preset { padding: 0.55rem 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 0.78rem; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.15s; min-height: 44px; }
-.preset:active, .preset.on { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
-.btn-row { display: flex; gap: 0.5rem; justify-content: center; }
-.btn { padding: 0.65rem 1.25rem; border-radius: 10px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; min-height: 48px; }
-.btn-main { background: var(--primary); border-color: var(--primary); color: #0c0f0a; font-weight: 600; flex: 1; }
-.btn-reset { width: 48px; flex-shrink: 0; }
+/* TIMER */
+.timer-wrap { text-align:center;padding:0.75rem 0 0.5rem; }
+.timer-ring-wrap { position:relative;width:140px;height:140px;margin:0 auto 1rem; }
+.timer-ring-wrap svg { transform:rotate(-90deg); }
+.ring-track { fill:none;stroke:var(--bg3);stroke-width:6; }
+.ring-fill { fill:none;stroke:var(--primary);stroke-width:6;stroke-linecap:butt;transition:stroke-dashoffset 1s linear; }
+.timer-inner { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center; }
+.timer-num { font-family:'Crimson Pro',serif;font-size:2.2rem;color:var(--text);font-weight:600; }
+.timer-sub { font-size:0.65rem;color:var(--text2);margin-top:2px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700; }
+.preset-row { display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.85rem; }
+.preset {
+  padding:0.55rem 0.5rem;border-radius:4px;border:1px solid var(--border);
+  background:transparent;color:var(--text2);font-size:0.78rem;cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;
+  letter-spacing:0.06em;transition:all 0.15s;min-height:44px;
+}
+.preset:active,.preset.on { border-color:var(--primary);color:var(--primary);background:var(--primary-dim); }
+.btn-row { display:flex;gap:0.5rem;justify-content:center; }
+.btn {
+  padding:0.65rem 1.25rem;border-radius:5px;border:1px solid var(--border2);
+  background:transparent;color:var(--text);font-family:'Barlow Condensed',sans-serif;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.1em;
+  cursor:pointer;transition:all 0.15s;min-height:48px;text-transform:uppercase;
+}
+.btn-main { background:var(--primary);border-color:var(--primary);color:var(--bg);flex:1; }
+.btn-reset { width:48px;flex-shrink:0; }
 
-.affirm-card { background: var(--primary-dim2); border: 1px solid rgba(168,197,122,0.15); border-radius: 12px; padding: 1.25rem; text-align: center; margin-bottom: 0.75rem; }
-.affirm-text { font-family: 'Instrument Serif', serif; font-size: 1.15rem; font-style: italic; color: var(--text); line-height: 1.5; margin-bottom: 0.5rem; }
-.affirm-sub { font-size: 0.72rem; color: var(--text2); margin-bottom: 0.6rem; }
-.affirm-when { display: inline-block; background: var(--primary-dim); color: var(--primary); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.22rem 0.65rem; border-radius: 20px; text-transform: uppercase; }
+/* AFFIRMATIONS */
+.affirm-card {
+  background:var(--primary-dim2);border:1px solid rgba(201,168,76,0.15);
+  border-left:3px solid var(--primary);border-radius:0 6px 6px 0;
+  padding:1.1rem;text-align:left;margin-bottom:0.75rem;
+}
+.affirm-text { font-family:'Crimson Pro',serif;font-size:1.15rem;font-style:italic;color:var(--text);line-height:1.55;margin-bottom:0.5rem; }
+.affirm-sub { font-size:0.7rem;color:var(--text2);margin-bottom:0.6rem;font-weight:400; }
+.affirm-when {
+  display:inline-block;background:var(--blue-dim);color:var(--blue2);
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;
+  padding:0.2rem 0.6rem;border-radius:3px;text-transform:uppercase;
+}
 
-.block-head { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); padding: 1.1rem 0 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
-.block-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.block-head {
+  font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--text3);padding:1.1rem 0 0.6rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.block-head::after { content:'';flex:1;height:1px;background:var(--border); }
 
-.time-row { display: grid; grid-template-columns: 58px 1fr auto; gap: 0.6rem; align-items: start; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
-.time-row:last-child { border-bottom: none; }
-.t-time { font-size: 0.72rem; color: var(--primary); font-weight: 600; padding-top: 2px; }
-.t-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.2rem; line-height: 1.3; }
-.t-desc { font-size: 0.72rem; color: var(--text2); line-height: 1.5; }
-.t-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.2rem 0.45rem; border-radius: 20px; text-transform: uppercase; white-space: nowrap; margin-top: 2px; }
-.tag-g { background: var(--primary-dim); color: var(--primary); }
-.tag-a { background: var(--amber-dim); color: var(--amber); }
-.tag-b { background: var(--blue-dim); color: var(--blue); }
-.tag-r { background: var(--red-dim); color: var(--red); }
+/* SCHEDULE */
+.time-row {
+  display:grid;grid-template-columns:58px 1fr auto;
+  gap:0.6rem;align-items:start;
+  padding:0.75rem 0;border-bottom:1px solid var(--border);
+}
+.time-row:last-child { border-bottom:none; }
+.t-time { font-size:0.7rem;color:var(--primary);font-weight:700;padding-top:2px; }
+.t-title { font-size:0.88rem;font-weight:600;margin-bottom:0.2rem;line-height:1.3; }
+.t-desc { font-size:0.7rem;color:var(--text2);line-height:1.55;font-weight:400; }
+.t-tag { font-size:0.58rem;font-weight:700;letter-spacing:0.08em;padding:0.18rem 0.4rem;border-radius:3px;text-transform:uppercase;white-space:nowrap;margin-top:2px; }
+.tag-g { background:var(--primary-dim);color:var(--primary); }
+.tag-a { background:var(--blue-dim);color:var(--blue2); }
+.tag-b { background:rgba(128,144,168,0.12);color:var(--slate); }
+.tag-r { background:var(--red-dim);color:var(--red); }
 
-/* JOURNAL + MENTAL HEALTH */
-.journal-nav { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
-.journal-nav button { background: transparent; border: 1px solid var(--border); color: var(--text2); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; transition: all 0.15s; font-family: 'Space Grotesk', sans-serif; min-width: 44px; min-height: 44px; }
-.journal-nav button:active { border-color: var(--primary); color: var(--primary); }
-.journal-day-label { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--primary2); }
-.journal-date-small { font-size: 0.7rem; color: var(--text3); margin-left: auto; }
-.journal-area { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; resize: none; height: 150px; outline: none; line-height: 1.6; transition: border-color 0.15s; -webkit-appearance: none; }
-.journal-area:focus { border-color: var(--primary); }
-.journal-prompts { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem; }
-.prompt-pill { font-size: 0.68rem; color: var(--text3); background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 0.22rem 0.6rem; }
+/* JOURNAL */
+.journal-nav { display:flex;align-items:center;gap:0.6rem;margin-bottom:0.85rem; }
+.journal-nav button {
+  background:transparent;border:1px solid var(--border);color:var(--text2);
+  border-radius:5px;width:44px;height:44px;cursor:pointer;font-size:1rem;
+  transition:all 0.15s;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+}
+.journal-nav button:active { border-color:var(--primary);color:var(--primary); }
+.journal-day-label { font-family:'Crimson Pro',serif;font-size:1.15rem;color:var(--primary2); }
+.journal-date-small { font-size:0.7rem;color:var(--text3);margin-left:auto;font-weight:700; }
+.journal-area {
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+  padding:0.9rem;color:var(--text);font-family:'Barlow Condensed',sans-serif;
+  font-size:0.9rem;resize:none;height:150px;outline:none;line-height:1.6;
+  transition:border-color 0.15s;-webkit-appearance:none;font-weight:400;
+}
+.journal-area:focus { border-color:var(--primary); }
 
-/* MOOD SLIDER */
-.mood-section { margin-bottom: 1rem; }
-.mood-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
-.mood-name { font-size: 0.72rem; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
-.mood-val { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--primary2); }
-.mood-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--border2); outline: none; cursor: pointer; }
-.mood-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; }
-.mood-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; border: none; }
+/* MOOD */
+.mood-section { margin-bottom:1rem; }
+.mood-label-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem; }
+.mood-name { font-size:0.7rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.1em; }
+.mood-val { font-family:'Crimson Pro',serif;font-size:1.35rem;color:var(--primary2);font-weight:600; }
+.mood-slider {
+  -webkit-appearance:none;appearance:none;width:100%;height:3px;
+  border-radius:0;background:var(--border2);outline:none;cursor:pointer;
+}
+.mood-slider::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:2px;background:var(--primary);cursor:pointer; }
+.mood-slider::-moz-range-thumb { width:18px;height:18px;border-radius:2px;background:var(--primary);cursor:pointer;border:none; }
 
-.mh-textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; resize: none; height: 80px; outline: none; line-height: 1.6; -webkit-appearance: none; transition: border-color 0.15s; }
-.mh-textarea:focus { border-color: var(--primary); }
-.mh-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; outline: none; -webkit-appearance: none; transition: border-color 0.15s; }
-.mh-input:focus { border-color: var(--primary); }
-.mh-label { font-size: 0.68rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; display: block; }
-.gratitude-row { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.1rem; }
+.mh-textarea {
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+  padding:0.75rem 0.9rem;color:var(--text);font-family:'Barlow Condensed',sans-serif;
+  font-size:0.88rem;resize:none;height:80px;outline:none;line-height:1.6;
+  -webkit-appearance:none;transition:border-color 0.15s;font-weight:400;
+}
+.mh-textarea:focus { border-color:var(--primary); }
+.mh-input {
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+  padding:0.7rem 0.9rem;color:var(--text);font-family:'Barlow Condensed',sans-serif;
+  font-size:0.88rem;outline:none;-webkit-appearance:none;transition:border-color 0.15s;font-weight:400;
+}
+.mh-input:focus { border-color:var(--primary); }
+.mh-label { font-size:0.64rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.4rem;display:block; }
+.gratitude-row { display:flex;flex-direction:column;gap:0.4rem;margin-top:0.1rem; }
 
-.avg-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--primary-dim); border: 1px solid rgba(168,197,122,0.2); border-radius: 20px; padding: 0.3rem 0.75rem; margin-top: 0.75rem; }
-.avg-badge-label { font-size: 0.65rem; color: var(--text2); }
-.avg-badge-val { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--primary2); }
+.avg-badge {
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:var(--primary-dim);border:1px solid rgba(201,168,76,0.2);
+  border-radius:4px;padding:0.3rem 0.75rem;margin-top:0.75rem;
+}
+.avg-badge-label { font-size:0.63rem;color:var(--text2);font-weight:700;letter-spacing:0.06em; }
+.avg-badge-val { font-family:'Crimson Pro',serif;font-size:1.05rem;color:var(--primary2);font-weight:600; }
 
 /* TRACKER */
-.week-grid-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.25rem; padding: 0 0.25rem; }
-.week-header { display: grid; grid-template-columns: 1fr repeat(7,32px); gap: 0.3rem; align-items: center; margin-bottom: 0.4rem; min-width: 380px; }
-.wh-day { font-size: 0.62rem; font-weight: 600; color: var(--text3); text-align: center; }
-.week-row { display: grid; grid-template-columns: 1fr repeat(7,32px); gap: 0.3rem; align-items: center; margin-bottom: 0.3rem; min-width: 380px; }
-.wr-label { font-size: 0.75rem; color: var(--text2); line-height: 1.2; }
-.wr-cell { width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg3); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: transparent; transition: all 0.15s; }
-.wr-cell.on { background: var(--primary-dim); border-color: rgba(168,197,122,0.4); color: var(--primary); }
+.week-grid-wrap { overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -0.25rem;padding:0 0.25rem; }
+.week-header { display:grid;grid-template-columns:1fr repeat(7,32px);gap:0.3rem;align-items:center;margin-bottom:0.4rem;min-width:380px; }
+.wh-day { font-size:0.6rem;font-weight:700;color:var(--text3);text-align:center;letter-spacing:0.06em; }
+.week-row { display:grid;grid-template-columns:1fr repeat(7,32px);gap:0.3rem;align-items:center;margin-bottom:0.3rem;min-width:380px; }
+.wr-label { font-size:0.75rem;color:var(--text2);line-height:1.2;font-weight:500; }
+.wr-cell {
+  width:32px;height:32px;border-radius:4px;border:1px solid var(--border);
+  background:var(--bg3);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:0.7rem;color:transparent;transition:all 0.15s;
+}
+.wr-cell.on { background:var(--primary-dim);border-color:rgba(201,168,76,0.4);color:var(--primary); }
 
-.prog-wrap { margin-bottom: 0.8rem; }
-.prog-head { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
-.prog-name { font-size: 0.78rem; color: var(--text2); }
-.prog-val { font-size: 0.78rem; color: var(--primary); font-weight: 600; }
-.prog-bar { height: 4px; border-radius: 2px; background: var(--border2); overflow: hidden; }
-.prog-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+.prog-wrap { margin-bottom:0.8rem; }
+.prog-head { display:flex;justify-content:space-between;margin-bottom:0.3rem; }
+.prog-name { font-size:0.75rem;color:var(--text2);font-weight:600; }
+.prog-val { font-size:0.75rem;color:var(--primary);font-weight:700; }
+.prog-bar { height:3px;border-radius:0;background:var(--border2);overflow:hidden; }
+.prog-fill { height:100%;transition:width 0.5s ease; }
 
 /* RULES */
-.rule { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0.9rem; border-radius: 10px; margin-bottom: 0.4rem; }
-.rule.no { background: var(--red-dim); border-left: 2px solid var(--red); }
-.rule.yes { background: var(--primary-dim2); border-left: 2px solid var(--primary); }
-.rule.warn { background: var(--amber-dim); border-left: 2px solid var(--amber); }
-.rule-icon { font-size: 1rem; min-width: 20px; padding-top: 1px; }
-.rule-body { font-size: 0.82rem; line-height: 1.5; }
-.rule-body strong { display: block; margin-bottom: 0.1rem; color: var(--text); }
-.rule-body span { color: var(--text2); font-size: 0.75rem; }
+.rule { display:flex;gap:0.75rem;align-items:flex-start;padding:0.85rem 0.9rem;border-radius:4px;margin-bottom:0.4rem; }
+.rule.no { background:var(--red-dim);border-left:2px solid var(--red); }
+.rule.yes { background:var(--primary-dim2);border-left:2px solid var(--primary); }
+.rule.warn { background:var(--blue-dim);border-left:2px solid var(--blue2); }
+.rule-icon { font-size:1rem;min-width:20px;padding-top:1px; }
+.rule-body { font-size:0.82rem;line-height:1.5; }
+.rule-body strong { display:block;margin-bottom:0.1rem;color:var(--text);font-weight:700; }
+.rule-body span { color:var(--text2);font-size:0.73rem;font-weight:400; }
 
 /* PLAN */
-.month-head { display: flex; align-items: center; gap: 0.5rem; font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); margin: 1.25rem 0 0.75rem; }
-.m-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.week-plan-row { margin-bottom: 0.5rem; }
-.wp-num { font-size: 0.68rem; font-weight: 600; color: var(--text3); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
-.wp-cells { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
-.wp-cell { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 0.75rem; font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
-.wp-cell strong { display: block; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.2rem; }
+.month-head { display:flex;align-items:center;gap:0.5rem;font-family:'Crimson Pro',serif;font-size:1.05rem;color:var(--text);margin:1.25rem 0 0.75rem;font-weight:600; }
+.m-dot { width:6px;height:6px;border-radius:1px;flex-shrink:0; }
+.wp-cells { display:grid;grid-template-columns:1fr 1fr;gap:0.4rem; }
+.wp-cell { background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:0.65rem 0.75rem;font-size:0.78rem;color:var(--text2);line-height:1.5;font-weight:400; }
+.wp-cell strong { display:block;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);margin-bottom:0.2rem;font-weight:700; }
 
 /* SUPPLEMENTS */
-.supp-list { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.supp { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); }
-.supp:last-child { border-bottom: none; }
-.supp:nth-child(even) { background: var(--bg3); }
-.supp-n { font-size: 0.85rem; font-weight: 500; flex: 1; }
-.supp-right { text-align: right; flex-shrink: 0; }
-.supp-d { color: var(--primary); font-weight: 600; font-size: 0.8rem; display: block; }
-.supp-w { color: var(--text2); font-size: 0.7rem; }
+.supp-list { border-radius:6px;overflow:hidden;border:1px solid var(--border); }
+.supp { display:flex;gap:0.75rem;align-items:flex-start;padding:0.85rem 1rem;border-bottom:1px solid var(--border); }
+.supp:last-child { border-bottom:none; }
+.supp:nth-child(even) { background:var(--bg3); }
+.supp-n { font-size:0.85rem;font-weight:600;flex:1; }
+.supp-right { text-align:right;flex-shrink:0; }
+.supp-d { color:var(--primary);font-weight:700;font-size:0.8rem;display:block; }
+.supp-w { color:var(--text2);font-size:0.68rem;font-weight:400; }
 
 /* REVIEW */
-.review-q { padding: 0.8rem 0.9rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.5rem; }
-.review-q-label { font-size: 0.67rem; font-weight: 600; color: var(--primary); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.4rem; }
-.review-input { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; resize: none; outline: none; line-height: 1.6; height: 60px; }
+.review-q { padding:0.8rem 0.9rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;margin-bottom:0.5rem; }
+.review-q-label { font-size:0.64rem;font-weight:700;color:var(--blue2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem; }
+.review-input { width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:0.88rem;resize:none;outline:none;line-height:1.6;height:60px;font-weight:400; }
 
-.affirm-grid { display: grid; gap: 0.75rem; }
-
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.affirm-grid { display:grid;gap:0.75rem; }
+::-webkit-scrollbar { width:2px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border2);border-radius:0; }
 
 /* COUNTDOWN */
-.countdown-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.5rem; margin-bottom: 1.25rem; }
-.cd-cell { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 0.5rem; text-align: center; }
-.cd-num { font-family: 'Instrument Serif', serif; font-size: 1.6rem; color: var(--primary2); line-height: 1; }
-.cd-unit { font-size: 0.58rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
+.countdown-strip { display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:1.25rem; }
+.cd-cell { background:var(--card);border:1px solid var(--border);border-bottom:2px solid var(--primary);border-radius:6px;padding:0.75rem 0.5rem;text-align:center; }
+.cd-num { font-family:'Crimson Pro',serif;font-size:1.7rem;color:var(--primary2);line-height:1;font-weight:600; }
+.cd-unit { font-size:0.56rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;font-weight:700; }
 
-/* ENGLISH LOG */
-.eng-log-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
-.eng-log-item:last-child { border-bottom: none; }
-.eng-icon { font-size: 1.1rem; min-width: 24px; }
-.eng-body { flex: 1; }
-.eng-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
-.eng-sub { font-size: 0.72rem; color: var(--text2); }
-
-/* Journal list */
-.j-entry { padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.4rem; cursor: pointer; background: var(--bg3); }
+.j-entry { padding:0.75rem 0.9rem;border:1px solid var(--border);border-radius:6px;margin-bottom:0.4rem;cursor:pointer;background:var(--bg3); }
+.journal-prompts { display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.6rem; }
+.prompt-pill { font-size:0.65rem;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:0.2rem 0.6rem;font-weight:700; }
 </style>
 </head>
 <body>
 
+<!-- LOCKSCREEN -->
+<div id="lockscreen" style="display:none;">
+  <div class="lock-logo">APEX</div>
+  <div class="lock-sub">სისტემა</div>
+  <div class="lock-ring-wrap">
+    <svg width="200" height="200" viewBox="0 0 200 200">
+      <circle class="lock-ring-track" cx="100" cy="100" r="88"/>
+      <circle class="lock-ring-fill" id="lock-ring" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="553"/>
+    </svg>
+    <div class="lock-inner">
+      <div class="lock-time" id="lock-time">00:00:00</div>
+      <div class="lock-label">07:00-მდე</div>
+    </div>
+  </div>
+  <div class="lock-date" id="lock-date"></div>
+  <div class="lock-msg">
+    ხვალ <strong>07:00</strong>-ზე სისტემა გაიხსნება.<br>
+    მოამზადე ყველაფერი ახლავე.
+  </div>
+  <div class="lock-divider"></div>
+  <div class="lock-affirm">"მე ვარ სისტემა — არა განწყობა"</div>
+</div>
+
 <div class="top-bar">
-  <div class="nav-logo">Apex</div>
-  <div class="nav-day-badge" id="top-day-badge"></div>
+  <div class="nav-logo">APEX</div>
+  <div class="nav-day-badge" id="top-day-badge">დღე —</div>
 </div>
 
 <main id="main-scroll">
@@ -254,28 +426,23 @@ main {
 <!-- TODAY -->
 <div id="tab-today" class="section active">
   <div class="hero">
-    <div class="hero-eyebrow">დღეს</div>
+    <div class="hero-eyebrow">სისტემა აქტიურია</div>
     <h1 id="greeting">გამარჯობა</h1>
     <p id="today-date"></p>
   </div>
-
-  <!-- COUNTDOWN -->
   <div class="countdown-strip" id="countdown-strip"></div>
-
   <div class="stat-row">
     <div class="stat"><div class="stat-val" id="s-day">1</div><div class="stat-label">დღე სისტემაში</div></div>
     <div class="stat"><div class="stat-val" id="s-score">0%</div><div class="stat-label">დღის შესრულება</div></div>
     <div class="stat"><div class="stat-val" id="s-streak">0</div><div class="stat-label">სერია 🔥</div></div>
     <div class="stat"><div class="stat-val" id="s-week">კვ.1</div><div class="stat-label">პროგრამის კვირა</div></div>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">✓</span>დღის ჩეკლისტი</div>
+    <div class="card-label">◻ დღის ჩეკლისტი</div>
     <div id="checklist"></div>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">⏱</span>ფოკუს ტაიმერი</div>
+    <div class="card-label">⏱ ფოკუს ტაიმერი</div>
     <div class="timer-wrap">
       <div class="timer-ring-wrap">
         <svg width="140" height="140" viewBox="0 0 140 140">
@@ -299,9 +466,8 @@ main {
       </div>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">💬</span>დღის აფირმაცია</div>
+    <div class="card-label">◈ დღის აფირმაცია</div>
     <div id="today-affirm"></div>
     <button class="btn" style="width:100%;margin-top:0.75rem;" onclick="nextAf()">შემდეგი →</button>
   </div>
@@ -314,7 +480,6 @@ main {
     <h1>დღის რუტინა</h1>
     <p>გამონაკლისი არ არის</p>
   </div>
-
   <div class="block-head">🌅 დილა — 07:00–09:00</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">07:00</div><div><div class="t-title">💧 გაღვიძება + 500 მლ წყალი</div><div class="t-desc">მაღვიძარა სხვა ოთახში. წყალი — მოამზადე წინა ღამეს.</div></div><span class="t-tag tag-g">სხეული</span></div>
@@ -325,35 +490,31 @@ main {
     <div class="time-row"><div class="t-time">08:40</div><div><div class="t-title">🧘 მედიტაცია + აფირმ. — 15 წთ</div><div class="t-desc">10 წთ სუნთქვა, 5 წთ — სარკის წინ.</div></div><span class="t-tag tag-b">გონება</span></div>
     <div class="time-row"><div class="t-time">08:55</div><div><div class="t-title">⚙️ Setup Ritual — 5 წთ</div><div class="t-desc">მაგიდა, წყალი, ტელ. პირქვე, გეგმა ქაღალდზე.</div></div><span class="t-tag tag-b">გონება</span></div>
   </div>
-
   <div class="block-head">📚 სწავლა #1 — 09:00–12:30</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">09:00</div><div><div class="t-title">📖 სწავლა — ღრმა ბლოკი (90 წთ)</div><div class="t-desc">0 შეფერხება. ჩეკლისტი, მიზანი, სიღრმე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
     <div class="time-row"><div class="t-time">10:30</div><div><div class="t-title">⏸ პაუზა — 20 წთ სეირნობა</div><div class="t-desc">ტელეფონი — არა. Panoramic Vision. ტვინი ამუშავებს.</div></div><span class="t-tag tag-b">დასვ.</span></div>
     <div class="time-row"><div class="t-time">10:50</div><div><div class="t-title">📝 სწავლა — პრაქტიკა + გამეორება (90 წთ)</div><div class="t-desc">ყოველი სუსტი ადგილი — ჩაიწერე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
   </div>
-
   <div class="block-head">🌿 შუადღე — 12:30–14:30</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">12:30</div><div><div class="t-title">😴 NSDR — 20 წთ</div><div class="t-desc">Circadian dip. დოპამინი +65%. ტვინი ახლა ამაგრებს ინფო.</div></div><span class="t-tag tag-a">ნეირო</span></div>
     <div class="time-row"><div class="t-time">12:50</div><div><div class="t-title">🍽 ლანჩი + სეირნობა</div><div class="t-desc">ჭამის შემდეგ 10 წთ სეირნობა — გლუკოზის კონტროლი.</div></div><span class="t-tag tag-g">კვება</span></div>
   </div>
-
   <div class="block-head">📚 სწავლა #2 — 14:30–18:00</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">14:30</div><div><div class="t-title">📖 სწავლა — ახალი მასალა (90 წთ)</div><div class="t-desc">სისუსტეების სია — ჩაიწერე. კონცენტრაცია.</div></div><span class="t-tag tag-a">სწავლა</span></div>
     <div class="time-row"><div class="t-time">16:00</div><div><div class="t-title">⏸ პაუზა — 15 წთ</div><div class="t-desc">გარეთ ან წყალი. ტელეფონი — გვერდზე.</div></div><span class="t-tag tag-b">დასვ.</span></div>
     <div class="time-row"><div class="t-time">16:15</div><div><div class="t-title">📝 გამეორება + კონსოლიდაცია (90 წთ)</div><div class="t-desc">Active Recall. Spaced Repetition. სიღრმე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
   </div>
-
-  <div class="block-head">🌆 საღამო — 18:00–22:00</div>
+  <div class="block-head">🌆 საღამო — 18:00–23:00</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">18:00</div><div><div class="t-title">🍽 ვახშამი + სეირნობა</div><div class="t-desc">ჭამის შემდეგ 10 წთ სეირნობა.</div></div><span class="t-tag tag-g">კვება</span></div>
     <div class="time-row"><div class="t-time">19:00</div><div><div class="t-title">🇬🇧 ინგლისური — 45 წთ</div><div class="t-desc">Podcast / ვიდეო მოსმენა + 10 ახალი სიტყვა. აქტიური ჩანაწერი.</div></div><span class="t-tag tag-a">ინგლ.</span></div>
-    <div class="time-row"><div class="t-time">19:45</div><div><div class="t-title">📺 Passive სწავლა ან Zone 2</div><div class="t-desc">ვიდეო/Podcast ან 30 წთ სეირნობა — ყვედრება არ არის.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">19:45</div><div><div class="t-title">📺 Passive სწავლა ან Zone 2</div><div class="t-desc">ვიდეო/Podcast ან 30 წთ სეირნობა.</div></div><span class="t-tag tag-b">გონება</span></div>
     <div class="time-row"><div class="t-time">20:00</div><div><div class="t-title">📵 ციფრული დეტოქსი</div><div class="t-desc">Hard Cutoff. ყველა სოც.მედია + ტელეფონი იხურება.</div></div><span class="t-tag tag-b">გონება</span></div>
     <div class="time-row"><div class="t-time">21:00</div><div><div class="t-title">✍️ დღიური + მენტ. ჯანმ. — 15 წთ</div><div class="t-desc">განწყობა · სტრესი · მადლიერება · Reframing.</div></div><span class="t-tag tag-b">გონება</span></div>
-    <div class="time-row"><div class="t-time">22:00</div><div><div class="t-title">💤 ძილი — 18°C, სრული სიბნელე</div><div class="t-desc">გლიმფური სისტემა. ტვინი ირეცხება. ხვალი იწყება.</div></div><span class="t-tag tag-b">ძილი</span></div>
+    <div class="time-row"><div class="t-time">23:00</div><div><div class="t-title">💤 ძილი — 18°C, სრული სიბნელე</div><div class="t-desc">გლიმფური სისტემა. ტვინი ირეცხება. ხვალი იწყება.</div></div><span class="t-tag tag-b">ძილი</span></div>
   </div>
 </div>
 
@@ -374,49 +535,32 @@ main {
     <h1>დღიური</h1>
     <p>ჩანაწერი + მენტალური ჯანმრთელობა</p>
   </div>
-
   <div class="card">
     <div class="journal-nav">
       <button onclick="jNav(-1)">←</button>
-      <div>
-        <div class="journal-day-label" id="j-day-label">დღე 1</div>
-      </div>
+      <div><div class="journal-day-label" id="j-day-label">დღე 1</div></div>
       <div class="journal-date-small" id="j-date-small"></div>
       <button onclick="jNav(1)">→</button>
     </div>
-
-    <!-- MOOD + STRESS -->
     <div style="margin-bottom:1rem;">
       <div class="mood-section">
-        <div class="mood-label-row">
-          <span class="mood-name">😊 განწყობა</span>
-          <span class="mood-val" id="mood-val">5</span>
-        </div>
+        <div class="mood-label-row"><span class="mood-name">😊 განწყობა</span><span class="mood-val" id="mood-val">5</span></div>
         <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider" oninput="onSlider('mood')">
       </div>
       <div class="mood-section" style="margin-top:0.75rem;">
-        <div class="mood-label-row">
-          <span class="mood-name">😤 სტრესი</span>
-          <span class="mood-val" id="stress-val">5</span>
-        </div>
+        <div class="mood-label-row"><span class="mood-name">😤 სტრესი</span><span class="mood-val" id="stress-val">5</span></div>
         <input type="range" min="1" max="10" value="5" class="mood-slider" id="stress-slider" oninput="onSlider('stress')">
       </div>
     </div>
-
-    <!-- FEAR -->
     <div style="margin-bottom:1rem;">
       <label class="mh-label">😨 რისი მეშინია დღეს?</label>
       <textarea class="mh-textarea" id="j-fear" placeholder="..." oninput="jSave()"></textarea>
     </div>
-
-    <!-- COGNITIVE REFRAMING -->
     <div style="margin-bottom:1rem;">
       <label class="mh-label">🔄 Cognitive Reframing</label>
       <input class="mh-input" id="j-neg" placeholder="ნეგატიური აზრი..." oninput="jSave()" style="margin-bottom:0.4rem;">
       <input class="mh-input" id="j-pos" placeholder="→ გადაწერე პოზიტიურად..." oninput="jSave()">
     </div>
-
-    <!-- GRATITUDE -->
     <div style="margin-bottom:1rem;">
       <label class="mh-label">🙏 3 მადლიერება</label>
       <div class="gratitude-row">
@@ -425,30 +569,23 @@ main {
         <input class="mh-input" id="j-g3" placeholder="3. ..." oninput="jSave()">
       </div>
     </div>
-
-    <!-- JOURNAL TEXT -->
     <div style="margin-bottom:0.75rem;">
       <label class="mh-label">✍️ დღიური</label>
       <textarea class="journal-area" id="j-area" placeholder="დღეს..." oninput="jSave()"></textarea>
-      <div class="journal-prompts" style="margin-top:0.5rem;">
+      <div class="journal-prompts">
         <span class="prompt-pill">3 გამარჯვება</span>
         <span class="prompt-pill">ხვალის 3 პრიორიტეტი</span>
         <span class="prompt-pill">რა გავაკეთებდი სხვაგვარად?</span>
       </div>
     </div>
-
     <button class="btn btn-main" onclick="jSave()" style="width:100%;">💾 შენახვა</button>
   </div>
-
-  <!-- AVERAGES -->
   <div class="card">
-    <div class="card-label"><span class="cl-icon">📊</span>საშუალო ქულები</div>
+    <div class="card-label">◈ საშუალო ქულები</div>
     <div id="avg-display"></div>
   </div>
-
-  <!-- JOURNAL LIST -->
   <div style="margin-top:0.5rem;">
-    <div class="card-label" style="margin-bottom:0.75rem;padding:0 0.1rem;"><span class="cl-icon">📋</span>ყველა ჩანაწერი</div>
+    <div class="card-label" style="margin-bottom:0.75rem;padding:0 0.1rem;">▤ ყველა ჩანაწერი</div>
     <div id="j-list"></div>
   </div>
 </div>
@@ -460,67 +597,60 @@ main {
     <h1>პროგრესი</h1>
     <p>გულწრფელად. ყოველ კვირა.</p>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">📊</span>კვირის სტატისტიკა</div>
+    <div class="card-label">◈ კვირის სტატისტიკა</div>
     <div id="week-stats"></div>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">📅</span>კვირის ჩეკლისტი — <span id="wk-label" style="color:var(--primary);font-size:0.75rem;text-transform:none;letter-spacing:0;font-weight:400;margin-left:0.3rem;"></span></div>
+    <div class="card-label">▦ კვირის ჩეკლისტი — <span id="wk-label" style="color:var(--primary);font-size:0.72rem;text-transform:none;letter-spacing:0;font-weight:600;margin-left:0.3rem;"></span></div>
     <div class="week-grid-wrap">
       <div class="week-header" id="wh"></div>
       <div id="wb"></div>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-label"><span class="cl-icon">🔄</span>კვირის მიმოხილვა</div>
+    <div class="card-label">◎ კვირის მიმოხილვა</div>
     <div class="review-q"><div class="review-q-label">რა მუშაობდა?</div><textarea class="review-input" id="rv1" oninput="saveReview()"></textarea></div>
     <div class="review-q"><div class="review-q-label">რა არ მუშაობდა?</div><textarea class="review-input" id="rv2" oninput="saveReview()"></textarea></div>
     <div class="review-q"><div class="review-q-label">რა იცვლება ხვალიდან?</div><textarea class="review-input" id="rv3" oninput="saveReview()"></textarea></div>
   </div>
 </div>
 
-<!-- MORE: Rules + Plan + Supplements -->
+<!-- MORE -->
 <div id="tab-more" class="section">
-
-  <!-- PLAN -->
   <div class="hero">
     <div class="hero-eyebrow">8 ივნისი → 4 ივლისი</div>
     <h1>გეგმა</h1>
     <p>27 დღე. ყველაფერი ეხლა.</p>
   </div>
-
-  <div style="border-left:2px solid var(--primary);padding:0.7rem 1rem;background:var(--primary-dim2);border-radius:0 8px 8px 0;margin-bottom:1.25rem;font-size:0.82rem;color:var(--text2);font-style:italic;line-height:1.6;">
+  <div style="border-left:2px solid var(--primary);padding:0.7rem 1rem;background:var(--primary-dim2);border-radius:0 6px 6px 0;margin-bottom:1.25rem;font-family:'Crimson Pro',serif;font-size:1rem;color:var(--text2);font-style:italic;line-height:1.6;">
     "ყველა ჩვევა ერთდროულად = წარუმატებლობა. 1 ჩვევა × 21 დღე = ავტომატიზმი."
   </div>
 
   <div class="month-head"><div class="m-dot" style="background:var(--primary)"></div>კვ.1 — 8–14 ივნისი · საძირკველი</div>
-  <div class="week-plan-row"><div class="wp-cells">
-    <div class="wp-cell"><strong>ჩვევები</strong>გაღვიძება 07:00 · წყალი · მზე · სირბილი · ძილი 22:00</div>
+  <div class="wp-cells" style="margin-bottom:0.5rem;">
+    <div class="wp-cell"><strong>ჩვევები</strong>გაღვიძება 07:00 · წყალი · მზე · სირბილი · ძილი 23:00</div>
     <div class="wp-cell"><strong>სწავლა</strong>ახალი ბლოკი დილით · გამეორება შუადღეს · 4×90 წთ</div>
-  </div></div>
+  </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--amber)"></div>კვ.2 — 15–21 ივნისი · სიღრმე</div>
-  <div class="week-plan-row"><div class="wp-cells">
+  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.2 — 15–21 ივნისი · სიღრმე</div>
+  <div class="wp-cells" style="margin-bottom:0.5rem;">
     <div class="wp-cell"><strong>+ დღიური</strong>მენტ. ჯანმ. ყოველ საღამოს 21:00</div>
     <div class="wp-cell"><strong>+ ინგლ.</strong>45 წთ/დღე. Podcast + სიტყვები</div>
-  </div></div>
+  </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--amber)"></div>კვ.3 — 22–28 ივნისი · სიმყარე</div>
-  <div class="week-plan-row"><div class="wp-cells">
+  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.3 — 22–28 ივნისი · სიმყარე</div>
+  <div class="wp-cells" style="margin-bottom:0.5rem;">
     <div class="wp-cell"><strong>+ NSDR</strong>NSDR 20 წთ ყოველ შუადღეს</div>
     <div class="wp-cell"><strong>+ დეტოქსი</strong>20:00 Hard Cutoff — გამონაკლისი არ არის</div>
-  </div></div>
+  </div>
 
   <div class="month-head"><div class="m-dot" style="background:var(--red)"></div>კვ.4 — 29 ივნ–4 ივლ · სრული სისტემა</div>
-  <div class="week-plan-row"><div class="wp-cells">
+  <div class="wp-cells" style="margin-bottom:0.5rem;">
     <div class="wp-cell"><strong>სრული</strong>ყველა ბლოკი სტაბილურად. არ გამოტოვო.</div>
     <div class="wp-cell"><strong>შეფასება</strong>კვირის მიმოხილვა · მომავლის გეგმა</div>
-  </div></div>
+  </div>
 
-  <!-- RULES -->
   <div class="hero" style="margin-top:2rem;">
     <div class="hero-eyebrow">სისტემა</div>
     <h1>წესები</h1>
@@ -545,7 +675,6 @@ main {
   <div class="rule warn"><div class="rule-icon">2️⃣</div><div class="rule-body"><strong>ორჯერ → საშიშია</strong><span>გამოტოვების ჩვევა ყალიბდება.</span></div></div>
   <div class="rule no"><div class="rule-icon">3️⃣</div><div class="rule-body"><strong>სამჯერ → სისტემა ირღვევა</strong><span>მიზეზი ჩაიწერე. მოხსენი. მიეყენე.</span></div></div>
 
-  <!-- SUPPLEMENTS -->
   <div class="hero" style="margin-top:2rem;">
     <div class="hero-eyebrow">ტვინის მხარდაჭერა</div>
     <h1>დანამატები</h1>
@@ -558,7 +687,6 @@ main {
     <div class="supp"><div class="supp-n">⚡ კრეატინი</div><div class="supp-right"><span class="supp-d">3–5 გ</span><span class="supp-w">ნებისმიერ დ.</span></div></div>
     <div class="supp"><div class="supp-n">☕ L-Theanine</div><div class="supp-right"><span class="supp-d">200 მგ</span><span class="supp-w">ყავასთან</span></div></div>
   </div>
-
 </div>
 
 </main>
@@ -581,11 +709,17 @@ main {
     <span class="bn-icon">📊</span><span class="bn-label">ტრეკერი</span>
   </button>
   <button class="bn-tab" onclick="showTab('more',this)">
-    <span class="bn-icon">⋯</span><span class="bn-label">სხვა</span>
+    <span class="bn-icon">⚙️</span><span class="bn-label">სხვა</span>
   </button>
 </div>
 
 <script>
+// ── CONSTANTS ──────────────────────────────────────────────
+// Program runs June 8 → July 4, 2026
+const FIXED_START  = new Date('2026-06-08T00:00:00');
+const TARGET_DATE  = new Date('2026-07-04T07:00:00');
+const TOTAL_DAYS   = 27;
+
 const HABITS = [
   {id:'water',   label:'💧 წყალი (500 მლ)'},
   {id:'sun',     label:'☀️ მზის შუქი (10 წთ)'},
@@ -598,7 +732,7 @@ const HABITS = [
   {id:'english', label:'🇬🇧 ინგლისური (45 წთ)'},
   {id:'detox',   label:'📵 დეტოქსი 20:00'},
   {id:'journal', label:'✍️ დღიური + მენტ.'},
-  {id:'sleep',   label:'💤 ძილი 22:00-მდე'},
+  {id:'sleep',   label:'💤 ძილი 23:00-მდე'},
 ];
 
 const AFFIRMS = [
@@ -613,130 +747,198 @@ const AFFIRMS = [
 ];
 
 const DAYS = ['ორ','სამ','ოთხ','ხუთ','პარ','შაბ','კვ'];
-const TARGET_DATE = new Date('2025-07-04T07:00:00');
 
-function getS() { try{return JSON.parse(localStorage.getItem('apex')||'{}')}catch{return{}} }
-function setState(d) { localStorage.setItem('apex',JSON.stringify({...getS(),...d})) }
+// ── STORAGE ────────────────────────────────────────────────
+function getS() { try{return JSON.parse(localStorage.getItem('apex_v3')||'{}')}catch{return{}} }
+function setState(d) { localStorage.setItem('apex_v3',JSON.stringify({...getS(),...d})) }
 function todayKey() { return new Date().toISOString().slice(0,10) }
-function getWeekMonday(offset=0) {
-  const d=new Date(),dow=d.getDay();
-  const diff=d.getDate()-dow+(dow===0?-6:1)+offset*7;
-  const m=new Date(d); m.setDate(diff); return m;
+
+function dayNumber() {
+  const now = new Date();
+  const diff = Math.floor((now - FIXED_START) / 86400000) + 1;
+  return Math.max(1, Math.min(diff, TOTAL_DAYS));
 }
 
+// ── LOCKSCREEN ─────────────────────────────────────────────
+function initLockscreen() {
+  const now = new Date();
+  const h = now.getHours();
+
+  // Only show lockscreen if it's before 07:00
+  if (h >= 7) {
+    document.getElementById('lockscreen').style.display = 'none';
+    return;
+  }
+
+  // Show lockscreen
+  document.getElementById('lockscreen').style.display = 'flex';
+
+  const target = new Date();
+  target.setHours(7, 0, 0, 0);
+  // total seconds from midnight to 7am = 7*3600 = 25200
+  const totalSecs = 7 * 3600;
+  const C = 2 * Math.PI * 88;
+
+  const months = ['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+  const weekdays = ['კვირა','ორშაბ.','სამშ.','ოთხშ.','ხუთშ.','პარ.','შაბ.'];
+  document.getElementById('lock-date').textContent =
+    weekdays[target.getDay()] + ', ' + target.getDate() + ' ' + months[target.getMonth()];
+
+  function tick() {
+    const n = new Date();
+    const diff = target - n;
+    if (diff <= 0) {
+      const ls = document.getElementById('lockscreen');
+      ls.classList.add('fade-out');
+      setTimeout(() => { ls.style.display = 'none'; }, 800);
+      return;
+    }
+    const hh = Math.floor(diff / 3600000);
+    const mm = Math.floor((diff % 3600000) / 60000);
+    const ss = Math.floor((diff % 60000) / 1000);
+    document.getElementById('lock-time').textContent =
+      String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
+
+    // Ring fills as night progresses toward 7am
+    const remSecs = diff / 1000;
+    const progress = 1 - (remSecs / totalSecs);
+    document.getElementById('lock-ring').style.strokeDashoffset = C * (1 - progress);
+
+    setTimeout(tick, 1000);
+  }
+  tick();
+}
+
+// ── NAV ────────────────────────────────────────────────────
 function showTab(id, btn) {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.bn-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  document.getElementById('main-scroll').scrollTop=0;
+  document.getElementById('main-scroll').scrollTop = 0;
 }
 
-// COUNTDOWN
+// ── COUNTDOWN ──────────────────────────────────────────────
 function renderCountdown() {
   const now = new Date();
   const diff = TARGET_DATE - now;
-  if(diff <= 0) {
-    document.getElementById('countdown-strip').innerHTML = '<div style="grid-column:1/-1;text-align:center;font-family:\'Instrument Serif\',serif;font-size:1.2rem;color:var(--primary2);">🎉 მიაღწიე!</div>';
+  const strip = document.getElementById('countdown-strip');
+  if (diff <= 0) {
+    strip.innerHTML = '<div style="grid-column:1/-1;text-align:center;font-family:\'Crimson Pro\',serif;font-size:1.2rem;color:var(--primary2);">🎉 მიაღწიე!</div>';
     return;
   }
-  const days = Math.floor(diff/86400000);
-  const hours = Math.floor((diff%86400000)/3600000);
-  const mins = Math.floor((diff%3600000)/60000);
-  const secs = Math.floor((diff%60000)/1000);
-  document.getElementById('countdown-strip').innerHTML = `
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000) / 60000);
+  const secs  = Math.floor((diff % 60000) / 1000);
+  strip.innerHTML = `
     <div class="cd-cell"><div class="cd-num">${days}</div><div class="cd-unit">დღე</div></div>
     <div class="cd-cell"><div class="cd-num">${String(hours).padStart(2,'0')}</div><div class="cd-unit">საათი</div></div>
     <div class="cd-cell"><div class="cd-num">${String(mins).padStart(2,'0')}</div><div class="cd-unit">წუთი</div></div>
     <div class="cd-cell"><div class="cd-num">${String(secs).padStart(2,'0')}</div><div class="cd-unit">წამი</div></div>`;
 }
 
-// TODAY
+// ── TODAY ──────────────────────────────────────────────────
 function initToday() {
-  const h=new Date().getHours();
-  document.getElementById('greeting').textContent=h<12?'გამარჯობა 🌅':h<17?'გამარჯობა ☀️':'გამარჯობა 🌙';
-  const days=['კვირა','ორშაბათი','სამშ.','ოთხშ.','ხუთშ.','პარასკ.','შაბათი'];
-  const months=['იანვ','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
-  const now=new Date();
-  document.getElementById('today-date').textContent=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
-  const s=getS();
-  if(!s.startDate) setState({startDate:todayKey()});
-  const day=Math.floor((new Date(todayKey())-new Date(getS().startDate))/86400000)+1;
-  document.getElementById('s-day').textContent=day;
-  document.getElementById('s-week').textContent='კვ.'+Math.ceil(day/7);
-  document.getElementById('s-streak').textContent=(getS().streak||0);
-  document.getElementById('top-day-badge').textContent='დღე '+day;
+  const h = new Date().getHours();
+  document.getElementById('greeting').textContent = h < 12 ? 'გამარჯობა 🌅' : h < 17 ? 'გამარჯობა ☀️' : 'გამარჯობა 🌙';
+
+  const wdays = ['კვირა','ორშაბათი','სამშ.','ოთხშ.','ხუთშ.','პარასკ.','შაბათი'];
+  const months = ['იანვ','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+  const now = new Date();
+  document.getElementById('today-date').textContent = `${wdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+
+  const day = dayNumber();
+  document.getElementById('s-day').textContent = day;
+  document.getElementById('s-week').textContent = 'კვ.' + Math.ceil(day / 7);
+  document.getElementById('s-streak').textContent = getS().streak || 0;
+  document.getElementById('top-day-badge').textContent = 'დღე ' + day;
+
   buildChecklist(); updateScore(); showTodayAffirm();
   renderCountdown();
   setInterval(renderCountdown, 1000);
 }
 
+// ── CHECKLIST ──────────────────────────────────────────────
 function buildChecklist() {
-  const s=getS(),tc=(s.checks||{})[todayKey()]||{};
-  const el=document.getElementById('checklist'); el.innerHTML='';
-  HABITS.forEach(h=>{
-    const done=tc[h.id]||false;
-    const d=document.createElement('div');
-    d.className='check-item'+(done?' done':'');
-    d.innerHTML=`<div class="check-box">${done?'✓':''}</div><span class="check-text">${h.label}</span>`;
-    d.onclick=()=>toggleHabit(h.id);
+  const tc = (getS().checks || {})[todayKey()] || {};
+  const el = document.getElementById('checklist');
+  el.innerHTML = '';
+  HABITS.forEach(h => {
+    const done = tc[h.id] || false;
+    const d = document.createElement('div');
+    d.className = 'check-item' + (done ? ' done' : '');
+    d.innerHTML = `<div class="check-box">${done ? '✓' : ''}</div><span class="check-text">${h.label}</span>`;
+    d.onclick = () => toggleHabit(h.id);
     el.appendChild(d);
   });
 }
 
 function toggleHabit(id) {
-  const s=getS(),checks=s.checks||{};
-  const tk=todayKey(); checks[tk]=checks[tk]||{};
-  checks[tk][id]=!checks[tk][id];
+  const s = getS(), checks = s.checks || {};
+  const tk = todayKey();
+  checks[tk] = checks[tk] || {};
+  checks[tk][id] = !checks[tk][id];
   setState({checks}); buildChecklist(); updateScore();
 }
 
 function updateScore() {
-  const s=getS(),tc=(s.checks||{})[todayKey()]||{};
-  const done=Object.values(tc).filter(Boolean).length;
-  document.getElementById('s-score').textContent=Math.round(done/HABITS.length*100)+'%';
+  const tc = (getS().checks || {})[todayKey()] || {};
+  const done = Object.values(tc).filter(Boolean).length;
+  document.getElementById('s-score').textContent = Math.round(done / HABITS.length * 100) + '%';
 }
 
-// TIMER
-const C=2*Math.PI*60;
-let tDur=90*60,tRem=90*60,tRun=false,tInt=null,tName='ღრმა სამუშაო';
-function setT(m,name,btn) {
-  resetT(); tDur=m*60; tRem=m*60; tName=name;
-  document.getElementById('tsub').textContent=name;
-  document.querySelectorAll('.preset').forEach(b=>b.classList.remove('on'));
+// ── TIMER ──────────────────────────────────────────────────
+const C = 2 * Math.PI * 60;
+let tDur=90*60, tRem=90*60, tRun=false, tInt=null, tName='ღრმა სამუშაო';
+
+function setT(m, name, btn) {
+  resetT(); tDur = m*60; tRem = m*60; tName = name;
+  document.getElementById('tsub').textContent = name;
+  document.querySelectorAll('.preset').forEach(b => b.classList.remove('on'));
   btn.classList.add('on'); updateTDisp();
 }
 function updateTDisp() {
-  const m=Math.floor(tRem/60),s=tRem%60;
-  document.getElementById('tdisp').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  document.getElementById('ring').style.strokeDasharray=C;
-  document.getElementById('ring').style.strokeDashoffset=C*(1-tRem/tDur);
+  const m = Math.floor(tRem/60), s = tRem % 60;
+  document.getElementById('tdisp').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  document.getElementById('ring').style.strokeDasharray = C;
+  document.getElementById('ring').style.strokeDashoffset = C * (1 - tRem / tDur);
 }
 function toggleT() {
-  if(tRun){clearInterval(tInt);tRun=false;document.getElementById('tbtn').textContent='▶ გაგრძელება';document.getElementById('tsub').textContent='პაუზა';}
-  else{tRun=true;document.getElementById('tbtn').textContent='⏸ პაუზა';document.getElementById('tsub').textContent=tName;
-    tInt=setInterval(()=>{tRem--;updateTDisp();if(tRem<=0){clearInterval(tInt);tRun=false;document.getElementById('tbtn').textContent='▶ დაწყება';document.getElementById('tsub').textContent='✅ დასრ.';}},1000);}
+  if (tRun) {
+    clearInterval(tInt); tRun = false;
+    document.getElementById('tbtn').textContent = '▶ გაგრძელება';
+    document.getElementById('tsub').textContent = 'პაუზა';
+  } else {
+    tRun = true;
+    document.getElementById('tbtn').textContent = '⏸ პაუზა';
+    document.getElementById('tsub').textContent = tName;
+    tInt = setInterval(() => {
+      tRem--; updateTDisp();
+      if (tRem <= 0) { clearInterval(tInt); tRun = false; document.getElementById('tbtn').textContent = '▶ დაწყება'; document.getElementById('tsub').textContent = '✅ დასრ.'; }
+    }, 1000);
+  }
 }
-function resetT(){clearInterval(tInt);tRun=false;tRem=tDur;document.getElementById('tbtn').textContent='▶ დაწყება';document.getElementById('tsub').textContent='მზადაა';updateTDisp();}
+function resetT() { clearInterval(tInt); tRun = false; tRem = tDur; document.getElementById('tbtn').textContent = '▶ დაწყება'; document.getElementById('tsub').textContent = 'მზადაა'; updateTDisp(); }
 
-// AFFIRMATIONS
-let afIdx=0;
-function showTodayAffirm(){afIdx=new Date().getDay()%AFFIRMS.length;renderAf();}
-function nextAf(){afIdx=(afIdx+1)%AFFIRMS.length;renderAf();}
-function renderAf(){
-  const a=AFFIRMS[afIdx];
-  document.getElementById('today-affirm').innerHTML=`
+// ── AFFIRMATIONS ───────────────────────────────────────────
+let afIdx = 0;
+function showTodayAffirm() { afIdx = new Date().getDay() % AFFIRMS.length; renderAf(); }
+function nextAf() { afIdx = (afIdx + 1) % AFFIRMS.length; renderAf(); }
+function renderAf() {
+  const a = AFFIRMS[afIdx];
+  document.getElementById('today-affirm').innerHTML = `
     <div class="affirm-card" style="margin-bottom:0;">
       <div class="affirm-text">"${a.text}"</div>
       <div class="affirm-sub">${a.sub}</div>
       <span class="affirm-when">${a.when}</span>
     </div>`;
 }
-function initAffirms(){
-  const g=document.getElementById('affirm-grid');g.innerHTML='';
-  AFFIRMS.forEach((a,i)=>{
-    const d=document.createElement('div');d.className='card';
-    d.innerHTML=`<div class="card-label">აფირმაცია ${i+1}</div>
+function initAffirms() {
+  const g = document.getElementById('affirm-grid'); g.innerHTML = '';
+  AFFIRMS.forEach((a, i) => {
+    const d = document.createElement('div'); d.className = 'card';
+    d.innerHTML = `<div class="card-label">აფირმაცია ${i+1}</div>
       <div class="affirm-card">
         <div class="affirm-text">"${a.text}"</div>
         <div class="affirm-sub">${a.sub}</div>
@@ -746,59 +948,47 @@ function initAffirms(){
   });
 }
 
-// JOURNAL + MENTAL HEALTH
-let jDay=null;
-function initJournal(){
-  const s=getS();if(!s.startDate)setState({startDate:todayKey()});
-  const start=new Date(getS().startDate),today=new Date(todayKey());
-  jDay=Math.floor((today-start)/86400000)+1;
-  renderJournal();renderJournalList();renderAverages();
+// ── JOURNAL ────────────────────────────────────────────────
+let jDay = 1;
+function initJournal() {
+  jDay = dayNumber();
+  renderJournal(); renderJournalList(); renderAverages();
 }
-
 function onSlider(type) {
-  const val = document.getElementById(type+'-slider').value;
-  document.getElementById(type+'-val').textContent = val;
+  document.getElementById(type+'-val').textContent = document.getElementById(type+'-slider').value;
   jSave();
 }
-
-function renderJournal(){
-  const s=getS(),start=new Date(getS().startDate||todayKey());
-  const dateForDay=new Date(start.getTime()+(jDay-1)*86400000);
-  const dk=dateForDay.toISOString().slice(0,10);
-  document.getElementById('j-day-label').textContent='დღე '+jDay;
-  const months=['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
-  document.getElementById('j-date-small').textContent=dateForDay.getDate()+' '+months[dateForDay.getMonth()];
-  const journals=s.journals||{};
-  const entry=journals[dk]||{};
-  // mood/stress sliders
-  const mood = entry.mood || 5;
-  const stress = entry.stress || 5;
-  document.getElementById('mood-slider').value = mood;
-  document.getElementById('mood-val').textContent = mood;
-  document.getElementById('stress-slider').value = stress;
-  document.getElementById('stress-val').textContent = stress;
-  // text fields
-  document.getElementById('j-fear').value = entry.fear||'';
-  document.getElementById('j-neg').value = entry.neg||'';
-  document.getElementById('j-pos').value = entry.pos||'';
-  document.getElementById('j-g1').value = entry.g1||'';
-  document.getElementById('j-g2').value = entry.g2||'';
-  document.getElementById('j-g3').value = entry.g3||'';
-  document.getElementById('j-area').value = entry.text||'';
+function dateForJDay(d) {
+  return new Date(FIXED_START.getTime() + (d - 1) * 86400000);
 }
-
-function jNav(dir){
-  const s=getS(),start=new Date(getS().startDate||todayKey()),today=new Date(todayKey());
-  const maxDay=Math.floor((today-start)/86400000)+1;
-  jDay=Math.max(1,Math.min(maxDay,jDay+dir));renderJournal();
+function renderJournal() {
+  const s = getS();
+  const dt = dateForJDay(jDay);
+  const dk = dt.toISOString().slice(0, 10);
+  const months = ['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+  document.getElementById('j-day-label').textContent = 'დღე ' + jDay;
+  document.getElementById('j-date-small').textContent = dt.getDate() + ' ' + months[dt.getMonth()];
+  const entry = (s.journals || {})[dk] || {};
+  document.getElementById('mood-slider').value = entry.mood || 5;
+  document.getElementById('mood-val').textContent = entry.mood || 5;
+  document.getElementById('stress-slider').value = entry.stress || 5;
+  document.getElementById('stress-val').textContent = entry.stress || 5;
+  document.getElementById('j-fear').value = entry.fear || '';
+  document.getElementById('j-neg').value = entry.neg || '';
+  document.getElementById('j-pos').value = entry.pos || '';
+  document.getElementById('j-g1').value = entry.g1 || '';
+  document.getElementById('j-g2').value = entry.g2 || '';
+  document.getElementById('j-g3').value = entry.g3 || '';
+  document.getElementById('j-area').value = entry.text || '';
 }
-
-function jSave(){
-  const s=getS(),journals=s.journals||{};
-  const start=new Date(getS().startDate||todayKey());
-  const dateForDay=new Date(start.getTime()+(jDay-1)*86400000);
-  const dk=dateForDay.toISOString().slice(0,10);
-  journals[dk]={
+function jNav(dir) {
+  jDay = Math.max(1, Math.min(dayNumber(), jDay + dir));
+  renderJournal();
+}
+function jSave() {
+  const s = getS(), journals = s.journals || {};
+  const dk = dateForJDay(jDay).toISOString().slice(0, 10);
+  journals[dk] = {
     mood: parseInt(document.getElementById('mood-slider').value),
     stress: parseInt(document.getElementById('stress-slider').value),
     fear: document.getElementById('j-fear').value,
@@ -809,127 +999,123 @@ function jSave(){
     g3: document.getElementById('j-g3').value,
     text: document.getElementById('j-area').value,
   };
-  setState({journals});renderJournalList();renderAverages();
+  setState({journals}); renderJournalList(); renderAverages();
 }
-
-function renderAverages(){
-  const s=getS(),journals=s.journals||{};
-  const entries=Object.values(journals).filter(e=>e&&typeof e==='object');
-  if(!entries.length){
-    document.getElementById('avg-display').innerHTML='<div style="font-size:0.78rem;color:var(--text3);">ჯერ ჩანაწერი არ არის</div>';
-    return;
-  }
-  const avgMood=(entries.reduce((a,e)=>a+(e.mood||5),0)/entries.length).toFixed(1);
-  const avgStress=(entries.reduce((a,e)=>a+(e.stress||5),0)/entries.length).toFixed(1);
-  document.getElementById('avg-display').innerHTML=`
+function renderAverages() {
+  const entries = Object.values(getS().journals || {}).filter(e => e && typeof e === 'object');
+  if (!entries.length) { document.getElementById('avg-display').innerHTML = '<div style="font-size:0.78rem;color:var(--text3);">ჯერ ჩანაწერი არ არის</div>'; return; }
+  const avgMood   = (entries.reduce((a,e) => a + (e.mood   || 5), 0) / entries.length).toFixed(1);
+  const avgStress = (entries.reduce((a,e) => a + (e.stress || 5), 0) / entries.length).toFixed(1);
+  document.getElementById('avg-display').innerHTML = `
     <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-      <div class="avg-badge">
-        <span class="avg-badge-label">😊 განწყობა საშ.</span>
-        <span class="avg-badge-val">${avgMood}</span>
-      </div>
-      <div class="avg-badge">
-        <span class="avg-badge-label">😤 სტრესი საშ.</span>
-        <span class="avg-badge-val">${avgStress}</span>
-      </div>
-      <div class="avg-badge" style="background:var(--blue-dim);border-color:rgba(107,159,212,0.2);">
+      <div class="avg-badge"><span class="avg-badge-label">😊 განწყობა საშ.</span><span class="avg-badge-val">${avgMood}</span></div>
+      <div class="avg-badge"><span class="avg-badge-label">😤 სტრესი საშ.</span><span class="avg-badge-val">${avgStress}</span></div>
+      <div class="avg-badge" style="background:var(--blue-dim);border-color:rgba(74,127,168,0.2);">
         <span class="avg-badge-label" style="color:var(--text2);">📅 ჩანაწერები</span>
-        <span class="avg-badge-val" style="color:var(--blue);">${entries.length}</span>
+        <span class="avg-badge-val" style="color:var(--blue2);">${entries.length}</span>
       </div>
     </div>`;
 }
-
-function renderJournalList(){
-  const s=getS(),journals=s.journals||{},start=new Date(getS().startDate||todayKey());
-  const el=document.getElementById('j-list');el.innerHTML='';
-  const months=['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
-  const keys=Object.keys(journals).filter(k=>{
-    const e=journals[k];
-    return e&&typeof e==='object'&&(e.text||e.fear||e.g1||e.neg);
+function renderJournalList() {
+  const journals = getS().journals || {};
+  const months = ['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+  const el = document.getElementById('j-list'); el.innerHTML = '';
+  const keys = Object.keys(journals).filter(k => {
+    const e = journals[k];
+    return e && typeof e === 'object' && (e.text || e.fear || e.g1 || e.neg);
   }).sort().reverse();
-  if(!keys.length){el.innerHTML='<div style="font-size:0.8rem;color:var(--text3);padding:0.5rem 0;">ჩანაწერი არ არის</div>';return;}
-  keys.forEach(dk=>{
-    const d=new Date(dk),dayNum=Math.floor((d-start)/86400000)+1;
-    const entry=journals[dk];
-    const preview=(entry.text||'').slice(0,60)+((entry.text||'').length>60?'...':'');
-    const div=document.createElement('div');div.className='j-entry';
-    div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
-      <span style="font-size:0.78rem;font-weight:600;color:var(--primary);">დღე ${dayNum}</span>
+  if (!keys.length) { el.innerHTML = '<div style="font-size:0.8rem;color:var(--text3);padding:0.5rem 0;">ჩანაწერი არ არის</div>'; return; }
+  keys.forEach(dk => {
+    const d = new Date(dk);
+    const dayNum = Math.max(1, Math.floor((d - FIXED_START) / 86400000) + 1);
+    const entry = journals[dk];
+    const preview = (entry.text || '').slice(0, 60) + ((entry.text || '').length > 60 ? '...' : '');
+    const div = document.createElement('div'); div.className = 'j-entry';
+    div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+      <span style="font-size:0.78rem;font-weight:700;color:var(--primary);letter-spacing:0.06em;">დღე ${dayNum}</span>
       <div style="display:flex;gap:0.5rem;align-items:center;">
-        ${entry.mood?`<span style="font-size:0.68rem;color:var(--text3);">😊${entry.mood}</span>`:''}
-        ${entry.stress?`<span style="font-size:0.68rem;color:var(--text3);">😤${entry.stress}</span>`:''}
-        <span style="font-size:0.7rem;color:var(--text3);">${d.getDate()} ${months[d.getMonth()]}</span>
+        ${entry.mood   ? `<span style="font-size:0.68rem;color:var(--text3);">😊${entry.mood}</span>`   : ''}
+        ${entry.stress ? `<span style="font-size:0.68rem;color:var(--text3);">😤${entry.stress}</span>` : ''}
+        <span style="font-size:0.7rem;color:var(--text3);font-weight:700;">${d.getDate()} ${months[d.getMonth()]}</span>
       </div>
     </div>
-    ${preview?`<div style="font-size:0.76rem;color:var(--text2);line-height:1.5;">${preview}</div>`:''}`;
-    div.onclick=()=>{jDay=dayNum;renderJournal();document.getElementById('main-scroll').scrollTop=0;};
+    ${preview ? `<div style="font-size:0.76rem;color:var(--text2);line-height:1.5;">${preview}</div>` : ''}`;
+    div.onclick = () => { jDay = dayNum; renderJournal(); document.getElementById('main-scroll').scrollTop = 0; };
     el.appendChild(div);
   });
 }
 
-// TRACKER
-function initTracker(){
-  const s=getS(),monday=getWeekMonday();
-  const months=['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
-  const end=new Date(monday.getTime()+6*86400000);
-  document.getElementById('wk-label').textContent=monday.getDate()+' '+months[monday.getMonth()]+' – '+end.getDate()+' '+months[end.getMonth()];
-  const wh=document.getElementById('wh');
-  wh.innerHTML='<div></div>'+DAYS.map(d=>`<div class="wh-day">${d}</div>`).join('');
-  const wb=document.getElementById('wb');wb.innerHTML='';
-  HABITS.forEach(h=>{
-    const row=document.createElement('div');row.className='week-row';
-    row.innerHTML=`<div class="wr-label">${h.label}</div>`;
-    for(let i=0;i<7;i++){
-      const day=new Date(monday.getTime()+i*86400000),dk=day.toISOString().slice(0,10);
-      const done=((s.checks||{})[dk]||{})[h.id]||false;
-      const cell=document.createElement('div');
-      cell.className='wr-cell'+(done?' on':'');
-      cell.textContent=done?'✓':'';
-      cell.onclick=()=>{
-        const s2=getS(),checks=s2.checks||{};
-        checks[dk]=checks[dk]||{};checks[dk][h.id]=!checks[dk][h.id];
-        setState({checks});initTracker();buildChecklist();updateScore();
+// ── TRACKER ────────────────────────────────────────────────
+function getWeekMonday() {
+  const d = new Date(), dow = d.getDay();
+  const diff = d.getDate() - dow + (dow === 0 ? -6 : 1);
+  const m = new Date(d); m.setDate(diff); return m;
+}
+function initTracker() {
+  const s = getS(), monday = getWeekMonday();
+  const months = ['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+  const end = new Date(monday.getTime() + 6 * 86400000);
+  document.getElementById('wk-label').textContent = monday.getDate()+' '+months[monday.getMonth()]+' – '+end.getDate()+' '+months[end.getMonth()];
+  document.getElementById('wh').innerHTML = '<div></div>' + DAYS.map(d => `<div class="wh-day">${d}</div>`).join('');
+  const wb = document.getElementById('wb'); wb.innerHTML = '';
+  HABITS.forEach(h => {
+    const row = document.createElement('div'); row.className = 'week-row';
+    row.innerHTML = `<div class="wr-label">${h.label}</div>`;
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(monday.getTime() + i * 86400000), dk = day.toISOString().slice(0, 10);
+      const done = ((s.checks || {})[dk] || {})[h.id] || false;
+      const cell = document.createElement('div');
+      cell.className = 'wr-cell' + (done ? ' on' : '');
+      cell.textContent = done ? '✓' : '';
+      cell.onclick = () => {
+        const s2 = getS(), checks = s2.checks || {};
+        checks[dk] = checks[dk] || {}; checks[dk][h.id] = !checks[dk][h.id];
+        setState({checks}); initTracker(); buildChecklist(); updateScore();
       };
       row.appendChild(cell);
     }
     wb.appendChild(row);
   });
   renderWeekStats();
-  const rev=(s.reviews||{})[monday.toISOString().slice(0,10)]||{};
-  document.getElementById('rv1').value=rev.q1||'';
-  document.getElementById('rv2').value=rev.q2||'';
-  document.getElementById('rv3').value=rev.q3||'';
+  const rev = (s.reviews || {})[monday.toISOString().slice(0,10)] || {};
+  document.getElementById('rv1').value = rev.q1 || '';
+  document.getElementById('rv2').value = rev.q2 || '';
+  document.getElementById('rv3').value = rev.q3 || '';
 }
-
-function renderWeekStats(){
-  const s=getS(),monday=getWeekMonday();
-  let done=0,possible=0;
-  for(let i=0;i<7;i++){
-    const day=new Date(monday.getTime()+i*86400000),dk=day.toISOString().slice(0,10);
-    const dc=(s.checks||{})[dk]||{};
-    done+=HABITS.filter(h=>dc[h.id]).length;
-    if(day<=new Date())possible+=HABITS.length;
+function renderWeekStats() {
+  const s = getS(), monday = getWeekMonday();
+  let done = 0, possible = 0;
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(monday.getTime() + i * 86400000), dk = day.toISOString().slice(0,10);
+    const dc = (s.checks || {})[dk] || {};
+    done += HABITS.filter(h => dc[h.id]).length;
+    if (day <= new Date()) possible += HABITS.length;
   }
-  const pct=possible>0?Math.round(done/possible*100):0;
-  document.getElementById('week-stats').innerHTML=`
+  const pct = possible > 0 ? Math.round(done / possible * 100) : 0;
+  document.getElementById('week-stats').innerHTML = `
     <div style="text-align:center;margin-bottom:1rem;">
-      <div style="font-family:'Instrument Serif',serif;font-size:2.5rem;color:var(--primary2);line-height:1;">${pct}%</div>
-      <div style="font-size:0.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem;">კვირის შესრულება</div>
+      <div style="font-family:'Crimson Pro',serif;font-size:2.8rem;color:var(--primary2);line-height:1;font-weight:600;">${pct}%</div>
+      <div style="font-size:0.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.14em;margin-top:0.25rem;font-weight:700;">კვირის შესრულება</div>
     </div>
     <div class="prog-wrap">
       <div class="prog-head"><span class="prog-name">ჩვევები</span><span class="prog-val">${done}/${possible}</span></div>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:var(--primary)"></div></div>
     </div>`;
 }
-
-function saveReview(){
-  const s=getS(),reviews=s.reviews||{},wk=getWeekMonday().toISOString().slice(0,10);
-  reviews[wk]={q1:document.getElementById('rv1').value,q2:document.getElementById('rv2').value,q3:document.getElementById('rv3').value};
+function saveReview() {
+  const s = getS(), reviews = s.reviews || {}, wk = getWeekMonday().toISOString().slice(0,10);
+  reviews[wk] = {q1: document.getElementById('rv1').value, q2: document.getElementById('rv2').value, q3: document.getElementById('rv3').value};
   setState({reviews});
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-  const s=getS();if(!s.startDate)setState({startDate:todayKey()});
-  initToday();initAffirms();initJournal();initTracker();updateTDisp();
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initLockscreen();
+  initToday();
+  initAffirms();
+  initJournal();
+  initTracker();
+  updateTDisp();
 });
 </script>
 </body>
