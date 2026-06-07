@@ -1,6 +1,6 @@
 bash
 
-cat > /home/claude/apex_mobile.html << 'HTMLEOF'
+cat > /mnt/user-data/outputs/apex_mobile.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="ka">
 <head>
@@ -35,194 +35,75 @@ cat > /home/claude/apex_mobile.html << 'HTMLEOF'
 }
 
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overscroll-behavior: none; }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  overscroll-behavior: none;
-}
-
-/* TOP NAV - logo only */
 .top-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: fixed; top: 0; left: 0; right: 0;
   height: var(--nav-h);
   background: rgba(12,15,10,0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.25rem;
-  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem; z-index: 100;
 }
+.nav-logo { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.2rem; color: var(--primary2); }
+.nav-day-badge { font-size: 0.7rem; font-weight: 600; color: var(--text3); letter-spacing: 0.08em; }
 
-.nav-logo {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 1.2rem;
-  color: var(--primary2);
-}
-
-.nav-day-badge {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text3);
-  letter-spacing: 0.08em;
-}
-
-/* MAIN SCROLL AREA */
 main {
-  position: fixed;
-  top: var(--nav-h);
-  bottom: var(--bottom-h);
-  left: 0; right: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
+  position: fixed; top: var(--nav-h); bottom: var(--bottom-h); left: 0; right: 0;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
 }
 
-/* SECTIONS */
-.section {
-  display: none;
-  padding: 1.25rem 1rem 1.5rem;
-  animation: up 0.2s ease;
-  min-height: 100%;
-}
+.section { display: none; padding: 1.25rem 1rem 1.5rem; animation: up 0.2s ease; min-height: 100%; }
 .section.active { display: block; }
 @keyframes up { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-/* BOTTOM NAV */
 .bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
+  position: fixed; bottom: 0; left: 0; right: 0;
   height: var(--bottom-h);
   background: rgba(12,15,10,0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 0.25rem;
-  padding-bottom: env(safe-area-inset-bottom);
-  z-index: 100;
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 0 0.25rem; padding-bottom: env(safe-area-inset-bottom); z-index: 100;
 }
-
 .bn-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 0.4rem 0.5rem;
-  border-radius: 10px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.15s;
-  min-width: 44px;
-  min-height: 44px;
-  justify-content: center;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 0.4rem 0.5rem; border-radius: 10px; border: none;
+  background: transparent; cursor: pointer; transition: all 0.15s;
+  min-width: 44px; min-height: 44px; justify-content: center;
 }
-
 .bn-icon { font-size: 1.3rem; line-height: 1; transition: transform 0.15s; }
 .bn-label { font-size: 0.58rem; font-weight: 600; color: var(--text3); letter-spacing: 0.04em; font-family: 'Space Grotesk', sans-serif; transition: color 0.15s; }
-
 .bn-tab.active .bn-icon { transform: scale(1.1); }
 .bn-tab.active .bn-label { color: var(--primary); }
 .bn-tab.active { background: var(--primary-dim); }
 
-/* HERO - compact for mobile */
-.hero {
-  padding: 0.75rem 0 1.25rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 1.25rem;
-}
-.hero-eyebrow {
-  font-size: 0.64rem; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--primary);
-  margin-bottom: 0.4rem;
-}
-.hero h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.8rem; font-weight: 400; line-height: 1.15;
-  color: var(--text); margin-bottom: 0.35rem;
-}
+.hero { padding: 0.75rem 0 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+.hero-eyebrow { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--primary); margin-bottom: 0.4rem; }
+.hero h1 { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.15; color: var(--text); margin-bottom: 0.35rem; }
 .hero p { color: var(--text2); font-size: 0.82rem; line-height: 1.5; }
 
-/* STAT ROW - 2x2 grid on mobile */
-.stat-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-  margin-bottom: 1.25rem;
-}
-.stat {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.9rem;
-}
-.stat-val {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.8rem; font-weight: 400;
-  color: var(--primary2); line-height: 1;
-  margin-bottom: 0.25rem;
-}
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem; }
+.stat-val { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; color: var(--primary2); line-height: 1; margin-bottom: 0.25rem; }
 .stat-label { font-size: 0.65rem; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
 
-/* CARDS */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.1rem;
-  margin-bottom: 0.85rem;
-}
-.card-label {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--text3);
-  margin-bottom: 0.85rem;
-  display: flex; align-items: center; gap: 0.4rem;
-}
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem; margin-bottom: 0.85rem; }
+.card-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
 .card-label .cl-icon { font-size: 0.9rem; }
 
-/* CHECKLIST - bigger tap targets */
-.check-item {
-  display: flex; align-items: center; gap: 0.8rem;
-  padding: 0.75rem 0.6rem;
-  border-radius: 10px;
-  margin-bottom: 0.25rem;
-  cursor: pointer;
-  transition: background 0.1s;
-  min-height: 48px;
-}
+.check-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 0.6rem; border-radius: 10px; margin-bottom: 0.25rem; cursor: pointer; transition: background 0.1s; min-height: 48px; }
 .check-item:active { background: rgba(255,255,255,0.04); }
 .check-item.done { background: var(--primary-dim2); }
-.check-box {
-  width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0;
-  border: 1.5px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; font-size: 0.75rem; color: transparent;
-}
-.check-item.done .check-box {
-  background: var(--primary); border-color: var(--primary); color: #0c0f0a;
-}
+.check-box { width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-size: 0.75rem; color: transparent; }
+.check-item.done .check-box { background: var(--primary); border-color: var(--primary); color: #0c0f0a; }
 .check-text { font-size: 0.88rem; transition: color 0.15s; line-height: 1.3; }
 .check-item.done .check-text { color: var(--text3); text-decoration: line-through; }
 
-/* TIMER */
 .timer-wrap { text-align: center; padding: 0.75rem 0 0.5rem; }
-.timer-ring-wrap {
-  position: relative; width: 140px; height: 140px; margin: 0 auto 1rem;
-}
+.timer-ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 1rem; }
 .timer-ring-wrap svg { transform: rotate(-90deg); }
 .ring-track { fill: none; stroke: var(--border2); stroke-width: 5; }
 .ring-fill { fill: none; stroke: var(--primary); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
@@ -230,113 +111,62 @@ main {
 .timer-num { font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--text); }
 .timer-sub { font-size: 0.68rem; color: var(--text2); margin-top: 2px; }
 .preset-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.85rem; }
-.preset {
-  padding: 0.55rem 0.5rem; border-radius: 8px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--text2); font-size: 0.78rem; cursor: pointer;
-  font-family: 'Space Grotesk', sans-serif;
-  transition: all 0.15s; min-height: 44px;
-}
+.preset { padding: 0.55rem 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 0.78rem; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.15s; min-height: 44px; }
 .preset:active, .preset.on { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
 .btn-row { display: flex; gap: 0.5rem; justify-content: center; }
-.btn {
-  padding: 0.65rem 1.25rem; border-radius: 10px;
-  border: 1px solid var(--border2); background: transparent;
-  color: var(--text); font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
-  min-height: 48px;
-}
+.btn { padding: 0.65rem 1.25rem; border-radius: 10px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; min-height: 48px; }
 .btn-main { background: var(--primary); border-color: var(--primary); color: #0c0f0a; font-weight: 600; flex: 1; }
 .btn-reset { width: 48px; flex-shrink: 0; }
 
-/* AFFIRMATION */
-.affirm-card {
-  background: var(--primary-dim2);
-  border: 1px solid rgba(168,197,122,0.15);
-  border-radius: 12px; padding: 1.25rem;
-  text-align: center; margin-bottom: 0.75rem;
-}
-.affirm-text {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.15rem; font-style: italic;
-  color: var(--text); line-height: 1.5; margin-bottom: 0.5rem;
-}
+.affirm-card { background: var(--primary-dim2); border: 1px solid rgba(168,197,122,0.15); border-radius: 12px; padding: 1.25rem; text-align: center; margin-bottom: 0.75rem; }
+.affirm-text { font-family: 'Instrument Serif', serif; font-size: 1.15rem; font-style: italic; color: var(--text); line-height: 1.5; margin-bottom: 0.5rem; }
 .affirm-sub { font-size: 0.72rem; color: var(--text2); margin-bottom: 0.6rem; }
-.affirm-when {
-  display: inline-block;
-  background: var(--primary-dim); color: var(--primary);
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
-  padding: 0.22rem 0.65rem; border-radius: 20px;
-  text-transform: uppercase;
-}
+.affirm-when { display: inline-block; background: var(--primary-dim); color: var(--primary); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.22rem 0.65rem; border-radius: 20px; text-transform: uppercase; }
 
-/* ROUTINE */
-.block-head {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--text3);
-  padding: 1.1rem 0 0.6rem;
-  display: flex; align-items: center; gap: 0.6rem;
-}
+.block-head { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); padding: 1.1rem 0 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
 .block-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-.time-row {
-  display: grid; grid-template-columns: 58px 1fr auto;
-  gap: 0.6rem; align-items: start;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
-}
+.time-row { display: grid; grid-template-columns: 58px 1fr auto; gap: 0.6rem; align-items: start; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
 .time-row:last-child { border-bottom: none; }
 .t-time { font-size: 0.72rem; color: var(--primary); font-weight: 600; padding-top: 2px; }
 .t-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.2rem; line-height: 1.3; }
 .t-desc { font-size: 0.72rem; color: var(--text2); line-height: 1.5; }
-.t-tag {
-  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em;
-  padding: 0.2rem 0.45rem; border-radius: 20px;
-  text-transform: uppercase; white-space: nowrap; margin-top: 2px;
-}
+.t-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.2rem 0.45rem; border-radius: 20px; text-transform: uppercase; white-space: nowrap; margin-top: 2px; }
 .tag-g { background: var(--primary-dim); color: var(--primary); }
 .tag-a { background: var(--amber-dim); color: var(--amber); }
 .tag-b { background: var(--blue-dim); color: var(--blue); }
 .tag-r { background: var(--red-dim); color: var(--red); }
 
-/* JOURNAL */
-.journal-nav {
-  display: flex; align-items: center; gap: 0.6rem;
-  margin-bottom: 0.85rem;
-}
-.journal-nav button {
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text2); border-radius: 8px;
-  width: 36px; height: 36px; cursor: pointer;
-  font-size: 1rem; transition: all 0.15s;
-  font-family: 'Space Grotesk', sans-serif;
-  min-width: 44px; min-height: 44px;
-}
+/* JOURNAL + MENTAL HEALTH */
+.journal-nav { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.85rem; }
+.journal-nav button { background: transparent; border: 1px solid var(--border); color: var(--text2); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; transition: all 0.15s; font-family: 'Space Grotesk', sans-serif; min-width: 44px; min-height: 44px; }
 .journal-nav button:active { border-color: var(--primary); color: var(--primary); }
-.journal-day-label {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.1rem; color: var(--primary2);
-}
+.journal-day-label { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--primary2); }
 .journal-date-small { font-size: 0.7rem; color: var(--text3); margin-left: auto; }
-.journal-area {
-  width: 100%; background: var(--bg3);
-  border: 1px solid var(--border); border-radius: 10px;
-  padding: 0.9rem; color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.88rem; resize: none; height: 150px;
-  outline: none; line-height: 1.6;
-  transition: border-color 0.15s;
-  -webkit-appearance: none;
-}
+.journal-area { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; resize: none; height: 150px; outline: none; line-height: 1.6; transition: border-color 0.15s; -webkit-appearance: none; }
 .journal-area:focus { border-color: var(--primary); }
-.journal-prompts {
-  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem;
-}
-.prompt-pill {
-  font-size: 0.68rem; color: var(--text3);
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 20px; padding: 0.22rem 0.6rem;
-}
+.journal-prompts { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem; }
+.prompt-pill { font-size: 0.68rem; color: var(--text3); background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 0.22rem 0.6rem; }
+
+/* MOOD SLIDER */
+.mood-section { margin-bottom: 1rem; }
+.mood-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+.mood-name { font-size: 0.72rem; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+.mood-val { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--primary2); }
+.mood-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--border2); outline: none; cursor: pointer; }
+.mood-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; }
+.mood-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; border: none; }
+
+.mh-textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; resize: none; height: 80px; outline: none; line-height: 1.6; -webkit-appearance: none; transition: border-color 0.15s; }
+.mh-textarea:focus { border-color: var(--primary); }
+.mh-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; outline: none; -webkit-appearance: none; transition: border-color 0.15s; }
+.mh-input:focus { border-color: var(--primary); }
+.mh-label { font-size: 0.68rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; display: block; }
+.gratitude-row { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.1rem; }
+
+.avg-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--primary-dim); border: 1px solid rgba(168,197,122,0.2); border-radius: 20px; padding: 0.3rem 0.75rem; margin-top: 0.75rem; }
+.avg-badge-label { font-size: 0.65rem; color: var(--text2); }
+.avg-badge-val { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--primary2); }
 
 /* TRACKER */
 .week-grid-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.25rem; padding: 0 0.25rem; }
@@ -344,15 +174,9 @@ main {
 .wh-day { font-size: 0.62rem; font-weight: 600; color: var(--text3); text-align: center; }
 .week-row { display: grid; grid-template-columns: 1fr repeat(7,32px); gap: 0.3rem; align-items: center; margin-bottom: 0.3rem; min-width: 380px; }
 .wr-label { font-size: 0.75rem; color: var(--text2); line-height: 1.2; }
-.wr-cell {
-  width: 32px; height: 32px; border-radius: 7px;
-  border: 1px solid var(--border); background: var(--bg3);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; color: transparent; transition: all 0.15s;
-}
+.wr-cell { width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg3); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: transparent; transition: all 0.15s; }
 .wr-cell.on { background: var(--primary-dim); border-color: rgba(168,197,122,0.4); color: var(--primary); }
 
-/* PROGRESS */
 .prog-wrap { margin-bottom: 0.8rem; }
 .prog-head { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
 .prog-name { font-size: 0.78rem; color: var(--text2); }
@@ -361,10 +185,7 @@ main {
 .prog-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
 
 /* RULES */
-.rule {
-  display: flex; gap: 0.75rem; align-items: flex-start;
-  padding: 0.85rem 0.9rem; border-radius: 10px; margin-bottom: 0.4rem;
-}
+.rule { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0.9rem; border-radius: 10px; margin-bottom: 0.4rem; }
 .rule.no { background: var(--red-dim); border-left: 2px solid var(--red); }
 .rule.yes { background: var(--primary-dim2); border-left: 2px solid var(--primary); }
 .rule.warn { background: var(--amber-dim); border-left: 2px solid var(--amber); }
@@ -374,31 +195,17 @@ main {
 .rule-body span { color: var(--text2); font-size: 0.75rem; }
 
 /* PLAN */
-.month-head {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.1rem; color: var(--text);
-  margin: 1.25rem 0 0.75rem;
-}
+.month-head { display: flex; align-items: center; gap: 0.5rem; font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); margin: 1.25rem 0 0.75rem; }
 .m-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
 .week-plan-row { margin-bottom: 0.5rem; }
 .wp-num { font-size: 0.68rem; font-weight: 600; color: var(--text3); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .wp-cells { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
-.wp-cell {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 10px; padding: 0.65rem 0.75rem;
-  font-size: 0.78rem; color: var(--text2); line-height: 1.5;
-}
+.wp-cell { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 0.75rem; font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
 .wp-cell strong { display: block; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.2rem; }
 
 /* SUPPLEMENTS */
 .supp-list { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.supp {
-  display: flex; gap: 0.75rem; align-items: flex-start;
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
+.supp { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); }
 .supp:last-child { border-bottom: none; }
 .supp:nth-child(even) { background: var(--bg3); }
 .supp-n { font-size: 0.85rem; font-weight: 500; flex: 1; }
@@ -407,66 +214,41 @@ main {
 .supp-w { color: var(--text2); font-size: 0.7rem; }
 
 /* REVIEW */
-.review-q {
-  padding: 0.8rem 0.9rem; background: var(--bg3);
-  border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.5rem;
-}
+.review-q { padding: 0.8rem 0.9rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.5rem; }
 .review-q-label { font-size: 0.67rem; font-weight: 600; color: var(--primary); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.4rem; }
-.review-input {
-  width: 100%; background: transparent; border: none;
-  color: var(--text); font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem; resize: none; outline: none;
-  line-height: 1.6; height: 60px;
-}
+.review-input { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; resize: none; outline: none; line-height: 1.6; height: 60px; }
 
-/* USMLE */
-.material-card {
-  display: flex; gap: 0.85rem; align-items: flex-start;
-  padding: 0.85rem; border-radius: 12px; margin-bottom: 0.5rem;
-  background: var(--card); border: 1px solid var(--border);
-}
-.mat-icon {
-  width: 36px; height: 36px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; flex-shrink: 0;
-}
-.mat-body { flex: 1; }
-.mat-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.15rem; }
-.mat-desc { font-size: 0.75rem; color: var(--text2); line-height: 1.5; }
-.mat-badge {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
-  padding: 0.2rem 0.55rem; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
-}
+.affirm-grid { display: grid; gap: 0.75rem; }
 
-/* UW input */
-.uw-input {
-  width: 100%; background: var(--bg3);
-  border: 1px solid var(--border); border-radius: 10px;
-  padding: 0.7rem 0.9rem; color: var(--text);
-  font-size: 1rem; outline: none; font-family: 'Space Grotesk', sans-serif;
-  -webkit-appearance: none; transition: border-color 0.15s;
-  margin-top: 0.5rem;
-}
-.uw-input:focus { border-color: var(--primary); }
-
-/* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* Affirm grid */
-.affirm-grid { display: grid; gap: 0.75rem; }
+/* COUNTDOWN */
+.countdown-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.5rem; margin-bottom: 1.25rem; }
+.cd-cell { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 0.5rem; text-align: center; }
+.cd-num { font-family: 'Instrument Serif', serif; font-size: 1.6rem; color: var(--primary2); line-height: 1; }
+.cd-unit { font-size: 0.58rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
+
+/* ENGLISH LOG */
+.eng-log-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+.eng-log-item:last-child { border-bottom: none; }
+.eng-icon { font-size: 1.1rem; min-width: 24px; }
+.eng-body { flex: 1; }
+.eng-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
+.eng-sub { font-size: 0.72rem; color: var(--text2); }
+
+/* Journal list */
+.j-entry { padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.4rem; cursor: pointer; background: var(--bg3); }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <div class="nav-logo">Apex</div>
   <div class="nav-day-badge" id="top-day-badge"></div>
 </div>
 
-<!-- MAIN CONTENT -->
 <main id="main-scroll">
 
 <!-- TODAY -->
@@ -476,6 +258,9 @@ main {
     <h1 id="greeting">გამარჯობა</h1>
     <p id="today-date"></p>
   </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-strip" id="countdown-strip"></div>
 
   <div class="stat-row">
     <div class="stat"><div class="stat-val" id="s-day">1</div><div class="stat-label">დღე სისტემაში</div></div>
@@ -530,50 +315,52 @@ main {
     <p>გამონაკლისი არ არის</p>
   </div>
 
-  <div class="block-head">🌅 დილა — 07:00–09:30</div>
+  <div class="block-head">🌅 დილა — 07:00–09:00</div>
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">07:00</div><div><div class="t-title">💧 გაღვიძება + 500 მლ წყალი</div><div class="t-desc">მაღვიძარა სხვა ოთახში. წყალი — მოამზადე წინა ღამეს.</div></div><span class="t-tag tag-g">სხეული</span></div>
-    <div class="time-row"><div class="t-time">07:05</div><div><div class="t-title">☀️ მზის შუქი — 10 წთ</div><div class="t-desc">გარეთ ან ფანჯარასთან. ტელეფონი — დანება.</div></div><span class="t-tag tag-a">ნეირო</span></div>
-    <div class="time-row"><div class="t-time">07:15</div><div><div class="t-title">🏃 სირბილი — 20–30 წთ Zone 2</div><div class="t-desc">ლაპარაკი შეგიძლია — ეს სწორი ტემპია. BDNF.</div></div><span class="t-tag tag-g">სხეული</span></div>
-    <div class="time-row"><div class="t-time">07:45</div><div><div class="t-title">🚿 შხაპი — ბოლო 30 წამი ცივი</div><div class="t-desc">ნოეპინეფრინი +300%. ტვინი გაიღვიძებს.</div></div><span class="t-tag tag-a">ნეირო</span></div>
-    <div class="time-row"><div class="t-time">08:00</div><div><div class="t-title">🥚 საუზმე + ყავა</div><div class="t-desc">კვერცხი + ავოკადო. ყავა — 90 წთ გავიდა.</div></div><span class="t-tag tag-g">კვება</span></div>
-    <div class="time-row"><div class="t-time">08:35</div><div><div class="t-title">🧘 მედიტაცია + აფირმ. — 15 წთ</div><div class="t-desc">10 წთ სუნთქვა, 5 წთ — სარკის წინ.</div></div><span class="t-tag tag-b">გონება</span></div>
-    <div class="time-row"><div class="t-time">08:50</div><div><div class="t-title">⚙️ Setup Ritual — 10 წთ</div><div class="t-desc">მაგიდა, წყალი, ტელ. პირქვე, გეგმა ქ-ზე.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">07:05</div><div><div class="t-title">☀️ მზის შუქი — 10 წთ</div><div class="t-desc">გარეთ ან ფანჯარასთან. ტელეფონი — გვერდზე.</div></div><span class="t-tag tag-a">ნეირო</span></div>
+    <div class="time-row"><div class="t-time">07:15</div><div><div class="t-title">🏃 სირბილი — 20–30 წთ Zone 2</div><div class="t-desc">ლაპარაკი შეგიძლია — სწორი ტემპია. BDNF იზრდება.</div></div><span class="t-tag tag-g">სხეული</span></div>
+    <div class="time-row"><div class="t-time">07:50</div><div><div class="t-title">🚿 შხაპი — ბოლო 30 წამი ცივი</div><div class="t-desc">ნოეპინეფრინი +300%. ტვინი სრულად გაიღვიძებს.</div></div><span class="t-tag tag-a">ნეირო</span></div>
+    <div class="time-row"><div class="t-time">08:20</div><div><div class="t-title">☕ საუზმე + ყავა</div><div class="t-desc">ყავა 90 წთ გაღვიძებიდან — ადენოზინი გაიწმინდება.</div></div><span class="t-tag tag-g">კვება</span></div>
+    <div class="time-row"><div class="t-time">08:40</div><div><div class="t-title">🧘 მედიტაცია + აფირმ. — 15 წთ</div><div class="t-desc">10 წთ სუნთქვა, 5 წთ — სარკის წინ.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">08:55</div><div><div class="t-title">⚙️ Setup Ritual — 5 წთ</div><div class="t-desc">მაგიდა, წყალი, ტელ. პირქვე, გეგმა ქაღალდზე.</div></div><span class="t-tag tag-b">გონება</span></div>
   </div>
 
   <div class="block-head">📚 სწავლა #1 — 09:00–12:30</div>
   <div class="card" style="padding:0 0.75rem;">
-    <div class="time-row"><div class="t-time">09:00</div><div><div class="t-title">📖 First Aid — ახალი სექცია (90 წთ)</div><div class="t-desc">0 შეფერხება. ჩაიწერე: გავიარე, გაიგე, სუსტი ადგილი.</div></div><span class="t-tag tag-a">სწავლა</span></div>
-    <div class="time-row"><div class="t-time">10:30</div><div><div class="t-title">⏸ პაუზა — 20 წთ სეირნობა</div><div class="t-desc">ტელეფონი — არა. Panoramic Vision.</div></div><span class="t-tag tag-b">დასვ.</span></div>
-    <div class="time-row"><div class="t-time">10:50</div><div><div class="t-title">❓ UWorld — 40 კითხვა</div><div class="t-desc">ყოველი შეცდომა — სრული ახსნა. სიღრმე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
+    <div class="time-row"><div class="t-time">09:00</div><div><div class="t-title">📖 სწავლა — ღრმა ბლოკი (90 წთ)</div><div class="t-desc">0 შეფერხება. ჩეკლისტი, მიზანი, სიღრმე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
+    <div class="time-row"><div class="t-time">10:30</div><div><div class="t-title">⏸ პაუზა — 20 წთ სეირნობა</div><div class="t-desc">ტელეფონი — არა. Panoramic Vision. ტვინი ამუშავებს.</div></div><span class="t-tag tag-b">დასვ.</span></div>
+    <div class="time-row"><div class="t-time">10:50</div><div><div class="t-title">📝 სწავლა — პრაქტიკა + გამეორება (90 წთ)</div><div class="t-desc">ყოველი სუსტი ადგილი — ჩაიწერე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
   </div>
 
-  <div class="block-head">🍽 შუადღე — 12:30–14:30</div>
+  <div class="block-head">🌿 შუადღე — 12:30–14:30</div>
   <div class="card" style="padding:0 0.75rem;">
-    <div class="time-row"><div class="t-time">12:30</div><div><div class="t-title">😴 NSDR — 20 წთ</div><div class="t-desc">Circadian dip. დოპამინი +65%.</div></div><span class="t-tag tag-a">ნეირო</span></div>
-    <div class="time-row"><div class="t-time">12:50</div><div><div class="t-title">🥗 ლანჩი — თევზი + ბოსტნეული</div><div class="t-desc">ჭარბი ნახშირწყლები — არა.</div></div><span class="t-tag tag-g">კვება</span></div>
+    <div class="time-row"><div class="t-time">12:30</div><div><div class="t-title">😴 NSDR — 20 წთ</div><div class="t-desc">Circadian dip. დოპამინი +65%. ტვინი ახლა ამაგრებს ინფო.</div></div><span class="t-tag tag-a">ნეირო</span></div>
+    <div class="time-row"><div class="t-time">12:50</div><div><div class="t-title">🍽 ლანჩი + სეირნობა</div><div class="t-desc">ჭამის შემდეგ 10 წთ სეირნობა — გლუკოზის კონტროლი.</div></div><span class="t-tag tag-g">კვება</span></div>
   </div>
 
   <div class="block-head">📚 სწავლა #2 — 14:30–18:00</div>
   <div class="card" style="padding:0 0.75rem;">
-    <div class="time-row"><div class="t-time">14:30</div><div><div class="t-title">📖 First Aid გამეორება / Pathoma (90 წთ)</div><div class="t-desc">სისუსტეების სია — ჩაიწერე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
-    <div class="time-row"><div class="t-time">16:20</div><div><div class="t-title">❓ UWorld — კიდევ 20 კითხვა</div><div class="t-desc">სულ 60/დღე. 3 თვეში 5400+ კითხვა.</div></div><span class="t-tag tag-a">სწავლა</span></div>
+    <div class="time-row"><div class="t-time">14:30</div><div><div class="t-title">📖 სწავლა — ახალი მასალა (90 წთ)</div><div class="t-desc">სისუსტეების სია — ჩაიწერე. კონცენტრაცია.</div></div><span class="t-tag tag-a">სწავლა</span></div>
+    <div class="time-row"><div class="t-time">16:00</div><div><div class="t-title">⏸ პაუზა — 15 წთ</div><div class="t-desc">გარეთ ან წყალი. ტელეფონი — გვერდზე.</div></div><span class="t-tag tag-b">დასვ.</span></div>
+    <div class="time-row"><div class="t-time">16:15</div><div><div class="t-title">📝 გამეორება + კონსოლიდაცია (90 წთ)</div><div class="t-desc">Active Recall. Spaced Repetition. სიღრმე.</div></div><span class="t-tag tag-a">სწავლა</span></div>
   </div>
 
   <div class="block-head">🌆 საღამო — 18:00–22:00</div>
   <div class="card" style="padding:0 0.75rem;">
-    <div class="time-row"><div class="t-time">18:00</div><div><div class="t-title">🍽 ვახშამი — ნახ. + ცილა</div><div class="t-desc">ნახ-ები საღ → სეროტონინი → ძილი.</div></div><span class="t-tag tag-g">კვება</span></div>
-    <div class="time-row"><div class="t-time">19:00</div><div><div class="t-title">📺 Sketchy Passive ან Zone 2</div><div class="t-desc">Micro/Pharm ვიდეო ან 30 წთ სეირნობა.</div></div><span class="t-tag tag-a">სწავლა</span></div>
-    <div class="time-row"><div class="t-time">20:00</div><div><div class="t-title">📵 ციფრული დეტოქსი</div><div class="t-desc">Hard Cutoff. ყველაფერი იხურება.</div></div><span class="t-tag tag-b">გონება</span></div>
-    <div class="time-row"><div class="t-time">21:00</div><div><div class="t-title">✍️ დღიური — 5 წთ</div><div class="t-desc">3 გამარჯვება · 3 პრიორიტეტი · განსხვ?</div></div><span class="t-tag tag-b">გონება</span></div>
-    <div class="time-row"><div class="t-time">22:00</div><div><div class="t-title">💤 ძილი — 18°C, სიბნელე</div><div class="t-desc">გლიმფური სისტემა. ტვინი ირეცხება.</div></div><span class="t-tag tag-b">ძილი</span></div>
+    <div class="time-row"><div class="t-time">18:00</div><div><div class="t-title">🍽 ვახშამი + სეირნობა</div><div class="t-desc">ჭამის შემდეგ 10 წთ სეირნობა.</div></div><span class="t-tag tag-g">კვება</span></div>
+    <div class="time-row"><div class="t-time">19:00</div><div><div class="t-title">🇬🇧 ინგლისური — 45 წთ</div><div class="t-desc">Podcast / ვიდეო მოსმენა + 10 ახალი სიტყვა. აქტიური ჩანაწერი.</div></div><span class="t-tag tag-a">ინგლ.</span></div>
+    <div class="time-row"><div class="t-time">19:45</div><div><div class="t-title">📺 Passive სწავლა ან Zone 2</div><div class="t-desc">ვიდეო/Podcast ან 30 წთ სეირნობა — ყვედრება არ არის.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">20:00</div><div><div class="t-title">📵 ციფრული დეტოქსი</div><div class="t-desc">Hard Cutoff. ყველა სოც.მედია + ტელეფონი იხურება.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">21:00</div><div><div class="t-title">✍️ დღიური + მენტ. ჯანმ. — 15 წთ</div><div class="t-desc">განწყობა · სტრესი · მადლიერება · Reframing.</div></div><span class="t-tag tag-b">გონება</span></div>
+    <div class="time-row"><div class="t-time">22:00</div><div><div class="t-title">💤 ძილი — 18°C, სრული სიბნელე</div><div class="t-desc">გლიმფური სისტემა. ტვინი ირეცხება. ხვალი იწყება.</div></div><span class="t-tag tag-b">ძილი</span></div>
   </div>
 </div>
 
 <!-- AFFIRMATIONS -->
 <div id="tab-affirm" class="section">
   <div class="hero">
-    <div class="hero-eyebrow">ყოველდღე — 08:35</div>
+    <div class="hero-eyebrow">ყოველდღე — 08:40</div>
     <h1>აფირმაციები</h1>
     <p>ხმამაღლა, სარკის წინ, 5 წუთი.</p>
   </div>
@@ -583,10 +370,11 @@ main {
 <!-- JOURNAL -->
 <div id="tab-journal" class="section">
   <div class="hero">
-    <div class="hero-eyebrow">ყოველ საღამოს</div>
+    <div class="hero-eyebrow">ყოველ საღამოს — 21:00</div>
     <h1>დღიური</h1>
-    <p>5 წუთი. გულწრფელად.</p>
+    <p>ჩანაწერი + მენტალური ჯანმრთელობა</p>
   </div>
+
   <div class="card">
     <div class="journal-nav">
       <button onclick="jNav(-1)">←</button>
@@ -596,15 +384,70 @@ main {
       <div class="journal-date-small" id="j-date-small"></div>
       <button onclick="jNav(1)">→</button>
     </div>
-    <textarea class="journal-area" id="j-area" placeholder="დღეს..." oninput="jSave()"></textarea>
-    <div class="journal-prompts">
-      <span class="prompt-pill">3 გამარჯვება</span>
-      <span class="prompt-pill">ხვალის 3 პრიორიტეტი</span>
-      <span class="prompt-pill">რა გავაკეთებდი სხვაგვარად?</span>
+
+    <!-- MOOD + STRESS -->
+    <div style="margin-bottom:1rem;">
+      <div class="mood-section">
+        <div class="mood-label-row">
+          <span class="mood-name">😊 განწყობა</span>
+          <span class="mood-val" id="mood-val">5</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider" oninput="onSlider('mood')">
+      </div>
+      <div class="mood-section" style="margin-top:0.75rem;">
+        <div class="mood-label-row">
+          <span class="mood-name">😤 სტრესი</span>
+          <span class="mood-val" id="stress-val">5</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" class="mood-slider" id="stress-slider" oninput="onSlider('stress')">
+      </div>
     </div>
+
+    <!-- FEAR -->
+    <div style="margin-bottom:1rem;">
+      <label class="mh-label">😨 რისი მეშინია დღეს?</label>
+      <textarea class="mh-textarea" id="j-fear" placeholder="..." oninput="jSave()"></textarea>
+    </div>
+
+    <!-- COGNITIVE REFRAMING -->
+    <div style="margin-bottom:1rem;">
+      <label class="mh-label">🔄 Cognitive Reframing</label>
+      <input class="mh-input" id="j-neg" placeholder="ნეგატიური აზრი..." oninput="jSave()" style="margin-bottom:0.4rem;">
+      <input class="mh-input" id="j-pos" placeholder="→ გადაწერე პოზიტიურად..." oninput="jSave()">
+    </div>
+
+    <!-- GRATITUDE -->
+    <div style="margin-bottom:1rem;">
+      <label class="mh-label">🙏 3 მადლიერება</label>
+      <div class="gratitude-row">
+        <input class="mh-input" id="j-g1" placeholder="1. რისი მადლიერი ვარ..." oninput="jSave()">
+        <input class="mh-input" id="j-g2" placeholder="2. ..." oninput="jSave()">
+        <input class="mh-input" id="j-g3" placeholder="3. ..." oninput="jSave()">
+      </div>
+    </div>
+
+    <!-- JOURNAL TEXT -->
+    <div style="margin-bottom:0.75rem;">
+      <label class="mh-label">✍️ დღიური</label>
+      <textarea class="journal-area" id="j-area" placeholder="დღეს..." oninput="jSave()"></textarea>
+      <div class="journal-prompts" style="margin-top:0.5rem;">
+        <span class="prompt-pill">3 გამარჯვება</span>
+        <span class="prompt-pill">ხვალის 3 პრიორიტეტი</span>
+        <span class="prompt-pill">რა გავაკეთებდი სხვაგვარად?</span>
+      </div>
+    </div>
+
+    <button class="btn btn-main" onclick="jSave()" style="width:100%;">💾 შენახვა</button>
   </div>
 
-  <div style="margin-top:1rem;">
+  <!-- AVERAGES -->
+  <div class="card">
+    <div class="card-label"><span class="cl-icon">📊</span>საშუალო ქულები</div>
+    <div id="avg-display"></div>
+  </div>
+
+  <!-- JOURNAL LIST -->
+  <div style="margin-top:0.5rem;">
     <div class="card-label" style="margin-bottom:0.75rem;padding:0 0.1rem;"><span class="cl-icon">📋</span>ყველა ჩანაწერი</div>
     <div id="j-list"></div>
   </div>
@@ -624,16 +467,6 @@ main {
   </div>
 
   <div class="card">
-    <div class="card-label"><span class="cl-icon">📈</span>USMLE პროგრესი</div>
-    <div id="usmle-prog"></div>
-    <div style="margin-top:0.5rem;">
-      <div style="font-size:0.75rem;color:var(--text2);">UWorld სიზუსტე (%)</div>
-      <input type="number" id="uw-inp" placeholder="მაგ: 62" min="0" max="100" class="uw-input"
-        oninput="setState({uwAcc:parseInt(this.value)||0});renderUsmleProgress()">
-    </div>
-  </div>
-
-  <div class="card">
     <div class="card-label"><span class="cl-icon">📅</span>კვირის ჩეკლისტი — <span id="wk-label" style="color:var(--primary);font-size:0.75rem;text-transform:none;letter-spacing:0;font-weight:400;margin-left:0.3rem;"></span></div>
     <div class="week-grid-wrap">
       <div class="week-header" id="wh"></div>
@@ -649,86 +482,43 @@ main {
   </div>
 </div>
 
-<!-- USMLE -->
-<div id="tab-usmle" class="section">
-  <div class="hero">
-    <div class="hero-eyebrow">Step 1 სტრატეგია</div>
-    <h1>USMLE გეგმა</h1>
-    <p>First Aid + UWorld — ყოველ დღე</p>
-  </div>
-
-  <div class="block-head">📚 მასალები</div>
-  <div class="material-card"><div class="mat-icon" style="background:var(--amber-dim);">📖</div><div class="mat-body"><div class="mat-title">First Aid</div><div class="mat-desc">ბაზა. ყოველი გვერდი → ჩანაწერი. მინ. 2 სრული გავლა.</div></div><span class="mat-badge" style="background:var(--amber-dim);color:var(--amber);">🥇 პირველი</span></div>
-  <div class="material-card"><div class="mat-icon" style="background:var(--blue-dim);">❓</div><div class="mat-body"><div class="mat-title">UWorld</div><div class="mat-desc">60 კითხვა/დღე. ყოველი შეცდომა → სრული ახსნა. 65%+ = მზადა.</div></div><span class="mat-badge" style="background:var(--blue-dim);color:var(--blue);">🥇 ყოველდღე</span></div>
-  <div class="material-card"><div class="mat-icon" style="background:var(--primary-dim);">🎨</div><div class="mat-body"><div class="mat-title">Sketchy — Micro + Pharm</div><div class="mat-desc">ვიზუალური მეხსიერება. Pathology → Pathoma.</div></div><span class="mat-badge" style="background:var(--primary-dim);color:var(--primary);">🥈 დამხმარე</span></div>
-
-  <div class="block-head">🎯 Target Scores</div>
-  <div class="card">
-    <div class="card-label"><span class="cl-icon">📊</span>UWorld სიზუსტე</div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">თვე 1</span><span class="prog-val">40–50%</span></div><div class="prog-bar"><div class="prog-fill" style="width:45%;background:var(--red)"></div></div></div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">თვე 2</span><span class="prog-val">55–65%</span></div><div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--amber)"></div></div></div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">თვე 3</span><span class="prog-val">65%+</span></div><div class="prog-bar"><div class="prog-fill" style="width:80%;background:var(--primary)"></div></div></div>
-  </div>
-  <div class="card">
-    <div class="card-label"><span class="cl-icon">📋</span>NBME Score</div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">Baseline</span><span class="prog-val">—</span></div><div class="prog-bar"><div class="prog-fill" style="width:25%;background:var(--text3)"></div></div></div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">თვე 2</span><span class="prog-val">210+</span></div><div class="prog-bar"><div class="prog-fill" style="width:55%;background:var(--amber)"></div></div></div>
-    <div class="prog-wrap"><div class="prog-head"><span class="prog-name">თვე 3</span><span class="prog-val">230+</span></div><div class="prog-bar"><div class="prog-fill" style="width:80%;background:var(--primary)"></div></div></div>
-  </div>
-</div>
-
-<!-- MORE: Nutrition + Rules + Plan in one tab -->
+<!-- MORE: Rules + Plan + Supplements -->
 <div id="tab-more" class="section">
-  
-  <!-- NUTRITION -->
+
+  <!-- PLAN -->
   <div class="hero">
-    <div class="hero-eyebrow">კვება + დანამატები</div>
-    <h1>ტვინის კვება</h1>
-    <p>ნაკლები, მაგრამ სწორი</p>
+    <div class="hero-eyebrow">8 ივნისი → 4 ივლისი</div>
+    <h1>გეგმა</h1>
+    <p>27 დღე. ყველაფერი ეხლა.</p>
   </div>
 
-  <div class="card">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-      <div>
-        <div style="font-size:0.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;">🌅 საუზმე</div>
-        <div style="display:flex;flex-direction:column;gap:0.35rem;">
-          <span style="font-size:0.8rem;color:var(--text2);">🥚 კვერცხი ×3–4</span>
-          <span style="font-size:0.8rem;color:var(--text2);">🥑 ავოკადო</span>
-          <span style="font-size:0.8rem;color:var(--text2);">🫐 მოცვი</span>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:0.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;">☀️ ლანჩი</div>
-        <div style="display:flex;flex-direction:column;gap:0.35rem;">
-          <span style="font-size:0.8rem;color:var(--text2);">🐟 თევზი/ქათამი</span>
-          <span style="font-size:0.8rem;color:var(--text2);">🥦 ბოსტნეული</span>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:0.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;">🌆 ვახშამი</div>
-        <div style="display:flex;flex-direction:column;gap:0.35rem;">
-          <span style="font-size:0.8rem;color:var(--text2);">🍚 ბრინჯი/კარტოფ.</span>
-          <span style="font-size:0.8rem;color:var(--text2);">🐔 ქათამი</span>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:0.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;">🔄 ყოველ დღე</div>
-        <div style="display:flex;flex-direction:column;gap:0.35rem;">
-          <span style="font-size:0.8rem;color:var(--text2);">🍫 მუქი შოკ. 85%+</span>
-          <span style="font-size:0.8rem;color:var(--text2);">💧 2+ ლ წყალი</span>
-        </div>
-      </div>
-    </div>
+  <div style="border-left:2px solid var(--primary);padding:0.7rem 1rem;background:var(--primary-dim2);border-radius:0 8px 8px 0;margin-bottom:1.25rem;font-size:0.82rem;color:var(--text2);font-style:italic;line-height:1.6;">
+    "ყველა ჩვევა ერთდროულად = წარუმატებლობა. 1 ჩვევა × 21 დღე = ავტომატიზმი."
   </div>
 
-  <div class="block-head">💊 დანამატები</div>
-  <div class="supp-list">
-    <div class="supp"><div class="supp-n">🐟 ომეგა-3 (DHA/EPA)</div><div class="supp-right"><span class="supp-d">1–2 გ</span><span class="supp-w">დილა</span></div></div>
-    <div class="supp"><div class="supp-n">🌙 მაგნიუმი L-Threonate</div><div class="supp-right"><span class="supp-d">300 მგ</span><span class="supp-w">ღამე</span></div></div>
-    <div class="supp"><div class="supp-n">☀️ ვიტამინი D3+K2</div><div class="supp-right"><span class="supp-d">2000 IU</span><span class="supp-w">დილა</span></div></div>
-    <div class="supp"><div class="supp-n">⚡ კრეატინი</div><div class="supp-right"><span class="supp-d">3–5 გ</span><span class="supp-w">ნებისმიერ დ.</span></div></div>
-    <div class="supp"><div class="supp-n">☕ L-Theanine</div><div class="supp-right"><span class="supp-d">200 მგ</span><span class="supp-w">ყავასთან</span></div></div>
-  </div>
+  <div class="month-head"><div class="m-dot" style="background:var(--primary)"></div>კვ.1 — 8–14 ივნისი · საძირკველი</div>
+  <div class="week-plan-row"><div class="wp-cells">
+    <div class="wp-cell"><strong>ჩვევები</strong>გაღვიძება 07:00 · წყალი · მზე · სირბილი · ძილი 22:00</div>
+    <div class="wp-cell"><strong>სწავლა</strong>ახალი ბლოკი დილით · გამეორება შუადღეს · 4×90 წთ</div>
+  </div></div>
+
+  <div class="month-head"><div class="m-dot" style="background:var(--amber)"></div>კვ.2 — 15–21 ივნისი · სიღრმე</div>
+  <div class="week-plan-row"><div class="wp-cells">
+    <div class="wp-cell"><strong>+ დღიური</strong>მენტ. ჯანმ. ყოველ საღამოს 21:00</div>
+    <div class="wp-cell"><strong>+ ინგლ.</strong>45 წთ/დღე. Podcast + სიტყვები</div>
+  </div></div>
+
+  <div class="month-head"><div class="m-dot" style="background:var(--amber)"></div>კვ.3 — 22–28 ივნისი · სიმყარე</div>
+  <div class="week-plan-row"><div class="wp-cells">
+    <div class="wp-cell"><strong>+ NSDR</strong>NSDR 20 წთ ყოველ შუადღეს</div>
+    <div class="wp-cell"><strong>+ დეტოქსი</strong>20:00 Hard Cutoff — გამონაკლისი არ არის</div>
+  </div></div>
+
+  <div class="month-head"><div class="m-dot" style="background:var(--red)"></div>კვ.4 — 29 ივნ–4 ივლ · სრული სისტემა</div>
+  <div class="week-plan-row"><div class="wp-cells">
+    <div class="wp-cell"><strong>სრული</strong>ყველა ბლოკი სტაბილურად. არ გამოტოვო.</div>
+    <div class="wp-cell"><strong>შეფასება</strong>კვირის მიმოხილვა · მომავლის გეგმა</div>
+  </div></div>
 
   <!-- RULES -->
   <div class="hero" style="margin-top:2rem;">
@@ -740,50 +530,34 @@ main {
   <div class="block-head">⛔ აბსოლუტური აკრძალვები</div>
   <div class="rule no"><div class="rule-icon">📱</div><div class="rule-body"><strong>სოც. მედია — წაშლილია</strong><span>Telegram/WhatsApp — მხოლოდ 19:00–20:00.</span></div></div>
   <div class="rule no"><div class="rule-icon">📺</div><div class="rule-body"><strong>Shorts / Reels / TikTok — სრულად</strong><span>დოპამინის ყველაზე სწრაფი დამანგრეველი.</span></div></div>
-  <div class="rule no"><div class="rule-icon">☕</div><div class="rule-body"><strong>ყავა 90 წუთამდე</strong><span>ადენოზინი ვერ გაიწმინდა = შუადღის კრახი.</span></div></div>
-  <div class="rule no"><div class="rule-icon">🍭</div><div class="rule-body"><strong>ჭარბი შაქარი</strong><span>სწრაფი დოპამინი → კრახი → ფოკუსი ნულზე.</span></div></div>
+  <div class="rule no"><div class="rule-icon">☕</div><div class="rule-body"><strong>ყავა 90 წუთამდე გაღვიძებიდან</strong><span>ადენოზინი ვერ გაიწმინდა = შუადღის კრახი.</span></div></div>
   <div class="rule no"><div class="rule-icon">📱</div><div class="rule-body"><strong>ტელეფონი 20:00 შემდეგ</strong><span>მელატონინი ბლოკირდება. ძილი ნადგურდება.</span></div></div>
 
   <div class="block-head">✅ სავალდებულო</div>
   <div class="rule yes"><div class="rule-icon">💧</div><div class="rule-body"><strong>2+ ლ წყალი</strong><span>გაღვიძებისთანავე.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">🏃</div><div class="rule-body"><strong>სირბილი — მინ. 20 წთ</strong><span>არარსებული ამინდი არ მიიღება.</span></div></div>
+  <div class="rule yes"><div class="rule-icon">🏃</div><div class="rule-body"><strong>სირბილი — მინ. 20 წთ Zone 2</strong><span>ყოველ დღე. არარსებული ამინდი არ მიიღება.</span></div></div>
   <div class="rule yes"><div class="rule-icon">💤</div><div class="rule-body"><strong>ძილი — 7+ საათი, ერთ დროს</strong><span>კვირაშიც. ყველაზე მნიშვნელოვანი ფაქტორი.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">✍️</div><div class="rule-body"><strong>დღიური — ყოველ საღამოს</strong><span>3 წინადადება კმარა.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">🔄</div><div class="rule-body"><strong>კვირის მიმოხილვა — კვირა</strong><span>20 წთ. სისტემა ადაპტირდება ან კვდება.</span></div></div>
+  <div class="rule yes"><div class="rule-icon">✍️</div><div class="rule-body"><strong>დღიური — ყოველ საღამოს 21:00</strong><span>3 წინადადება კმარა. მაგრამ ყოველ დღე.</span></div></div>
+  <div class="rule yes"><div class="rule-icon">🇬🇧</div><div class="rule-body"><strong>ინგლისური — 45 წთ საღამოს</strong><span>Podcast + სიტყვები. ყოველ დღე.</span></div></div>
 
   <div class="block-head">⚠️ Never Miss Twice</div>
   <div class="rule warn"><div class="rule-icon">1️⃣</div><div class="rule-body"><strong>ერთხელ გამოტოვე → ნორმაა</strong><span>ეს ადამიანია.</span></div></div>
   <div class="rule warn"><div class="rule-icon">2️⃣</div><div class="rule-body"><strong>ორჯერ → საშიშია</strong><span>გამოტოვების ჩვევა ყალიბდება.</span></div></div>
   <div class="rule no"><div class="rule-icon">3️⃣</div><div class="rule-body"><strong>სამჯერ → სისტემა ირღვევა</strong><span>მიზეზი ჩაიწერე. მოხსენი. მიეყენე.</span></div></div>
 
-  <!-- 3-MONTH PLAN -->
+  <!-- SUPPLEMENTS -->
   <div class="hero" style="margin-top:2rem;">
-    <div class="hero-eyebrow">12 კვირა</div>
-    <h1>3-თვიანი გეგმა</h1>
-    <p>ნაბიჯ-ნაბიჯ.</p>
+    <div class="hero-eyebrow">ტვინის მხარდაჭერა</div>
+    <h1>დანამატები</h1>
+    <p>მეცნიერულად დასაბუთებული</p>
   </div>
-
-  <div style="border-left:2px solid var(--primary);padding:0.7rem 1rem;background:var(--primary-dim2);border-radius:0 8px 8px 0;margin-bottom:1.25rem;font-size:0.82rem;color:var(--text2);font-style:italic;line-height:1.6;">
-    "ყველა ჩვევა ერთდროულად = წარუმატებლობა. 1 ჩვევა × 21 დღე = ავტომატიზმი."
+  <div class="supp-list">
+    <div class="supp"><div class="supp-n">🐟 ომეგა-3 (DHA/EPA)</div><div class="supp-right"><span class="supp-d">1–2 გ</span><span class="supp-w">დილა</span></div></div>
+    <div class="supp"><div class="supp-n">🌙 მაგნიუმი L-Threonate</div><div class="supp-right"><span class="supp-d">300 მგ</span><span class="supp-w">ღამე</span></div></div>
+    <div class="supp"><div class="supp-n">☀️ ვიტამინი D3+K2</div><div class="supp-right"><span class="supp-d">2000 IU</span><span class="supp-w">დილა</span></div></div>
+    <div class="supp"><div class="supp-n">⚡ კრეატინი</div><div class="supp-right"><span class="supp-d">3–5 გ</span><span class="supp-w">ნებისმიერ დ.</span></div></div>
+    <div class="supp"><div class="supp-n">☕ L-Theanine</div><div class="supp-right"><span class="supp-d">200 მგ</span><span class="supp-w">ყავასთან</span></div></div>
   </div>
-
-  <div class="month-head"><div class="m-dot" style="background:var(--primary)"></div>თვე 1 — საძირკველი</div>
-  <div class="week-plan-row"><div class="wp-num">კვ.1</div><div class="wp-cells"><div class="wp-cell"><strong>ჩვევები</strong>გაღვიძება + მზე + წყალი + სირბილი + ძილი</div><div class="wp-cell"><strong>USMLE</strong>Biochemistry — First Aid + UWorld 20/დღე</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.2</div><div class="wp-cells"><div class="wp-cell"><strong>+ დღიური</strong>საღამოს 5 წთ ყოველ დღე</div><div class="wp-cell"><strong>Biochem ✓</strong>UWorld 40/დღე</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.3</div><div class="wp-cells"><div class="wp-cell"><strong>+ მედ/ცივი</strong>მედიტაცია + ცივი შხაპი</div><div class="wp-cell"><strong>Immunology</strong>UWorld 40/დღე</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.4</div><div class="wp-cells"><div class="wp-cell"><strong>+ NSDR/დეტ.</strong>NSDR 20 წთ + 20:00 Hard Cutoff</div><div class="wp-cell"><strong>Micro</strong>NBME Baseline</div></div></div>
-
-  <div class="month-head"><div class="m-dot" style="background:var(--amber)"></div>თვე 2 — ღრმა სამუშაო</div>
-  <div class="week-plan-row"><div class="wp-num">კვ.5</div><div class="wp-cells"><div class="wp-cell"><strong>Elite სრული</strong>ყველა ბლოკი სტაბ.</div><div class="wp-cell"><strong>Micro+Path</strong>Pathoma + UWorld 60/დღე</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.6</div><div class="wp-cells"><div class="wp-cell"><strong>Zone 2 ×4</strong>45 წთ კვირაში 4-ჯერ</div><div class="wp-cell"><strong>Pathology</strong>UWorld + NBME</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.7</div><div class="wp-cells"><div class="wp-cell"><strong>სრულ სიმ.</strong>Elite + Zone 2</div><div class="wp-cell"><strong>Pharmacology</strong>Sketchy + UWorld</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.8</div><div class="wp-cells"><div class="wp-cell"><strong>Elite სრ.</strong></div><div class="wp-cell"><strong>Physiology</strong>UWSA სიმულ.</div></div></div>
-
-  <div class="month-head"><div class="m-dot" style="background:var(--red)"></div>თვე 3 — ინტენსიური</div>
-  <div class="week-plan-row"><div class="wp-num">კვ.9</div><div class="wp-cells"><div class="wp-cell"><strong>Elite+Rest</strong>შაბათი — reduced</div><div class="wp-cell"><strong>Organ Sys.</strong>FA მე-2 გავლა</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.10</div><div class="wp-cells"><div class="wp-cell"><strong>Elite სრ.</strong></div><div class="wp-cell"><strong>FA გამეო.</strong>UWorld სისუსტ.</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.11</div><div class="wp-cells"><div class="wp-cell"><strong>Elite სრ.</strong></div><div class="wp-cell"><strong>High-Yield</strong>სისუსტ. დახ.</div></div></div>
-  <div class="week-plan-row"><div class="wp-num">კვ.12</div><div class="wp-cells"><div class="wp-cell"><strong>ძილი #1</strong>8 საათი — კომპ. არ არის</div><div class="wp-cell"><strong>NBME/UWSA</strong>230+ სიმულ.</div></div></div>
 
 </div>
 
@@ -806,9 +580,6 @@ main {
   <button class="bn-tab" onclick="showTab('tracker',this)">
     <span class="bn-icon">📊</span><span class="bn-label">ტრეკერი</span>
   </button>
-  <button class="bn-tab" onclick="showTab('usmle',this)">
-    <span class="bn-icon">🎯</span><span class="bn-label">USMLE</span>
-  </button>
   <button class="bn-tab" onclick="showTab('more',this)">
     <span class="bn-icon">⋯</span><span class="bn-label">სხვა</span>
   </button>
@@ -816,31 +587,33 @@ main {
 
 <script>
 const HABITS = [
-  {id:'water',  label:'💧 წყალი (500 მლ)'},
-  {id:'sun',    label:'☀️ მზის შუქი (10 წთ)'},
-  {id:'run',    label:'🏃 სირბილი (20+ წთ)'},
-  {id:'shower', label:'🚿 ცივი შხაპი'},
-  {id:'med',    label:'🧘 მედიტაცია + აფირმ.'},
-  {id:'uworld', label:'❓ UWorld (40+ კ.)'},
-  {id:'fa',     label:'📖 First Aid'},
-  {id:'nsdr',   label:'😴 NSDR (20 წთ)'},
-  {id:'detox',  label:'📵 დეტოქსი 20:00'},
-  {id:'journal',label:'✍️ დღიური'},
-  {id:'sleep',  label:'💤 ძილი 22:00-მდე'},
+  {id:'water',   label:'💧 წყალი (500 მლ)'},
+  {id:'sun',     label:'☀️ მზის შუქი (10 წთ)'},
+  {id:'run',     label:'🏃 სირბილი Zone 2'},
+  {id:'shower',  label:'🚿 ცივი შხაპი'},
+  {id:'med',     label:'🧘 მედიტაცია + აფირმ.'},
+  {id:'study1',  label:'📖 სწავლა #1 (90 წთ)'},
+  {id:'nsdr',    label:'😴 NSDR (20 წთ)'},
+  {id:'study2',  label:'📖 სწავლა #2 (90 წთ)'},
+  {id:'english', label:'🇬🇧 ინგლისური (45 წთ)'},
+  {id:'detox',   label:'📵 დეტოქსი 20:00'},
+  {id:'journal', label:'✍️ დღიური + მენტ.'},
+  {id:'sleep',   label:'💤 ძილი 22:00-მდე'},
 ];
 
 const AFFIRMS = [
   {text:"ჩემი ტვინი ყოველ დღე უფრო ძლიერი ხდება",sub:"BDNF იზრდება — ნეიროპლასტიკობა რეალობაა",when:"🌅 ყოველ დილა"},
-  {text:"მე ვარ სამედიცინო სტუდენტი, რომელიც USMLE-ს ჩააბარებს",sub:"ვინაობა → ქცევა. ეს ნეირომეცნიერებაა.",when:"🌅 სარკის წინ"},
+  {text:"მე ვარ ადამიანი, რომელიც ყოველ დღე იზრდება",sub:"ვინაობა → ქცევა. ეს ნეირომეცნიერებაა.",when:"🌅 სარკის წინ"},
   {text:"სირბილი ჩემს ტვინს BDNF-ით ავსებს",sub:"ფიზიკური ვარჯიში = ნეიროგენეზი ჰიპოკამპში",when:"🏃 სირბილამდე"},
   {text:"ძილი ჩემი ტვინის ყველაზე ძლიერი ინსტრუმენტია",sub:"გლიმფური სისტემა ამ დროს მუშაობს",when:"🌙 ძილის წინ"},
-  {text:"მე ვარ სისტემა — არა განწყობა",sub:"Discipline = Freedom.",when:"😔 მოტივაციის ვარდნისას"},
+  {text:"მე ვარ სისტემა — არა განწყობა",sub:"Discipline = Freedom. ემოცია გადის, ჩვევა რჩება.",when:"😔 მოტივაციის ვარდნისას"},
   {text:"ყოველი გამოტოვება ასწავლის, არა ანადგურებს",sub:"Never Miss Twice. ხვალ — სრულად.",when:"😟 გამოტოვების შემდეგ"},
-  {text:"UWorld-ის ყოველი შეცდომა ჩემი მასწავლებელია",sub:"Errors = Learning Opportunities",when:"📚 UWorld-ის შემდეგ"},
+  {text:"ინგლისური ყოველ დღე — ნეირონები მყარდება",sub:"Myelin გამოიმუშავება გამეორებით",when:"🇬🇧 ინგლისურამდე"},
   {text:"22 წლის ვარ. ყველა ცვლილება ახლა ხდება",sub:"ნეიროპლასტიკობა მაქსიმუმზეა 18–25 წლამდე",when:"🌅 ყოველ დილა"},
 ];
 
 const DAYS = ['ორ','სამ','ოთხ','ხუთ','პარ','შაბ','კვ'];
+const TARGET_DATE = new Date('2025-07-04T07:00:00');
 
 function getS() { try{return JSON.parse(localStorage.getItem('apex')||'{}')}catch{return{}} }
 function setState(d) { localStorage.setItem('apex',JSON.stringify({...getS(),...d})) }
@@ -851,7 +624,6 @@ function getWeekMonday(offset=0) {
   const m=new Date(d); m.setDate(diff); return m;
 }
 
-// Scroll to top on tab switch
 function showTab(id, btn) {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.bn-tab').forEach(t=>t.classList.remove('active'));
@@ -860,11 +632,29 @@ function showTab(id, btn) {
   document.getElementById('main-scroll').scrollTop=0;
 }
 
+// COUNTDOWN
+function renderCountdown() {
+  const now = new Date();
+  const diff = TARGET_DATE - now;
+  if(diff <= 0) {
+    document.getElementById('countdown-strip').innerHTML = '<div style="grid-column:1/-1;text-align:center;font-family:\'Instrument Serif\',serif;font-size:1.2rem;color:var(--primary2);">🎉 მიაღწიე!</div>';
+    return;
+  }
+  const days = Math.floor(diff/86400000);
+  const hours = Math.floor((diff%86400000)/3600000);
+  const mins = Math.floor((diff%3600000)/60000);
+  const secs = Math.floor((diff%60000)/1000);
+  document.getElementById('countdown-strip').innerHTML = `
+    <div class="cd-cell"><div class="cd-num">${days}</div><div class="cd-unit">დღე</div></div>
+    <div class="cd-cell"><div class="cd-num">${String(hours).padStart(2,'0')}</div><div class="cd-unit">საათი</div></div>
+    <div class="cd-cell"><div class="cd-num">${String(mins).padStart(2,'0')}</div><div class="cd-unit">წუთი</div></div>
+    <div class="cd-cell"><div class="cd-num">${String(secs).padStart(2,'0')}</div><div class="cd-unit">წამი</div></div>`;
+}
+
 // TODAY
 function initToday() {
   const h=new Date().getHours();
-  document.getElementById('greeting').textContent=
-    h<12?'გამარჯობა 🌅':h<17?'გამარჯობა ☀️':'გამარჯობა 🌙';
+  document.getElementById('greeting').textContent=h<12?'გამარჯობა 🌅':h<17?'გამარჯობა ☀️':'გამარჯობა 🌙';
   const days=['კვირა','ორშაბათი','სამშ.','ოთხშ.','ხუთშ.','პარასკ.','შაბათი'];
   const months=['იანვ','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
   const now=new Date();
@@ -877,6 +667,8 @@ function initToday() {
   document.getElementById('s-streak').textContent=(getS().streak||0);
   document.getElementById('top-day-badge').textContent='დღე '+day;
   buildChecklist(); updateScore(); showTodayAffirm();
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
 }
 
 function buildChecklist() {
@@ -905,7 +697,7 @@ function updateScore() {
   document.getElementById('s-score').textContent=Math.round(done/HABITS.length*100)+'%';
 }
 
-// TIMER — updated circumference for r=60
+// TIMER
 const C=2*Math.PI*60;
 let tDur=90*60,tRem=90*60,tRun=false,tInt=null,tName='ღრმა სამუშაო';
 function setT(m,name,btn) {
@@ -954,14 +746,21 @@ function initAffirms(){
   });
 }
 
-// JOURNAL
+// JOURNAL + MENTAL HEALTH
 let jDay=null;
 function initJournal(){
   const s=getS();if(!s.startDate)setState({startDate:todayKey()});
   const start=new Date(getS().startDate),today=new Date(todayKey());
   jDay=Math.floor((today-start)/86400000)+1;
-  renderJournal();renderJournalList();
+  renderJournal();renderJournalList();renderAverages();
 }
+
+function onSlider(type) {
+  const val = document.getElementById(type+'-slider').value;
+  document.getElementById(type+'-val').textContent = val;
+  jSave();
+}
+
 function renderJournal(){
   const s=getS(),start=new Date(getS().startDate||todayKey());
   const dateForDay=new Date(start.getTime()+(jDay-1)*86400000);
@@ -970,37 +769,99 @@ function renderJournal(){
   const months=['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
   document.getElementById('j-date-small').textContent=dateForDay.getDate()+' '+months[dateForDay.getMonth()];
   const journals=s.journals||{};
-  document.getElementById('j-area').value=journals[dk]||'';
+  const entry=journals[dk]||{};
+  // mood/stress sliders
+  const mood = entry.mood || 5;
+  const stress = entry.stress || 5;
+  document.getElementById('mood-slider').value = mood;
+  document.getElementById('mood-val').textContent = mood;
+  document.getElementById('stress-slider').value = stress;
+  document.getElementById('stress-val').textContent = stress;
+  // text fields
+  document.getElementById('j-fear').value = entry.fear||'';
+  document.getElementById('j-neg').value = entry.neg||'';
+  document.getElementById('j-pos').value = entry.pos||'';
+  document.getElementById('j-g1').value = entry.g1||'';
+  document.getElementById('j-g2').value = entry.g2||'';
+  document.getElementById('j-g3').value = entry.g3||'';
+  document.getElementById('j-area').value = entry.text||'';
 }
+
 function jNav(dir){
   const s=getS(),start=new Date(getS().startDate||todayKey()),today=new Date(todayKey());
   const maxDay=Math.floor((today-start)/86400000)+1;
   jDay=Math.max(1,Math.min(maxDay,jDay+dir));renderJournal();
 }
+
 function jSave(){
   const s=getS(),journals=s.journals||{};
   const start=new Date(getS().startDate||todayKey());
   const dateForDay=new Date(start.getTime()+(jDay-1)*86400000);
-  journals[dateForDay.toISOString().slice(0,10)]=document.getElementById('j-area').value;
-  setState({journals});renderJournalList();
+  const dk=dateForDay.toISOString().slice(0,10);
+  journals[dk]={
+    mood: parseInt(document.getElementById('mood-slider').value),
+    stress: parseInt(document.getElementById('stress-slider').value),
+    fear: document.getElementById('j-fear').value,
+    neg: document.getElementById('j-neg').value,
+    pos: document.getElementById('j-pos').value,
+    g1: document.getElementById('j-g1').value,
+    g2: document.getElementById('j-g2').value,
+    g3: document.getElementById('j-g3').value,
+    text: document.getElementById('j-area').value,
+  };
+  setState({journals});renderJournalList();renderAverages();
 }
+
+function renderAverages(){
+  const s=getS(),journals=s.journals||{};
+  const entries=Object.values(journals).filter(e=>e&&typeof e==='object');
+  if(!entries.length){
+    document.getElementById('avg-display').innerHTML='<div style="font-size:0.78rem;color:var(--text3);">ჯერ ჩანაწერი არ არის</div>';
+    return;
+  }
+  const avgMood=(entries.reduce((a,e)=>a+(e.mood||5),0)/entries.length).toFixed(1);
+  const avgStress=(entries.reduce((a,e)=>a+(e.stress||5),0)/entries.length).toFixed(1);
+  document.getElementById('avg-display').innerHTML=`
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <div class="avg-badge">
+        <span class="avg-badge-label">😊 განწყობა საშ.</span>
+        <span class="avg-badge-val">${avgMood}</span>
+      </div>
+      <div class="avg-badge">
+        <span class="avg-badge-label">😤 სტრესი საშ.</span>
+        <span class="avg-badge-val">${avgStress}</span>
+      </div>
+      <div class="avg-badge" style="background:var(--blue-dim);border-color:rgba(107,159,212,0.2);">
+        <span class="avg-badge-label" style="color:var(--text2);">📅 ჩანაწერები</span>
+        <span class="avg-badge-val" style="color:var(--blue);">${entries.length}</span>
+      </div>
+    </div>`;
+}
+
 function renderJournalList(){
   const s=getS(),journals=s.journals||{},start=new Date(getS().startDate||todayKey());
   const el=document.getElementById('j-list');el.innerHTML='';
   const months=['იან','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
-  const keys=Object.keys(journals).filter(k=>journals[k]).sort().reverse();
+  const keys=Object.keys(journals).filter(k=>{
+    const e=journals[k];
+    return e&&typeof e==='object'&&(e.text||e.fear||e.g1||e.neg);
+  }).sort().reverse();
   if(!keys.length){el.innerHTML='<div style="font-size:0.8rem;color:var(--text3);padding:0.5rem 0;">ჩანაწერი არ არის</div>';return;}
   keys.forEach(dk=>{
     const d=new Date(dk),dayNum=Math.floor((d-start)/86400000)+1;
-    const preview=journals[dk].slice(0,80)+(journals[dk].length>80?'...':'');
-    const div=document.createElement('div');
-    div.style.cssText='padding:0.75rem 0.9rem;border:1px solid var(--border);border-radius:10px;margin-bottom:0.4rem;cursor:pointer;background:var(--bg3);';
-    div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.25rem;">
+    const entry=journals[dk];
+    const preview=(entry.text||'').slice(0,60)+((entry.text||'').length>60?'...':'');
+    const div=document.createElement('div');div.className='j-entry';
+    div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
       <span style="font-size:0.78rem;font-weight:600;color:var(--primary);">დღე ${dayNum}</span>
-      <span style="font-size:0.7rem;color:var(--text3);">${d.getDate()} ${months[d.getMonth()]}</span>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        ${entry.mood?`<span style="font-size:0.68rem;color:var(--text3);">😊${entry.mood}</span>`:''}
+        ${entry.stress?`<span style="font-size:0.68rem;color:var(--text3);">😤${entry.stress}</span>`:''}
+        <span style="font-size:0.7rem;color:var(--text3);">${d.getDate()} ${months[d.getMonth()]}</span>
+      </div>
     </div>
-    <div style="font-size:0.76rem;color:var(--text2);line-height:1.5;">${preview}</div>`;
-    div.onclick=()=>{jDay=dayNum;renderJournal();document.getElementById('j-area').scrollIntoView({behavior:'smooth'});};
+    ${preview?`<div style="font-size:0.76rem;color:var(--text2);line-height:1.5;">${preview}</div>`:''}`;
+    div.onclick=()=>{jDay=dayNum;renderJournal();document.getElementById('main-scroll').scrollTop=0;};
     el.appendChild(div);
   });
 }
@@ -1032,14 +893,13 @@ function initTracker(){
     }
     wb.appendChild(row);
   });
-  renderWeekStats();renderUsmleProgress();
+  renderWeekStats();
   const rev=(s.reviews||{})[monday.toISOString().slice(0,10)]||{};
   document.getElementById('rv1').value=rev.q1||'';
   document.getElementById('rv2').value=rev.q2||'';
   document.getElementById('rv3').value=rev.q3||'';
-  const uwInp=document.getElementById('uw-inp');
-  if(uwInp)uwInp.value=s.uwAcc||'';
 }
+
 function renderWeekStats(){
   const s=getS(),monday=getWeekMonday();
   let done=0,possible=0;
@@ -1060,14 +920,7 @@ function renderWeekStats(){
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:var(--primary)"></div></div>
     </div>`;
 }
-function renderUsmleProgress(){
-  const s=getS(),uw=s.uwAcc||0;
-  document.getElementById('usmle-prog').innerHTML=`
-    <div class="prog-wrap">
-      <div class="prog-head"><span class="prog-name">UWorld სიზუსტე</span><span class="prog-val">${uw}%</span></div>
-      <div class="prog-bar"><div class="prog-fill" style="width:${Math.min(uw,100)}%;background:${uw>=65?'var(--primary)':uw>=50?'var(--amber)':'var(--red)'}"></div></div>
-    </div>`;
-}
+
 function saveReview(){
   const s=getS(),reviews=s.reviews||{},wk=getWeekMonday().toISOString().slice(0,10);
   reviews[wk]={q1:document.getElementById('rv1').value,q2:document.getElementById('rv2').value,q3:document.getElementById('rv3').value};
