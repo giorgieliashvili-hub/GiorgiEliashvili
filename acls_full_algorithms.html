@@ -1,0 +1,543 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{padding:0.5rem 0;font-family:var(--font-sans)}
+.tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:7px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:all .15s}
+.tab.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.pg{display:none}.pg.on{display:block}
+.tree{display:flex;flex-direction:column;gap:0}
+
+/* nodes */
+.nd{border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);padding:10px 14px;cursor:pointer;transition:all .15s;position:relative}
+.nd:hover{border-color:var(--color-border-secondary)}
+.nd.open{border-color:var(--color-border-info)}
+.nd-hd{display:flex;align-items:center;gap:8px}
+.nd-ico{font-size:13px;transition:transform .2s;flex-shrink:0;color:var(--color-text-tertiary)}
+.nd.open .nd-ico{transform:rotate(90deg)}
+.nd-title{font-size:14px;font-weight:500;color:var(--color-text-primary);flex:1}
+.badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0}
+.b-red{background:var(--color-background-danger);color:var(--color-text-danger)}
+.b-blue{background:var(--color-background-info);color:var(--color-text-info)}
+.b-grn{background:var(--color-background-success);color:var(--color-text-success)}
+.b-warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.b-grey{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.nd-body{display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary)}
+.nd.open .nd-body{display:block}
+
+/* children */
+.ch{display:flex;flex-direction:column;gap:0;margin-top:0}
+.ch-wrap{display:none;margin-left:20px;border-left:2px solid var(--color-border-tertiary);padding-left:12px;gap:0;display:flex;flex-direction:column}
+.ch-wrap.vis{display:flex}
+.connector{height:20px;display:flex;align-items:center;justify-content:flex-start;padding-left:2px}
+.connector-line{width:1px;height:100%;background:var(--color-border-tertiary);margin-left:0}
+
+/* content */
+.steps{display:flex;flex-direction:column;gap:6px}
+.step{display:flex;gap:10px;align-items:flex-start}
+.snum{min-width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.snum.r{background:var(--color-background-danger);color:var(--color-text-danger)}
+.snum.g{background:var(--color-background-success);color:var(--color-text-success)}
+.snum.w{background:var(--color-background-warning);color:var(--color-text-warning)}
+.stxt{font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.stxt strong{color:var(--color-text-primary);font-weight:500}
+.stxt em{color:var(--color-text-danger);font-style:normal;font-weight:500}
+
+/* drug table */
+.dtable{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.dtable th{text-align:left;color:var(--color-text-tertiary);font-weight:500;padding:4px 6px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.dtable td{padding:5px 6px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);vertical-align:top;line-height:1.5}
+.dtable td:first-child{font-weight:500;color:var(--color-text-primary);white-space:nowrap}
+.dtable td.dose{color:var(--color-text-danger);font-weight:500}
+.dtable tr:last-child td{border-bottom:none}
+
+/* alert box */
+.alert{border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;line-height:1.6;margin-top:8px}
+.alert.red{background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger)}
+.alert.blue{background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)}
+.alert.grn{background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+.alert.warn{background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)}
+.alert strong{font-weight:500}
+
+/* grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px}
+.gcard{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px}
+.gcard-label{font-size:11px;color:var(--color-text-tertiary);font-weight:500;margin-bottom:3px}
+.gcard-val{font-size:13px;color:var(--color-text-primary);font-weight:500;line-height:1.4}
+.gcard-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px;line-height:1.4}
+
+.spacer{height:6px}
+.row-nd{display:flex;gap:6px;margin-top:0}
+</style>
+
+<div class="app">
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden">ACLS Interactive Algorithms</h2>
+<div class="tabs">
+  <button class="tab on" onclick="sw('ca')">🫀 Cardiac Arrest</button>
+  <button class="tab" onclick="sw('brady')">🔽 Bradycardia</button>
+  <button class="tab" onclick="sw('tachy')">🔼 Tachycardia</button>
+  <button class="tab" onclick="sw('cardio')">⚡ Cardioversion</button>
+</div>
+
+<!-- ═══════════════ CARDIAC ARREST ═══════════════ -->
+<div class="pg on" id="pg-ca">
+<div class="tree">
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">პირველი ნაბიჯები — ყველა cardiac arrest-ზე</span><span class="badge b-grey">Universal</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">CPR დაიწყე — <strong>30:2</strong>, სიხშირე <strong>100–120/წთ</strong>, სიღრმე <strong>≥2 in / 5 სმ</strong> (მაქს. 2.4 in / 6 სმ). სრული recoil. CCF <strong>≥80%</strong>.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">მოनिtor/defibrillator მიაერთე. <strong>O₂</strong> მაქს. FiO₂. IV/IO access.</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">Rhythm check — <strong>≤10 წამი</strong>. Shockable (VF/pVT) თუ Non-shockable (PEA/Asystole)?</div></div>
+    </div>
+    <div class="g3" style="margin-top:10px">
+      <div class="gcard"><div class="gcard-label">CPR rate</div><div class="gcard-val">100–120/min</div></div>
+      <div class="gcard"><div class="gcard-label">Depth</div><div class="gcard-val">≥2 in / 5 cm</div><div class="gcard-sub">max 2.4 in / 6 cm</div></div>
+      <div class="gcard"><div class="gcard-label">CCF სამიზნე</div><div class="gcard-val">≥80%</div><div class="gcard-sub">min 60%</div></div>
+      <div class="gcard"><div class="gcard-label">პაუზა max</div><div class="gcard-val">≤10 წამი</div></div>
+      <div class="gcard"><div class="gcard-label">Compressor switch</div><div class="gcard-val">ყოველ 2 წუთში</div></div>
+      <div class="gcard"><div class="gcard-label">Vent. (adv. airway)</div><div class="gcard-val">10/min (ყოველ 6 წამ)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- SHOCKABLE -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">VF / Pulseless VT — Shockable</span><span class="badge b-red">⚡ Shock</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum r">1</div><div class="stxt"><strong>შოკი</strong> — ბიფაზური: 120–200 J; მონოფაზური: 360 J. მაშინვე CPR 2 წუთი. Compressor switches.</div></div>
+      <div class="step"><div class="snum r">2</div><div class="stxt">Rhythm check → ისევ VF/pVT? <strong>მეორე შოკი</strong>. შემდეგ → <strong>ეპინეფრინი 1 mg IV/IO</strong>. ყოველ 3–5 წუთში განმეორება.</div></div>
+      <div class="step"><div class="snum r">3</div><div class="stxt">CPR 2 წუთი. Advanced airway — ET tube ან Supraglottic. <strong>Waveform capnography</strong> სავალდებულო.</div></div>
+      <div class="step"><div class="snum r">4</div><div class="stxt">Rhythm check → ისევ VF/pVT? <strong>მე-3 შოკი</strong> → <strong>ამიოდარონი 300 mg IV/IO</strong> ან ლიდოკაინი 1–1.5 mg/kg.</div></div>
+      <div class="step"><div class="snum r">5</div><div class="stxt">2-წუთიანი ციკლები გაგრძელება. H's & T's. ETCO₂ მონიტორინგი. ROSC?</div></div>
+    </div>
+    <div class="alert blue" style="margin-top:10px"><strong>ETCO₂ სიგნალები:</strong> &lt;10 mmHg → CPR ხარისხი გაუმჯობესება · მოულოდნელი ↑ ≥40 mmHg → ROSC — პულსი შეამოწმე!</div>
+    <table class="dtable" style="margin-top:10px">
+      <tr><th>პრეპარატი</th><th>დოზა</th><th>დრო / შენიშვნა</th></tr>
+      <tr><td>ეპინეფრინი</td><td class="dose">1 mg IV/IO</td><td>მე-2 შოკის შემდეგ; ყოველ 3–5 წთ</td></tr>
+      <tr><td>ამიოდარონი</td><td class="dose">300 mg IV/IO bolus → 150 mg</td><td>მე-3 შოკის შემდეგ. Stable VT: 150 mg/10 წთ</td></tr>
+      <tr><td>ლიდოკაინი</td><td class="dose">1–1.5 mg/kg IV/IO</td><td>ამიოდ. ალტერნატივა; max 3 mg/kg</td></tr>
+      <tr><td>მაგნიუმი</td><td class="dose">1–2 g IV/IO</td><td>Torsades de pointes-ზე <em>ოღონდ</em></td></tr>
+    </table>
+    <div class="alert red" style="margin-top:8px"><strong>⚠ ამიოდარონი — Torsades de Pointes-ში კატეგორიულად აკრძალული</strong> — QT კიდევ ↑. იყენე: მაგნიუმი 1–2g.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- NON-SHOCKABLE -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">PEA / Asystole — Non-shockable</span><span class="badge b-warn">No Shock</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum w">1</div><div class="stxt">CPR გაგრძელება. <strong>ეპინეფრინი 1 mg IV/IO</strong> — რაც შეიძლება სწრაფად. განმეორება ყოველ 3–5 წუთში.</div></div>
+      <div class="step"><div class="snum w">2</div><div class="stxt">Advanced airway. ETCO₂ capnography. <strong>H's & T's</strong> — ყველა 10 მიზეზი განიხილე.</div></div>
+      <div class="step"><div class="snum w">3</div><div class="stxt">Rhythm check → ორგანიზებული რიტმი გამოჩნდა? → პულსი შეამოწმე → ROSC → post-arrest care.</div></div>
+      <div class="step"><div class="snum w">4</div><div class="stxt">ETCO₂ &lt;10 mmHg 20 წუთიანი CPR-ის შემდეგ + შექცევადი მიზეზი ვერ ნახე → გაჩერების განხილვა.</div></div>
+    </div>
+    <div class="alert warn" style="margin-top:10px"><strong>Asystole verification:</strong> ნამდვილი ასისტოლია? → Lead-ები, კავშირი, ძაბვა. Fine VF-ი შეიძლება ჰგავდეს ასისტოლიას.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- H's and T's -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">H's & T's — ყველა შექცევადი მიზეზი</span><span class="badge b-blue">PEA/Asystole</span></div>
+  <div class="nd-body">
+    <div class="g2">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:6px">H's</div>
+        <div class="steps">
+          <div class="step"><div class="snum" style="font-size:10px">H</div><div class="stxt"><strong>Hypovolemia</strong> — ყველაზე ხშირი. ვიწრო QRS PEA. სწრაფი IV ბოლუსი. ოკულტური სისხლდენა?</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">H</div><div class="stxt"><strong>Hypoxia</strong> — Airway + O₂ + ვენტილაცია. მე-2 ყველაზე ხშირი.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">H</div><div class="stxt"><strong>Hydrogen ion</strong> (Acidosis) — pH &lt;7.1: bicarb (ზოგ შემთხვ.), ვენტილ. ↑</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">H</div><div class="stxt"><strong>Hypo/Hyper-kalemia</strong> — HyperK: <em>Calcium chloride 1g IV</em>. ECG: peaked T → wide QRS → sine wave.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">H</div><div class="stxt"><strong>Hypothermia</strong> — &lt;30°C → VF. J-wave (Osborn). CPR + rewarming. "Warm and dead".</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:6px">T's</div>
+        <div class="steps">
+          <div class="step"><div class="snum" style="font-size:10px">T</div><div class="stxt"><strong>Tension PTX</strong> — Needle decomp. 2nd ICS MCL → chest tube. Ultrasound: lung sliding გაქრა.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">T</div><div class="stxt"><strong>Tamponade</strong> — Pericardiocentesis. Beck's triad. Ultrasound: RA/RV diastolic collapse.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">T</div><div class="stxt"><strong>Toxins</strong> — TCA → Bicarb; β-block/CCB → Ca, insulin; Opioid → Naloxone; LA → Lipid emulsion.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">T</div><div class="stxt"><strong>Thrombosis PE</strong> — Saddle PE → Alteplase 50 mg IV → CPR 60–90 წუთი. RV dilated echo.</div></div>
+          <div class="step"><div class="snum" style="font-size:10px">T</div><div class="stxt"><strong>Thrombosis Coronary</strong> — STEMI → ROSC → cath lab. VF-ის ყველაზე ხშირი მიზეზი.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- POST-ROSC -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Post-Cardiac Arrest Care — ROSC-ის შემდეგ</span><span class="badge b-grn">After ROSC</span></div>
+  <div class="nd-body">
+    <div class="g2">
+      <div class="gcard"><div class="gcard-label">SpO₂ სამიზნე</div><div class="gcard-val">92–98%</div><div class="gcard-sub">ჰიპეროქსია → ↑ ROS, vasoconstr.</div></div>
+      <div class="gcard"><div class="gcard-label">ETCO₂ სამიზნე</div><div class="gcard-val">35–45 mmHg</div><div class="gcard-sub">ჰიპერვენტ. → ↓ CBF</div></div>
+      <div class="gcard"><div class="gcard-label">SBP მინ.</div><div class="gcard-val">≥90 mmHg</div><div class="gcard-sub">MAP ≥65 mmHg</div></div>
+      <div class="gcard"><div class="gcard-label">TTM (კომა)</div><div class="gcard-val">32–36°C</div><div class="gcard-sub">24–48 სთ</div></div>
+      <div class="gcard"><div class="gcard-label">გლუკოზა</div><div class="gcard-val">&lt;180 mg/dL</div><div class="gcard-sub">ჰიპოგლიკ. — avoid!</div></div>
+      <div class="gcard"><div class="gcard-label">Neuro assessment</div><div class="gcard-val">≥72h post-normothermy</div></div>
+    </div>
+    <div class="steps" style="margin-top:10px">
+      <div class="step"><div class="snum g">!</div><div class="stxt">12-lead ECG <strong>მაშინვე</strong> → STEMI ან ეჭვობ კორონ. ოკლუზია → <strong>cath lab</strong>.</div></div>
+      <div class="step"><div class="snum g">!</div><div class="stxt">Vasopressors (norepinephrine/epinephrine) BP-ის შენარჩუნებისთვის.</div></div>
+      <div class="step"><div class="snum g">!</div><div class="stxt">IV fluids — euvolemia. Glucose control — insulin.</div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /tree -->
+</div>
+
+<!-- ═══════════════ BRADYCARDIA ═══════════════ -->
+<div class="pg" id="pg-brady">
+<div class="tree">
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">ბრადიკარდია — განმარტება და ფიზიოლოგია</span><span class="badge b-grey">HR &lt;60/min</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>ACLS-ში კლინიკურ. მნიშვნ. ≤50/min</strong> — CO = HR × SV. HR↓ → SV-ს კომპენს. ლიმიტია. &lt;30/min → CO სრულ. კოლაფსი.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt">სიმპტომები: ჰიპოტ., AMS, სინკ., ტკივილი, HF. <strong>სიმპტ. + ბრადი = ატროპინი → TCP → infusion.</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- AV BLOCKS -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">1st Degree AV Block — PR &gt;200 ms</span><span class="badge b-grn">უვნებელი</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>მექანიზმი:</strong> AV კვანძის გამტარობა შეფერხ., მაგ. ვერ ჩერდება. PR >200 ms, ყველა P →QRS.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>მიზეზები:</strong> ვაგოტონია, ჰიპოთიროზი, ამიოდ., ჰიპოK, ACS (ქვედა კედელი).</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>მართვა:</strong> No treatment. მხოლოდ მონიტ. <strong>კარდიოვ./ატრ. კონტრინდ.</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">2nd Degree Mobitz I — Wenckebach</span><span class="badge b-blue">AV კვანძი</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>მექანიზმი:</strong> AV კვანძი იღლება → PR ყოველ ციკლში ↑ → ერთი QRS ვარდება → კვანძი ისვენებს → repeat.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>ECG:</strong> PR პროგრ. გრძელდება → QRS drop → პაუზა → restart.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>მართვა სიმპტ.:</strong> <em>ატროპინი 1 mg IV</em> (მაქს 3 mg) — <strong>მუშაობს</strong>, ბლოკი AV კვანძ. დონეა, ვაგ. innervation კარგი.</div></div>
+    </div>
+    <div class="alert blue"><strong>გამოცდის ხაფანგი:</strong> Mobitz I — ატრ. მუშ.; Mobitz II — ატრ. ვერ მუშ.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">2nd Degree Mobitz II — Infranodal ⚠</span><span class="badge b-warn">TCP სავალდ.</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>მექანიზმი:</strong> ბლოკი His-ის ქვემოთ. ბოჭკო ან ატარებს ან სრულ. ბლოკ. → PR მუდმ., QRS მოულ. ვარდება.</div></div>
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>ECG:</strong> PR კონსტ. → QRS drop (მოულ.). QRS ხშ. ფართო (BBB). 2:1, 3:1 ვარიანტები.</div></div>
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>საფრთხე:</strong> სწრაფი პროგრ. 3rd degree → asystole-მდე, გაფრთ. გარეშე!</div></div>
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>მართვა:</strong> <em>TCP (Transcutaneous Pacing)</em> მაშინვე + მომზ. TVP (Transvenous Pacing).</div></div>
+    </div>
+    <div class="alert red"><strong>ატროპინი Mobitz II-ში:</strong> SA rate ↑ → ბლოკ. ქვევითაა → ვენტრ. კიდევ ნაკლ. imp. იღებ → გაუარ. 2:1→3:1. ატრ. <strong>ნუ იყენებ.</strong></div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">3rd Degree (Complete) AV Block ⚠⚠</span><span class="badge b-red">Emergency</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>მექანიზმი:</strong> P ↔ QRS სრულ. დისოციაცია. SA → ბლოკი → ვენტრ. escape pacemaker-ი ჩადგება.</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>Junctional escape</strong> (AV კვანძ. დონე) → <strong>ვიწრო QRS</strong>, HR 40–60/min — უფრო სტაბილ.</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>Ventricular escape</strong> (ინფრანოდ.) → <strong>ფართო QRS</strong>, HR 20–40/min — სახიფ., asystole-ს ახლ.</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>ECG:</strong> P-P მუდმ. · R-R მუდმ. · PR ყ. ციკლში სხვა (dissociation).</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>მართვა:</strong> TCP მაშინვე → TVP. ატროპინი ხშ. არარეფ. (ინფრ. ბლოკი — vagus ნაკლ. innervation).</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ALGORITHM -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">ბრადიკარდიის ალგორითმი — სრული</span><span class="badge b-blue">Algorithm</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt">O₂ (hypox-ზე), IV access, მონიტ., 12-lead ECG.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><strong>სიმპტომები ბრადიკარდიისგანაა?</strong> ჰიპოტ./AMS/შოკი/ტკივ./HF → სიმპტ. <strong>კი</strong> → ნ.3.</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><em>ატროპინი 1 mg IV</em>, ყოველ 3–5 წთ, მაქს <strong>3 mg</strong>. პირველი ფარმ. ყველაზე ხშ.</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">ატრ. ეფ. ვერა? → <strong>TCP</strong> (rate 60–80, mA-ი გაზარდე capture-მდე + 10 mA safety margin).</div></div>
+      <div class="step"><div class="snum">5</div><div class="stxt">ან: <strong>დოფამინი 5–20 mcg/kg/min</strong> ანდ <strong>ეპი 2–10 mcg/min</strong> infusion — TCP-ის bridge.</div></div>
+      <div class="step"><div class="snum">6</div><div class="stxt">Expert consultation → <strong>Transvenous Pacing</strong> — Mobitz II, 3rd degree.</div></div>
+    </div>
+    <table class="dtable" style="margin-top:10px">
+      <tr><th>პრეპარ.</th><th>დოზა</th><th>შენიშვნა</th></tr>
+      <tr><td>ატროპინი</td><td class="dose">1 mg IV q3–5 min; max 3 mg</td><td>1st line. &lt;0.5 mg → paradox brady ⚠</td></tr>
+      <tr><td>დოფამინი</td><td class="dose">5–20 mcg/kg/min infusion</td><td>2nd line. Low: ინოტ.; High: vasoc.</td></tr>
+      <tr><td>ეპინ. infusion</td><td class="dose">2–10 mcg/min infusion</td><td>ატრ. ვერ / TCP-ის bridge</td></tr>
+    </table>
+    <div class="alert red" style="margin-top:8px"><strong>ატრ. Mobitz II / 3rd degree-ში:</strong> ბლოკი ინფრანოდ. → vagus-ი იქ ნაკლ. → ატრ. ვერ. TCP + TVP.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">TCP — Electrical vs Mechanical Capture</span><span class="badge b-grey">Critical concept</span></div>
+  <div class="nd-body">
+    <div class="g2">
+      <div class="gcard"><div class="gcard-label">Electrical capture</div><div class="gcard-val">ECG-ზე ყ. spike-ს QRS მისდ.</div><div class="gcard-sub">სტიმული ვენტრ. მიდის</div></div>
+      <div class="gcard"><div class="gcard-label">Mechanical capture</div><div class="gcard-val">პულსი + BP ზომვადია</div><div class="gcard-sub">ვენტრ. შეიკუმშება !</div></div>
+    </div>
+    <div class="alert warn" style="margin-top:8px"><strong>შეიძლება electrical capture იყოს mechanical-ის გარეშე!</strong> ECG-ზე QRS ჩანს, მაგ. კარდიომიოც. ვერ შეიკუმშება (depressed myocardium). ყოველთვის BP + SpO₂ ტალღა შეამ.</div>
+    <div class="steps" style="margin-top:8px">
+      <div class="step"><div class="snum">!</div><div class="stxt">კაროტიდი ნუ შეამ. TCP-ის დროს — კუნთ. ათრთოლება = false pulse სიგნალი.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt">ცნობ. პაც. — სედ.: მიდაზ. + ფენტ. (etomidate — BP-ის ნაკლ. ეფ.)</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════════════ TACHYCARDIA ═══════════════ -->
+<div class="pg" id="pg-tachy">
+<div class="tree">
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">ტაქიკარდიის საფუძველი — CO და HR</span><span class="badge b-grey">Physiology</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>CO = HR × SV.</strong> HR↑↑↑ → diastolic filling time↓ → SV↓ → CO↓. HR &gt;150/min → ჰემოდინ. კომპ. ხშ.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>სინუსური ტაქი — ოდესმე არ ვმკ.!</strong> Compensatory tach + β-block → CO↓ → shock. მიზეზი: ცხ., ანემ., PE, სეფ., ჰიპოვ., ტკივ., ჰიპოთიროზი.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>Unstable:</strong> ჰიპოტ./AMS/შოკი/ტკივ./HF. → სინქრ. კარდიოვ. <strong>მაშინვე.</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- UNSTABLE -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">UNSTABLE — ყველა ტაქი + სიმპტომი</span><span class="badge b-red">⚡ IMMEDIATE</span></div>
+  <div class="nd-body">
+    <div class="alert red"><strong>Immediate Synchronized Cardioversion.</strong> 12-lead ECG-ს ნუ დაელოდები. სედ. სურვილ. მაგ. ნუ აჩერ.</div>
+    <table class="dtable" style="margin-top:10px">
+      <tr><th>რიტმი</th><th>ტიპი</th><th>ენერგია</th></tr>
+      <tr><td>AFib</td><td>სინქრ.</td><td class="dose">120–200 J biphasic</td></tr>
+      <tr><td>Atrial flutter / SVT</td><td>სინქრ.</td><td class="dose">50–100 J</td></tr>
+      <tr><td>Monomorphic VT (pulse)</td><td>სინქრ.</td><td class="dose">Device recommendation</td></tr>
+      <tr><td>Polymorphic VT</td><td>ასინქრ.!</td><td class="dose">Defib doses (120–200 J)</td></tr>
+      <tr><td>Ეჭვი mono vs poly</td><td>ასინქრ.!</td><td class="dose">Defib doses — ნუ დაელ.</td></tr>
+    </table>
+    <div class="steps" style="margin-top:10px">
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>Polymorphic VT = ვერ სინქრ.</strong> QRS ფ. არარ. → device-ი R ტ. ვ. პ. → unsynchronized.</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>Adenosine ვ.:</strong> Unstable SVT ან monomorph. wide-ზე — სედ. + კარდიოვ. პრიო. ადენ. მხ. bridge სახ.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- STABLE NARROW REGULAR -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Stable · Narrow QRS · Regular — SVT</span><span class="badge b-blue">Vagal → Adenosine</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt"><strong>Vagal maneuvers</strong> — Valsalva ≈25% success. Carotid sinus massage (bruit-ი? — ნუ!). Div Trendelenburg.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><strong>ადენოზინი 6 mg IV rapid push</strong> + 20 mL NS flush + ხელი ↑. ახ. ახ. ახ.ქ. antecubital ვ.</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt">ვ. converts 1–2 წთ → <strong>12 mg IV</strong> → ვ. კვლ. ვ. → <strong>12 mg IV</strong> (max 3 დოზ.).</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt"><strong>Converts</strong> → reentry SVT. Observe. Recurrence → Diltiazem ან Metoprolol IV.</div></div>
+      <div class="step"><div class="snum">5</div><div class="stxt"><strong>ვ. converts</strong> → Flutter/Ectopic AT/Junctional tach → Expert consultation.</div></div>
+    </div>
+    <div class="alert blue" style="margin-top:8px"><strong>Adenosine — Atrial Flutter-ს ვ. შლის!</strong> AV conduction-ს ანელ. → flutter waves გამოჩნდება (Dx მიზ.). ტერმინ. = კარდიოვ.</div>
+    <table class="dtable" style="margin-top:8px">
+      <tr><th>სიტუაცია</th><th>ადენოზინი</th></tr>
+      <tr><td>Theophylline/კოფეინი</td><td>მეტი დოზა საჭ.</td></tr>
+      <tr><td>Dipyridamole/Carbamazepine</td><td class="dose">3 mg-ით დაიწყე!</td></tr>
+      <tr><td>Transplanted heart</td><td class="dose">3 mg — ჰიპერმგრძ.!</td></tr>
+      <tr><td>Asthma / COPD</td><td class="dose">კონტრინდ. — ბრონქოსპ.!</td></tr>
+      <tr><td>WPW + AFib</td><td class="dose">სიკვდილი — ნუ!</td></tr>
+      <tr><td>Pregnancy</td><td>Safe</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- STABLE NARROW IRREGULAR -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Stable · Narrow QRS · Irregular — AFib</span><span class="badge b-blue">Rate control / Cardioversion</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt"><strong>Onset ≤48h?</strong> → cardioversion შეიძლება (თრომბი ჯ. ვ. ჩ.). → Pharmacol. ან ელ. კარდიოვ.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><strong>Onset &gt;48h ან unknown</strong> → <em>ანტიკოაგ. 3 კვ. ან TEE (thrombus exclude) → შემდ. კარდიოვ.</em></div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><strong>Rate control:</strong> Metoprolol IV / Diltiazem IV / Verapamil IV. HR სამ. &lt;110/min.</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt"><strong>WPW?</strong> ფართო QRS, არარ., HR &gt;200 → <em>კარდიოვ. მაშინვე</em>. AV ბლ. — სიკვდ.!</div></div>
+    </div>
+    <div class="alert red"><strong>⚠ AFib &gt;48h + Cardioversion without anticoag = Embolic Stroke risk.</strong> LA thrombus → კარდიოვ. → systemic embolus.</div>
+    <div class="alert warn" style="margin-top:6px"><strong>BB + CCB სერიულად ნუ:</strong> Actions overlap → profound bradycardia, complete heart block.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- STABLE WIDE REGULAR -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Stable · Wide QRS · Regular — VT vs SVT+Aberrancy</span><span class="badge b-warn">VT Until Proven Otherwise</span></div>
+  <div class="nd-body">
+    <div class="alert warn"><strong>"VT until proven otherwise"</strong> — especially if: underlying heart disease · age &gt;35 · AV dissociation · capture/fusion beats · QRS &gt;160ms.</div>
+    <div class="steps" style="margin-top:10px">
+      <div class="step"><div class="snum">1</div><div class="stxt"><strong>VT (სავარ.):</strong> <em>ამიოდარონი 150 mg IV 10 წთ-ში</em> → maintenance 1 mg/min × 6h → 0.5 mg/min × 18h.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><strong>SVT+Aberrancy ეჭვი (ახ., ჯანს.):</strong> <em>Adenosine 6 mg</em> — diagnostic + therapeutic. Defib ready!</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><strong>Procainamide</strong> 20–50 mg/min (max 17 mg/kg) — VT. Avoid: prolonged QT, CHF.</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt"><strong>Sotalol</strong> 100 mg IV 5 წთ — VT. Avoid: prolonged QT.</div></div>
+    </div>
+    <div class="alert blue" style="margin-top:8px"><strong>Adenosine — Regular Monomorphic Wide QRS:</strong> SVT converts → SVT was. ვ. converts → VT → amiodarone. Defibrillator charged & ready.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- STABLE WIDE IRREGULAR -->
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Stable · Wide QRS · Irregular — AFib+WPW / Torsades</span><span class="badge b-red">⚠ AV Blockers KILL</span></div>
+  <div class="nd-body">
+    <div class="g2">
+      <div class="gcard"><div class="gcard-label">AFib + WPW</div><div class="gcard-val">Cardioversion</div><div class="gcard-sub">HR 200+, delta waves, არარეგ., ფართო QRS</div></div>
+      <div class="gcard"><div class="gcard-label">AFib + BBB</div><div class="gcard-val">Rate control</div><div class="gcard-sub">BBB pattern, HR ნ., არარ. ვიწრო QRS-ის ისტ.</div></div>
+      <div class="gcard"><div class="gcard-label">Torsades (Long QT)</div><div class="gcard-val">Mg 1–2 g IV</div><div class="gcard-sub">QRS twist, QTc ↑↑</div></div>
+      <div class="gcard"><div class="gcard-label">Polymorphic VT (Normal QT)</div><div class="gcard-val">Unsynchronized shock</div><div class="gcard-sub">Ischemia → cath lab</div></div>
+    </div>
+    <div class="alert red" style="margin-top:10px">
+      <strong>AFib + WPW-ში ABSOLUTE CONTRAINDICATION:</strong><br>
+      ❌ ადენოზინი — AV ბლ. → ყვ. imp. Kent-ზე → VF<br>
+      ❌ Diltiazem / Verapamil — AV ბლ. → VF<br>
+      ❌ Digoxin — Kent-ს ↑ + AV ბლ. → VF<br>
+      ❌ Beta-blockers — AV ბლ. → VF
+    </div>
+    <div class="alert warn" style="margin-top:6px"><strong>Torsades-ში ამიოდ. კონტრინდ!</strong> QT კიდ.↑ → Torsades კიდ.↑. იყ.: Mg → Overdrive pacing → Isoproterenol.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════════════ CARDIOVERSION ═══════════════ -->
+<div class="pg" id="pg-cardio">
+<div class="tree">
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Sync vs Async — ფიზიოლოგია</span><span class="badge b-grey">Core Concept</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>Vulnerable Period = T ტალღა.</strong> კარდიომიოც. ნაწ. ready, ნაწ. refractory → სტიმ. → ჰეტეროგ. → VF.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>Synchronized:</strong> device R ტ. peak-ს პ. → shock R-ზე → ყ. კარდ. depolarized → T ტ. გვ. → safe.</div></div>
+      <div class="step"><div class="snum">!</div><div class="stxt"><strong>Unsynchronized (Defib):</strong> Brute force → ყ. კარდ. ერთ. depol. VF-ის დ. T ტ. irrelevant.</div></div>
+    </div>
+    <div class="g2" style="margin-top:10px">
+      <div class="gcard"><div class="gcard-label">Synchronized — გამოყ.</div><div class="gcard-val">პულსი + AFib, Flutter, SVT, Monomorphic VT</div></div>
+      <div class="gcard"><div class="gcard-label">Unsynchronized — გამოყ.</div><div class="gcard-val">VF/pVT · Polymorphic VT · Sync ვ. შეიძ.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">ენერგიების სრული ცხრილი</span><span class="badge b-blue">Energy Doses</span></div>
+  <div class="nd-body">
+    <table class="dtable">
+      <tr><th>რიტმი</th><th>ტიპი</th><th>ენერგია (Biphasic)</th><th>შენიშვნა</th></tr>
+      <tr><td>Atrial Fibrillation</td><td>Synchronized</td><td class="dose">120–200 J</td><td>მაღ. ენ. = ↑ success rate</td></tr>
+      <tr><td>Atrial Flutter</td><td>Synchronized</td><td class="dose">50–100 J</td><td>ნ. ენ. — re-entry loop მარ.</td></tr>
+      <tr><td>SVT (narrow, reentry)</td><td>Synchronized</td><td class="dose">50–100 J</td><td>ვაგ./ადენ. ჯ. მოსინ.</td></tr>
+      <tr><td>Monomorphic VT (pulse)</td><td>Synchronized</td><td class="dose">Device recommend.</td><td>escalate if no convert</td></tr>
+      <tr><td>Polymorphic VT</td><td>Unsynchronized</td><td class="dose">120–200 J (max)</td><td>sync ვ. შ. — R wave არარ.</td></tr>
+      <tr><td>VF / Pulseless VT</td><td>Unsynchronized</td><td class="dose">120–200 J (max)</td><td>CPR immediately after</td></tr>
+      <tr><td>Monophasic (if only)</td><td>უნივ.</td><td class="dose">360 J</td><td>ყ. სიტ. ერთ. დოზ.</td></tr>
+    </table>
+    <div class="alert blue" style="margin-top:8px"><strong>Energy escalation:</strong> პირ. შ. ვ. converts → ↑ J device-ის rec. მიხ. შემდ. მცდ.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Cardioversion ნაბიჯები — სრული პროცედურა</span><span class="badge b-blue">Step-by-step</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt"><strong>სედ. ცნობ. პაც.:</strong> Midazolam + Fentanyl ან Etomidate (BP ↓ risk ↓). Propofol — BP ↓ risk. ნუ აჩ. unstable-ზე.</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt">Defibrillator ჩართე. Monitor leads მიაერთე. Adhesive pads — antero-lateral ან antero-posterior.</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><strong>SYNC ღილაკი</strong> → R wave-ზე markers გამოჩნდება ECG-ზე. Gain ↑ თუ R wave დაბ. amplitude.</div></div>
+      <div class="step"><div class="snum">4</div><div class="stxt">ენ. შეარჩიე. "Charging — Stand Clear!" → Charge → Clear check → <strong>SHOCK.</strong></div></div>
+      <div class="step"><div class="snum">5</div><div class="stxt">Monitor. ვ. converts → CPR (თუ no pulse) ან post-care (ROSC). Converts → observe.</div></div>
+      <div class="step"><div class="snum r">!</div><div class="stxt"><strong>ყ. sync shock-ის შემდ. device UNSYNC mode-ზე ბ.!</strong> შემ. shock-ამ. SYNC ხელ. ჩ.</div></div>
+    </div>
+    <div class="alert warn" style="margin-top:8px"><strong>3 ხაფანგი synchronization-ში:</strong><br>
+    1. Low-amplitude R waves → sync markers ვ. → შ. ვ. გ. → Lead-ი შ., Gain ↑<br>
+    2. Handheld paddles → ბ. sync-ვ. → Adhesive pads გ.<br>
+    3. Post-shock auto-revert to unsync → ყ. shock-ამ. SYNC ჩ.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">Cardioversion — Junctional / Ectopic AT-ზე ვ. ეფ.</span><span class="badge b-warn">Special Cases</span></div>
+  <div class="nd-body">
+    <div class="steps">
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>Junctional Tachycardia / Ectopic AT / Multifocal AT</strong> → კარდიოვ. უეფ. ან ↑ rate. ეს <em>automatic focus</em> — re-entry კი ა. shock ამ ფოქ. ვ. შლის.</div></div>
+      <div class="step"><div class="snum w">!</div><div class="stxt"><strong>Sinus Tachycardia</strong> → კარდიოვ. = absolute error. SA კვ. კარდიოვ. = CO↓ + ჰემოდინ. გაუარ.</div></div>
+    </div>
+    <div class="alert red"><strong>Cardioversion ეფ. — Reentry-based rhythms only:</strong> AFib, Flutter, SVT (AVNRT/AVRT), Monomorphic VT.</div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="nd" onclick="tog(this)">
+  <div class="nd-hd"><span class="nd-ico">▶</span><span class="nd-title">სედაცია — ყოველი სცენარი</span><span class="badge b-grey">Sedation</span></div>
+  <div class="nd-body">
+    <table class="dtable">
+      <tr><th>პაციენტი</th><th>სედაცია</th><th>შენიშვნა</th></tr>
+      <tr><td>სტაბ., ცნობ.</td><td>Midazolam 1–2 mg + Fentanyl 1–2 mcg/kg</td><td>amnesia + analgesia</td></tr>
+      <tr><td>სტ., BP ↓ risk</td><td class="dose">Etomidate 0.2–0.3 mg/kg</td><td>ჰემოდ. ნეიტ. 1st choice</td></tr>
+      <tr><td>Unstable, BP 60/40</td><td class="dose">ნუ ელოდები — shock მაშინვე</td><td>პაც. ვ. გახ. procedure-ს</td></tr>
+      <tr><td>Propofol</td><td>BP↓ risk — frag.</td><td>ჰიპოტ. პაც-ზე avoid</td></tr>
+    </table>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+function sw(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  event.target.classList.add('on');
+}
+function tog(nd){
+  nd.classList.toggle('open');
+}
+</script>
