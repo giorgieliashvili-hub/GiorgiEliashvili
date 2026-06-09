@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ACLS</title>
+<style>
+:root {
+  --red:      #D93025; --red-lt:    #FEF2F1; --red-md:   #FCCAC7; --red-dk:   #6B1511;
+  --amber:    #C07000; --amber-lt:  #FFF8EC; --amber-md: #FDDFA0; --amber-dk: #5C3400;
+  --teal:     #0B7B5E; --teal-lt:   #EDFAF5; --teal-md:  #A8EDD8; --teal-dk:  #064535;
+  --green:    #2E7D32; --green-lt:  #F1F8E9; --green-md: #B5DBA8; --green-dk: #133815;
+  --purple:   #5B4FD9; --purple-lt: #F0EEFF; --purple-md:#C5BFFA; --purple-dk:#28206B;
+  --slate:    #546E7A; --slate-lt:  #ECEFF1; --slate-md: #B0BEC5; --slate-dk: #263238;
+  --ink:      #1A1A2E;
+  --ink2:     #4A4A6A;
+  --ink3:     #8888AA;
+  --surface:  #F5F5FA;
+  --card:     #FFFFFF;
+  --line:     #E8E8F0;
+  --safe-t: env(safe-area-inset-top,0px);
+  --safe-b: env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{background:var(--surface);font-family:-apple-system,'SF Pro Text','Helvetica Neue',sans-serif;overscroll-behavior:none}
+
+/* ── TOP BAR ── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,245,250,0.92);
+  backdrop-filter:saturate(200%) blur(24px);
+  -webkit-backdrop-filter:saturate(200%) blur(24px);
+  border-bottom:0.5px solid var(--line);
+  padding:calc(var(--safe-t) + 8px) 16px 10px;
+  display:flex;align-items:center;gap:12px;
+}
+.topbar-badge{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(145deg,#D93025,#5B4FD9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.topbar-title{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.3px}
+.topbar-sub{font-size:11px;color:var(--ink3);margin-top:1px}
+
+/* ── SCROLL ── */
+.scroll-wrap{overflow:auto;-webkit-overflow-scrolling:touch;padding:10px 10px calc(var(--safe-b) + 20px)}
+.svg-wrap{max-width:700px;margin:0 auto;width:100%}
+svg{display:block;width:100%;height:auto;touch-action:pan-x pan-y}
+
+/* ── SVG NODES ── */
+.node{cursor:pointer}
+.node rect{stroke-width:1.3;transition:opacity .12s}
+.node:active rect{opacity:.75}
+
+.c-red    rect{fill:var(--red-lt);   stroke:var(--red)}
+.c-amber  rect{fill:var(--amber-lt); stroke:var(--amber)}
+.c-teal   rect{fill:var(--teal-lt);  stroke:var(--teal)}
+.c-green  rect{fill:var(--green-lt); stroke:var(--green)}
+.c-purple rect{fill:var(--purple-lt);stroke:var(--purple)}
+.c-slate  rect{fill:var(--slate-lt); stroke:var(--slate)}
+
+/* legend squares */
+.sq-red   {fill:var(--red-lt);   stroke:var(--red);   stroke-width:1.2}
+.sq-amber {fill:var(--amber-lt); stroke:var(--amber); stroke-width:1.2}
+.sq-teal  {fill:var(--teal-lt);  stroke:var(--teal);  stroke-width:1.2}
+.sq-green {fill:var(--green-lt); stroke:var(--green); stroke-width:1.2}
+.sq-purple{fill:var(--purple-lt);stroke:var(--purple);stroke-width:1.2}
+
+.th{font-family:-apple-system,'SF Pro Text',sans-serif;font-size:12.5px;font-weight:700}
+.ts{font-family:-apple-system,'SF Pro Text',sans-serif;font-size:9.5px;fill:var(--ink2)}
+.tl{font-family:-apple-system,'SF Pro Text',sans-serif;font-size:9px;fill:var(--ink3)}
+
+.c-red    .th{fill:var(--red-dk)}
+.c-amber  .th{fill:var(--amber-dk)}
+.c-teal   .th{fill:var(--teal-dk)}
+.c-green  .th{fill:var(--green-dk)}
+.c-purple .th{fill:var(--purple-dk)}
+.c-slate  .th{fill:var(--slate-dk)}
+
+/* ── BOTTOM SHEET ── */
+.backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,30,.5);z-index:200;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.backdrop.open{display:block}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:201;
+  background:var(--card);border-radius:22px 22px 0 0;
+  max-height:90vh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .36s cubic-bezier(.32,.72,0,1);
+  padding-bottom:var(--safe-b);
+}
+.sheet.open{transform:translateY(0)}
+.handle{width:40px;height:4px;border-radius:2px;background:#DDDDE8;margin:10px auto 0;flex-shrink:0}
+
+.sheet-head{
+  padding:12px 16px 10px;border-bottom:0.5px solid var(--line);
+  display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0;gap:8px
+}
+.sheet-title{font-size:17px;font-weight:700;color:var(--ink);line-height:1.3;flex:1}
+.sheet-x{
+  width:30px;height:30px;border-radius:50%;background:#EFEFF5;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink2);flex-shrink:0
+}
+
+.sheet-body{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px 16px}
+
+/* ── SHEET CONTENT COMPONENTS ── */
+.s-section{margin:14px 0 0}
+.s-label{
+  font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:6px
+}
+.s-box{
+  background:var(--surface);border-radius:12px;padding:12px 14px;
+  border:0.5px solid var(--line);margin-bottom:8px
+}
+.s-box p{font-size:13.5px;color:var(--ink2);line-height:1.65;margin:0}
+.s-box p+p{margin-top:6px}
+.s-box strong{color:var(--ink);font-weight:600}
+
+.s-steps{list-style:none;padding:0;margin:0}
+.s-steps li{
+  display:flex;gap:10px;padding:8px 0;
+  border-bottom:0.5px solid var(--line);font-size:13.5px;color:var(--ink2);line-height:1.6
+}
+.s-steps li:last-child{border-bottom:none}
+.s-steps li .num{
+  min-width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px
+}
+.step-red   .num{background:var(--red-md);   color:var(--red-dk)}
+.step-amber .num{background:var(--amber-md); color:var(--amber-dk)}
+.step-teal  .num{background:var(--teal-md);  color:var(--teal-dk)}
+.step-green .num{background:var(--green-md); color:var(--green-dk)}
+.step-purple.num{background:var(--purple-md);color:var(--purple-dk)}
+
+.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
+.s-card{
+  background:var(--surface);border-radius:10px;padding:10px 12px;
+  border:0.5px solid var(--line)
+}
+.s-card .s-card-label{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.s-card .s-card-val{font-size:13px;font-weight:600;color:var(--ink)}
+.s-card .s-card-sub{font-size:11px;color:var(--ink2);margin-top:2px;line-height:1.4}
+
+.badge{
+  display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;
+  font-size:11px;font-weight:700;margin:2px 2px 2px 0;white-space:nowrap
+}
+.badge-red   {background:var(--red-lt);   color:var(--red-dk);   border:0.5px solid var(--red-md)}
+.badge-amber {background:var(--amber-lt); color:var(--amber-dk); border:0.5px solid var(--amber-md)}
+.badge-teal  {background:var(--teal-lt);  color:var(--teal-dk);  border:0.5px solid var(--teal-md)}
+.badge-green {background:var(--green-lt); color:var(--green-dk); border:0.5px solid var(--green-md)}
+.badge-slate {background:var(--slate-lt); color:var(--slate-dk); border:0.5px solid var(--slate-md)}
+
+.warn{
+  background:#FFF8EC;border:0.5px solid #FDDFA0;border-radius:10px;
+  padding:10px 12px;font-size:13px;color:#5C3400;line-height:1.6;margin-bottom:8px
+}
+.warn strong{font-weight:700}
+.danger{
+  background:#FEF2F1;border:0.5px solid #FCCAC7;border-radius:10px;
+  padding:10px 12px;font-size:13px;color:#6B1511;line-height:1.6;margin-bottom:8px
+}
+.danger strong{font-weight:700}
+.ok{
+  background:var(--teal-lt);border:0.5px solid var(--teal-md);border-radius:10px;
+  padding:10px 12px;font-size:13px;color:var(--teal-dk);line-height:1.6;margin-bottom:8px
+}
+
+.drug-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:7px 0;border-bottom:0.5px solid var(--line);gap:8px
+}
+.drug-row:last-child{border-bottom:none}
+.drug-name{font-size:13.5px;font-weight:600;color:var(--ink)}
+.drug-dose{font-size:12.5px;color:var(--ink2);text-align:right;line-height:1.4}
+
+.divider{height:0.5px;background:var(--line);margin:14px 0}
+
+table.s-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:8px}
+table.s-table th{background:var(--surface);padding:7px 10px;text-align:left;font-weight:700;color:var(--ink);border-bottom:1px solid var(--line)}
+table.s-table td{padding:7px 10px;color:var(--ink2);border-bottom:0.5px solid var(--line);vertical-align:top;line-height:1.5}
+table.s-table tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-badge">🫀</div>
+  <div>
+    <div class="topbar-title">ACLS ალგორითმი</div>
+    <div class="topbar-sub">ბოქსზე — სრული კლინიკური ინფო</div>
+  </div>
+</div>
+
+<div class="scroll-wrap"><div class="svg-wrap">
+<svg viewBox="0 0 680 1190" role="img">
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- ══ ROW 0 — პაციენტი ══ -->
+<g class="node c-purple" onclick="S('patient')">
+  <rect x="225" y="14" width="230" height="46" rx="10"/>
+  <text class="th" x="340" y="32" text-anchor="middle" dominant-baseline="central">პაციენტი / Scene</text>
+  <text class="ts" x="340" y="50" text-anchor="middle" dominant-baseline="central">Scene safe · PPE · ABCDE · 10 წმ</text>
+</g>
+<line x1="340" y1="60" x2="340" y2="96" stroke="#5B4FD9" stroke-width="1.5" marker-end="url(#ar)"/>
+
+<!-- ══ ROW 1 — Pulse diamond + CA + HR ══ -->
+<g onclick="S('pulse')" style="cursor:pointer">
+  <polygon points="340,96 428,130 340,164 252,130" fill="#FFF8EC" stroke="#C07000" stroke-width="1.2"/>
+  <text class="th" x="340" y="122" text-anchor="middle" dominant-baseline="central" fill="#5C3400">პულსი?</text>
+  <text class="ts" x="340" y="143" text-anchor="middle" dominant-baseline="central" fill="#7A4500">≤10 წმ · carotid</text>
+</g>
+
+<!-- NO → CA -->
+<line x1="252" y1="130" x2="148" y2="130" stroke="#D93025" stroke-width="2" marker-end="url(#ar)"/>
+<text class="tl" x="198" y="120" text-anchor="middle" fill="#6B1511">არა / ეჭვი</text>
+
+<!-- YES → HR -->
+<line x1="428" y1="130" x2="526" y2="130" stroke="#0B7B5E" stroke-width="1.5" marker-end="url(#ar)"/>
+<text class="tl" x="476" y="120" text-anchor="middle" fill="#064535">კი</text>
+
+<!-- Cardiac Arrest -->
+<g class="node c-red" onclick="S('ca')">
+  <rect x="14" y="104" width="134" height="52" rx="10"/>
+  <text class="th" x="81" y="122" text-anchor="middle" dominant-baseline="central">Cardiac Arrest</text>
+  <text class="ts" x="81" y="140" text-anchor="middle" dominant-baseline="central">VF/pVT · PEA · Asys.</text>
+</g>
+
+<!-- HR diamond -->
+<g onclick="S('hr')" style="cursor:pointer">
+  <polygon points="590,96 652,130 590,164 528,130" fill="#EDFAF5" stroke="#0B7B5E" stroke-width="1.2"/>
+  <text class="th" x="590" y="122" text-anchor="middle" dominant-baseline="central" fill="#064535">HR</text>
+  <text class="ts" x="590" y="143" text-anchor="middle" dominant-baseline="central" fill="#0B7B5E">რამდენია?</text>
+</g>
+
+<!-- HR <50 → Bradycardia -->
+<line x1="590" y1="164" x2="590" y2="204" stroke="#C07000" stroke-width="1.5" marker-end="url(#ar)"/>
+<text class="tl" x="612" y="188" fill="#7A4500">&lt;50</text>
+
+<!-- HR >150 — far right bypass -->
+<path d="M652 130 L670 130 L670 486 L554 486"
+      fill="none" stroke="#D93025" stroke-width="2" stroke-dasharray="7 3" marker-end="url(#ar)"/>
+<text class="tl" x="658" y="116" text-anchor="middle" fill="#6B1511">&gt;150</text>
+
+<!-- ══ ROW 2 y=204 ══ -->
+<!-- CA → H&T -->
+<line x1="81" y1="156" x2="81" y2="204" stroke="#D93025" stroke-width="1.2" marker-end="url(#ar)"/>
+<!-- CA dashed → Shockable -->
+<path d="M148 116 L162 116 L162 232 L176 232" fill="none" stroke="#D93025" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<!-- CA dashed → Non-Shock -->
+<path d="M148 144 L168 144 L168 252 L318 252" fill="none" stroke="#C07000" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+
+<!-- H's & T's -->
+<g class="node c-slate" onclick="S('hnt')">
+  <rect x="14" y="204" width="134" height="62" rx="10"/>
+  <text class="th" x="81" y="222" text-anchor="middle" dominant-baseline="central">H's &amp; T's</text>
+  <text class="ts" x="81" y="240" text-anchor="middle" dominant-baseline="central">10 შექცევადი</text>
+  <text class="ts" x="81" y="256" text-anchor="middle" dominant-baseline="central">მიზეზი</text>
+</g>
+
+<!-- Shockable -->
+<g class="node c-red" onclick="S('shock')">
+  <rect x="176" y="204" width="130" height="62" rx="10"/>
+  <text class="th" x="241" y="222" text-anchor="middle" dominant-baseline="central">Shockable</text>
+  <text class="ts" x="241" y="240" text-anchor="middle" dominant-baseline="central">VF / pVT</text>
+  <text class="ts" x="241" y="256" text-anchor="middle" dominant-baseline="central">შოკი 120–200J</text>
+</g>
+
+<!-- Non-Shockable -->
+<g class="node c-amber" onclick="S('nonshock')">
+  <rect x="318" y="204" width="138" height="62" rx="10"/>
+  <text class="th" x="387" y="222" text-anchor="middle" dominant-baseline="central">Non-Shockable</text>
+  <text class="ts" x="387" y="240" text-anchor="middle" dominant-baseline="central">PEA · Asystole</text>
+  <text class="ts" x="387" y="256" text-anchor="middle" dominant-baseline="central">ეპი 1mg ASAP</text>
+</g>
+
+<!-- Bradycardia -->
+<g class="node c-amber" onclick="S('brady')">
+  <rect x="472" y="204" width="170" height="62" rx="10"/>
+  <text class="th" x="557" y="222" text-anchor="middle" dominant-baseline="central">Bradycardia</text>
+  <text class="ts" x="557" y="240" text-anchor="middle" dominant-baseline="central">HR &lt;50 / min</text>
+  <text class="ts" x="557" y="256" text-anchor="middle" dominant-baseline="central">სიმპტომები?</text>
+</g>
+
+<!-- ══ ROW 3 y=330 — CPR + TCP ══ -->
+<line x1="81"  y1="266" x2="81"  y2="328" stroke="#546E7A" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+<line x1="241" y1="266" x2="241" y2="328" stroke="#D93025" stroke-width="1.5" marker-end="url(#ar)"/>
+<line x1="387" y1="266" x2="387" y2="328" stroke="#C07000" stroke-width="1.5" marker-end="url(#ar)"/>
+<line x1="557" y1="266" x2="557" y2="328" stroke="#C07000" stroke-width="1.5" marker-end="url(#ar)"/>
+
+<g class="node c-red" onclick="S('cpr')">
+  <rect x="14" y="328" width="440" height="74" rx="10"/>
+  <text class="th" x="234" y="348" text-anchor="middle" dominant-baseline="central">CPR — 2-წუთიანი ციკლი</text>
+  <text class="ts" x="234" y="368" text-anchor="middle" dominant-baseline="central">100–120/წთ · ≥5სმ · CCF ≥80% · Full recoil · Pause ≤10წმ</text>
+  <text class="ts" x="234" y="386" text-anchor="middle" dominant-baseline="central">VF: შოკი→ეპი(2შ)→ამიოდ.300(3შ)→150mg · PEA: ეპი 1mg ASAP</text>
+</g>
+
+<g class="node c-amber" onclick="S('tcp')">
+  <rect x="472" y="328" width="170" height="74" rx="10"/>
+  <text class="th" x="557" y="348" text-anchor="middle" dominant-baseline="central">TCP / TVP</text>
+  <text class="ts" x="557" y="368" text-anchor="middle" dominant-baseline="central">ატრ. → TCP → TVP</text>
+  <text class="ts" x="557" y="386" text-anchor="middle" dominant-baseline="central">Mobitz II / 3° → TVP!</text>
+</g>
+
+<!-- ══ ROW 4 y=468 — Tachycardia (arrived from right) ══ -->
+<g class="node c-red" onclick="S('tachy')">
+  <rect x="310" y="464" width="244" height="56" rx="10"/>
+  <text class="th" x="432" y="483" text-anchor="middle" dominant-baseline="central">Tachycardia</text>
+  <text class="ts" x="432" y="501" text-anchor="middle" dominant-baseline="central">HR &gt;150/min · Stable თუ Unstable?</text>
+</g>
+
+<!-- ══ ROW 5 y=592 — Cardioversion + QRS ══ -->
+<!-- Unstable → left -->
+<path d="M310 492 L238 492 L238 592 L14 592"
+      fill="none" stroke="#D93025" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#ar)"/>
+<text class="tl" x="165" y="583" text-anchor="middle" fill="#6B1511">Unstable</text>
+<!-- Stable → down -->
+<line x1="432" y1="520" x2="432" y2="592" stroke="#0B7B5E" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#ar)"/>
+<text class="tl" x="453" y="562" fill="#064535">Stable</text>
+
+<g class="node c-teal" onclick="S('cardio')">
+  <rect x="14" y="592" width="268" height="64" rx="10"/>
+  <text class="th" x="148" y="612" text-anchor="middle" dominant-baseline="central">⚡ Cardioversion</text>
+  <text class="ts" x="148" y="630" text-anchor="middle" dominant-baseline="central">Sync — AFib · SVT · Mono VT</text>
+  <text class="ts" x="148" y="647" text-anchor="middle" dominant-baseline="central">Unsync — VF · pVT · Poly VT</text>
+</g>
+
+<g class="node c-teal" onclick="S('qrs')">
+  <rect x="300" y="592" width="362" height="64" rx="10"/>
+  <text class="th" x="481" y="612" text-anchor="middle" dominant-baseline="central">Narrow / Wide QRS</text>
+  <text class="ts" x="481" y="630" text-anchor="middle" dominant-baseline="central">&lt;120ms → SVT · ≥120ms → VT</text>
+  <text class="ts" x="481" y="647" text-anchor="middle" dominant-baseline="central">Regular vs Irregular → Adenosine / Amio</text>
+</g>
+
+<!-- ══ ROW 6 y=724 — SVT + VT ══ -->
+<line x1="375" y1="656" x2="175" y2="724" stroke="#0B7B5E" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<line x1="585" y1="656" x2="502" y2="724" stroke="#D93025" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+
+<g class="node c-teal" onclick="S('svt')">
+  <rect x="14" y="724" width="308" height="64" rx="10"/>
+  <text class="th" x="168" y="744" text-anchor="middle" dominant-baseline="central">Narrow QRS — SVT</text>
+  <text class="ts" x="168" y="762" text-anchor="middle" dominant-baseline="central">Vagal → Adenosine</text>
+  <text class="ts" x="168" y="779" text-anchor="middle" dominant-baseline="central">6mg → 12mg → 12mg IV push</text>
+</g>
+
+<g class="node c-red" onclick="S('vt')">
+  <rect x="340" y="724" width="322" height="64" rx="10"/>
+  <text class="th" x="501" y="744" text-anchor="middle" dominant-baseline="central">Wide QRS — VT</text>
+  <text class="ts" x="501" y="762" text-anchor="middle" dominant-baseline="central">Amiodarone 150mg / 10 წთ</text>
+  <text class="ts" x="501" y="779" text-anchor="middle" dominant-baseline="central">Unstable → Cardioversion!</text>
+</g>
+
+<!-- ══ ROW 7 y=858 — ROSC ══ -->
+<line x1="81"  y1="402" x2="81"  y2="858" stroke="#0B7B5E" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text class="tl" x="64" y="630" fill="#0B7B5E" text-anchor="middle">ROSC?</text>
+<line x1="168" y1="788" x2="168" y2="858" stroke="#0B7B5E" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<line x1="501" y1="788" x2="501" y2="858" stroke="#0B7B5E" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+
+<g class="node c-green" onclick="S('rosc')">
+  <rect x="14" y="858" width="648" height="70" rx="10"/>
+  <text class="th" x="338" y="878" text-anchor="middle" dominant-baseline="central">ROSC სამიზნეები</text>
+  <text class="ts" x="338" y="897" text-anchor="middle" dominant-baseline="central">SpO₂ 92–98% · SBP ≥90 · MAP ≥65 · ETCO₂ 35–45mmHg</text>
+  <text class="ts" x="338" y="915" text-anchor="middle" dominant-baseline="central">TTM 32–36°C · Glucose 140–180 · 12-lead → Cath Lab?</text>
+</g>
+
+<!-- ══ LEGEND ══ -->
+<rect x="14" y="948" width="648" height="220" rx="10" fill="none" stroke="#E8E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="th" x="338" y="970" text-anchor="middle" dominant-baseline="central" fill="#1A1A2E">ლეგენდა</text>
+
+<rect x="30" y="990" width="12" height="12" rx="3" class="sq-red"/>
+<text class="ts" x="50" y="1001">კრიტ. / CPR / VF / Cardiac Arrest / Tachycardia</text>
+<rect x="30" y="1012" width="12" height="12" rx="3" class="sq-amber"/>
+<text class="ts" x="50" y="1023">Bradycardia / Non-Shock / TCP-TVP</text>
+<rect x="30" y="1034" width="12" height="12" rx="3" class="sq-teal"/>
+<text class="ts" x="50" y="1045">Cardioversion / QRS ანალიზი / SVT</text>
+<rect x="30" y="1056" width="12" height="12" rx="3" class="sq-green"/>
+<text class="ts" x="50" y="1067">ROSC სამიზნეები</text>
+<rect x="30" y="1078" width="12" height="12" rx="3" class="sq-purple"/>
+<text class="ts" x="50" y="1089">პაციენტი / შეფასება</text>
+
+<line x1="360" y1="998" x2="396" y2="998" stroke="#D93025" stroke-width="2" marker-end="url(#ar)"/>
+<text class="ts" x="404" y="1002">გადაუდებელი / ძირითადი</text>
+<line x1="360" y1="1018" x2="396" y2="1018" stroke="#D93025" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#ar)"/>
+<text class="ts" x="404" y="1022">Unstable / HR&gt;150</text>
+<line x1="360" y1="1038" x2="396" y2="1038" stroke="#0B7B5E" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text class="ts" x="404" y="1042">Stable / ROSC</text>
+<line x1="360" y1="1058" x2="396" y2="1058" stroke="#C07000" stroke-width="1.5" marker-end="url(#ar)"/>
+<text class="ts" x="404" y="1062">Bradycardia / TCP</text>
+
+<text class="tl" x="338" y="1150" text-anchor="middle" fill="#8888AA">👆 ნებისმიერ ბოქსზე დაჭერით — სრული კლინიკური ინფო</text>
+</svg>
+</div></div>
+
+<!-- BACKDROP + SHEET -->
+<div class="backdrop" id="bd" onclick="closeSheet()"></div>
+<div class="sheet" id="sh">
+  <div class="handle"></div>
+  <div class="sheet-head">
+    <div class="sheet-title" id="sh-title"></div>
+    <button class="sheet-x" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-body" id="sh-body"></div>
+</div>
+
+<script>
+const DATA = {
+
+patient: {
+  title: "🟣 პაციენტი — პირველადი შეფასება",
+  html: `
+<div class="s-section">
+  <div class="s-label">პრიორიტეტი</div>
+  <div class="danger"><strong>10 წამი</strong> — პულსი კი/არა. ეჭვის შემთხვევაში CPR დაუყოვნებლივ. გამოტოვებული CPR = სიკვდილი.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Scene Safety — პირველი ნაბიჯი</div>
+  <div class="s-box"><p><strong>Scene safe?</strong> — ნუ შეხვალ სახიფათო გარემოში<br><strong>PPE:</strong> ხელთათმანი, თვალდამცავი (CPR-ზე)</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">ABCDE შეფასება — თანმიმდევრობა</div>
+  <ul class="s-steps">
+    <li class="step-purple"><span class="num">A</span><span><strong>Airway</strong> — ღია? ხმები? Jaw-thrust თუ საჭ. გახსენე. C-spine თუ trauma.</span></li>
+    <li class="step-purple"><span class="num">B</span><span><strong>Breathing</strong> — სუნთქავს? სიჩქარე? SpO₂? თუ არ სუნთქავს → 2 rescue breath</span></li>
+    <li class="step-purple"><span class="num">C</span><span><strong>Circulation</strong> — Carotid პულსი ≤10წმ · BP · კანი (ფერი, ტემპ, ოფლი)</span></li>
+    <li class="step-purple"><span class="num">D</span><span><strong>Disability</strong> — AVPU / GCS · pupil · სისხლი გლუკოზა</span></li>
+    <li class="step-purple"><span class="num">E</span><span><strong>Exposure</strong> — ტემპ. · სისხლდენა · ჟ-ბი · ECG monitor</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">გადაწყვეტილების ხე</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">პულსი ✗</div><div class="s-card-val" style="color:#D93025">CPR დაუყ.</div><div class="s-card-sub">Cardiac Arrest პროტ.</div></div>
+    <div class="s-card"><div class="s-card-label">HR &gt;150</div><div class="s-card-val" style="color:#D93025">Tachycardia</div><div class="s-card-sub">Stable / Unstable?</div></div>
+    <div class="s-card"><div class="s-card-label">HR &lt;50</div><div class="s-card-val" style="color:#C07000">Bradycardia</div><div class="s-card-sub">სიმპტომები?</div></div>
+    <div class="s-card"><div class="s-card-label">HR 50–150</div><div class="s-card-val" style="color:#0B7B5E">Monitor</div><div class="s-card-sub">მიზეზი მოძებნე</div></div>
+  </div>
+</div>`
+},
+
+pulse: {
+  title: "🔶 პულსის შემოწმება",
+  html: `
+<div class="s-section">
+  <div class="s-label">ტექნიკა</div>
+  <div class="s-box"><p><strong>Carotid:</strong> კისრის გვერდი, 2 თითი, SCM-ის მედიალური კიდე<br>
+  <strong>Radial:</strong> მაჯა — carotid-ზე ნაკლებ საიმედო cardiac arrest-ში<br>
+  <strong>დრო:</strong> მკაცრად ≤10 წამი — ნუ გახარჯავ მეტს</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">გადაწყვეტილება</div>
+  <ul class="s-steps">
+    <li class="step-red"><span class="num">!</span><span><strong>პულსი არ არის / ეჭვი</strong> → CPR დაუყოვნებლივ. "When in doubt — compress."</span></li>
+    <li class="step-teal"><span class="num">✓</span><span><strong>პულსი კი</strong> → HR შეაფასე · SpO₂ · BP · 12-lead ECG</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="warn"><strong>⚠️ მნიშვნელოვანი:</strong> არარსებული პულსის CPR = უსაფრთხო. გამოტოვებული CPR = ფატალური. ეჭვის შემთხვევაში — დაიწყე.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">ETCO₂ — პულსის სეროგ. სიგნალი</div>
+  <div class="s-box"><p>ETCO₂ მოულოდნელი ↑ ≥40 mmHg CPR-ში → <strong>pulse check!</strong> → ROSC სიგნალი</p></div>
+</div>`
+},
+
+hr: {
+  title: "🔵 HR — Heart Rate შეფასება",
+  html: `
+<div class="s-section">
+  <div class="s-label">გაზომვა</div>
+  <div class="s-box"><p><strong>12-lead ECG</strong> — პირველი არჩევანი<br>
+  <strong>Pulse oximeter</strong> — HR + SpO₂ ერთად<br>
+  <strong>Monitor</strong> — rhythm continuous</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">HR კლასიფიკაცია</div>
+  <table class="s-table">
+    <tr><th>HR</th><th>სიტუაცია</th><th>მოქმედება</th></tr>
+    <tr><td>&gt;150</td><td><span class="badge badge-red">Tachycardia</span></td><td>Stable vs Unstable?</td></tr>
+    <tr><td>100–150</td><td><span class="badge badge-amber">Sinus Tach</span></td><td>მიზეზი (ტკივ./ცხ./ჰიპოვ.)</td></tr>
+    <tr><td>60–100</td><td><span class="badge badge-green">ნორმ.</span></td><td>Monitor, ABCDE</td></tr>
+    <tr><td>50–60</td><td><span class="badge badge-slate">ქვედა ნორმ.</span></td><td>სპორტ.? სიმპტ.?</td></tr>
+    <tr><td>&lt;50</td><td><span class="badge badge-amber">Bradycardia</span></td><td>სიმპტომები?</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="s-label">სიმპტომები — ყოველთვის შეაფასე</div>
+  <div class="s-box"><p>BP↓ · AMS (altered mental status) · შოკი · Chest pain · Syncope · Dyspnea<br>
+  → სიმპტომის არსებობა = <strong>გადაჩქარება</strong></p></div>
+</div>`
+},
+
+ca: {
+  title: "🔴 Cardiac Arrest",
+  html: `
+<div class="s-section">
+  <div class="danger"><strong>CPR ხარისხი = გადარჩენა.</strong> ყოველი 10წმ შეფერხება ↓ გადარჩენა.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">CPR სტანდარტი — დაიმახსოვრე</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">სიჩქარე</div><div class="s-card-val">100–120</div><div class="s-card-sub">შეკუმშვა/წთ</div></div>
+    <div class="s-card"><div class="s-card-label">სიღრმე</div><div class="s-card-val">≥5სმ</div><div class="s-card-sub">max 6სმ · Full recoil!</div></div>
+    <div class="s-card"><div class="s-card-label">CCF</div><div class="s-card-val">≥80%</div><div class="s-card-sub">Chest Compression Fraction</div></div>
+    <div class="s-card"><div class="s-card-label">Pause</div><div class="s-card-val">≤10წმ</div><div class="s-card-sub">rhythm check-ზეც</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Rhythm — 2 გზა</div>
+  <div class="s-box" style="border-left:3px solid var(--red)">
+    <p><strong>🔴 VF / pVT (Shockable)</strong></p>
+    <p>შოკი 120–200J biphasic → CPR 2წთ დაუყ.<br>
+    Epi 1mg IV/IO → <strong>მე-2 შოკის შემდეგ</strong> → q3–5წთ<br>
+    Amiodarone 300mg → <strong>მე-3 შოკის შემდეგ</strong><br>
+    Amiodarone 150mg → მე-2 დოზა</p>
+  </div>
+  <div class="s-box" style="border-left:3px solid var(--amber)">
+    <p><strong>🟠 PEA / Asystole (Non-Shockable)</strong></p>
+    <p>CPR → <strong>Epinephrine 1mg IV/IO ASAP</strong> → q3–5წთ<br>
+    Advanced Airway → 10 ვენტ./წთ (1 q6წმ)<br>
+    H's &amp; T's — ყოველ ციკლში მოძებნე!</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">ETCO₂ — CPR მონიტ.</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">ETCO₂ &lt;10</div><div class="s-card-val" style="color:#D93025">CPR ↑</div><div class="s-card-sub">ხარისხი გააუმჯ.</div></div>
+    <div class="s-card"><div class="s-card-label">ETCO₂ ≥40 ↑</div><div class="s-card-val" style="color:#0B7B5E">ROSC?</div><div class="s-card-sub">Pulse check!</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Switch</div>
+  <div class="s-box"><p>გუნდის წევრების ცვლა q2წთ — ყოველ rhythm check-ზე — დაღლა ↓ CCF</p></div>
+</div>`
+},
+
+hnt: {
+  title: "🔍 H's & T's — 10 შექცევადი მიზეზი",
+  html: `
+<div class="s-section">
+  <div class="ok"><strong>ყოველ CPR ციკლში</strong> — H's &amp; T's გაიარე გონებაში. ერთი პასუხი = სიცოცხლე.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">H's — 5 მიზეზი</div>
+  <ul class="s-steps">
+    <li class="step-red"><span class="num">H1</span><span><strong>Hypovolemia</strong> — ყველაზე ხშირი PEA მიზეზი<br>ECG: ვიწრო QRS rapid PEA · IV/IO bolus 1–2L NaCl სწრ.<br>რისკი: სისხლდენა, დეჰიდრ., სეფსისი</span></li>
+    <li class="step-red"><span class="num">H2</span><span><strong>Hypoxia</strong> — 2-ე ყველაზე ხშირი<br>Airway გახსენი → BVM 100% O₂ → ინტუბ. თუ საჭ.<br>SpO₂ ✗ cardiac arrest-ში — ETCO₂ გამოიყენე</span></li>
+    <li class="step-red"><span class="num">H3</span><span><strong>H⁺ (Acidosis)</strong> — pH &lt;7.1<br>ვენტ.↑ → PaCO₂↓ → pH↑ · NaHCO₃ 1mEq/kg IV<br>TCA OD-ში: NaHCO₃ ყველ. pH-ზე!</span></li>
+    <li class="step-red"><span class="num">H4</span><span><strong>Hypo/HyperKalemia</strong><br>HyperK: CaCl₂ 1g IV + NaHCO₃ + Insulin/Dextrose + Albuterol<br>HypoK: Mg 2g IV + KCl infusion</span></li>
+    <li class="step-red"><span class="num">H5</span><span><strong>Hypothermia</strong> — &lt;30°C = VF-prone, დეფ-ს არ პასუხობს<br>"Warm before declaring dead" — rewarm to ≥30°C<br>ხელები გათბობა → Active internal rewarming</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">T's — 5 მიზეზი</div>
+  <ul class="s-steps">
+    <li class="step-amber"><span class="num">T1</span><span><strong>Tension PTX</strong> — US: lung sliding გაქრა · Absent breath sounds<br>Needle decompression: 2nd ICS MCL, 14G · ან Finger thoracostomy<br>შემდეგ: Chest tube</span></li>
+    <li class="step-amber"><span class="num">T2</span><span><strong>Cardiac Tamponade</strong> — Beck's triad: ↓BP + JVD + Muffled sounds<br>US: Pericardial fluid + RA/RV collapse · Pericardiocentesis<br>PEA in narrow QRS + JVD = Tamponade until proven otherwise</span></li>
+    <li class="step-amber"><span class="num">T3</span><span><strong>Toxins / OD</strong><br>TCA: NaHCO₃ 1-2mEq/kg · β-blocker: Ca + Glucagon 3-5mg + HiDi<br>CCB: CaCl₂ 1g IV + HiDi Insulin · Opioid: Naloxone 0.4-2mg IV<br>LA toxicity: Lipid emulsion 20% 1.5ml/kg bolus</span></li>
+    <li class="step-amber"><span class="num">T4</span><span><strong>Thrombosis — PE</strong> — RV dilated on Echo · S1Q3T3<br>Alteplase 50mg IV push → CPR გ. 60–90წთ!<br>ან ემბოლექტომია (surgical/catheter)</span></li>
+    <li class="step-amber"><span class="num">T5</span><span><strong>Thrombosis — CAD (MI)</strong> — STEMI → VF<br>ROSC → Cath Lab 24სთ-ში (ნებისმ. rhythm ECG-ზე)<br>Lytics თუ Cath Lab მიუწვდ.</span></li>
+  </ul>
+</div>`
+},
+
+shock: {
+  title: "⚡ Shockable — VF / pulseless VT",
+  html: `
+<div class="s-section">
+  <div class="s-label">განმარტება</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">VF</div><div class="s-card-val">ქაოტური</div><div class="s-card-sub">პულსი ✗ · ECG: irregular rapid</div></div>
+    <div class="s-card"><div class="s-card-label">pVT</div><div class="s-card-val">ორგანიზებ.</div><div class="s-card-sub">VT morphology · პულსი ✗</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">ალგორითმი — ციკლი</div>
+  <ul class="s-steps">
+    <li class="step-red"><span class="num">1</span><span><strong>შოკი 120–200J biphasic</strong> (ან 360J mono)<br>→ UNSYNC defib · post-shock pause = 0წმ → CPR მაშინვე!</span></li>
+    <li class="step-red"><span class="num">2</span><span>CPR 2წთ → rhythm check<br>VF/pVT? → <strong>შოკი 2</strong> → CPR 2წთ</span></li>
+    <li class="step-red"><span class="num">3</span><span><strong>Epinephrine 1mg IV/IO</strong> — მე-2 შოკის შემდეგ<br>→ q3–5წთ შემდეგ (ყოველ მე-2 ციკლს)</span></li>
+    <li class="step-red"><span class="num">4</span><span>CPR 2წთ → rhythm check<br>VF/pVT? → <strong>შოკი 3</strong></span></li>
+    <li class="step-red"><span class="num">5</span><span><strong>Amiodarone 300mg IV</strong> — მე-3 შოკის შემდეგ<br>შემდ. დოზა: 150mg · ალტ.: Lidocaine 1-1.5mg/kg</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">შოკი — ტექნიკა</div>
+  <div class="s-box"><p><strong>Pads:</strong> Sternum-Right 2nd ICS · Apex-Left MCL 5th ICS<br>
+  <strong>ყველა გათიშული!</strong> → Clear → შოკი<br>
+  <strong>Biphasic:</strong> 120–200J (device-specific) · <strong>Mono:</strong> 360J<br>
+  <strong>post-shock:</strong> CPR დაუყოვნებლივ — rhythm/pulse check არ ≠ შეჩერება</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">Advanced Airway</div>
+  <div class="s-box"><p>ET tube ან SGA (LMA/King) → <strong>10 ვენტ./წთ</strong> (1 q6წმ)<br>
+  ETCO₂ waveform → CPR ხარისხის მონიტ.<br>
+  <strong>Hyperventilation = VR↓ = Output↓</strong> — ნელა!</p></div>
+</div>`
+},
+
+nonshock: {
+  title: "🟠 Non-Shockable — PEA · Asystole",
+  html: `
+<div class="s-section">
+  <div class="s-label">განმარტება</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">PEA</div><div class="s-card-val">ECG ✓</div><div class="s-card-sub">ორგ. rhythm · პულსი ✗</div></div>
+    <div class="s-card"><div class="s-card-label">Asystole</div><div class="s-card-val">Flat line</div><div class="s-card-sub">P-wave ± · QRS ✗</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">ალგორითმი</div>
+  <ul class="s-steps">
+    <li class="step-amber"><span class="num">1</span><span><strong>CPR 2წთ</strong> — დაუყ. დაიწყე</span></li>
+    <li class="step-amber"><span class="num">2</span><span><strong>Epinephrine 1mg IV/IO ASAP</strong> → q3–5წთ<br>(Non-shock-ში ეპი პირველი = სწრაფი!)</span></li>
+    <li class="step-amber"><span class="num">3</span><span>Advanced Airway + ETCO₂</span></li>
+    <li class="step-amber"><span class="num">4</span><span><strong>H's &amp; T's</strong> — ყოველ ციკლში! მიზეზი = მკ.</span></li>
+    <li class="step-amber"><span class="num">5</span><span>Rhythm check q2წთ<br>Shockable? → VF/pVT protocol</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">⚠️ ხაფანგები</div>
+  <div class="warn"><strong>Asystole ≠ Fine VF!</strong> — Lead/gain შეცვალე · 2 lead confirm<br>
+  <strong>Pseudo-PEA:</strong> Ultra-low output · Echo: კედლის მოძრაობა? → CPR!<br>
+  <strong>NaHCO₃ 1mEq/kg:</strong> pH &lt;7.1 · TCA OD · გრძ. arrest · HyperK</div>
+</div>
+<div class="s-section">
+  <div class="s-label">PEA — ყველაზე ხშირი მიზეზები</div>
+  <div class="s-box"><p>
+  <span class="badge badge-red">Hypovolemia</span> → IV bolus<br>
+  <span class="badge badge-red">Hypoxia</span> → Airway + O₂<br>
+  <span class="badge badge-amber">Tamponade</span> → Pericardiocentesis<br>
+  <span class="badge badge-amber">Tension PTX</span> → Needle decompression<br>
+  <span class="badge badge-amber">PE</span> → Lytics
+  </p></div>
+</div>`
+},
+
+brady: {
+  title: "🟠 Bradycardia — HR <50/min",
+  html: `
+<div class="s-section">
+  <div class="s-label">სიმპტომური ბრადიკარდია?</div>
+  <div class="s-box"><p><span class="badge badge-red">BP↓</span> <span class="badge badge-red">AMS</span> <span class="badge badge-red">შოკი</span> <span class="badge badge-red">Syncope</span> <span class="badge badge-red">Ischemic CP</span> <span class="badge badge-red">Acute HF</span><br><br>
+  <strong>სიმპტომი ✗</strong> → Monitor, მიზეზი მოძებნე (ვაგ., მედ., ეკ.)<br>
+  <strong>სიმპტომი ✓</strong> → მკურნ. Step 1→2→3</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">Step 1 — Atropine</div>
+  <div class="s-box" style="border-left:3px solid var(--amber)">
+    <p><strong>Atropine 1mg IV</strong> — q3–5წთ · max 3mg<br>
+    Onset: 1–2წთ · Duration: 4–6სთ</p>
+  </div>
+  <div class="danger"><strong>⚠️ &lt;0.5mg = Paradoxical bradycardia!</strong> (vagal rebound) — ყოველთვის 1mg<br>
+  <strong>Mobitz II / 3° AV Block-ზე:</strong> ატრ. SA rate↑ → AV block ქვ. → VR↓↓ → Asystole! → პირდაპ. TCP</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Step 2 — TCP (Transcutaneous Pacing)</div>
+  <div class="s-box" style="border-left:3px solid var(--amber)">
+    <p><strong>Rate:</strong> 60–80/წთ<br>
+    <strong>mA:</strong> 0-დან ↑ capture-მდე (+10mA ზემოთ) — ჩვ. 50–80mA<br>
+    <strong>სედ. სავალდებ.!</strong> Fentanyl 1–2mcg/kg IV + Midazolam 1–2mg IV<br>
+    <strong>Capture confirm:</strong> ECG spike → QRS ✓ — მაგრამ ეს ≠ Mechanical!<br>
+    Mechanical: BP + Carotid pulse ტალღა = ნამდვ. capture</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Step 3 — TVP (Transvenous Pacing)</div>
+  <div class="s-box" style="border-left:3px solid var(--red)">
+    <p><strong>Mobitz II / 3° AV Block → TVP სწრ.!</strong><br>
+    TCP bridging-ად სანამ TVP-ს მოემზ.<br>
+    შეყვანა: IJV ან Subclavian → RA/RV → fluoroscopy/Echo guide</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">AV Block — კლასიფიკაცია</div>
+  <table class="s-table">
+    <tr><th>ბლოკი</th><th>ECG</th><th>მოქმ.</th></tr>
+    <tr><td><span class="badge badge-green">1st degree</span></td><td>PR &gt;200ms, ყოველი P→QRS</td><td>Monitor only</td></tr>
+    <tr><td><span class="badge badge-teal">Mobitz I</span></td><td>PR↑ → QRS drop (Wenckebach)</td><td>ატრ. + Monitor</td></tr>
+    <tr><td><span class="badge badge-amber">Mobitz II</span></td><td>PR const → მოულ. QRS drop</td><td>TCP → TVP!</td></tr>
+    <tr><td><span class="badge badge-red">3rd degree</span></td><td>P↔QRS dissociation</td><td>TCP → TVP სწრ.!</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="s-label">Bridge Drugs (TCP-ს ალტ./დამ.)</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Dopamine</span><span class="drug-dose">2–10 mcg/kg/min infusion</span></div>
+    <div class="drug-row"><span class="drug-name">Epinephrine</span><span class="drug-dose">2–10 mcg/min infusion</span></div>
+    <div class="drug-row"><span class="drug-name">Atropine</span><span class="drug-dose">0.5–1mg IV · max 3mg</span></div>
+  </div>
+</div>`
+},
+
+cpr: {
+  title: "🔴 CPR — 2-წუთიანი ციკლი",
+  html: `
+<div class="s-section">
+  <div class="s-label">CPR ხარისხი — 5 პარამეტრი</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">სიჩქარე</div><div class="s-card-val">100–120/წთ</div><div class="s-card-sub">მეტრონომი/feedback</div></div>
+    <div class="s-card"><div class="s-card-label">სიღრმე</div><div class="s-card-val">5–6სმ</div><div class="s-card-sub">Full recoil ყ. შეკუმშ-ს!</div></div>
+    <div class="s-card"><div class="s-card-label">CCF</div><div class="s-card-val">≥80%</div><div class="s-card-sub">პაუზები ≤10წმ</div></div>
+    <div class="s-card"><div class="s-card-label">Recoil</div><div class="s-card-val">სრული</div><div class="s-card-sub">არ დააყუდო ხელი!</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">VF/pVT — ციკლი</div>
+  <ul class="s-steps">
+    <li class="step-red"><span class="num">→</span><span>შოკი 120–200J → CPR 2წთ დაუყ. (0 pause!)</span></li>
+    <li class="step-red"><span class="num">→</span><span>Rhythm check → VF? → შოკი 2 → CPR 2წთ</span></li>
+    <li class="step-red"><span class="num">→</span><span><strong>Epi 1mg</strong> (მე-2 შოკის შემდ.) → q3–5წთ</span></li>
+    <li class="step-red"><span class="num">→</span><span>Rhythm check → VF? → შოკი 3 → CPR 2წთ</span></li>
+    <li class="step-red"><span class="num">→</span><span><strong>Amiodarone 300mg</strong> (მე-3 შოკის შემდ.) → 150mg</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">PEA/Asystole — ციკლი</div>
+  <ul class="s-steps">
+    <li class="step-amber"><span class="num">→</span><span>CPR → <strong>Epi 1mg ASAP</strong> → q3–5წთ</span></li>
+    <li class="step-amber"><span class="num">→</span><span>H's &amp; T's ყოველ ციკლში</span></li>
+    <li class="step-amber"><span class="num">→</span><span>Rhythm check q2წთ</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">ვენტილაცია</div>
+  <div class="s-box"><p><strong>Advanced Airway გარეშე:</strong> 30:2 (30 compress : 2 breath)<br>
+  <strong>Advanced Airway (ET/LMA):</strong> async 10 ვენტ./წთ (1 q6წმ)<br>
+  <strong>Hyperventilation = ↓ VR = ↓ Output</strong> — ნელა! Tidal vol ~500ml</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">ETCO₂ — რეალ. მონიტ.</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">ETCO₂ &lt;10</div><div class="s-card-val" style="color:#D93025">↑ CPR</div><div class="s-card-sub">ხარისხი არ არის</div></div>
+    <div class="s-card"><div class="s-card-label">ETCO₂ 10–20</div><div class="s-card-val" style="color:#C07000">OK</div><div class="s-card-sub">გააგრ. გულ. ხარ.</div></div>
+    <div class="s-card"><div class="s-card-label">ETCO₂ ≥40 ↑</div><div class="s-card-val" style="color:#0B7B5E">ROSC!</div><div class="s-card-sub">Pulse check!</div></div>
+    <div class="s-card"><div class="s-card-label">ETCO₂ flat</div><div class="s-card-val" style="color:#546E7A">airway?</div><div class="s-card-sub">ET tube confirm</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">გუნდი</div>
+  <div class="s-box"><p><strong>Leader:</strong> გუნდის ხელმძღ. — H&T, drugs, rhythm check<br>
+  <strong>Compressor:</strong> ცვლა q2წთ — დაღლა ↓ CCF<br>
+  <strong>Airway:</strong> BVM/ET + ETCO₂<br>
+  <strong>IV/Drugs:</strong> ხაზი + medic admin<br>
+  <strong>Timer/Recorder:</strong> 2წთ ციკლი + დოზები</p></div>
+</div>`
+},
+
+tcp: {
+  title: "🟠 TCP / TVP — Pacing",
+  html: `
+<div class="s-section">
+  <div class="s-label">TCP — Transcutaneous Pacing</div>
+  <div class="s-box" style="border-left:3px solid var(--amber)">
+    <p><strong>Rate:</strong> 60–80/წთ<br>
+    <strong>mA (Output):</strong> 0-დან ↑ → capture (spike→QRS ✓) → +10mA ზემოთ<br>
+    ჩვეულ. 50–80mA<br>
+    <strong>სედაცია სავალდ.!</strong> Fentanyl 1–2mcg/kg + Midazolam 1–2mg IV<br>
+    <strong>Mechanical capture:</strong> ECG ≠ Mechanical! → BP ტალღა + Carotid pulse</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">TVP — Transvenous Pacing</div>
+  <div class="s-box" style="border-left:3px solid var(--red)">
+    <p><strong>Mobitz II / 3° AV Block → TVP სწრ.!</strong><br>
+    TCP = Bridge სანამ TVP-ს მომზ.<br>
+    Access: IJV ან Subclavian ან Femoral<br>
+    Catheter → RA → RV apex (→ fluoroscopy/echo guide)<br>
+    Threshold: mA capture → -10mA output</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="danger"><strong>⚠️ Atropine Mobitz II/3°-ზე:</strong><br>
+  SA rate↑ → ბლოკი AV კვანძის ქვ. → VR↓↓ → Asystole!<br>
+  → პირდ. TCP — ატრ. ნუ გამოიყ. ამ ბლოკებზე!</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Bridge Drugs</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Dopamine</span><span class="drug-dose">2–10 mcg/kg/min infusion</span></div>
+    <div class="drug-row"><span class="drug-name">Epinephrine</span><span class="drug-dose">2–10 mcg/min infusion</span></div>
+    <div class="drug-row"><span class="drug-name">Isoproterenol</span><span class="drug-dose">2–10 mcg/min (Torsades-შიც)</span></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">ხაფანგები</div>
+  <div class="warn"><strong>Failure to capture:</strong> Pads position · ↑mA · Metabolic correct (K, pH)<br>
+  <strong>Failure to sense:</strong> Sensitivity ↑ · Lead artefact<br>
+  <strong>Pacemaker-induced VF:</strong> R-on-T თუ async mode-ში</div>
+</div>`
+},
+
+tachy: {
+  title: "🔴 Tachycardia — HR >150/min",
+  html: `
+<div class="s-section">
+  <div class="danger"><strong>პირველი კითხვა: Stable თუ Unstable?</strong><br>
+  სიმპტომი ✓ = Unstable → Cardioversion მაშინვე!</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Unstable — ნებისმიერი ამ სიმპტომიდან</div>
+  <div class="s-box"><p>
+  <span class="badge badge-red">BP↓ / Hypotension</span>
+  <span class="badge badge-red">AMS</span>
+  <span class="badge badge-red">შოკი/Diaphoresis</span>
+  <span class="badge badge-red">Ischemic CP</span>
+  <span class="badge badge-red">Acute HF/Pulm. Edema</span><br><br>
+  → <strong>Synchronized Cardioversion მაშინვე!</strong><br>
+  → სედ. თუ გონებრ. მდგ. პერმ. (Midazolam + Fentanyl)</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">Stable → QRS ანალიზი</div>
+  <table class="s-table">
+    <tr><th>QRS</th><th>Rhythm</th><th>Dx</th><th>Rx</th></tr>
+    <tr><td>Narrow &lt;120ms</td><td>Regular</td><td>SVT/AVNRT</td><td>Vagal → Adenosine</td></tr>
+    <tr><td>Narrow &lt;120ms</td><td>Irregular</td><td>AFib/Flutter</td><td>Rate ctrl · Anticoag</td></tr>
+    <tr><td>Wide ≥120ms</td><td>Regular</td><td>VT (პრეს.!)</td><td>Amiodarone · Cardio</td></tr>
+    <tr><td>Wide ≥120ms</td><td>Irregular</td><td>AFib+WPW / Torsades</td><td>Cardioversion!</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="danger"><strong>⚠️ WPW + AFib — კატ. კონტრინდ.:</strong><br>
+  Adenosine · Verapamil · Diltiazem · Digoxin · Beta-blockers<br>
+  → AV ბლ. → Kent bundle-ზე → VF!<br>
+  → <strong>Cardioversion ONLY ან Procainamide/Ibutilide</strong></div>
+</div>
+<div class="s-section">
+  <div class="s-label">Torsades de Pointes</div>
+  <div class="s-box"><p>QT↑ + Polymorphic wide VT (twist around baseline)<br>
+  <strong>მიზეზი:</strong> QT-გამ. წამ. (Amio, Sotalol, Haloperidol), HypoMg/K<br>
+  <span class="badge badge-red">Amiodarone = კატ. კონტ.!</span> QT↑↑ → VF!<br>
+  → <strong>Mg 1–2g IV slow 5–10წთ</strong><br>
+  → Overdrive pacing HR→100 · Isoproterenol<br>
+  → QT-გამ. წამ. შ. → გ.</p></div>
+</div>`
+},
+
+cardio: {
+  title: "⚡ Cardioversion — Sync vs Unsync",
+  html: `
+<div class="s-section">
+  <div class="s-label">ძირ. განსხვ.: SYNC vs UNSYNC</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">SYNC</div><div class="s-card-val">R-wave-ზე</div><div class="s-card-sub">T-wave avoid → safe. AFib/SVT/VT</div></div>
+    <div class="s-card"><div class="s-card-label">UNSYNC</div><div class="s-card-val">Brute force</div><div class="s-card-sub">VF/pVT/Torsades</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">ენერგია — დოზები</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">AFib (SYNC)</span><span class="drug-dose">120–200J biphasic</span></div>
+    <div class="drug-row"><span class="drug-name">A-Flutter / SVT (SYNC)</span><span class="drug-dose">50–100J</span></div>
+    <div class="drug-row"><span class="drug-name">Mono VT (SYNC)</span><span class="drug-dose">100J → escalate</span></div>
+    <div class="drug-row"><span class="drug-name">VF / pVT (UNSYNC)</span><span class="drug-dose">120–200J biphasic / 360J mono</span></div>
+    <div class="drug-row"><span class="drug-name">Poly VT / Torsades (UNSYNC)</span><span class="drug-dose">200J</span></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">სედაცია (Stable-ში)</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Midazolam + Fentanyl</span><span class="drug-dose">1–2mg + 1–2mcg/kg</span></div>
+    <div class="drug-row"><span class="drug-name">Etomidate</span><span class="drug-dose">0.2–0.3mg/kg (BP stable)</span></div>
+    <div class="drug-row"><span class="drug-name">Ketamine</span><span class="drug-dose">1–2mg/kg (BP↓ min)</span></div>
+    <div class="drug-row"><span class="drug-name">Propofol</span><span class="drug-dose">1–2mg/kg (BP↓ risk)</span></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">⚠️ 3 ხაფანგი</div>
+  <div class="warn">
+    <p><strong>1. Low amplitude R-wave:</strong> Markers ✗ → Sync fails → Gain↑ ან Lead შეცვ.</p>
+    <p style="margin-top:6px"><strong>2. Handheld paddles:</strong> Sync ≠ reliable → <strong>Adhesive pads ყოველთვის!</strong></p>
+    <p style="margin-top:6px"><strong>3. Post-shock Auto UNSYNC:</strong> ყოველი SYNC shock შემდ. → monitor UNSYNC-ზე გადაეხვ. → SYNC ყ. შ-ში ხელახ. ჩ.!</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Pads პოზიცია</div>
+  <div class="s-box"><p><strong>Ant-Lat:</strong> Sternum R 2nd ICS · Apex L MCL 5th ICS<br>
+  <strong>Ant-Post:</strong> Sternum · Left subscapular<br>
+  <strong>Pacemaker:</strong> Pads ≥8სმ მოწყ-ს</p></div>
+</div>`
+},
+
+qrs: {
+  title: "🔵 Narrow / Wide QRS — Tachycardia Dx",
+  html: `
+<div class="s-section">
+  <div class="s-label">QRS გაზომვა</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">Narrow</div><div class="s-card-val">&lt;120ms</div><div class="s-card-sub">SVT / SV origin</div></div>
+    <div class="s-card"><div class="s-card-label">Wide</div><div class="s-card-val">≥120ms</div><div class="s-card-sub">VT პრეს. · LBBB · WPW</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Narrow QRS — კლასიფ.</div>
+  <table class="s-table">
+    <tr><th>Pattern</th><th>Dx</th><th>მკ.</th></tr>
+    <tr><td>Regular, HR ~150</td><td>SVT / AVNRT</td><td>Vagal → Adenosine 6→12→12mg</td></tr>
+    <tr><td>Regular, P before QRS</td><td>Sinus Tach</td><td>მიზეზი (ტკ./ჰიპ./ცხ.)</td></tr>
+    <tr><td>Irregular, no clear P</td><td>AFib</td><td>Rate ctrl: Metoprolol/Diltiazem</td></tr>
+    <tr><td>Sawtooth baseline</td><td>A-Flutter</td><td>Cardioversion 50–100J</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="s-label">Wide QRS — კლასიფ.</div>
+  <table class="s-table">
+    <tr><th>Pattern</th><th>Dx</th><th>მკ.</th></tr>
+    <tr><td>Regular, monomorphic</td><td>VT (პრეს.!)</td><td>Amio 150mg/10წთ · Cardioversion</td></tr>
+    <tr><td>Irregular, polymorphic</td><td>Torsades / AFib+WPW</td><td>Mg 2g · Cardioversion!</td></tr>
+    <tr><td>Regular, LBBB-like</td><td>LBBB+SVT ან VT</td><td>VT assume → Amio</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="danger"><strong>⚠️ Wide + Irregular = EMERGENY:</strong><br>
+  Adenosine / Verapamil / Diltiazem → VF! კატ. კონტ.<br>
+  → <strong>Cardioversion only!</strong></div>
+</div>
+<div class="s-section">
+  <div class="s-label">VT vs SVT+LBBB — სხვაობა</div>
+  <div class="s-box"><p><strong>VT-ს სასარგებლო:</strong> AV dissociation · Fusion beats · Capture beats<br>
+  <strong>RS &gt;100ms V1-V6-ში</strong> · QRS ≥160ms · Northwest axis<br>
+  <strong>Brugada criteria:</strong> RS absent all V leads = VT<br>
+  <span class="badge badge-red">Rule:</span> Wide regular tach = VT სანამ სხვა არ დამ. → Amio</p></div>
+</div>`
+},
+
+svt: {
+  title: "🔵 Narrow QRS — SVT / AVNRT",
+  html: `
+<div class="s-section">
+  <div class="s-label">განმარტება</div>
+  <div class="s-box"><p>SVT = Supraventricular Tachycardia<br>
+  ხშ. AVNRT (AV nodal re-entry) = "P buried in QRS" ან retrograde P<br>
+  HR ჩვ. 150–250/წთ · Narrow QRS · Regular<br>
+  <strong>გამ.:</strong> Parox. onset/offset · Palpitation · Presyncope</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">Step 1 — Vagal Maneuver</div>
+  <div class="s-box" style="border-left:3px solid var(--teal)">
+    <p><strong>Modified Valsalva (საუკ.):</strong> 15წმ blow → სუპინ + legs↑ 45° → 1წთ<br>
+    <strong>Carotid Sinus Massage:</strong> ყელი 5–10წმ<br>
+    CI: Bruit · Stroke Hx · TIA Hx<br>
+    <strong>Cold water face immersion:</strong> ბავშვებში ეფ.</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Step 2 — Adenosine</div>
+  <ul class="s-steps">
+    <li class="step-teal"><span class="num">1</span><span><strong>6mg rapid IV push</strong> — antecubital ან ზემო + 20ml flush + arm↑<br>Monitor (12-lead) + Crash cart მახლ.!<br>T½ = 10 წამი — სწრაფად!</span></li>
+    <li class="step-teal"><span class="num">2</span><span><strong>12mg</strong> — თუ 6mg ვ.შ. (1–2წთ)</span></li>
+    <li class="step-teal"><span class="num">3</span><span><strong>12mg</strong> — კვლ. თუ საჭ. (max 3 dose)</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">Adenosine — სპეც. სიტუ.</div>
+  <table class="s-table">
+    <tr><th>სიტ.</th><th>ცვლ.</th></tr>
+    <tr><td>Theophylline / Caffeine</td><td>↑ დოზა (12mg პირველი)</td></tr>
+    <tr><td>Dipyridamole / Carbamazepine</td><td>3mg-ით!</td></tr>
+    <tr><td>Asthma / COPD</td><td><span class="badge badge-red">კონტ.!</span> ბრონქოსპ.</td></tr>
+    <tr><td>Central line</td><td>3mg (ეფ. ↑↑)</td></tr>
+    <tr><td>WPW + AFib</td><td><span class="badge badge-red">სიკვდ.!</span> Cardioversion only!</td></tr>
+    <tr><td>Transplant heart</td><td>1mg-ით (hypersensitive)</td></tr>
+  </table>
+</div>
+<div class="s-section">
+  <div class="s-label">AFib / A-Flutter — Stable</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Rate control</span><span class="drug-dose">Metoprolol 5mg IV · Diltiazem 15–20mg</span></div>
+    <div class="drug-row"><span class="drug-name">A-Flutter</span><span class="drug-dose">Cardioversion 50–100J (Drug-res.)</span></div>
+    <div class="drug-row"><span class="drug-name">Anticoagulation</span><span class="drug-dose">≥48სთ AFib → Heparin + CHA₂DS₂</span></div>
+  </div>
+</div>`
+},
+
+vt: {
+  title: "🔴 Wide QRS — VT",
+  html: `
+<div class="s-section">
+  <div class="danger"><strong>VT პრეზ. პრინციპი:</strong> Wide regular tach = VT სანამ სხვა არ დამ. — ყ. Amiodarone.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Stable Mono VT</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Amiodarone</span><span class="drug-dose">150mg/10წთ IV slow → 1mg/min 6სთ → 0.5mg/min 18სთ</span></div>
+    <div class="drug-row"><span class="drug-name">Procainamide</span><span class="drug-dose">20–50mg/min · max 17mg/kg · CI: EF&lt;40%</span></div>
+    <div class="drug-row"><span class="drug-name">Sotalol</span><span class="drug-dose">100mg/10წთ IV · CI: QT↑ / Torsades</span></div>
+    <div class="drug-row"><span class="drug-name">Lidocaine</span><span class="drug-dose">1–1.5mg/kg IV · ალტ. Amio-ს</span></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Unstable VT</div>
+  <div class="danger"><strong>→ Synchronized Cardioversion მაშინვე!</strong><br>
+  სედ.: Midazolam + Fentanyl (თუ გონება შენ.)</div>
+</div>
+<div class="s-section">
+  <div class="s-label">Torsades de Pointes — ✗ Amio!</div>
+  <div class="s-box" style="border-left:3px solid var(--red)">
+    <p><strong>განმ.:</strong> QT↑ + Polymorphic VT (twisting QRS)<br>
+    <strong>მიზეზი:</strong> Amio, Sotalol, Haloperidol, HypoMg/K, Congenital<br>
+    <span class="badge badge-red">Amiodarone = კატ. კონტ.!</span> QT↑↑ → VF!<br><br>
+    <strong>მკ.:</strong><br>
+    → Mg 1–2g IV slow 5–10წთ<br>
+    → Overdrive pacing (HR→100 → QT↓)<br>
+    → Isoproterenol 2–10mcg/min<br>
+    → QT-გამ. წამ. შ. · K repletion → K ≥4.5<br>
+    → Unstable → Unsync Defib</p>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">AFib + WPW — Wide Irregular</div>
+  <div class="danger"><strong>→ Cardioversion ONLY!</strong><br>
+  Adenosine/Verapamil/Digoxin → AV block → Kent↑ → VF!<br>
+  Procainamide ან Ibutilide (stable, თუ გადაწ.)</div>
+</div>`
+},
+
+rosc: {
+  title: "🟢 ROSC — Return of Spontaneous Circulation",
+  html: `
+<div class="s-section">
+  <div class="ok"><strong>ახლა ტვინი:</strong> ROSC = გულსისხლ-სისხ. ↑ → ახლა ტვინი ვ. · Secondary injury avoid.</div>
+</div>
+<div class="s-section">
+  <div class="s-label">სამიზნეები — ყველა ერთად</div>
+  <div class="s-grid">
+    <div class="s-card"><div class="s-card-label">SpO₂</div><div class="s-card-val">92–98%</div><div class="s-card-sub">&gt;98% = hyperoxia → ROS↑</div></div>
+    <div class="s-card"><div class="s-card-label">PaCO₂</div><div class="s-card-val">35–45mmHg</div><div class="s-card-sub">Hypervent. → CBF↓</div></div>
+    <div class="s-card"><div class="s-card-label">SBP</div><div class="s-card-val">≥90</div><div class="s-card-sub">MAP ≥65 target</div></div>
+    <div class="s-card"><div class="s-card-label">TTM</div><div class="s-card-val">32–36°C</div><div class="s-card-sub">24–48სთ კომა-პ.</div></div>
+    <div class="s-card"><div class="s-card-label">Glucose</div><div class="s-card-val">140–180</div><div class="s-card-sub">ჰიპოგლიკ. = კრიტ.!</div></div>
+    <div class="s-card"><div class="s-card-label">ETCO₂</div><div class="s-card-val">35–45</div><div class="s-card-sub">↑ ვენტ. თუ &gt;45</div></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">Vasopressors (SBP &lt;90)</div>
+  <div class="s-box">
+    <div class="drug-row"><span class="drug-name">Norepinephrine</span><span class="drug-dose">0.1–0.5 mcg/kg/min (1st choice)</span></div>
+    <div class="drug-row"><span class="drug-name">Epinephrine</span><span class="drug-dose">0.1–0.5 mcg/kg/min</span></div>
+    <div class="drug-row"><span class="drug-name">Dopamine</span><span class="drug-dose">5–10 mcg/kg/min (ალტ.)</span></div>
+    <div class="drug-row"><span class="drug-name">Fluids</span><span class="drug-dose">250ml bolus თუ ჰიპოვ. · avoid fluid overload</span></div>
+  </div>
+</div>
+<div class="s-section">
+  <div class="s-label">გამ. სტაბ. შემდ. — პრიორ.</div>
+  <ul class="s-steps">
+    <li class="step-green"><span class="num">1</span><span><strong>12-lead ECG</strong> — STEMI? → Cath Lab ≤24სთ (ნებ. rhythm)</span></li>
+    <li class="step-green"><span class="num">2</span><span><strong>CT Head</strong> — თუ non-cardiac მიზეზი (ინს., ტრ.)</span></li>
+    <li class="step-green"><span class="num">3</span><span><strong>TTM 32–36°C</strong> — 24–48სთ · ცხ. avoid ≥72სთ</span></li>
+    <li class="step-green"><span class="num">4</span><span><strong>Neuro monitoring</strong> — EEG (seizure?), SSEP, CT/MRI 72სთ</span></li>
+    <li class="step-green"><span class="num">5</span><span><strong>Prognostication</strong> — ≥72სთ პოსტ-ROSC (ადრეული ✗)</span></li>
+  </ul>
+</div>
+<div class="s-section">
+  <div class="s-label">TTM — Targeted Temperature Management</div>
+  <div class="s-box"><p><strong>კანდ.:</strong> კომა post-ROSC (GCS &lt;8) · შ-ი Cardiac arrest<br>
+  <strong>მეთ.:</strong> Cold IV fluids (30ml/kg) + Surface cooling ან Endovascular<br>
+  <strong>32–34°C</strong> = ნეირო-პრ. · <strong>36°C</strong> = Fever avoid (equiv.)<br>
+  <strong>Shivering:</strong> Mg 2g + Meperidine + Sedation<br>
+  <strong>Rewarming:</strong> 0.25°C/სთ · ≥48სთ ნ. 37°C-მდე</p></div>
+</div>
+<div class="s-section">
+  <div class="s-label">⚠️ Avoid</div>
+  <div class="danger"><strong>Hyperoxia</strong> (SpO₂ &gt;98%) → ROS → ↑ mortality<br>
+  <strong>Hypocapnia</strong> (PaCO₂ &lt;35) → vasoconstr → CBF↓<br>
+  <strong>Hypoglycemia</strong> → ≥140 maintain<br>
+  <strong>Fever</strong> ≥37.7°C → ↑ cerebral metabol. demand<br>
+  <strong>ადრ. prognostication</strong> &lt;72სთ → misleading</div>
+</div>`
+}
+
+};
+
+function S(key) {
+  const d = DATA[key];
+  if (!d) return;
+  document.getElementById('sh-title').textContent = d.title;
+  document.getElementById('sh-body').innerHTML = d.html;
+  document.getElementById('sh-body').scrollTop = 0;
+  document.getElementById('bd').classList.add('open');
+  document.getElementById('sh').classList.add('open');
+}
+function closeSheet() {
+  document.getElementById('bd').classList.remove('open');
+  document.getElementById('sh').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+let _sy = 0;
+const sh = document.getElementById('sh');
+sh.addEventListener('touchstart', e => { _sy = e.touches[0].clientY; }, {passive:true});
+sh.addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientY - _sy > 90) closeSheet();
+}, {passive:true});
+</script>
+</body>
+</html>
