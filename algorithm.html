@@ -3,746 +3,1460 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ACLS Algorithms</title>
+<title>ACLS — სრული ალგორითმი</title>
 <style>
+/* ═══════════════════════════════════════════════════════
+   PSYCHOLOGICAL COLOR SYSTEM
+   
+   RED    #FF2D3B  → გადაუდებელი, სიცოცხლე-სიკვდილი, CPR, Shockable
+   AMBER  #FF9500  → ყურადღება, გაფრთხილება, Bradycardia, Non-shockable
+   CYAN   #00C8FF  → სიმშვიდე/კონტროლი, Stable Tachy, Cardioversion
+   GREEN  #00D25B  → ROSC, გადარჩენა, წარმატება, ნორმა
+   PURPLE #A855FF  → გადაწყვეტილება, ასესმენტი
+   
+   Background: #0A0D14 — ღრმა ღამის ცა
+   ══════════════════════════════════════════════════════= */
+
 :root {
-  --bg: #0f1117;
-  --bg2: #161b27;
-  --bg3: #1e2535;
-  --bg4: #252d42;
-  --line: rgba(255,255,255,0.07);
-  --line2: rgba(255,255,255,0.12);
-  --txt: #e8ecf4;
-  --txt2: #8892a4;
-  --txt3: #515c70;
-  --red: #ff4d5e;
-  --red-bg: rgba(255,77,94,0.1);
-  --red-line: rgba(255,77,94,0.3);
-  --amber: #f5a623;
-  --amber-bg: rgba(245,166,35,0.1);
-  --amber-line: rgba(245,166,35,0.3);
-  --green: #2ecc71;
-  --green-bg: rgba(46,204,113,0.1);
-  --green-line: rgba(46,204,113,0.3);
-  --blue: #4e9eff;
-  --blue-bg: rgba(78,158,255,0.1);
-  --blue-line: rgba(78,158,255,0.3);
-  --pulse: #ff4d5e;
-  --r: 6px;
-  --font: -apple-system, 'Helvetica Neue', sans-serif;
+  /* Backgrounds */
+  --bg:    #0A0D14;
+  --bg1:   #0F1220;
+  --bg2:   #141928;
+  --bg3:   #1A2132;
+  --bg4:   #202840;
+
+  /* Lines */
+  --ln:    rgba(255,255,255,0.07);
+  --ln2:   rgba(255,255,255,0.12);
+
+  /* Text */
+  --t1:    #F0F4FF;
+  --t2:    #8E98B0;
+  --t3:    #4A536B;
+
+  /* DANGER — RED: გადაუდებელი, CPR, VF/pVT, Cardiac Arrest */
+  --red:   #FF2D3B;
+  --red2:  #FF6170;
+  --rbg:   rgba(255,45,59,.10);
+  --rln:   rgba(255,45,59,.30);
+  --rbrd:  rgba(255,45,59,.50);
+
+  /* CAUTION — AMBER: Bradycardia, Non-Shock, გაფრთხილება */
+  --amb:   #FF9500;
+  --amb2:  #FFB340;
+  --abg:   rgba(255,149,0,.10);
+  --aln:   rgba(255,149,0,.28);
+  --abrd:  rgba(255,149,0,.50);
+
+  /* CONTROL — CYAN: Cardioversion, Stable Tachy, Stable */
+  --cyn:   #00C8FF;
+  --cyn2:  #5DD8FF;
+  --cbg:   rgba(0,200,255,.10);
+  --cln:   rgba(0,200,255,.28);
+  --cbrd:  rgba(0,200,255,.50);
+
+  /* SUCCESS — GREEN: ROSC, OK, გადარჩენა */
+  --grn:   #00D25B;
+  --grn2:  #34E87A;
+  --gbg:   rgba(0,210,91,.10);
+  --gln:   rgba(0,210,91,.28);
+  --gbrd:  rgba(0,210,91,.50);
+
+  /* DECISION — PURPLE: შეფასება, გადაწყვეტილება */
+  --pur:   #A855FF;
+  --pur2:  #C084FC;
+  --pbg:   rgba(168,85,255,.10);
+  --pln:   rgba(168,85,255,.28);
+  --pbrd:  rgba(168,85,255,.50);
+
+  /* Layout */
+  --r:     8px;
+  --r2:    5px;
+  --font:  -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--txt); font-family: var(--font); font-size: 14px; line-height: 1.5; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── NAV ── */
-.nav { 
-  display: flex; gap: 4px; padding: 16px 16px 0;
-  border-bottom: 1px solid var(--line); background: var(--bg);
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── GLOW HELPER ─── */
+.glow-red  { box-shadow: 0 0 20px rgba(255,45,59,.15); }
+.glow-amb  { box-shadow: 0 0 20px rgba(255,149,0,.15); }
+.glow-cyn  { box-shadow: 0 0 20px rgba(0,200,255,.15); }
+.glow-grn  { box-shadow: 0 0 20px rgba(0,210,91,.15); }
+
+/* ═══════════════════════ TAB BAR ═══════════════════════ */
+.tabbar {
+  display: flex; gap: 2px; padding: 10px 12px 0;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--ln2);
   position: sticky; top: 0; z-index: 100;
+  flex-wrap: wrap;
+  backdrop-filter: blur(10px);
 }
-.nav-btn {
-  padding: 8px 14px 10px; border: none; background: transparent;
-  color: var(--txt2); font-size: 13px; font-weight: 500; cursor: pointer;
-  border-bottom: 2px solid transparent; transition: all .15s;
-  font-family: var(--font); letter-spacing: 0.01em;
+.tab {
+  padding: 8px 13px 10px; border: none; background: transparent;
+  color: var(--t3); font-size: 11.5px; font-weight: 600;
+  cursor: pointer; border-bottom: 2.5px solid transparent;
+  transition: all .15s; font-family: var(--font);
+  letter-spacing: .02em; border-radius: var(--r2) var(--r2) 0 0;
+  white-space: nowrap;
 }
-.nav-btn:hover { color: var(--txt); }
-.nav-btn.on { color: var(--txt); border-bottom-color: var(--blue); }
+.tab:hover { color: var(--t2); background: rgba(255,255,255,.03); }
+.tab.on.t-r  { color: var(--red);  border-bottom-color: var(--red);  background: var(--rbg); }
+.tab.on.t-a  { color: var(--amb);  border-bottom-color: var(--amb);  background: var(--abg); }
+.tab.on.t-c  { color: var(--cyn);  border-bottom-color: var(--cyn);  background: var(--cbg); }
+.tab.on.t-g  { color: var(--grn);  border-bottom-color: var(--grn);  background: var(--gbg); }
+.tab.on.t-p  { color: var(--pur);  border-bottom-color: var(--pur);  background: var(--pbg); }
 
-/* ── PAGES ── */
-.pg { display: none; padding: 20px 16px 40px; max-width: 780px; margin: 0 auto; }
+/* ═══════════════════════ PAGES ═══════════════════════ */
+.pg { display: none; padding: 16px 14px 60px; max-width: 860px; margin: 0 auto; }
 .pg.on { display: block; }
 
-/* ── SECTION HEADER ── */
-.sec-label {
-  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
-  color: var(--txt3); text-transform: uppercase; margin: 24px 0 10px;
+/* ═══════════════════════ SECTION LABEL ═══════════════════════ */
+.sl {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  color: var(--t3); text-transform: uppercase;
+  margin: 24px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--ln);
 }
-.sec-label:first-child { margin-top: 0; }
+.sl:first-child { margin-top: 0; }
+.sl.red  { color: var(--red2); border-color: var(--rln); }
+.sl.amb  { color: var(--amb2); border-color: var(--aln); }
+.sl.cyn  { color: var(--cyn2); border-color: var(--cln); }
+.sl.grn  { color: var(--grn2); border-color: var(--gln); }
+.sl.pur  { color: var(--pur2); border-color: var(--pln); }
 
-/* ── DECISION PATHWAY (top-level visual flow) ── */
-.pathway {
+/* ═══════════════════════ HERO BANNER (MAP PAGE) ═══════════════════════ */
+.hero {
+  background: linear-gradient(135deg, #0F1220 0%, #1A0E2E 50%, #0A1420 100%);
+  border: 1px solid var(--pln); border-radius: var(--r);
+  padding: 20px 20px 16px; margin-bottom: 16px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(168,85,255,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-title {
+  font-size: 22px; font-weight: 800; letter-spacing: -.01em;
+  background: linear-gradient(135deg, var(--red2) 0%, var(--pur2) 50%, var(--cyn2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1.2; margin-bottom: 6px;
+}
+.hero-sub { font-size: 12px; color: var(--t3); line-height: 1.6; }
+.hero-sub strong { color: var(--t2); font-weight: 600; }
+
+/* ═══════════════════════ DECISION TREE — SVG MAP ═══════════════════════ */
+#mapsvg-wrap { margin-bottom: 16px; border-radius: var(--r); overflow: hidden; border: 1px solid var(--ln2); }
+#mapsvg-wrap svg { width: 100%; display: block; background: var(--bg1); }
+
+/* ═══════════════════════ QUICK STRIP ═══════════════════════ */
+.qstrip {
   display: flex; flex-direction: column; gap: 0;
-  border: 1px solid var(--line2); border-radius: var(--r);
-  overflow: hidden; margin-bottom: 12px;
+  border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden;
+  margin-bottom: 14px;
 }
-.path-row {
-  display: flex; align-items: stretch; border-bottom: 1px solid var(--line);
+.qs {
+  display: grid; grid-template-columns: 52px 1fr;
+  border-bottom: 1px solid var(--ln); background: var(--bg2);
 }
-.path-row:last-child { border-bottom: none; }
-.path-label {
-  width: 110px; min-width: 110px; padding: 10px 12px;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
-  color: var(--txt3); display: flex; align-items: center;
-  border-right: 1px solid var(--line); background: var(--bg2);
+.qs:last-child { border-bottom: none; }
+.qs-num {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; font-size: 17px; padding: 10px 6px;
+  background: var(--bg1); border-right: 1px solid var(--ln);
+  gap: 2px; line-height: 1;
 }
-.path-content {
-  flex: 1; padding: 10px 14px; display: flex;
-  align-items: center; flex-wrap: wrap; gap: 6px;
-  background: var(--bg3); font-size: 13px; color: var(--txt2);
-}
-.path-content strong { color: var(--txt); font-weight: 600; }
+.qs-num span { font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.qs-body { padding: 9px 12px; font-size: 12.5px; color: var(--t2); line-height: 1.65; align-self: center; }
+.qs-body strong { color: var(--t1); font-weight: 700; }
+.qs-body .d { color: var(--red2); font-weight: 700; }
+.qs.c-r .qs-num { color: var(--red);  background: var(--rbg); }
+.qs.c-a .qs-num { color: var(--amb);  background: var(--abg); }
+.qs.c-c .qs-num { color: var(--cyn);  background: var(--cbg); }
+.qs.c-g .qs-num { color: var(--grn);  background: var(--gbg); }
+.qs.c-p .qs-num { color: var(--pur);  background: var(--pbg); }
 
-/* ── BRANCHES (two-column split) ── */
-.branches { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.branch {
-  border: 1px solid var(--line2); border-radius: var(--r);
-  overflow: hidden;
+/* ═══════════════════════ FLOW CHAIN ═══════════════════════ */
+.flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 14px; }
+.fn {
+  display: grid; grid-template-columns: 74px 1fr;
+  border: 1px solid var(--ln2); border-bottom: none;
+  background: var(--bg2); position: relative;
 }
-.branch-hd {
-  padding: 8px 12px; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
+.fn:first-child { border-radius: var(--r) var(--r) 0 0; }
+.fn:last-child  { border-bottom: 1px solid var(--ln2); border-radius: 0 0 var(--r) var(--r); }
+.fn-badge {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 10px 6px; font-size: 10px;
+  font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  border-right: 1px solid var(--ln2); background: var(--bg1);
+  text-align: center; gap: 4px;
 }
-.branch-hd.red { background: var(--red-bg); color: var(--red); border-bottom: 1px solid var(--red-line); }
-.branch-hd.amber { background: var(--amber-bg); color: var(--amber); border-bottom: 1px solid var(--amber-line); }
-.branch-hd.green { background: var(--green-bg); color: var(--green); border-bottom: 1px solid var(--green-line); }
-.branch-hd.blue { background: var(--blue-bg); color: var(--blue); border-bottom: 1px solid var(--blue-line); }
-.branch-body { padding: 10px 12px; background: var(--bg3); }
+.fn-badge .ico { font-size: 20px; line-height: 1; }
+.fn-body {
+  padding: 10px 14px; font-size: 12.5px;
+  color: var(--t2); line-height: 1.65; align-self: center;
+}
+.fn-body strong { color: var(--t1); font-weight: 700; }
+.fn-body .d  { color: var(--red2);  font-weight: 700; }
+.fn-body .a  { color: var(--amb2);  font-weight: 700; }
+.fn-body .c  { color: var(--cyn2);  font-weight: 700; }
+.fn-body .g  { color: var(--grn2);  font-weight: 700; }
+.fn-body .p  { color: var(--pur2);  font-weight: 700; }
+.fn-body .warn { color: var(--red); font-weight: 700; background: var(--rbg); padding: 1px 5px; border-radius: 3px; }
 
-/* ── STEPS ── */
-.steps { display: flex; flex-direction: column; gap: 0; }
-.step {
-  display: flex; gap: 0; align-items: stretch;
-  border-bottom: 1px solid var(--line);
-}
-.step:last-child { border-bottom: none; }
-.step-num {
-  min-width: 36px; display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: var(--txt3);
-  border-right: 1px solid var(--line); flex-shrink: 0;
-  background: var(--bg2);
-}
-.step-num.r { color: var(--red); background: var(--red-bg); }
-.step-num.a { color: var(--amber); background: var(--amber-bg); }
-.step-num.g { color: var(--green); background: var(--green-bg); }
-.step-num.b { color: var(--blue); background: var(--blue-bg); }
-.step-txt {
-  padding: 9px 12px; font-size: 13px; color: var(--txt2);
-  line-height: 1.6; flex: 1;
-}
-.step-txt strong { color: var(--txt); font-weight: 600; }
-.step-txt em { color: var(--amber); font-style: normal; font-weight: 600; }
-.step-txt .drug { color: var(--red); font-weight: 700; }
-.step-txt .ok { color: var(--green); font-weight: 600; }
-.step-txt .warn { color: var(--red); font-weight: 600; }
+.fn.c-r .fn-badge { color: var(--red); background: var(--rbg); border-color: var(--rln); }
+.fn.c-a .fn-badge { color: var(--amb); background: var(--abg); border-color: var(--aln); }
+.fn.c-c .fn-badge { color: var(--cyn); background: var(--cbg); border-color: var(--cln); }
+.fn.c-g .fn-badge { color: var(--grn); background: var(--gbg); border-color: var(--gln); }
+.fn.c-p .fn-badge { color: var(--pur); background: var(--pbg); border-color: var(--pln); }
 
-/* ── CARD GRID ── */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-.cards.c2 { grid-template-columns: 1fr 1fr; }
-.cards.c4 { grid-template-columns: repeat(4, 1fr); }
+/* CRITICAL border accent */
+.fn.crit { border-left: 3px solid var(--red); }
+.fn.ok   { border-left: 3px solid var(--grn); }
+.fn.warn { border-left: 3px solid var(--amb); }
+
+/* ═══════════════════════ 2-COL SPLIT ═══════════════════════ */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.branch { border-radius: var(--r); overflow: hidden; border: 1px solid var(--ln2); }
+.bh {
+  padding: 9px 12px; font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.bh.r { background: var(--rbg); color: var(--red);  border-bottom: 1px solid var(--rln); }
+.bh.a { background: var(--abg); color: var(--amb);  border-bottom: 1px solid var(--aln); }
+.bh.c { background: var(--cbg); color: var(--cyn);  border-bottom: 1px solid var(--cln); }
+.bh.g { background: var(--gbg); color: var(--grn);  border-bottom: 1px solid var(--gln); }
+.bb   { padding: 10px 12px; background: var(--bg2); }
+
+/* ═══════════════════════ NUMBERED STEPS ═══════════════════════ */
+.steps { display: flex; flex-direction: column; }
+.st { display: grid; grid-template-columns: 32px 1fr; border-bottom: 1px solid var(--ln); }
+.st:last-child { border-bottom: none; }
+.sn {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; border-right: 1px solid var(--ln);
+  background: var(--bg1); flex-shrink: 0;
+}
+.sn.r { color: var(--red); background: var(--rbg); }
+.sn.a { color: var(--amb); background: var(--abg); }
+.sn.c { color: var(--cyn); background: var(--cbg); }
+.sn.g { color: var(--grn); background: var(--gbg); }
+.stb  { padding: 8px 11px; font-size: 12.5px; color: var(--t2); line-height: 1.6; }
+.stb strong { color: var(--t1); font-weight: 700; }
+.stb .d { color: var(--red2); font-weight: 700; }
+.stb .g { color: var(--grn2); font-weight: 700; }
+
+/* ═══════════════════════ CARDS GRID ═══════════════════════ */
+.cards { display: grid; gap: 8px; margin-bottom: 14px; }
+.c2 { grid-template-columns: 1fr 1fr; }
+.c3 { grid-template-columns: repeat(3,1fr); }
+.c4 { grid-template-columns: repeat(4,1fr); }
+.c6 { grid-template-columns: repeat(3,1fr); }
 .card {
-  background: var(--bg3); border: 1px solid var(--line2);
-  border-radius: var(--r); padding: 10px 12px;
+  background: var(--bg2); border: 1px solid var(--ln2);
+  border-radius: var(--r); padding: 11px 13px;
 }
-.card-lbl { font-size: 10px; font-weight: 600; color: var(--txt3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-.card-val { font-size: 15px; font-weight: 700; color: var(--txt); line-height: 1.2; }
-.card-sub { font-size: 11px; color: var(--txt2); margin-top: 3px; line-height: 1.4; }
-.card.red { border-color: var(--red-line); background: var(--red-bg); }
-.card.red .card-val { color: var(--red); }
-.card.green { border-color: var(--green-line); background: var(--green-bg); }
-.card.green .card-val { color: var(--green); }
-.card.amber { border-color: var(--amber-line); background: var(--amber-bg); }
-.card.amber .card-val { color: var(--amber); }
-.card.blue { border-color: var(--blue-line); background: var(--blue-bg); }
-.card.blue .card-val { color: var(--blue); }
+.card-lbl { font-size: 10px; font-weight: 700; color: var(--t3); letter-spacing: .09em; text-transform: uppercase; margin-bottom: 3px; }
+.card-val { font-size: 16px; font-weight: 800; color: var(--t1); line-height: 1.15; }
+.card-sub { font-size: 11px; color: var(--t2); margin-top: 3px; line-height: 1.45; }
+.card.r  { border-color: var(--rln); background: var(--rbg); } .card.r  .card-val { color: var(--red2); }
+.card.a  { border-color: var(--aln); background: var(--abg); } .card.a  .card-val { color: var(--amb2); }
+.card.c  { border-color: var(--cln); background: var(--cbg); } .card.c  .card-val { color: var(--cyn2); }
+.card.g  { border-color: var(--gln); background: var(--gbg); } .card.g  .card-val { color: var(--grn2); }
 
-/* ── DRUG TABLE ── */
-.dtbl { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 10px; }
-.dtbl th {
-  text-align: left; padding: 6px 10px; font-size: 10px; font-weight: 700;
-  color: var(--txt3); letter-spacing: 0.08em; text-transform: uppercase;
-  border-bottom: 1px solid var(--line2); background: var(--bg2);
-}
-.dtbl td {
-  padding: 7px 10px; border-bottom: 1px solid var(--line);
-  color: var(--txt2); vertical-align: top; line-height: 1.5;
-}
-.dtbl tr:last-child td { border-bottom: none; }
-.dtbl td:first-child { color: var(--txt); font-weight: 600; }
-.dtbl td.dose { color: var(--red); font-weight: 700; }
-.dtbl td.ok { color: var(--green); font-weight: 600; }
-.dtbl td.kill { color: var(--red); font-weight: 700; }
-.dtbl-wrap { border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
-
-/* ── ALERTS ── */
+/* ═══════════════════════ ALERT BARS ═══════════════════════ */
 .alert {
-  border-radius: var(--r); padding: 10px 14px; font-size: 12.5px;
-  line-height: 1.65; margin-bottom: 10px;
+  border-radius: var(--r); padding: 10px 14px;
+  font-size: 12.5px; line-height: 1.65; margin-bottom: 10px;
   border-left: 3px solid;
 }
-.alert.red { background: var(--red-bg); border-color: var(--red); color: #ffaab0; }
-.alert.amber { background: var(--amber-bg); border-color: var(--amber); color: #f5cc80; }
-.alert.green { background: var(--green-bg); border-color: var(--green); color: #7de8aa; }
-.alert.blue { background: var(--blue-bg); border-color: var(--blue); color: #93c5fd; }
-.alert strong { font-weight: 700; color: inherit; }
+.alert.r { background: var(--rbg); border-color: var(--red);  color: #FFAAB0; }
+.alert.a { background: var(--abg); border-color: var(--amb);  color: #FFCC80; }
+.alert.c { background: var(--cbg); border-color: var(--cyn);  color: #80DFFF; }
+.alert.g { background: var(--gbg); border-color: var(--grn);  color: #80EFB0; }
+.alert.p { background: var(--pbg); border-color: var(--pur);  color: #D4A0FF; }
+.alert strong { font-weight: 800; color: inherit; }
 
-/* ── COLLAPSIBLE ── */
-.collapse { margin-bottom: 8px; border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; }
-.collapse-hd {
-  display: flex; align-items: center; padding: 10px 14px;
-  cursor: pointer; background: var(--bg3); gap: 8px;
-  transition: background .12s; user-select: none;
+/* MEGA ALERT — critical */
+.mega-alert {
+  background: linear-gradient(135deg, rgba(255,45,59,.18) 0%, rgba(255,45,59,.08) 100%);
+  border: 1.5px solid var(--rbrd); border-radius: var(--r);
+  padding: 12px 16px; margin-bottom: 12px;
 }
-.collapse-hd:hover { background: var(--bg4); }
-.collapse-arrow { font-size: 10px; color: var(--txt3); transition: transform .15s; flex-shrink: 0; }
-.collapse.open .collapse-arrow { transform: rotate(90deg); }
-.collapse-title { font-size: 13px; font-weight: 600; color: var(--txt); flex: 1; }
-.collapse-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.05em; }
-.tag-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-line); }
-.tag-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-line); }
-.tag-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-line); }
-.tag-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-line); }
-.tag-grey { background: var(--bg4); color: var(--txt2); border: 1px solid var(--line2); }
-.collapse-body { display: none; padding: 14px; border-top: 1px solid var(--line2); background: var(--bg2); }
-.collapse.open .collapse-body { display: block; }
+.mega-alert-title {
+  font-size: 11px; font-weight: 800; color: var(--red2);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.mega-alert-body { font-size: 12.5px; color: #FFAAB0; line-height: 1.65; }
+.mega-alert-body strong { color: #FF8090; font-weight: 800; }
 
-/* ── FLOW ARROW ── */
-.flow-arrow {
-  text-align: center; color: var(--txt3); font-size: 18px;
-  padding: 2px 0; line-height: 1;
+/* ═══════════════════════ DRUG TABLE ═══════════════════════ */
+.tbl-wrap { border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden; margin-bottom: 14px; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.tbl th {
+  text-align: left; padding: 7px 11px;
+  font-size: 10px; font-weight: 700; color: var(--t3);
+  letter-spacing: .09em; text-transform: uppercase;
+  border-bottom: 1px solid var(--ln2); background: var(--bg1);
 }
+.tbl td {
+  padding: 8px 11px; border-bottom: 1px solid var(--ln);
+  color: var(--t2); vertical-align: top; line-height: 1.5;
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td:first-child { color: var(--t1); font-weight: 700; }
+.tbl td.dose  { color: var(--red2);  font-weight: 800; font-size: 13px; }
+.tbl td.ok    { color: var(--grn2);  font-weight: 700; }
+.tbl td.kill  { color: var(--red);   font-weight: 800; }
+.tbl td.warn  { color: var(--amb2);  font-weight: 700; }
+.tbl tr.hi-r td { background: rgba(255,45,59,.07); }
+.tbl tr.hi-a td { background: rgba(255,149,0,.07); }
+.tbl tr.hi-g td { background: rgba(0,210,91,.07);  }
 
-/* ── AV BLOCK COMPARISON ── */
-.avblock-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 12px; }
-.avcard {
-  border-radius: var(--r); overflow: hidden;
-  border: 1px solid var(--line2);
+/* ═══════════════════════ H's & T's ═══════════════════════ */
+.ht2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.htcol { border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden; }
+.hthead {
+  padding: 8px 12px; font-size: 10.5px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: var(--bg1); border-bottom: 1px solid var(--ln2); color: var(--t2);
 }
-.avcard-hd {
-  padding: 8px 10px; font-size: 11px; font-weight: 700;
-  text-align: center; letter-spacing: 0.04em;
+.hti { display: grid; grid-template-columns: 24px 1fr; border-bottom: 1px solid var(--ln); }
+.hti:last-child { border-bottom: none; }
+.htk {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: var(--red2);
+  background: var(--rbg); border-right: 1px solid var(--rln); flex-shrink: 0;
 }
-.avcard-hd.g { background: var(--green-bg); color: var(--green); border-bottom: 1px solid var(--green-line); }
-.avcard-hd.b { background: var(--blue-bg); color: var(--blue); border-bottom: 1px solid var(--blue-line); }
-.avcard-hd.a { background: var(--amber-bg); color: var(--amber); border-bottom: 1px solid var(--amber-line); }
-.avcard-hd.r { background: var(--red-bg); color: var(--red); border-bottom: 1px solid var(--red-line); }
-.avcard-body { padding: 10px; background: var(--bg3); }
-.avcard-row { font-size: 11px; color: var(--txt2); padding: 3px 0; border-bottom: 1px solid var(--line); line-height: 1.5; }
-.avcard-row:last-child { border-bottom: none; }
-.avcard-row strong { color: var(--txt); font-weight: 600; display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--txt3); margin-bottom: 1px; }
+.htt { padding: 7px 10px; font-size: 12px; color: var(--t2); line-height: 1.5; }
+.htt strong { color: var(--t1); font-weight: 700; }
+.htt em { color: var(--amb2); font-style: normal; font-weight: 700; }
+.htt .d { color: var(--red2); font-weight: 700; }
+.htt .g { color: var(--grn2); font-weight: 700; }
 
-/* ── TACHY DECISION MATRIX ── */
-.matrix { border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
-.matrix-row { display: grid; grid-template-columns: 90px 90px 1fr; border-bottom: 1px solid var(--line); }
-.matrix-row:last-child { border-bottom: none; }
-.matrix-row.hd { background: var(--bg2); }
-.matrix-cell {
-  padding: 8px 10px; font-size: 12px; color: var(--txt2);
-  border-right: 1px solid var(--line); display: flex; align-items: center;
-}
-.matrix-cell:last-child { border-right: none; }
-.matrix-cell.hd { font-size: 10px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.08em; }
-.matrix-cell strong { color: var(--txt); font-weight: 600; }
-.matrix-cell.r strong { color: var(--red); }
-.matrix-cell.b strong { color: var(--blue); }
-.matrix-cell.a strong { color: var(--amber); }
-.matrix-cell.g strong { color: var(--green); }
+/* ═══════════════════════ AV BLOCK GRID ═══════════════════════ */
+.av4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 14px; }
+.avcard { border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden; }
+.avhd { padding: 8px 10px; font-size: 11px; font-weight: 800; text-align: center; letter-spacing: .04em; }
+.avhd.g { background: var(--gbg); color: var(--grn); border-bottom: 1px solid var(--gln); }
+.avhd.c { background: var(--cbg); color: var(--cyn); border-bottom: 1px solid var(--cln); }
+.avhd.a { background: var(--abg); color: var(--amb); border-bottom: 1px solid var(--aln); }
+.avhd.r { background: var(--rbg); color: var(--red); border-bottom: 1px solid var(--rln); }
+.avbody { padding: 9px 10px; background: var(--bg2); }
+.avr { font-size: 11.5px; color: var(--t2); padding: 4px 0; border-bottom: 1px solid var(--ln); line-height: 1.4; }
+.avr:last-child { border-bottom: none; }
+.avr strong { color: var(--t3); font-weight: 700; display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 1px; }
+.avr .kill { color: var(--red2); font-weight: 800; }
+.avr .ok   { color: var(--grn2); font-weight: 700; }
+.avr .warn { color: var(--amb2); font-weight: 700; }
 
-/* ── CONTRAINDICATION BOX ── */
-.contra { 
-  background: var(--red-bg); border: 1px solid var(--red-line);
-  border-radius: var(--r); padding: 12px 14px; margin-bottom: 10px;
+/* ═══════════════════════ MATRIX ═══════════════════════ */
+.matrix { border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden; margin-bottom: 14px; }
+.mrow { display: grid; grid-template-columns: 80px 80px 1fr; border-bottom: 1px solid var(--ln); }
+.mrow:last-child { border-bottom: none; }
+.mrow.hd { background: var(--bg1); }
+.mcell {
+  padding: 8px 10px; font-size: 12px; color: var(--t2);
+  border-right: 1px solid var(--ln); display: flex; align-items: center; line-height: 1.5;
 }
-.contra-title {
-  font-size: 11px; font-weight: 700; color: var(--red);
-  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
-}
-.contra-row {
-  display: flex; gap: 8px; align-items: flex-start;
-  padding: 4px 0; border-bottom: 1px solid var(--red-line);
-  font-size: 12px; color: #ffaab0; line-height: 1.5;
-}
-.contra-row:last-child { border-bottom: none; }
-.contra-x { color: var(--red); font-weight: 700; flex-shrink: 0; font-size: 14px; line-height: 1.3; }
+.mcell:last-child { border-right: none; }
+.mcell.hd { font-size: 10px; font-weight: 700; color: var(--t3); text-transform: uppercase; letter-spacing: .07em; }
+.mcell strong { font-weight: 800; }
+.mcell.mc-r strong { color: var(--red2); }
+.mcell.mc-a strong { color: var(--amb2); }
+.mcell.mc-c strong { color: var(--cyn2); }
+.mcell.mc-g strong { color: var(--grn2); }
 
-/* ── ENERGY TABLE ── */
-.energy-grid { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
-.energy-row { display: grid; grid-template-columns: 2fr 1fr 1fr; border-bottom: 1px solid var(--line); }
-.energy-row:last-child { border-bottom: none; }
-.energy-row.hd { background: var(--bg2); }
-.energy-cell {
-  padding: 8px 12px; font-size: 12px; color: var(--txt2);
-  border-right: 1px solid var(--line); display: flex; align-items: center;
+/* ═══════════════════════ CONTRA BOX ═══════════════════════ */
+.contra {
+  background: var(--rbg); border: 1.5px solid var(--rbrd);
+  border-radius: var(--r); padding: 11px 14px; margin-bottom: 12px;
 }
-.energy-cell:last-child { border-right: none; }
-.energy-cell.hd { font-size: 10px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.08em; }
-.energy-cell strong { color: var(--txt); font-weight: 600; }
-.energy-cell .j { color: var(--red); font-weight: 700; font-size: 14px; }
-.energy-cell .sync { color: var(--blue); font-weight: 600; }
-.energy-cell .async { color: var(--amber); font-weight: 600; }
+.contra-title { font-size: 10px; font-weight: 800; color: var(--red2); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.cx-row { display: flex; gap: 8px; align-items: flex-start; padding: 4px 0; border-bottom: 1px solid var(--rln); font-size: 12.5px; color: #FFAAB0; line-height: 1.45; }
+.cx-row:last-child { border-bottom: none; }
+.cx { color: var(--red); font-weight: 900; flex-shrink: 0; font-size: 16px; line-height: 1.1; }
+.cx-ok { color: var(--grn); }
 
-/* ── H's T's GRID ── */
-.ht-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.ht-col { border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; }
-.ht-col-hd {
-  padding: 8px 12px; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  background: var(--bg2); border-bottom: 1px solid var(--line2); color: var(--txt2);
+/* ═══════════════════════ ENERGY TABLE ═══════════════════════ */
+.etbl-wrap { border: 1px solid var(--ln2); border-radius: var(--r); overflow: hidden; margin-bottom: 14px; }
+.etbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.etbl th { padding: 7px 11px; font-size: 10px; font-weight: 700; color: var(--t3); letter-spacing: .09em; text-transform: uppercase; border-bottom: 1px solid var(--ln2); background: var(--bg1); text-align: left; }
+.etbl td { padding: 8px 11px; border-bottom: 1px solid var(--ln); color: var(--t2); }
+.etbl tr:last-child td { border-bottom: none; }
+.etbl td:first-child { color: var(--t1); font-weight: 700; }
+.etbl .j   { color: var(--red2); font-weight: 800; }
+.etbl .syn { color: var(--cyn2); font-weight: 700; }
+.etbl .asy { color: var(--amb2); font-weight: 700; }
+.etbl tr.hi-r td { background: rgba(255,45,59,.06); }
+.etbl tr.hi-a td { background: rgba(255,149,0,.06); }
+
+/* ═══════════════════════ TIMER BADGE (CPR TIMING) ═══════════════════════ */
+.timers { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
+.timer-card {
+  background: var(--bg2); border: 1px solid var(--ln2);
+  border-radius: var(--r); padding: 12px; text-align: center;
 }
-.ht-item {
-  display: flex; gap: 0; border-bottom: 1px solid var(--line);
+.timer-card.r { border-color: var(--rln); background: var(--rbg); }
+.timer-card.a { border-color: var(--aln); background: var(--abg); }
+.timer-card.c { border-color: var(--cln); background: var(--cbg); }
+.tc-time { font-size: 24px; font-weight: 900; line-height: 1.1; }
+.timer-card.r .tc-time { color: var(--red2); }
+.timer-card.a .tc-time { color: var(--amb2); }
+.timer-card.c .tc-time { color: var(--cyn2); }
+.tc-label { font-size: 10px; font-weight: 700; color: var(--t3); letter-spacing: .09em; text-transform: uppercase; margin-top: 4px; }
+.tc-sub { font-size: 11px; color: var(--t2); margin-top: 3px; line-height: 1.35; }
+
+/* ═══════════════════════ ROSC TARGETS ═══════════════════════ */
+.rosc-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px;
+  background: linear-gradient(135deg, rgba(0,210,91,.05) 0%, transparent 100%);
+  border: 1px solid var(--gln); border-radius: var(--r); padding: 14px;
 }
-.ht-item:last-child { border-bottom: none; }
-.ht-key {
-  min-width: 28px; display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 800; color: var(--red);
-  background: var(--red-bg); border-right: 1px solid var(--red-line);
-  flex-shrink: 0;
+.rosc-item { text-align: center; }
+.rosc-val { font-size: 18px; font-weight: 900; color: var(--grn2); }
+.rosc-lbl { font-size: 10px; font-weight: 700; color: var(--t3); letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; }
+.rosc-note { font-size: 10.5px; color: var(--t2); margin-top: 3px; line-height: 1.35; }
+.rosc-divider { border-right: 1px solid var(--gln); }
+
+/* ═══════════════════════ TORSADES SPECIAL ═══════════════════════ */
+.torsades-warn {
+  background: linear-gradient(90deg, rgba(255,45,59,.2) 0%, rgba(255,149,0,.1) 100%);
+  border: 1.5px solid var(--red);
+  border-radius: var(--r); padding: 12px 16px; margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 10px;
 }
-.ht-txt { padding: 8px 10px; font-size: 12px; color: var(--txt2); line-height: 1.55; flex: 1; }
-.ht-txt strong { color: var(--txt); font-weight: 600; }
-.ht-txt em { color: var(--amber); font-style: normal; }
+.tw-icon { font-size: 28px; flex-shrink: 0; }
+.tw-body { flex: 1; }
+.tw-title { font-size: 13px; font-weight: 800; color: var(--red2); margin-bottom: 4px; }
+.tw-text { font-size: 12px; color: #FFAAB0; line-height: 1.6; }
+.tw-text strong { color: var(--grn2); font-weight: 800; }
 
-/* ── ROSC TARGETS ── */
-.rosc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 12px; }
-
-/* ── MINI BADGE ── */
-.mbadge {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  padding: 1px 6px; border-radius: 3px; vertical-align: middle;
-  margin-left: 4px;
+/* ═══════════════════════ PULSE TAG ═══════════════════════ */
+.ptag {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 20px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .04em; vertical-align: middle; margin: 0 2px;
 }
-.mbadge.r { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-line); }
-.mbadge.g { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-line); }
+.ptag.r { background: var(--rbg); color: var(--red2); border: 1px solid var(--rln); }
+.ptag.a { background: var(--abg); color: var(--amb2); border: 1px solid var(--aln); }
+.ptag.c { background: var(--cbg); color: var(--cyn2); border: 1px solid var(--cln); }
+.ptag.g { background: var(--gbg); color: var(--grn2); border: 1px solid var(--gln); }
 
-/* ── DIVIDER ── */
-.divider { border: none; border-top: 1px solid var(--line); margin: 18px 0; }
-
-/* RESPONSIVE */
+/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
 @media (max-width: 600px) {
-  .avblock-grid { grid-template-columns: 1fr 1fr; }
-  .cards.c4 { grid-template-columns: 1fr 1fr; }
-  .branches { grid-template-columns: 1fr; }
+  .av4  { grid-template-columns: 1fr 1fr; }
+  .c4   { grid-template-columns: 1fr 1fr; }
+  .c3   { grid-template-columns: 1fr 1fr; }
+  .c6   { grid-template-columns: 1fr 1fr; }
+  .timers { grid-template-columns: 1fr 1fr; }
   .rosc-grid { grid-template-columns: 1fr 1fr; }
-  .ht-grid { grid-template-columns: 1fr; }
+  .split, .ht2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  .av4  { grid-template-columns: 1fr; }
+  .tab  { font-size: 10px; padding: 7px 9px 9px; }
 }
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <button class="nav-btn on" onclick="sw('ca',this)">🫀 Cardiac Arrest</button>
-  <button class="nav-btn" onclick="sw('brady',this)">↓ Bradycardia</button>
-  <button class="nav-btn" onclick="sw('tachy',this)">↑ Tachycardia</button>
-  <button class="nav-btn" onclick="sw('cardio',this)">⚡ Cardioversion</button>
+<!-- ══════════════════ TAB BAR ══════════════════ -->
+<div class="tabbar">
+  <button class="tab t-p on"  onclick="sw('map',this)">🗺 რუკა</button>
+  <button class="tab t-r"     onclick="sw('ca',this)">🫀 Cardiac Arrest</button>
+  <button class="tab t-a"     onclick="sw('brady',this)">↓ Bradycardia</button>
+  <button class="tab t-c"     onclick="sw('tachy',this)">↑ Tachycardia</button>
+  <button class="tab t-c"     onclick="sw('cardio',this)">⚡ Cardioversion</button>
 </div>
 
-<!-- ══════════════════ CARDIAC ARREST ══════════════════ -->
-<div class="pg on" id="pg-ca">
 
-  <div class="sec-label">CPR — ხარისხობრივი სტანდარტი</div>
-  <div class="cards c4">
-    <div class="card red"><div class="card-lbl">სიხშირე</div><div class="card-val">100–120</div><div class="card-sub">/min</div></div>
-    <div class="card red"><div class="card-lbl">სიღრმე</div><div class="card-val">≥5 სმ</div><div class="card-sub">max 6 სმ · სრული recoil</div></div>
-    <div class="card red"><div class="card-lbl">CCF სამიზნე</div><div class="card-val">≥80%</div><div class="card-sub">min 60% · პაუზა ≤10 წმ</div></div>
-    <div class="card"><div class="card-lbl">Switch / Vent.</div><div class="card-val">2 წთ / 10/min</div><div class="card-sub">Advanced airway: ყ. 6 წამ.</div></div>
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 1 — MASTER MAP
+══════════════════════════════════════════════════════════ -->
+<div class="pg on" id="pg-map">
+
+  <!-- SVG MASTER DECISION TREE — complete, high-detail -->
+  <!-- INFO PANEL (shown on box tap) -->
+  <div id="info-panel" style="display:none;background:#141928;border:1px solid rgba(255,255,255,.15);border-radius:10px;margin-bottom:12px;overflow:hidden;">
+    <div id="info-header" style="padding:10px 14px 8px;display:flex;justify-content:space-between;align-items:center;">
+      <span id="info-title" style="font-size:13px;font-weight:800;"></span>
+      <button onclick="document.getElementById('info-panel').style.display='none'" style="background:rgba(255,255,255,.08);border:none;color:#8E98B0;font-size:14px;cursor:pointer;border-radius:5px;padding:2px 8px;font-family:inherit;">✕</button>
+    </div>
+    <div id="info-body" style="padding:0 14px 14px;font-size:12.5px;color:#8E98B0;line-height:1.7;"></div>
   </div>
 
-  <div class="alert red"><strong>ETCO₂:</strong> &lt;10 mmHg → CPR ხარისხი გაუმჯ. &nbsp;|&nbsp; მოულ. ↑ ≥40 mmHg → ROSC — პულსი შეამ.! &nbsp;|&nbsp; &lt;10 after 20 min → stop განხ.</div>
+  <div id="mapsvg-wrap">
+  <svg viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img">
+    <defs>
+      <marker id="arr-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="#FF2D3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="arr-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="#FF9500" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="arr-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="#00C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="arr-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="#00D25B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="arr-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="arr-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M1 1L8 5L1 9" fill="none" stroke="#A855FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
 
-  <div class="sec-label">გადამწყვეტი გაყოფა — Rhythm Check</div>
-  <div class="branches">
+    <!-- ══════ ROW 1: PATIENT (center top) ══════ -->
+    <!-- y=20..74 -->
+    <g onclick="showInfo('patient')" style="cursor:pointer">
+      <rect x="290" y="20" width="180" height="54" rx="9" fill="rgba(168,85,255,.18)" stroke="rgba(168,85,255,.65)" stroke-width="1.8"/>
+      <text x="380" y="42" text-anchor="middle" fill="#C084FC" font-size="11" font-weight="800" font-family="-apple-system,sans-serif">პაციენტი</text>
+      <text x="380" y="60" text-anchor="middle" fill="#D4A0FF" font-size="11" font-weight="600" font-family="-apple-system,sans-serif">პირველადი შეფასება</text>
+    </g>
+
+    <!-- Patient → Pulse diamond -->
+    <line x1="380" y1="74" x2="380" y2="104" stroke="rgba(168,85,255,.5)" stroke-width="2" marker-end="url(#arr-p)"/>
+
+    <!-- ══════ ROW 2: PULSE DIAMOND (center) ══════ -->
+    <!-- diamond center y=130, half-w=70, half-h=30 → y=100..160 -->
+    <g onclick="showInfo('pulse')" style="cursor:pointer">
+      <polygon points="380,104 450,134 380,164 310,134" fill="rgba(255,149,0,.15)" stroke="rgba(255,149,0,.65)" stroke-width="1.8"/>
+      <text x="380" y="129" text-anchor="middle" fill="#FF9500" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">პულსი?</text>
+      <text x="380" y="148" text-anchor="middle" fill="#FFB340" font-size="10" font-family="-apple-system,sans-serif">10 წმ · HR?</text>
+    </g>
+
+    <!-- NO pulse → left (Cardiac Arrest) -->
+    <line x1="310" y1="134" x2="164" y2="134" stroke="rgba(255,45,59,.75)" stroke-width="2.5" marker-end="url(#arr-r)"/>
+    <text x="236" y="124" text-anchor="middle" fill="#FF6170" font-size="10.5" font-weight="800" font-family="-apple-system,sans-serif">არა / ეჭვი</text>
+
+    <!-- YES pulse → right (HR diamond) -->
+    <line x1="450" y1="134" x2="596" y2="134" stroke="rgba(0,210,91,.55)" stroke-width="2" marker-end="url(#arr-g)"/>
+    <text x="522" y="124" text-anchor="middle" fill="#00D25B" font-size="10.5" font-weight="800" font-family="-apple-system,sans-serif">კი</text>
+
+    <!-- ══════ CARDIAC ARREST BOX (far left) ══════ -->
+    <!-- x=28..164, y=104..174 -->
+    <g onclick="showInfo('ca')" style="cursor:pointer">
+      <rect x="28" y="104" width="136" height="70" rx="9" fill="rgba(255,45,59,.2)" stroke="rgba(255,45,59,.75)" stroke-width="2"/>
+      <text x="96" y="126" text-anchor="middle" fill="#FF2D3B" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">CARDIAC</text>
+      <text x="96" y="143" text-anchor="middle" fill="#FF2D3B" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">ARREST</text>
+      <text x="96" y="162" text-anchor="middle" fill="#FF8090" font-size="10" font-family="-apple-system,sans-serif">VF/pVT · PEA · Asys.</text>
+    </g>
+
+    <!-- ══════ HR DIAMOND (far right) ══════ -->
+    <!-- center x=626, y=134 -->
+    <g onclick="showInfo('hr')" style="cursor:pointer">
+      <polygon points="626,104 696,134 626,164 556,134" fill="rgba(0,200,255,.12)" stroke="rgba(0,200,255,.55)" stroke-width="1.8"/>
+      <text x="626" y="129" text-anchor="middle" fill="#00C8FF" font-size="11" font-weight="700" font-family="-apple-system,sans-serif">HR</text>
+      <text x="626" y="148" text-anchor="middle" fill="#5DD8FF" font-size="10" font-family="-apple-system,sans-serif">რამდენია?</text>
+    </g>
+
+    <!-- HR >150 → up to Tachy row -->
+    <line x1="626" y1="104" x2="626" y2="68" stroke="rgba(255,45,59,.45)" stroke-width="1.8" marker-end="url(#arr-r)"/>
+    <line x1="626" y1="54" x2="500" y2="54" stroke="rgba(255,45,59,.45)" stroke-width="1.8" marker-end="url(#arr-r)"/>
+    <text x="620" y="86" text-anchor="middle" fill="#FF6170" font-size="10" font-family="-apple-system,sans-serif">&gt;150</text>
+
+    <!-- HR <50 → Bradycardia below -->
+    <line x1="626" y1="164" x2="626" y2="224" stroke="rgba(255,149,0,.55)" stroke-width="2" marker-end="url(#arr-a)"/>
+    <text x="640" y="198" fill="#FFB340" font-size="10" font-family="-apple-system,sans-serif">&lt;50/min</text>
+
+    <!-- ══════ TACHYCARDIA BOX (right-center, row 1.5) ══════ -->
+    <!-- x=380..504, y=20..74 -->
+    <g onclick="showInfo('tachy')" style="cursor:pointer">
+      <rect x="380" y="20" width="120" height="54" rx="8" fill="rgba(255,45,59,.15)" stroke="rgba(255,45,59,.55)" stroke-width="1.5"/>
+      <text x="440" y="41" text-anchor="middle" fill="#FF6170" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">TACHY-</text>
+      <text x="440" y="57" text-anchor="middle" fill="#FF6170" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">CARDIA</text>
+    </g>
+
+    <!-- ══════ ROW 3: below CA — shockable / non-shock / H&Ts ══════ -->
+    <!-- CA bottom y=174 → arrow down -->
+    <line x1="96" y1="174" x2="96" y2="214" stroke="rgba(255,45,59,.4)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-r)"/>
+
+    <!-- H's & T's box — y=214..274 -->
+    <g onclick="showInfo('hnt')" style="cursor:pointer">
+      <rect x="28" y="214" width="136" height="60" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" stroke-width="1.2"/>
+      <text x="96" y="236" text-anchor="middle" fill="#8E98B0" font-size="11" font-weight="800" font-family="-apple-system,sans-serif">H's &amp; T's</text>
+      <text x="96" y="252" text-anchor="middle" fill="#5A6480" font-size="10" font-family="-apple-system,sans-serif">10 შექცევადი მიზ.</text>
+      <text x="96" y="267" text-anchor="middle" fill="#3A4460" font-size="9.5" font-family="-apple-system,sans-serif">Hypoxia · Hypo · Tampo</text>
+    </g>
+
+    <!-- CA → Shockable fork arrow right -->
+    <line x1="164" y1="200" x2="260" y2="200" stroke="rgba(255,45,59,.35)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arr-r)"/>
+
+    <!-- Shockable box — x=260..360, y=184..234 -->
+    <g onclick="showInfo('shockable')" style="cursor:pointer">
+      <rect x="260" y="184" width="110" height="48" rx="7" fill="rgba(255,45,59,.13)" stroke="rgba(255,45,59,.38)" stroke-width="1.2"/>
+      <text x="315" y="205" text-anchor="middle" fill="#FF6170" font-size="11" font-weight="800" font-family="-apple-system,sans-serif">Shockable</text>
+      <text x="315" y="222" text-anchor="middle" fill="#FF9090" font-size="10" font-family="-apple-system,sans-serif">VF / pVT</text>
+    </g>
+
+    <!-- Non-shockable box — x=260..360, y=244..294 -->
+    <line x1="164" y1="250" x2="260" y2="250" stroke="rgba(255,149,0,.3)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arr-a)"/>
+    <g onclick="showInfo('nonshock')" style="cursor:pointer">
+      <rect x="260" y="234" width="110" height="48" rx="7" fill="rgba(255,149,0,.10)" stroke="rgba(255,149,0,.32)" stroke-width="1.2"/>
+      <text x="315" y="255" text-anchor="middle" fill="#FFB340" font-size="11" font-weight="800" font-family="-apple-system,sans-serif">Non-Shock.</text>
+      <text x="315" y="273" text-anchor="middle" fill="#CC8000" font-size="10" font-family="-apple-system,sans-serif">PEA · Asys.</text>
+    </g>
+
+    <!-- Epi note near CA -->
+    <text x="170" y="180" fill="#FF9500" font-size="9" font-family="-apple-system,sans-serif" font-style="italic">ეპი: 1mg q3–5წთ</text>
+    <text x="170" y="193" fill="#FF6170" font-size="9" font-family="-apple-system,sans-serif" font-style="italic">ამიოდ: 300mg (3შ)</text>
+
+    <!-- ══════ TACHYCARDIA ROW (row 3, center-right) ══════ -->
+    <!-- Tachy box (detail) — already shown at top, arrows: Unstable → Cardio, Stable → Narrow/Wide -->
+    <!-- Unstable arrow from Tachy box down -->
+    <line x1="440" y1="74" x2="440" y2="184" stroke="rgba(255,45,59,.5)" stroke-width="2" marker-end="url(#arr-r)"/>
+    <text x="450" y="134" fill="#FF6170" font-size="10" font-family="-apple-system,sans-serif">Unstable</text>
+
+    <!-- CARDIOVERSION box — x=380..520, y=184..244 -->
+    <g onclick="showInfo('cardio')" style="cursor:pointer">
+      <rect x="380" y="184" width="150" height="60" rx="8" fill="rgba(0,200,255,.15)" stroke="rgba(0,200,255,.65)" stroke-width="1.8"/>
+      <text x="455" y="207" text-anchor="middle" fill="#00C8FF" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">⚡ CARDIO-</text>
+      <text x="455" y="224" text-anchor="middle" fill="#00C8FF" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">VERSION</text>
+      <text x="455" y="240" text-anchor="middle" fill="#5DD8FF" font-size="9.5" font-family="-apple-system,sans-serif">Sync vs Unsync · სედ.</text>
+    </g>
+
+    <!-- Stable → Narrow/Wide -->
+    <line x1="380" y1="47" x2="380" y2="104" stroke="rgba(0,200,255,.4)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-c)"/>
+    <text x="368" y="87" text-anchor="end" fill="#5DD8FF" font-size="10" font-family="-apple-system,sans-serif">Stable</text>
+
+    <!-- NARROW/WIDE box — x=380..520, y=254..304 -->
+    <g onclick="showInfo('narrow')" style="cursor:pointer">
+      <rect x="380" y="254" width="150" height="56" rx="7" fill="rgba(0,200,255,.09)" stroke="rgba(0,200,255,.38)" stroke-width="1.2"/>
+      <text x="455" y="275" text-anchor="middle" fill="#00C8FF" font-size="12" font-weight="700" font-family="-apple-system,sans-serif">Narrow / Wide</text>
+      <text x="455" y="292" text-anchor="middle" fill="#5DD8FF" font-size="10" font-family="-apple-system,sans-serif">QRS &lt;120 / ≥120 ms</text>
+      <text x="455" y="305" text-anchor="middle" fill="#3A8A9A" font-size="9.5" font-family="-apple-system,sans-serif">Reg vs Irreg → Dx</text>
+    </g>
+    <line x1="455" y1="244" x2="455" y2="254" stroke="rgba(0,200,255,.4)" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr-c)"/>
+
+    <!-- ══════ BRADYCARDIA + TCP (right column) ══════ -->
+    <!-- BRADYCARDIA box — x=548..712, y=224..284 -->
+    <g onclick="showInfo('brady')" style="cursor:pointer">
+      <rect x="548" y="224" width="148" height="60" rx="8" fill="rgba(255,149,0,.15)" stroke="rgba(255,149,0,.58)" stroke-width="1.8"/>
+      <text x="622" y="247" text-anchor="middle" fill="#FF9500" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">BRADY-</text>
+      <text x="622" y="264" text-anchor="middle" fill="#FF9500" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">CARDIA</text>
+      <text x="622" y="279" text-anchor="middle" fill="#FFCC80" font-size="9.5" font-family="-apple-system,sans-serif">HR &lt;50 · სიმპტ.?</text>
+    </g>
+
+    <!-- Brady → TCP -->
+    <line x1="622" y1="284" x2="622" y2="334" stroke="rgba(255,149,0,.5)" stroke-width="1.8" marker-end="url(#arr-a)"/>
+
+    <!-- TCP/TVP box — x=548..712, y=334..394 -->
+    <g onclick="showInfo('tcp')" style="cursor:pointer">
+      <rect x="548" y="334" width="148" height="60" rx="7" fill="rgba(255,149,0,.10)" stroke="rgba(255,149,0,.38)" stroke-width="1.3"/>
+      <text x="622" y="357" text-anchor="middle" fill="#FF9500" font-size="12" font-weight="700" font-family="-apple-system,sans-serif">TCP / TVP</text>
+      <text x="622" y="374" text-anchor="middle" fill="#FFCC80" font-size="10" font-family="-apple-system,sans-serif">ატრ. → TCP → TVP</text>
+      <text x="622" y="389" text-anchor="middle" fill="#8A6020" font-size="9.5" font-family="-apple-system,sans-serif">Mobitz II / 3° — TVP სწრ.</text>
+    </g>
+
+    <!-- ══════ ROSC box (bottom center) ══════ -->
+    <!-- y=390..452 -->
+    <g onclick="showInfo('rosc')" style="cursor:pointer">
+      <rect x="240" y="394" width="200" height="64" rx="9" fill="rgba(0,210,91,.12)" stroke="rgba(0,210,91,.5)" stroke-width="1.8"/>
+      <text x="340" y="416" text-anchor="middle" fill="#00D25B" font-size="12" font-weight="800" font-family="-apple-system,sans-serif">ROSC სამიზნეები</text>
+      <text x="340" y="434" text-anchor="middle" fill="#34E87A" font-size="10.5" font-family="-apple-system,sans-serif">SpO₂ 92–98% · SBP ≥90</text>
+      <text x="340" y="451" text-anchor="middle" fill="#34E87A" font-size="10.5" font-family="-apple-system,sans-serif">ETCO₂ 35–45 · TTM 32–36°C</text>
+    </g>
+    <!-- ROSC from CA dashed -->
+    <path d="M96 274 Q96 426 240 426" fill="none" stroke="rgba(0,210,91,.38)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr-g)"/>
+    <text x="108" y="380" fill="#00D25B" font-size="9.5" font-family="-apple-system,sans-serif">ROSC?</text>
+    <!-- ROSC from Cardio -->
+    <path d="M455 244 Q455 380 440 394" fill="none" stroke="rgba(0,210,91,.28)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arr-g)"/>
+
+    <!-- ══════ LEGEND ══════ -->
+    <rect x="16" y="484" width="728" height="142" rx="9" fill="rgba(255,255,255,.025)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+    <text x="32" y="503" fill="#4A536B" font-size="10" font-weight="800" font-family="-apple-system,sans-serif" letter-spacing=".12em">ლეგენდა</text>
+
+    <rect x="32" y="513" width="12" height="12" rx="3" fill="rgba(255,45,59,.25)" stroke="rgba(255,45,59,.6)" stroke-width="1"/>
+    <text x="50" y="524" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">კრიტიკული / CPR / VF-pVT / Cardiac Arrest</text>
+
+    <rect x="32" y="531" width="12" height="12" rx="3" fill="rgba(255,149,0,.25)" stroke="rgba(255,149,0,.6)" stroke-width="1"/>
+    <text x="50" y="542" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">Bradycardia / Non-Shockable / გაფრთხილება</text>
+
+    <rect x="32" y="549" width="12" height="12" rx="3" fill="rgba(0,200,255,.25)" stroke="rgba(0,200,255,.6)" stroke-width="1"/>
+    <text x="50" y="560" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">Cardioversion / Stable Tachy / SVT</text>
+
+    <rect x="32" y="567" width="12" height="12" rx="3" fill="rgba(0,210,91,.25)" stroke="rgba(0,210,91,.6)" stroke-width="1"/>
+    <text x="50" y="578" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">ROSC / წარმატება / ნორმა</text>
+
+    <rect x="32" y="585" width="12" height="12" rx="3" fill="rgba(168,85,255,.25)" stroke="rgba(168,85,255,.6)" stroke-width="1"/>
+    <text x="50" y="596" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">გადაწყვეტილება / შეფასება</text>
+
+    <line x1="330" y1="521" x2="374" y2="521" stroke="rgba(255,45,59,.7)" stroke-width="2" marker-end="url(#arr-r)"/>
+    <text x="382" y="525" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">გადაუდებელი</text>
+
+    <line x1="330" y1="543" x2="374" y2="543" stroke="rgba(255,255,255,.25)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-w)"/>
+    <text x="382" y="547" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">კავშირი / სეკ. მარშ.</text>
+
+    <line x1="330" y1="565" x2="374" y2="565" stroke="rgba(0,210,91,.6)" stroke-width="2" marker-end="url(#arr-g)"/>
+    <text x="382" y="569" fill="#8E98B0" font-size="10.5" font-family="-apple-system,sans-serif">ROSC / პოზიტ.</text>
+
+    <text x="380" y="617" text-anchor="middle" fill="#3A4460" font-size="10" font-family="-apple-system,sans-serif" font-style="italic">👆 დააჭირე ნებისმიერ ბოქსს — ინფორმაცია გამოჩნდება</text>
+  </svg>
+  </div>
+
+  <!-- ─── QUICK DECISION STRIP ─── -->
+  <div class="sl pur">⚡ კრიტიკული გადაწყვეტილება — 10 წამში</div>
+  <div class="qstrip">
+    <div class="qs c-p">
+      <div class="qs-num">🔍<span>1</span></div>
+      <div class="qs-body"><strong>პულსი?</strong> — 10 წმ · Carotid/radial · ეჭვი = CPR დაუყოვნებლივ</div>
+    </div>
+    <div class="qs c-r">
+      <div class="qs-num">❌<span>არა</span></div>
+      <div class="qs-body"><strong>CPR მაშინვე</strong> · Defib ჩართე · 100–120/min · ≥5სმ · Rhythm check 2 წთ-ში</div>
+    </div>
+    <div class="qs c-r">
+      <div class="qs-num">⚡<span>VF</span></div>
+      <div class="qs-body"><strong>შოკი 120–200J</strong> → CPR 2წთ → ეპი 1mg (მე-2 შ-შ) → ამიოდ. 300mg (მე-3 შ-შ)</div>
+    </div>
+    <div class="qs c-a">
+      <div class="qs-num">💤<span>PEA</span></div>
+      <div class="qs-body"><span class="d">ეპი 1mg IV/IO სწრ.</span> → q3–5წთ · <strong>H's &amp; T's!</strong> Hypovolemia + Hypoxia — პირველი 2წთ</div>
+    </div>
+    <div class="qs c-a">
+      <div class="qs-num">🐢<span>Brady</span></div>
+      <div class="qs-body">პულსი + HR &lt;50 + სიმპტ. → <strong>ატროპინი 1mg IV</strong> → TCP → TVP (Mobitz II/3°)</div>
+    </div>
+    <div class="qs c-c">
+      <div class="qs-num">💨<span>Tachy</span></div>
+      <div class="qs-body">HR &gt;150 + Unstable → <strong>Sync Cardioversion მაშინვე!</strong> · Stable → QRS? → Dx</div>
+    </div>
+    <div class="qs c-g">
+      <div class="qs-num">✅<span>ROSC</span></div>
+      <div class="qs-body">SpO₂ 92–98% · MAP ≥65 · ETCO₂ 35–45 · TTM 32–36°C · 12-lead → Cath Lab?</div>
+    </div>
+  </div>
+
+  <!-- ─── COLOR LEGEND DETAIL ─── -->
+  <div class="sl">ფერების ფსიქოლოგია</div>
+  <div class="cards c2">
+    <div class="card r"><div class="card-lbl">🔴 წითელი</div><div class="card-val" style="font-size:13px">CPR · VF · Arrest · კრიტ.</div><div class="card-sub">ყველაზე მაღალი საფ. — დაუყოვნებელი ქმედება. Shockable, ეპი, ამიოდ.</div></div>
+    <div class="card a"><div class="card-lbl">🟠 ნარინჯი</div><div class="card-val" style="font-size:13px">Brady · Non-shock · გაფ.</div><div class="card-sub">გაფრთხილება — დრო გვაქვს, მაგრამ არ ველოდოთ. ატრ., TCP, PEA/Asys.</div></div>
+    <div class="card c"><div class="card-lbl">🔵 ცისფერი</div><div class="card-val" style="font-size:13px">Cardioversion · Stable</div><div class="card-sub">კონტროლი — ვაკეთებთ ინვაზიურ ქმედებებს, მაგრამ გვაქვს სტრუქტ. მიდგ.</div></div>
+    <div class="card g"><div class="card-lbl">🟢 მწვანე</div><div class="card-val" style="font-size:13px">ROSC · OK · ნორმა</div><div class="card-sub">გადარჩენა — სამიზნე. SpO₂, MAP, ETCO₂, TTM. ახლა ვიცავთ ტვინს.</div></div>
+  </div>
+
+</div><!-- /pg-map -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 2 — CARDIAC ARREST
+══════════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-ca">
+
+  <!-- BANNER -->
+  <div class="mega-alert">
+    <div class="mega-alert-title">🫀 CARDIAC ARREST — VF/pVT · PEA · Asystole</div>
+    <div class="mega-alert-body">
+      <strong>მთავარი წესი:</strong> CPR ხარისხი = გადარჩენა. ყოველი შეფერხება კლავს.
+      <strong>VF/pVT = შოკი პირველი.</strong> PEA/Asys = ეპი + H&amp;T's.
+    </div>
+  </div>
+
+  <!-- CPR QUALITY TIMERS -->
+  <div class="sl red">CPR — ხარისხის სტანდარტი</div>
+  <div class="timers">
+    <div class="timer-card r">
+      <div class="tc-time">100–120</div>
+      <div class="tc-label">შეკუმშვა/წთ</div>
+      <div class="tc-sub">სიჩქარე — ზუსტ. სიხშ.<br>&lt;100 = ინეფ. &gt;120 = ცუდი</div>
+    </div>
+    <div class="timer-card r">
+      <div class="tc-time">≥5 სმ</div>
+      <div class="tc-label">სიღრმე</div>
+      <div class="tc-sub">Max 6სმ · Full recoil<br>ხელი არ შეაჩეროს</div>
+    </div>
+    <div class="timer-card a">
+      <div class="tc-time">≥80%</div>
+      <div class="tc-label">CCF (chest compr. fraction)</div>
+      <div class="tc-sub">პაუზა ≤10 წმ · Switch 2წთ<br>Adv. airway → 6 წმ ვენტ.</div>
+    </div>
+  </div>
+
+  <div class="alert r">
+    <strong>ETCO₂ — CPR ხარისხის მონიტორი:</strong>
+    &lt;10 mmHg → CPR ↑ ხარ. ·
+    მოულ. ↑ ≥40 → ROSC შეამოწმე! ·
+    &lt;10 after 20 min → stop განიხილე ·
+    ETCO₂ = პულსის surrogate!
+  </div>
+
+  <!-- SHOCKABLE vs NON-SHOCKABLE -->
+  <div class="sl red">Rhythm Check — 2-წუთიანი ციკლი</div>
+  <div class="split">
     <div class="branch">
-      <div class="branch-hd red">⚡ VF / Pulseless VT — Shockable</div>
-      <div class="branch-body">
-        <div class="dtbl-wrap">
-          <table class="dtbl">
-            <tr><th>#</th><th>მოქმედება</th></tr>
-            <tr><td>1</td><td><strong>შოკი</strong> — 120–200 J biphaz / 360 J monoph → CPR 2 წთ</td></tr>
-            <tr><td>2</td><td>Rhythm → VF? <strong>შოკი</strong> → <span class="drug">ეპინეფრინი 1 mg IV/IO</span> → q3–5 წთ</td></tr>
-            <tr><td>3</td><td>Advanced airway + capnography</td></tr>
-            <tr><td>4</td><td>Rhythm → VF? <strong>შოკი</strong> → <span class="drug">ამიოდ. 300 mg</span> ან ლიდოკ. 1–1.5 mg/kg</td></tr>
-            <tr><td>5</td><td>2-წთ ციკლები. H&T's. ROSC?</td></tr>
-          </table>
+      <div class="bh r">⚡ VF / pVT — SHOCKABLE</div>
+      <div class="bb">
+        <div class="steps">
+          <div class="st"><div class="sn r">1</div><div class="stb"><strong>შოკი</strong> 120–200J biphaz (360J mono) → CPR 2წთ დაუყ.</div></div>
+          <div class="st"><div class="sn r">2</div><div class="stb">Rhythm check → VF? → <strong>შოკი</strong> → <span class="d">ეპი 1mg IV/IO</span> (q3–5წთ)</div></div>
+          <div class="st"><div class="sn r">3</div><div class="stb">Advanced airway + Capnography + IV/IO</div></div>
+          <div class="st"><div class="sn r">4</div><div class="stb">Rhythm? → VF → <strong>შოკი</strong> → <span class="d">ამიოდ. 300mg IV</span> (ან ლიდოკ. 1–1.5 mg/kg)</div></div>
+          <div class="st"><div class="sn r">5</div><div class="stb">ციკლები 2 წთ · H&amp;T's ყველა 10 · ROSC?</div></div>
+          <div class="st"><div class="sn r">6</div><div class="stb"><span class="d">ამიოდ. მე-2: 150mg IV</span> (შემდეგ შოკ-შ.)</div></div>
         </div>
-        <div class="alert red" style="margin:0"><strong>ეპი:</strong> მე-2 შოკის შემდეგ · <strong>ამიოდ.:</strong> მე-3 შოკის შემდეგ</div>
+        <div class="alert r" style="margin:8px 0 0">
+          <strong>ეპი:</strong> მე-2 შოკ-შ. · <strong>ამიოდ.:</strong> მე-3 შოკ-შ. · <strong>ლიდოკ.:</strong> ამიოდ. ალტ.
+        </div>
       </div>
     </div>
     <div class="branch">
-      <div class="branch-hd amber">PEA / Asystole — Non-shockable</div>
-      <div class="branch-body">
-        <div class="dtbl-wrap">
-          <table class="dtbl">
-            <tr><th>#</th><th>მოქმედება</th></tr>
-            <tr><td>1</td><td>CPR → <span class="drug">ეპინეფრინი 1 mg IV/IO</span> — რაც შეიძ. სწრ. → q3–5 წთ</td></tr>
-            <tr><td>2</td><td>Advanced airway · H&T's — ყველა 10</td></tr>
-            <tr><td>3</td><td>Rhythm check → ორგ. რიტმი → პულსი? → ROSC</td></tr>
-            <tr><td>!</td><td>Asystole ≠ Fine VF — leads, gain, კონტ. შეამ.</td></tr>
-          </table>
+      <div class="bh a">💤 PEA / ASYSTOLE — NON-SHOCK.</div>
+      <div class="bb">
+        <div class="steps">
+          <div class="st"><div class="sn a">1</div><div class="stb">CPR → <span class="d">ეპი 1mg IV/IO სწრ. ASAP!</span> q3–5წთ</div></div>
+          <div class="st"><div class="sn a">2</div><div class="stb">Advanced airway · H&amp;T's — ყველა 10 შეამ.</div></div>
+          <div class="st"><div class="sn a">3</div><div class="stb">Rhythm check → ორგ. რიტმი → პულსი? → ROSC?</div></div>
+          <div class="st"><div class="sn a">!</div><div class="stb">Asystole ≠ Fine VF — <strong>Lead შეცვ./Gain↑/კონტ.!</strong></div></div>
+          <div class="st"><div class="sn a">!</div><div class="stb"><strong>PEA ყ.ხშ.:</strong> Hypovolemia → IV bolus · Hypoxia → Airway!</div></div>
         </div>
-        <div class="alert amber" style="margin:0"><strong>PEA-ს ყ. ხშ.:</strong> Hypovolemia + Hypoxia → პირველ ორ მინუტში გადამ.</div>
+        <div class="alert a" style="margin:8px 0 0">
+          <strong>Pseudo-PEA:</strong> Ultra-low CO. Echo: კედ. მოძ.?<br>
+          <strong>Sodium Bicarb:</strong> გრძ. arrest + pH &lt;7.1 ან TCA OD
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="sec-label">H's & T's — 10 შექცევადი მიზეზი</div>
-  <div class="ht-grid">
-    <div class="ht-col">
-      <div class="ht-col-hd">H's</div>
-      <div class="ht-item"><div class="ht-key">H</div><div class="ht-txt"><strong>Hypovolemia</strong> — ვიწ. QRS PEA. სწრ. IV bolus. ოკულტ. hemorrhage?</div></div>
-      <div class="ht-item"><div class="ht-key">H</div><div class="ht-txt"><strong>Hypoxia</strong> — Airway + O₂ + ვენტ. 2nd ყ. ხშ.</div></div>
-      <div class="ht-item"><div class="ht-key">H</div><div class="ht-txt"><strong>Hydrogen ion</strong> — pH &lt;7.1: ვენტ.↑, bicarb ზოგ შემთხ.</div></div>
-      <div class="ht-item"><div class="ht-key">H</div><div class="ht-txt"><strong>Hypo/HyperK</strong> — <em>HyperK: CaCl 1g IV.</em> ECG: peaked T → wide QRS → sine</div></div>
-      <div class="ht-item"><div class="ht-key">H</div><div class="ht-txt"><strong>Hypothermia</strong> — &lt;30°C → VF. Osborn (J) wave. CPR + rewarming. <em>"Warm and dead."</em></div></div>
+  <!-- CPR CYCLE TIMELINE -->
+  <div class="sl red">2-წუთიანი ციკლის სტრუქტ.</div>
+  <div class="flow">
+    <div class="fn c-r crit">
+      <div class="fn-badge"><div class="ico">⚡</div>შოკი</div>
+      <div class="fn-body"><strong>120–200J → CPR დაუყოვნებლივ</strong> — post-shock pause → 0 წმ! CPR 2 წთ</div>
     </div>
-    <div class="ht-col">
-      <div class="ht-col-hd">T's</div>
-      <div class="ht-item"><div class="ht-key">T</div><div class="ht-txt"><strong>Tension PTX</strong> — Needle decomp 2nd ICS MCL → chest tube. US: lung sliding გაქ.</div></div>
-      <div class="ht-item"><div class="ht-key">T</div><div class="ht-txt"><strong>Tamponade</strong> — Pericardiocentesis. Beck's triad. US: RA/RV diastolic collapse.</div></div>
-      <div class="ht-item"><div class="ht-key">T</div><div class="ht-txt"><strong>Toxins</strong> — TCA → Bicarb · β/CCB → Ca + insulin · Opioid → Naloxone · LA → Lipid 20%</div></div>
-      <div class="ht-item"><div class="ht-key">T</div><div class="ht-txt"><strong>Thrombosis PE</strong> — RV dilated (US) → <em>Alteplase 50 mg IV</em> → CPR 60–90 წთ</div></div>
-      <div class="ht-item"><div class="ht-key">T</div><div class="ht-txt"><strong>Thrombosis CAD</strong> — STEMI → VF. ROSC → cath lab.</div></div>
+    <div class="fn c-r">
+      <div class="fn-badge"><div class="ico">💊</div>ეპი</div>
+      <div class="fn-body"><strong>Epinephrine 1mg IV/IO</strong> — <span class="d">VF: 2nd shock-ის შემდ. · PEA: სწრ./1st</span> · q3–5 წთ</div>
+    </div>
+    <div class="fn c-r">
+      <div class="fn-badge"><div class="ico">🫁</div>Airway</div>
+      <div class="fn-body">Advanced airway (TEMS/ETT) → <strong>Capnography</strong> → 10 ვენტ/წთ (6 წმ-ში ერთ.) — hypervent. არ!</div>
+    </div>
+    <div class="fn c-r">
+      <div class="fn-badge"><div class="ico">💊</div>ამიოდ.</div>
+      <div class="fn-body"><strong>Amiodarone 300mg IV</strong> — <span class="d">3rd shock-ის შემდ.</span> · მე-2: 150mg · ან ლიდოკ. 1–1.5mg/kg</div>
+    </div>
+    <div class="fn c-a">
+      <div class="fn-badge"><div class="ico">🔎</div>H&amp;T's</div>
+      <div class="fn-body"><strong>ყველა 10 — ყოველ ციკლ.</strong> Hypovolemia + Hypoxia პირველები · US გამოი.</div>
+    </div>
+    <div class="fn c-g ok">
+      <div class="fn-badge"><div class="ico">✅</div>ROSC?</div>
+      <div class="fn-body">ETCO₂ <span class="g">≥40 მოულ. ↑</span> → ROSC! Pulse check → Post-ROSC care</div>
     </div>
   </div>
 
-  <div class="sec-label">Post-ROSC სამიზნეები</div>
+  <!-- H's & T's COMPLETE -->
+  <div class="sl">H's &amp; T's — 10 შექცევადი მიზეზი</div>
+  <div class="ht2">
+    <div class="htcol">
+      <div class="hthead">H's — 5 შ.</div>
+      <div class="hti"><div class="htk">H</div><div class="htt"><strong>Hypovolemia</strong> — ვიწრო QRS PEA. <em>სწრ. IV/IO bolus 1–2L</em></div></div>
+      <div class="hti"><div class="htk">H</div><div class="htt"><strong>Hypoxia</strong> — <em>Airway + O₂ + ვენტ.</em> მე-2 ყველაზე ხშ. მიზ.</div></div>
+      <div class="hti"><div class="htk">H</div><div class="htt"><strong>Hydrogen ion (Acidosis)</strong> — pH &lt;7.1: ვენტ.↑ · <em>Bicarb 1mEq/kg</em> · TCA OD</div></div>
+      <div class="hti"><div class="htk">H</div><div class="htt"><strong>Hypo/HyperK</strong> — HyperK: peaked T→wide QRS→sine · <span class="d">CaCl 1g IV!</span> · HypoK: Mg+K</div></div>
+      <div class="hti"><div class="htk">H</div><div class="htt"><strong>Hypothermia</strong> — &lt;30°C = VF-prone · Osborn wave · <em>"Warm before declaring dead"</em></div></div>
+    </div>
+    <div class="htcol">
+      <div class="hthead">T's — 5 ტ.</div>
+      <div class="hti"><div class="htk">T</div><div class="htt"><strong>Tension PTX</strong> — <em>Needle 2nd ICS MCL</em> · US: lung sliding გაქ. · Tracheal shift</div></div>
+      <div class="hti"><div class="htk">T</div><div class="htt"><strong>Tamponade</strong> — <em>Pericardiocentesis</em> · Beck's triad · US: fluid + RA collapse</div></div>
+      <div class="hti"><div class="htk">T</div><div class="htt"><strong>Toxins</strong> — TCA: <span class="d">Bicarb</span> · β/CCB: <span class="d">Ca+Glucagon</span> · Opioid: <span class="d">Nalox.</span> · LA: <span class="d">Lipid 20%</span></div></div>
+      <div class="hti"><div class="htk">T</div><div class="htt"><strong>Thrombosis PE</strong> — RV dilated · <em>Alteplase 50mg IV push</em> → CPR 60–90 წთ გ.</div></div>
+      <div class="hti"><div class="htk">T</div><div class="htt"><strong>Thrombosis CAD</strong> — STEMI → VF · ROSC → cath lab 24სთ</div></div>
+    </div>
+  </div>
+
+  <!-- POST-ROSC TARGETS -->
+  <div class="sl grn">✅ Post-ROSC — სამიზნეები (ახლა ტვინს ვიცავთ)</div>
   <div class="rosc-grid">
-    <div class="card green"><div class="card-lbl">SpO₂</div><div class="card-val">92–98%</div><div class="card-sub">ჰიპეროქსია → ↑ ROS → vasoconstr.</div></div>
-    <div class="card green"><div class="card-lbl">ETCO₂</div><div class="card-val">35–45 mmHg</div><div class="card-sub">ჰიპერვენტ. → ↓ CBF</div></div>
-    <div class="card green"><div class="card-lbl">SBP / MAP</div><div class="card-val">≥90 / ≥65</div><div class="card-sub">Vasopressors თუ საჭ.</div></div>
-    <div class="card"><div class="card-lbl">TTM (კომა)</div><div class="card-val">32–36°C</div><div class="card-sub">24–48 სთ</div></div>
-    <div class="card"><div class="card-lbl">გლუკოზა</div><div class="card-val">&lt;180 mg/dL</div><div class="card-sub">ჰიპოგლ. — avoid!</div></div>
-    <div class="card"><div class="card-lbl">12-lead ECG</div><div class="card-val">მაშინვე</div><div class="card-sub">STEMI? → cath lab</div></div>
+    <div class="rosc-item rosc-divider">
+      <div class="rosc-val">92–98%</div>
+      <div class="rosc-lbl">SpO₂</div>
+      <div class="rosc-note">ჰიპეროქსია → ↑ROS<br>100% → ↓CBF</div>
+    </div>
+    <div class="rosc-item rosc-divider">
+      <div class="rosc-val">35–45</div>
+      <div class="rosc-lbl">ETCO₂ mmHg</div>
+      <div class="rosc-note">ჰიპერვენტ. → vasoconstr.<br>→ ↓ CBF</div>
+    </div>
+    <div class="rosc-item">
+      <div class="rosc-val">≥90/65</div>
+      <div class="rosc-lbl">SBP / MAP mmHg</div>
+      <div class="rosc-note">Vasopressors თუ საჭ.<br>NE 0.1–0.5 mcg/kg/min</div>
+    </div>
+    <div class="rosc-item rosc-divider">
+      <div class="rosc-val">32–36°C</div>
+      <div class="rosc-lbl">TTM (კომა)</div>
+      <div class="rosc-note">24–48 სთ<br>Fever → avoid!</div>
+    </div>
+    <div class="rosc-item rosc-divider">
+      <div class="rosc-val">&lt;180</div>
+      <div class="rosc-lbl">Glucose mg/dL</div>
+      <div class="rosc-note">ჰიპოგლიკ. → avoid!<br>&lt;70 = კრიტ.</div>
+    </div>
+    <div class="rosc-item">
+      <div class="rosc-val">მაშინვე</div>
+      <div class="rosc-lbl">12-lead ECG</div>
+      <div class="rosc-note">STEMI? → Cath Lab<br>24სთ-ში</div>
+    </div>
   </div>
 
-  <div class="sec-label">პრეპარატები — სრული ცხრილი</div>
-  <div class="dtbl-wrap">
-    <table class="dtbl">
-      <tr><th>პრეპარატი</th><th>დოზა</th><th>დრო</th><th>შენიშვნა</th></tr>
-      <tr><td>ეპინეფრინი</td><td class="dose">1 mg IV/IO</td><td>q3–5 წთ</td><td>VF: მე-2 შოკ-შემდ. · PEA: სწრ. IV</td></tr>
-      <tr><td>ამიოდარონი</td><td class="dose">300 mg → 150 mg IV/IO</td><td>მე-3 შოკ-შემდ.</td><td>Stable VT: 150 mg / 10 წთ</td></tr>
-      <tr><td>ლიდოკაინი</td><td class="dose">1–1.5 mg/kg IV/IO</td><td>ამიოდ. ალტ.</td><td>max 3 mg/kg · Subsequent: 0.5–0.75 mg/kg</td></tr>
-      <tr><td>მაგნიუმი</td><td class="dose">1–2 g IV slow</td><td>Torsades only</td><td class="kill">ამიოდ. + Torsades = კატ. კონტრინდ.!</td></tr>
+  <!-- DRUG TABLE -->
+  <div class="sl red">პრეპარატები — სრული</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>პრეპ.</th><th>დოზა</th><th>დრო / ინდ.</th><th>შენიშვნა</th></tr>
+      <tr class="hi-r"><td>ეპინეფრინი</td><td class="dose">1mg IV/IO</td><td>q3–5წთ</td><td>VF: 2nd შ-შ · PEA: 1st ASAP · ↑DBP → coronary perf.</td></tr>
+      <tr class="hi-r"><td>ამიოდარონი</td><td class="dose">300mg → 150mg</td><td>3rd შ-შ</td><td>Stable VT: 150mg/10წთ slow infusion</td></tr>
+      <tr><td>ლიდოკაინი</td><td class="dose">1–1.5 mg/kg</td><td>ამიოდ. ალტ.</td><td>max 3mg/kg · 2nd dose: 0.5–0.75 mg/kg q5–10წთ</td></tr>
+      <tr class="hi-r"><td>მაგნიუმი</td><td class="dose">1–2g IV slow</td><td>Torsades only!</td><td class="kill">ამიოდ.+Torsades = კატ. კონტ.! QT↑↑→VF</td></tr>
+      <tr><td>Sodium Bicarb</td><td class="dose">1 mEq/kg IV</td><td>pH &lt;7.1 / TCA / HyperK</td><td>ხანგრძ. arrest · resp. acidosis → ჯერ ვენტ.!</td></tr>
+      <tr><td>კალციუმი (CaCl)</td><td class="dose">1g IV (10ml of 10%)</td><td>HyperK / Ca-blocker OD</td><td>→ CaGluconate 3g ალტ. · IV-ს ირ. არ!</td></tr>
     </table>
   </div>
 
-</div>
+</div><!-- /pg-ca -->
 
-<!-- ══════════════════ BRADYCARDIA ══════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 3 — BRADYCARDIA
+══════════════════════════════════════════════════════════ -->
 <div class="pg" id="pg-brady">
 
-  <div class="sec-label">ალგორითმი — გადაწყვეტილების ხე</div>
-  <div class="pathway">
-    <div class="path-row">
-      <div class="path-label">1. შეაფასე</div>
-      <div class="path-content">O₂ (hypox-ზე) · IV access · Monitor · 12-lead ECG &nbsp;→&nbsp; <strong>HR &lt;50/min?</strong></div>
+  <div class="alert a">
+    <strong>ბრადიკარდია:</strong> HR &lt;50/min — <strong>მხოლოდ სიმპტომური ბრადია საჭ. მკ.!</strong>
+    სიმპტ: ჰიპოტ. · AMS · შოკი · ტკ./იშ. · Acute HF · სინკოპე
+  </div>
+
+  <!-- FLOW -->
+  <div class="sl amb">ალგორითმი — ნაბიჯ-ნაბიჯ</div>
+  <div class="flow">
+    <div class="fn c-c">
+      <div class="fn-badge"><div class="ico">🔍</div><div>1<br>შეაფ.</div></div>
+      <div class="fn-body">O₂ · IV/IO · Monitor · <strong>12-lead ECG</strong> → HR &lt;50/min? · SpO₂ · BP</div>
     </div>
-    <div class="path-row">
-      <div class="path-label">2. კითხვა</div>
-      <div class="path-content"><strong>სიმპტომები ბრადიკარდიისგანაა?</strong> — ჰიპოტ. / AMS / შოკი / ტკივ. / HF</div>
+    <div class="fn c-a warn">
+      <div class="fn-badge"><div class="ico">❓</div><div>2<br>კითხ.</div></div>
+      <div class="fn-body"><strong>სიმპტ. ბრადიკარდიისგანაა?</strong> — ჰიპოტ. / AMS / შოკი / ჩ.ტ. / HF · თუ ეჭვი → მკ.!</div>
     </div>
-    <div class="path-row" style="background:rgba(46,204,113,0.04)">
-      <div class="path-label" style="color:var(--green)">არა → Monitor</div>
-      <div class="path-content">უსიმპტომო ბრადი = დაკვირვება. სპორტსმენი HR 42 = ნ. ✓</div>
+    <div class="fn c-g ok">
+      <div class="fn-badge"><div class="ico">✓</div><div>არა<br>Monitor</div></div>
+      <div class="fn-body">უსიმპტომო → <strong>Monitor + observe</strong> · სპორტსმ. HR 42 = ნ. ✓ · მიზ. მოძ.?</div>
     </div>
-    <div class="path-row" style="background:rgba(245,166,35,0.04)">
-      <div class="path-label" style="color:var(--amber)">კი → 3. ატროპინი</div>
-      <div class="path-content"><strong class="drug">ატროპინი 1 mg IV</strong> · repeat q3–5 წთ · max <strong>3 mg სულ</strong></div>
+    <div class="fn c-a crit">
+      <div class="fn-badge"><div class="ico">💊</div><div>კი<br>ატრ.</div></div>
+      <div class="fn-body"><span class="d">ატროპინი 1mg IV</span> · repeat q3–5წთ · max <strong>3mg სულ</strong> · IO ჩვ.!</div>
     </div>
-    <div class="path-row">
-      <div class="path-label">4. ეფ. ვერა?</div>
-      <div class="path-content"><strong>TCP</strong> (rate 60–80, mA ↑ capture-მდე +10) &nbsp;·&nbsp; <strong>დოფამინი</strong> 5–20 mcg/kg/min &nbsp;·&nbsp; <strong>ეპი</strong> 2–10 mcg/min</div>
+    <div class="fn c-a">
+      <div class="fn-badge"><div class="ico">⚡</div><div>4<br>TCP</div></div>
+      <div class="fn-body"><strong>TCP</strong> (rate 60–80, mA ↑ capture-მდე) · <a class="a">დოფ. 5–20 mcg/kg/min</a> · ეპი 2–10 mcg/min infusion</div>
     </div>
-    <div class="path-row">
-      <div class="path-label">5. Expert</div>
-      <div class="path-content">Transvenous Pacing — Mobitz II, 3rd degree</div>
+    <div class="fn c-r crit">
+      <div class="fn-badge"><div class="ico">🏥</div><div>5<br>TVP</div></div>
+      <div class="fn-body"><strong>Transvenous Pacing</strong> — Mobitz II / 3rd Degree → TVP სწრ. — ატრ. ვ.!</div>
     </div>
   </div>
 
-  <div class="sec-label">AV ბლოკები — სწრაფი შედარება</div>
-  <div class="avblock-grid">
+  <!-- AV BLOCKS -->
+  <div class="sl amb">AV ბლოკები — დიფ. დიაგნ.</div>
+  <div class="av4">
     <div class="avcard">
-      <div class="avcard-hd g">1st Degree</div>
-      <div class="avcard-body">
-        <div class="avcard-row"><strong>ECG</strong>PR &gt;200 ms · ყველა P→QRS</div>
-        <div class="avcard-row"><strong>ბლოკის ადგილი</strong>AV კვანძი (nodal)</div>
-        <div class="avcard-row"><strong>ატროპინი</strong>not needed</div>
-        <div class="avcard-row"><strong>მართვა</strong>Monitor only</div>
-        <div class="avcard-row"><strong>საფრთხე</strong>მინიმ.</div>
+      <div class="avhd g">1st Degree ✓</div>
+      <div class="avbody">
+        <div class="avr"><strong>ECG</strong><span class="ok">PR &gt;200ms · ყვ. P→QRS</span></div>
+        <div class="avr"><strong>ბლოკის ადგ.</strong>AV კვანძი (nodal)</div>
+        <div class="avr"><strong>ატრ. ეფ.</strong><span class="ok">✓ მუშ.</span></div>
+        <div class="avr"><strong>მართვა</strong><span class="ok">Monitor only</span></div>
+        <div class="avr"><strong>საფ.</strong><span class="ok">მინიმ. საფ.</span></div>
       </div>
     </div>
     <div class="avcard">
-      <div class="avcard-hd b">Mobitz I (Wenckebach)</div>
-      <div class="avcard-body">
-        <div class="avcard-row"><strong>ECG</strong>PR↑↑↑ → QRS drop → repeat</div>
-        <div class="avcard-row"><strong>ბლოკის ადგილი</strong>AV კვანძი (nodal)</div>
-        <div class="avcard-row"><strong>ატროპინი</strong>✓ მუშაობს</div>
-        <div class="avcard-row"><strong>მართვა</strong>ატრ. → TCP თუ sympt.</div>
-        <div class="avcard-row"><strong>საფრთხე</strong>მცირე</div>
+      <div class="avhd c">Mobitz I ✓</div>
+      <div class="avbody">
+        <div class="avr"><strong>ECG</strong>PR ↑↑↑ → QRS drop → repeat (Wenckebach)</div>
+        <div class="avr"><strong>ბლოკის ადგ.</strong>AV კვანძი (nodal)</div>
+        <div class="avr"><strong>ატრ. ეფ.</strong><span class="ok">✓ მუშ.</span></div>
+        <div class="avr"><strong>მართვა</strong>ატრ. → TCP სიმპტ.</div>
+        <div class="avr"><strong>საფ.</strong>მცირე საფ.</div>
       </div>
     </div>
     <div class="avcard">
-      <div class="avcard-hd a">Mobitz II ⚠</div>
-      <div class="avcard-body">
-        <div class="avcard-row"><strong>ECG</strong>PR კონსტ. → QRS drop (მოულ.)</div>
-        <div class="avcard-row"><strong>ბლოკის ადგილი</strong>His/ინფრანოდ.</div>
-        <div class="avcard-row"><strong>ატროპინი</strong>✗ ვერ / გაუარ.!</div>
-        <div class="avcard-row"><strong>მართვა</strong>TCP მაშინვე → TVP</div>
-        <div class="avcard-row"><strong>საფრთხე</strong>მაღ. → asystole!</div>
+      <div class="avhd a">Mobitz II ⚠</div>
+      <div class="avbody">
+        <div class="avr"><strong>ECG</strong>PR კონსტ. → სუდ. QRS drop</div>
+        <div class="avr"><strong>ბლოკის ადგ.</strong>His / Infra-His</div>
+        <div class="avr"><strong>ატრ. ეფ.</strong><span class="kill">✗ ვ./გაუარ.!</span></div>
+        <div class="avr"><strong>მართვა</strong><span class="warn">TCP → TVP!</span></div>
+        <div class="avr"><strong>საფ.</strong><span class="warn">მაღ. → Asystole!</span></div>
       </div>
     </div>
     <div class="avcard">
-      <div class="avcard-hd r">3rd Degree ⚠⚠</div>
-      <div class="avcard-body">
-        <div class="avcard-row"><strong>ECG</strong>P↔QRS სრ. დის. · PR სხვ. ყ. ციკლ.</div>
-        <div class="avcard-row"><strong>ბლოკის ადგილი">AV კვ. ან ინფრ.</div>
-        <div class="avcard-row"><strong>ატროპინი</strong>ხშ. არარეფ.</div>
-        <div class="avcard-row"><strong>მართვა</strong>TCP → TVP სწრ.</div>
-        <div class="avcard-row"><strong>საფრთხე</strong>კრიტ. / asystole</div>
+      <div class="avhd r">3rd Degree ⚠⚠</div>
+      <div class="avbody">
+        <div class="avr"><strong>ECG</strong>P↔QRS სრ. დისოციაცია</div>
+        <div class="avr"><strong>ბლოკის ადგ.</strong>AV ან ინფრ-ნოდ.</div>
+        <div class="avr"><strong>ატრ. ეფ.</strong><span class="kill">ხშ. არარეაქ.!</span></div>
+        <div class="avr"><strong>მართვა</strong><span class="kill">TCP → TVP სწრ.!</span></div>
+        <div class="avr"><strong>საფ.</strong><span class="kill">კრიტ. საფ.!</span></div>
       </div>
     </div>
   </div>
 
-  <div class="alert red"><strong>ატროპინი Mobitz II / 3rd degree-ში:</strong> SA rate ↑ → ბლოკი ქვევ. → ვენტრ. კიდ. ნაკლ. imp. → 2:1 → 3:1 → გაუარ. TCP პირველი.</div>
-  <div class="alert amber"><strong>TCP — Electrical vs Mechanical Capture:</strong> ECG-ზე QRS ≠ შეკუმშვა! ყოველთ. BP + SpO₂ ტალ. შეამ. კაროტ. ნუ — კუნთ. artifact.</div>
+  <!-- CRITICAL ATROPINE WARNING -->
+  <div class="mega-alert">
+    <div class="mega-alert-title">🚨 ატროპინი Mobitz II / 3° — სასიკვდილო ხაფანგი!</div>
+    <div class="mega-alert-body">
+      ატროპინი → SA rate ↑ → <strong>ბლოკი ქვეშ ↓ AV</strong> → VR ↓↓ → Asystole!<br>
+      <strong>Mobitz II/3° → TCP პირველი!</strong> ატრ. მხოლ. ბლოკ-ზე ზ. (1st, Mobitz I).
+    </div>
+  </div>
 
-  <div class="sec-label">პრეპარატები</div>
-  <div class="dtbl-wrap">
-    <table class="dtbl">
-      <tr><th>პრეპ.</th><th>დოზა</th><th>Line</th><th>შენიშვნა</th></tr>
-      <tr><td>ატროპინი</td><td class="dose">1 mg IV q3–5 min; max 3 mg</td><td>1st</td><td>&lt;0.5 mg → paradox brady ⚠ · M2 ანტაგ.</td></tr>
-      <tr><td>დოფამინი</td><td class="dose">5–20 mcg/kg/min</td><td>2nd</td><td>Low: inotropy · High: vasoc.</td></tr>
-      <tr><td>ეპინ. infusion</td><td class="dose">2–10 mcg/min</td><td>2nd</td><td>TCP-ის bridge</td></tr>
+  <div class="alert a">
+    <strong>TCP Capture ≠ Mechanical Capture!</strong>
+    ECG QRS ≠ შეკუმშვა! <strong>BP + SpO₂ ტალ. შეამ. (კაროტ. ნუ — კუნთ. artifact!)</strong>
+    Capture: mA ↑ სტიმ.-ზე 10mA-ით → Capture. Sedation!
+  </div>
+
+  <!-- DRUG TABLE -->
+  <div class="sl amb">პრეპარატები</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>პრეპ.</th><th>დოზა</th><th>Line</th><th>შენიშვ.</th></tr>
+      <tr class="hi-a"><td>ატროპინი</td><td class="dose">1mg IV q3–5min · max 3mg</td><td>1st Line</td><td>&lt;0.5mg → paradox brady ⚠ · IO: ჩვ. · Mobitz II/3° → ▶ TCP!</td></tr>
+      <tr><td>დოფამინი infusion</td><td class="dose">5–20 mcg/kg/min</td><td>2nd Line</td><td>Low: inot. · High: vasoc. · Bridge to TVP</td></tr>
+      <tr><td>ეპინეფრინი infusion</td><td class="dose">2–10 mcg/min</td><td>2nd Line</td><td>TCP bridge · ↑BP + HR</td></tr>
     </table>
   </div>
 
-</div>
+</div><!-- /pg-brady -->
 
-<!-- ══════════════════ TACHYCARDIA ══════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 4 — TACHYCARDIA
+══════════════════════════════════════════════════════════ -->
 <div class="pg" id="pg-tachy">
 
-  <div class="sec-label">1. გადამწყვეტი კითხვა — Unstable?</div>
-  <div class="pathway">
-    <div class="path-row">
-      <div class="path-label">Unstable სიგნ.</div>
-      <div class="path-content">ჰიპოტ. · AMS · შოკი · Ischemic chest pain · Acute HF</div>
+  <div class="alert c">
+    <strong>ტახიკარდია:</strong> HR &gt;150/min · <strong>პირველი კითხვა: Stable or Unstable?</strong><br>
+    Unstable = ჰიპოტ. / AMS / შოკი / Ischemic chest pain / Acute HF → <strong>Sync Cardio მაშინვე!</strong>
+  </div>
+
+  <!-- UNSTABLE FLOW -->
+  <div class="sl red">1. Unstable? — კარდიოვ. გადაწყვ.</div>
+  <div class="flow">
+    <div class="fn c-r crit">
+      <div class="fn-badge"><div class="ico">⚠️</div><div>Unstab.<br>სიგნ.</div></div>
+      <div class="fn-body">ჰიპოტ. · AMS · შოკი · Ischemic chest pain · Acute HF — ➜ <strong>ნე ელ.!</strong></div>
     </div>
-    <div class="path-row" style="background:rgba(255,77,94,0.04)">
-      <div class="path-label" style="color:var(--red)">კი → SHOCK</div>
-      <div class="path-content"><strong>Immediate Synchronized Cardioversion</strong> · 12-lead ECG-ს ნუ ელოდ. · სედ. სურვ. — ნუ ჩერ.</div>
+    <div class="fn c-r crit">
+      <div class="fn-badge"><div class="ico">⚡</div><div>SHOCK<br>მაშინ.</div></div>
+      <div class="fn-body"><strong>Sync Cardioversion მაშინვე</strong> · 12-lead ნუ ელ. · <span class="a">სედ. თუ დრო გვ. (Midazolam 1–2mg + Fentanyl)</span></div>
     </div>
-    <div class="path-row" style="background:rgba(46,204,113,0.04)">
-      <div class="path-label" style="color:var(--green)">სტაბ. → 2. QRS?</div>
-      <div class="path-content">IV access · 12-lead ECG · QRS &lt;120 ms (ვიწრო) თუ ≥120 ms (ფართო)?</div>
+    <div class="fn c-g ok">
+      <div class="fn-badge"><div class="ico">✓</div><div>Stable<br>QRS?</div></div>
+      <div class="fn-body">IV/IO · 12-lead ECG · <strong>QRS &lt;120ms?</strong> (ვიწ.) თუ <strong>≥120ms?</strong> (ფართ.) → Matrix</div>
     </div>
   </div>
 
-  <div class="sec-label">2. სტაბილური — გადაწყვეტილების მატრიცა</div>
+  <!-- DECISION MATRIX -->
+  <div class="sl cyn">2. Decision Matrix — Stable Tachy</div>
   <div class="matrix">
-    <div class="matrix-row hd">
-      <div class="matrix-cell hd">QRS</div>
-      <div class="matrix-cell hd">რიტმი</div>
-      <div class="matrix-cell hd">სავარ. Dx → მართვა</div>
+    <div class="mrow hd">
+      <div class="mcell hd">QRS</div>
+      <div class="mcell hd">რიტმი</div>
+      <div class="mcell hd">Dx → მართვა</div>
     </div>
-    <div class="matrix-row">
-      <div class="matrix-cell b"><strong>ვიწრო &lt;120</strong></div>
-      <div class="matrix-cell">Regular</div>
-      <div class="matrix-cell b"><strong>SVT/AVNRT</strong> → Vagal → Adenosine 6→12→12 mg &nbsp;|&nbsp; Sinus tach → მიზეზი!</div>
+    <div class="mrow">
+      <div class="mcell mc-c"><strong>ვიწრო<br>&lt;120</strong></div>
+      <div class="mcell">Regular</div>
+      <div class="mcell mc-c"><strong>SVT/AVNRT</strong> → Vagal → <span style="color:#FF6170;font-weight:800">Adenosine 6→12→12 mg</span> (სწრ.push + flush + ხელი↑)</div>
     </div>
-    <div class="matrix-row">
-      <div class="matrix-cell b"><strong>ვიწრო &lt;120</strong></div>
-      <div class="matrix-cell">Irregular</div>
-      <div class="matrix-cell b"><strong>AFib</strong> → Onset? Rate control · Anticoag? · WPW?</div>
+    <div class="mrow">
+      <div class="mcell mc-c"><strong>ვიწრო<br>&lt;120</strong></div>
+      <div class="mcell">Irregular</div>
+      <div class="mcell mc-c"><strong>AFib</strong> → Onset &lt;48სთ? → Rate ctrl (β-block/Diltiaz.) · Anticoag? · WPW?</div>
     </div>
-    <div class="matrix-row">
-      <div class="matrix-cell a"><strong>ფართო ≥120</strong></div>
-      <div class="matrix-cell">Regular</div>
-      <div class="matrix-cell a"><strong>VT (until proven otherwise)</strong> → Amiodarone 150 mg / 10 წთ &nbsp;|&nbsp; Adenosine Dx-ისთ. თუ regular+mono</div>
+    <div class="mrow">
+      <div class="mcell mc-a"><strong>ფართო<br>≥120</strong></div>
+      <div class="mcell">Regular</div>
+      <div class="mcell mc-a"><strong>VT (until proven otherwise!)</strong> → <span style="color:#FF6170;font-weight:800">Amiodarone 150mg/10წთ</span> · Procainamide ალტ.</div>
     </div>
-    <div class="matrix-row">
-      <div class="matrix-cell r"><strong>ფართო ≥120</strong></div>
-      <div class="matrix-cell">Irregular</div>
-      <div class="matrix-cell r"><strong>AFib+WPW</strong> → Cardioversion · <strong>Torsades</strong> → Mg 1–2 g IV · <strong>Poly VT</strong> → Unsync shock</div>
-    </div>
-  </div>
-
-  <div class="sec-label">Adenosine — ყველა დეტალი</div>
-  <div class="collapse open" onclick="tog(this)">
-    <div class="collapse-hd">
-      <span class="collapse-arrow">▶</span>
-      <span class="collapse-title">Adenosine — მექანიზმი, ტექნიკა, სპეც. სიტუაციები</span>
-      <span class="collapse-tag tag-blue">SVT 1st line</span>
-    </div>
-    <div class="collapse-body">
-      <div class="cards c2" style="margin-bottom:12px">
-        <div class="card"><div class="card-lbl">მექ.</div><div class="card-val" style="font-size:13px">A1/A2 receptor → AV კვ. If + ICaL ბლ. → 3–15 წმ pause</div></div>
-        <div class="card"><div class="card-lbl">t½</div><div class="card-val">6–10 წმ</div><div class="card-sub">სწრ. IV push + 20 mL flush + ხელი ↑ სავალდ.</div></div>
-      </div>
-      <div class="dtbl-wrap">
-        <table class="dtbl">
-          <tr><th>სიტუაცია</th><th>ადენოზინი</th><th>მიზეზი</th></tr>
-          <tr><td>სტანდ. SVT</td><td class="dose">6 mg → 12 mg → 12 mg</td><td>A1/A2 ბლ.</td></tr>
-          <tr><td>Theophylline / კოფეინი</td><td class="ok">დოზა ↑ საჭ.</td><td>Adenosine ანტ.</td></tr>
-          <tr><td>Dipyridamole / Carbamazepine</td><td class="dose">3 mg-ით!</td><td>ეფ. ↑↑ → prolong asys.</td></tr>
-          <tr><td>Transplanted heart</td><td class="dose">3 mg</td><td>ჰიპერმგრძ.</td></tr>
-          <tr><td>Asthma / COPD</td><td class="kill">კონტრინდ.!</td><td>ბრონქოსპ.</td></tr>
-          <tr><td>WPW + AFib</td><td class="kill">სიკვდილი!</td><td>AV ბლ. → Kent → VF</td></tr>
-          <tr><td>Pregnancy</td><td class="ok">Safe</td><td>—</td></tr>
-        </table>
-      </div>
-      <div class="alert blue" style="margin:0"><strong>Diagnostic use:</strong> Regular monomorphic wide QRS UID → Adenosine 6 mg · converts = SVT was · ვ. converts = VT → Amiodarone. <strong>Defib ready!</strong></div>
+    <div class="mrow">
+      <div class="mcell mc-r"><strong>ფართო<br>≥120</strong></div>
+      <div class="mcell">Irregular</div>
+      <div class="mcell mc-r"><strong>AFib+WPW</strong> → Cardiov. · <strong>Torsades</strong> → Mg 1–2g slow · <strong>Poly VT</strong> → Unsync defib</div>
     </div>
   </div>
 
-  <div class="sec-label">AFib — სამი გადაწყვეტილება</div>
-  <div class="pathway">
-    <div class="path-row">
-      <div class="path-label">Onset ≤48h</div>
-      <div class="path-content">Cardioversion შეიძლება — თრომბი ≤48h-ში ვ. ჩამოყ. · Amiodarone ან ელ. კარდიოვ.</div>
-    </div>
-    <div class="path-row">
-      <div class="path-label">Onset &gt;48h / UID</div>
-      <div class="path-content"><strong>Anticoag 3 კვ. ჯ.</strong> ან TEE (LA thrombus exclude) → შემდ. კარდიოვ. LA thrombus + კარდიოვ. = stroke!</div>
-    </div>
-    <div class="path-row">
-      <div class="path-label">Rate control</div>
-      <div class="path-content">Metoprolol IV / Diltiazem IV / Verapamil IV · <strong>BB + CCB სერ. ნუ!</strong> → AV block</div>
-    </div>
-  </div>
-
-  <div class="sec-label">AFib + WPW — სიკვდილის მედიკამენტები</div>
+  <!-- AFib WPW WARNING -->
   <div class="contra">
-    <div class="contra-title">Absolute Contraindication — AFib + WPW (Pre-excited AFib)</div>
-    <div class="contra-row"><div class="contra-x">✕</div><div>ადენოზინი — AV კვ. ბლ. → ყვ. 400–600 imp. Kent bundle-ზე → VF</div></div>
-    <div class="contra-row"><div class="contra-x">✕</div><div>Diltiazem / Verapamil — AV ბლ. → Kent → VF</div></div>
-    <div class="contra-row"><div class="contra-x">✕</div><div>Digoxin — Kent-ს ↑ + AV ბლ. → VF</div></div>
-    <div class="contra-row"><div class="contra-x">✕</div><div>Beta-blockers — AV ბლ. → Kent → VF</div></div>
-    <div class="contra-row" style="border:none;background:rgba(46,204,113,0.08);border-radius:4px;margin-top:6px;padding:6px 8px">
-      <div class="contra-x" style="color:var(--green)">✓</div>
-      <div style="color:#7de8aa"><strong>Cardioversion მაშინვე</strong> — ერთადერთი სწ. მართვა</div>
+    <div class="contra-title">🚫 Absolute Contraindication — AFib + WPW (სიკვდ. მედ.!)</div>
+    <div class="cx-row"><div class="cx">✕</div><div><strong>ადენოზინი</strong> — AV ბლ. → Kent bundle ↑↑ → VF</div></div>
+    <div class="cx-row"><div class="cx">✕</div><div><strong>Diltiazem / Verapamil</strong> — AV ბლ. → Kent ↑↑ → VF</div></div>
+    <div class="cx-row"><div class="cx">✕</div><div><strong>Digoxin</strong> — Kent refractory ↓ + AV ბლ. → VF</div></div>
+    <div class="cx-row"><div class="cx">✕</div><div><strong>Beta-blockers</strong> — AV ბლ. → Kent ↑↑ → VF</div></div>
+    <div class="cx-row" style="background:rgba(0,210,91,.08);border-radius:4px;padding:6px 8px">
+      <div class="cx cx-ok">✓</div>
+      <div style="color:#80EFB0"><strong>Cardioversion მაშინვე</strong> — ერთადერთი სწ. მართვა!</div>
     </div>
   </div>
 
-  <div class="sec-label">Torsades de Pointes — Long QT</div>
-  <div class="cards c2" style="margin-bottom:10px">
-    <div class="card"><div class="card-lbl">ECG</div><div class="card-val" style="font-size:13px">QRS ტ. + ამპ. ყ. ციკლ. სხვა</div><div class="card-sub">QTc ↑↑ (ამიოდ/სოტ/ჰალ/ანტ-ბ./ჰიპო-Mg/K)</div></div>
-    <div class="card amber"><div class="card-lbl">1st line</div><div class="card-val">Mg 1–2 g IV slow</div><div class="card-sub">Membrane stab. · Ca ანტ. · QT-ს ვ. ელოდ.</div></div>
+  <!-- ADENOSINE SPECIAL SITUATIONS -->
+  <div class="sl cyn">Adenosine — სპეც. სიტუ.</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>სიტ.</th><th>ადენ. დოზა</th><th>მიზეზი</th></tr>
+      <tr><td>სტანდ. SVT</td><td class="dose">6→12→12 mg rapid IV</td><td>სწრ. push + flush + ხელი ↑ + ჩაწ. / monitor</td></tr>
+      <tr class="hi-a"><td>Theophylline / კოფ.</td><td class="warn">↑ დოზა!</td><td>ანტაგ. → ეფ.↓ · მეტი საჭ.</td></tr>
+      <tr class="hi-a"><td>Dipyridamole / Carbamazepine</td><td class="kill">3mg-ით!</td><td>ეფ.↑↑ → გრძ. asystole!</td></tr>
+      <tr class="hi-a"><td>Transplant heart</td><td class="kill">3mg!</td><td>ჰიპერმგ. — reduced clearance</td></tr>
+      <tr class="hi-r"><td>Asthma / COPD</td><td class="kill">კონტრინდ.!</td><td>ბრონქოსპ. → სიკვდ.</td></tr>
+      <tr class="hi-r"><td>WPW + AFib</td><td class="kill">სიკვდ.!</td><td>AV ბლ. → Kent ↑↑ → VF!</td></tr>
+      <tr><td>Peripheral IV</td><td class="warn">სწ. push + flush</td><td>ნახ. t½ &lt;10 წმ — ბასაკობამდე!</td></tr>
+    </table>
   </div>
-  <div class="alert red"><strong>Amiodarone — Torsades-ში კატ. კონტრინდ.!</strong> QT კიდ.↑ → Torsades კიდ.↑ → VF. → Mg → Overdrive pacing → Isoproterenol</div>
 
-</div>
+  <!-- TORSADES WARNING -->
+  <div class="torsades-warn">
+    <div class="tw-icon">⚡</div>
+    <div class="tw-body">
+      <div class="tw-title">Torsades de Pointes — QT↑ VT</div>
+      <div class="tw-text">
+        <strong>Amiodarone + Torsades = კატ. კონტ.! QT↑ → Torsades↑ → VF!</strong><br>
+        მართვა: → <strong style="color:#80EFB0">Mg 1–2g IV slow (5–10წთ)</strong> → Overdrive pacing (HR→100) → Isoproterenol · QT-↑ მედ. გ.!
+      </div>
+    </div>
+  </div>
 
-<!-- ══════════════════ CARDIOVERSION ══════════════════ -->
+  <!-- VT STABLE TABLE -->
+  <div class="sl amb">Stable VT — მართვა</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>Mono VT (pulse)</th><th>დოზა</th><th>შენიშვ.</th></tr>
+      <tr><td>Amiodarone</td><td class="dose">150mg/10წთ IV slow</td><td>შემდ. 1mg/min · Stable preferred</td></tr>
+      <tr><td>Procainamide</td><td class="dose">20–50 mg/min · max 17mg/kg</td><td>stop: QRS ↑50% / BP↓ · CI: EF&lt;40%</td></tr>
+      <tr><td>Sotalol</td><td class="dose">100mg (1.5mg/kg) IV/10წთ</td><td>CI: QT↑ · Long QT / Torsades</td></tr>
+      <tr class="hi-r"><td class="kill">Synchronized Cardio</td><td>device-rec. J → ↑</td><td>Hemodynamically unstable!</td></tr>
+    </table>
+  </div>
+
+</div><!-- /pg-tachy -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 5 — CARDIOVERSION
+══════════════════════════════════════════════════════════ -->
 <div class="pg" id="pg-cardio">
 
-  <div class="sec-label">Sync vs Async — ფიზიოლოგია</div>
-  <div class="branches">
+  <div class="alert c">
+    <strong>Cardioversion:</strong> ელ. შოკი გ. კარდ. რიტმი.
+    <strong>Synchronized</strong> = R-wave-ზე · <strong>Unsynchronized</strong> = ნებ. დ. · VF → UNSYNC!
+  </div>
+
+  <!-- SYNC vs ASYNC -->
+  <div class="sl cyn">Sync vs Async — განსხვ.</div>
+  <div class="split">
     <div class="branch">
-      <div class="branch-hd blue">Synchronized Cardioversion</div>
-      <div class="branch-body">
+      <div class="bh c">⚡ Synchronized — SYNC</div>
+      <div class="bb">
         <div class="steps">
-          <div class="step"><div class="step-num b">მექ.</div><div class="step-txt">Device R wave peak-ს პ. → shock R-ზე → ყ. კარდ. depol. → T ტ. გვ. → safe</div></div>
-          <div class="step"><div class="step-num b">გამ.</div><div class="step-txt">პულსი + <strong>AFib · Flutter · SVT · Monomorphic VT</strong></div></div>
-          <div class="step"><div class="step-num b">!</div><div class="step-txt"><em>ყ. shock-ის შ. device AUTO-REVERTS to unsync!</em> შ. shock-ამ. SYNC ხელ. ჩ.</div></div>
+          <div class="st"><div class="sn c">მექ.</div><div class="stb">R-wave detect → shock R-ზე → T ტალ. გვ. → safe (VF-ის პ.)</div></div>
+          <div class="st"><div class="sn c">გამ.</div><div class="stb"><strong>AFib · A-Flutter · SVT · Mono VT (pulse+)</strong></div></div>
+          <div class="st"><div class="sn c">!</div><div class="stb"><span class="d">ყოველი shock → device UNSYNC! SYNC ყ. shock-შ. ჩ.!</span></div></div>
         </div>
       </div>
     </div>
     <div class="branch">
-      <div class="branch-hd amber">Unsynchronized (Defibrillation)</div>
-      <div class="branch-body">
+      <div class="bh a">⚡ Unsynchronized — DEFIB</div>
+      <div class="bb">
         <div class="steps">
-          <div class="step"><div class="step-num a">მექ.</div><div class="step-txt">Brute force → ყ. კარდ. ერთ. depol. · VF-ში T ტ. irrelevant</div></div>
-          <div class="step"><div class="step-num a">გამ.</div><div class="step-txt"><strong>VF · pVT · Polymorphic VT · Sync შ./ვ. · Unstable deteriorating</strong></div></div>
-          <div class="step"><div class="step-num a">!</div><div class="step-txt">Polymorphic VT → sync ვ. შ. — R wave არარ. → device ვ. markers-ს</div></div>
+          <div class="st"><div class="sn a">მექ.</div><div class="stb">Brute force → ყ.კარდ. ერთ.depol. · T wave timing irrelevant</div></div>
+          <div class="st"><div class="sn a">გამ.</div><div class="stb"><strong>VF · pVT · Poly VT · SYNC შ./ვ.</strong></div></div>
+          <div class="st"><div class="sn a">!</div><div class="stb">Poly VT → sync ვ.შ. — R wave არარ. (Sync fails)</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="alert amber"><strong>T ტალღა = Vulnerable Period:</strong> კარდიომიოც. ნაწ. ready + ნაწ. refractory → სტიმ. → ჰეტეროგ. → VF. Sync-ი ამ ფანჯარას გვეხვ.</div>
-
-  <div class="sec-label">ენერგიების ცხრილი</div>
-  <div class="energy-grid">
-    <div class="energy-row hd">
-      <div class="energy-cell hd">რიტმი</div>
-      <div class="energy-cell hd">ტიპი</div>
-      <div class="energy-cell hd">ენერგია</div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell"><strong>Atrial Fibrillation</strong></div>
-      <div class="energy-cell"><span class="sync">Sync</span></div>
-      <div class="energy-cell"><span class="j">120–200 J</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell"><strong>Atrial Flutter</strong></div>
-      <div class="energy-cell"><span class="sync">Sync</span></div>
-      <div class="energy-cell"><span class="j">50–100 J</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell"><strong>SVT (narrow, reentry)</strong></div>
-      <div class="energy-cell"><span class="sync">Sync</span></div>
-      <div class="energy-cell"><span class="j">50–100 J</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell"><strong>Monomorphic VT (pulse)</strong></div>
-      <div class="energy-cell"><span class="sync">Sync</span></div>
-      <div class="energy-cell"><span class="j">Device rec. → escalate</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell" style="color:var(--amber)"><strong>Polymorphic VT</strong></div>
-      <div class="energy-cell"><span class="async">Unsync !</span></div>
-      <div class="energy-cell"><span class="j">120–200 J max</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell" style="color:var(--red)"><strong>VF / Pulseless VT</strong></div>
-      <div class="energy-cell"><span class="async">Unsync !</span></div>
-      <div class="energy-cell"><span class="j">120–200 J max</span></div>
-    </div>
-    <div class="energy-row">
-      <div class="energy-cell"><strong>Monophasic (ნ. ბიფ.)</strong></div>
-      <div class="energy-cell">ნებ.</div>
-      <div class="energy-cell"><span class="j">360 J — ყ. სიტ.</span></div>
-    </div>
-  </div>
-
-  <div class="sec-label">Cardioversion — სრული პროცედურა</div>
-  <div class="dtbl-wrap" style="margin-bottom:12px">
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-txt"><strong>სედ. ცნობ. პაც.:</strong> Midazolam 1–2 mg + Fentanyl 1–2 mcg/kg &nbsp;|&nbsp; <em>Etomidate 0.2–0.3 mg/kg</em> (BP↓ risk↓) &nbsp;|&nbsp; Unstable → ნუ ელ.</div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-txt">Defibrillator ჩ. · Monitor leads · <strong>Adhesive pads</strong> (handheld-ი sync-ს ვ. შ.!)</div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>SYNC ღილ.</strong> → ECG-ზე R wave markers. Gain ↑ თუ amplitude დაბ.</div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-txt">ენ. შ. → "Charging — Stand Clear!" → Clear check → <strong>SHOCK</strong></div></div>
-      <div class="step"><div class="step-num r">!</div><div class="step-txt"><strong>ყ. sync shock-ის შ. → UNSYNC mode!</strong> შ. shock-ამ. SYNC ხ. ჩ. (თუ VF გამ. → მაშინვე unsync defib)</div></div>
-    </div>
-  </div>
-
-  <div class="sec-label">3 ხაფანგი — Synchronization-ში</div>
-  <div class="dtbl-wrap">
-    <table class="dtbl">
-      <tr><th>#</th><th>პრობლემა</th><th>გამოსავ.</th></tr>
-      <tr><td>1</td><td>Low-amplitude R waves → markers ვ. → shock ვ. გ.</td><td>Lead შ. · Gain ↑</td></tr>
-      <tr><td>2</td><td>Handheld paddles → ბ. sync-ი</td><td>Adhesive pads გ.</td></tr>
-      <tr><td>3</td><td>Post-shock → device auto-reverts to unsync</td><td class="dose">ყ. shock-ამ. SYNC ჩ.!</td></tr>
+  <!-- ENERGY TABLE -->
+  <div class="sl cyn">ენერგია — ცხრილი</div>
+  <div class="etbl-wrap">
+    <table class="etbl">
+      <tr><th>რიტმი</th><th>ტიპი</th><th>ენ. (J)</th><th>შ.</th></tr>
+      <tr><td>AFib</td><td><span class="syn">SYNC</span></td><td><span class="j">120–200 J</span></td><td>Biph. · Escalate თუ failure</td></tr>
+      <tr><td>A-Flutter / SVT</td><td><span class="syn">SYNC</span></td><td><span class="j">50–100 J</span></td><td>Low energy · Escalate</td></tr>
+      <tr><td>Mono VT (pulse+)</td><td><span class="syn">SYNC</span></td><td><span class="j">device-rec. → ↑</span></td><td>Hemostable · Sedate</td></tr>
+      <tr class="hi-a"><td>Poly VT / Torsades</td><td><span class="asy">UNSYNC !</span></td><td><span class="j">120–200 J max</span></td><td>R-wave არარ. → sync fails!</td></tr>
+      <tr class="hi-r"><td>VF / pVT</td><td><span class="asy">UNSYNC !</span></td><td><span class="j">120–200 J max</span></td><td>გ.შ. → max ენ.</td></tr>
+      <tr><td>Monophasic device</td><td>ნებ.</td><td><span class="j">360 J ყ.სიტ.</span></td><td>Biph. preferred</td></tr>
     </table>
   </div>
 
-  <div class="sec-label">Cardioversion ვ. ეფ. — Automatic rhythms</div>
-  <div class="alert amber"><strong>Junctional Tach / Ectopic AT / Multifocal AT / Sinus Tach</strong> → კარდიოვ. უუეფ. ან rate ↑. ეს <em>automatic focus</em>-ია — re-entry კი ა. Shock ვ. შლის. სინ. ტაქ. = მიზეზი!</div>
+  <!-- PROCEDURE FLOW -->
+  <div class="sl cyn">პროცედურა — 6 ნ.</div>
+  <div class="flow">
+    <div class="fn c-c">
+      <div class="fn-badge"><div class="ico">💤</div><div>სედ.</div></div>
+      <div class="fn-body"><strong>Midazolam 1–2mg + Fentanyl 1–2mcg/kg</strong> · Etomidate 0.2–0.3mg/kg (BP↓ risk) · Unstable → ნუ ელ.!</div>
+    </div>
+    <div class="fn c-c">
+      <div class="fn-badge"><div class="ico">🔧</div><div>2<br>Pads</div></div>
+      <div class="fn-body">Defibrillator ON · Monitor · <strong>Adhesive pads!</strong> (handheld paddles → sync ✗)</div>
+    </div>
+    <div class="fn c-c crit">
+      <div class="fn-badge"><div class="ico">🔁</div><div>3<br>SYNC!</div></div>
+      <div class="fn-body"><strong>SYNC ღილაკი → ECG-ზე R-wave markers.</strong> Gain ↑ თუ amplitude დაბ. · markers = ♦ ყ. R-ზე</div>
+    </div>
+    <div class="fn c-c">
+      <div class="fn-badge"><div class="ico">⚡</div><div>4<br>Charge</div></div>
+      <div class="fn-body">ენ.შ. → <strong>"Charging — Stand Clear!"</strong> → Clear (ყველ.) → <strong>SHOCK</strong></div>
+    </div>
+    <div class="fn c-r crit">
+      <div class="fn-badge"><div class="ico">🚨</div><div>!</div></div>
+      <div class="fn-body"><span class="d">ყ. sync shock → AUTO UNSYNC! SYNC ყ. shock-შ.!</span> (VF გამ. → unsync defib)</div>
+    </div>
+    <div class="fn c-g ok">
+      <div class="fn-badge"><div class="ico">✅</div><div>5<br>Post</div></div>
+      <div class="fn-body">Rhythm check · BP · SpO₂ · SYNC კვ.? → გ. shock-ამ. · ROSC care</div>
+    </div>
+  </div>
 
-  <div class="sec-label">სედაცია — სცენ. მიხ.</div>
-  <div class="dtbl-wrap">
-    <table class="dtbl">
-      <tr><th>პაციენტი</th><th>პრეპ.</th><th>დოზა</th><th>შენიშ.</th></tr>
-      <tr><td>სტაბ., ცნობ.</td><td>Midazolam + Fentanyl</td><td class="dose">1–2 mg + 1–2 mcg/kg</td><td>amnesia + analgesia</td></tr>
-      <tr><td>BP↓ risk</td><td>Etomidate</td><td class="dose">0.2–0.3 mg/kg</td><td class="ok">ჰემოდ. ნეიტ. ✓</td></tr>
-      <tr><td>Unstable, BP 60/40</td><td colspan="2" class="kill">ნუ ელ. — shock მაშინვე</td><td>consciousness → ROSC</td></tr>
-      <tr><td>Propofol ეჭვი</td><td>—</td><td>BP↓ risk</td><td>ჰიპოტ. → avoid</td></tr>
+  <!-- 3 TRAPS -->
+  <div class="sl red">3 ხაფანგი — ყველ. პ. ექიმ. ვარდება!</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>#</th><th>პრობლ.</th><th>გამოსავ.</th></tr>
+      <tr class="hi-r"><td>1</td><td>Low-amplitude R-wave → markers ✗ → shock ✗ / delay</td><td>Lead შ. · Gain ↑ · Pad pos. შ.</td></tr>
+      <tr class="hi-r"><td>2</td><td>Handheld paddles → sync ✗ (paddles → poor sync)</td><td class="kill">Adhesive pads ყ.!</td></tr>
+      <tr class="hi-r"><td>3</td><td>Post-shock → auto-revert to UNSYNC</td><td class="kill">SYNC ჩ. ყ. shock-შ.!</td></tr>
     </table>
   </div>
 
-</div>
+  <div class="alert a">
+    <strong>Automatic Rhythms → Cardioversion უუეფ.!</strong><br>
+    Junctional Tach / Ectopic AT / MAT / Sinus Tach = automatic focus, re-entry კი.
+    Sinus Tach = მიზეზი! (ტ., ტკ., Hypo-volemia/thyroid) → cause-ი მკ.!
+  </div>
 
+  <!-- QUICK DRUG REFS FOR CARDIO PAGE -->
+  <div class="sl cyn">სედ. პრეპ. სწ. ცხ.</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <tr><th>პრეპ.</th><th>დოზა</th><th>შ.</th></tr>
+      <tr><td>Midazolam</td><td class="dose">1–2mg IV slow</td><td>ამნ. + სედ. · Resp. depr. · Flumazenil reversal</td></tr>
+      <tr><td>Fentanyl</td><td class="dose">1–2 mcg/kg IV</td><td>ტკ. კონტ. · Naloxone reversal</td></tr>
+      <tr><td>Etomidate</td><td class="dose">0.2–0.3 mg/kg IV</td><td>BP↓ min · Myoclonus · CI: adrenal insuff. long-t.</td></tr>
+      <tr class="hi-a"><td>Ketamine</td><td class="dose">1–2 mg/kg IV</td><td>Dissoc. · BP↑ · Peds friendly · Emergence reaction</td></tr>
+    </table>
+  </div>
+
+</div><!-- /pg-cardio -->
+
+
+<!-- ══════════════════ SCRIPT ══════════════════ -->
 <script>
 function sw(id, btn) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
-  document.getElementById('pg-' + id).classList.add('on');
-  btn.classList.add('on');
+  const pg = document.getElementById('pg-' + id);
+  if (pg) pg.classList.add('on');
+  if (btn) {
+    btn.classList.add('on');
+  } else {
+    const map = { map: 0, ca: 1, brady: 2, tachy: 3, cardio: 4 };
+    const tabs = document.querySelectorAll('.tab');
+    if (tabs[map[id]]) tabs[map[id]].classList.add('on');
+  }
+  window.scrollTo(0, 0);
 }
-function tog(el) {
-  el.classList.toggle('open');
+
+const INFO = {
+  patient: {
+    title: '🟣 პაციენტი — პირველადი შეფასება',
+    color: '#A855FF',
+    body: `<b style="color:#C084FC">მიზანი:</b> 10 წამში გადაწყვეტილება.<br>
+• <b>A</b> — Airway: სასუნთქი გზა თავისუფალია?<br>
+• <b>B</b> — Breathing: სუნთქავს? SpO₂?<br>
+• <b>C</b> — Circulation: პულსი? BP? კანის ფერი?<br>
+• <b>D</b> — Disability: გონება? AVPU/GCS?<br>
+• <b>E</b> — Exposure: ტემპ., სისხლდენა, ჟ-ბი?<br><br>
+<b style="color:#FF6170">⚠️ ეჭვი = CPR — ნუ დაელოდები!</b>`
+  },
+  pulse: {
+    title: '🔶 პულსის შემოწმება',
+    color: '#FF9500',
+    body: `<b>10 წამი</b> — carotid (ყელი) ან radial (მაჯა)<br><br>
+• <b>პულსი არ არის / ეჭვი →</b> <span style="color:#FF6170">CARDIAC ARREST პროტოკოლი</span><br>
+• <b>პულსი კი →</b> HR შეაფასე → Brady (&lt;50) ან Tachy (&gt;150)?<br><br>
+<b style="color:#FFB340">ეჭვის შემთხვევაში:</b> CPR დაიწყე — არარსებული პულსის CPR უსაფრთხოა, გამოტოვებული CPR — ფატალური.`
+  },
+  ca: {
+    title: '🔴 Cardiac Arrest — VF/pVT · PEA · Asystole',
+    color: '#FF2D3B',
+    body: `<b style="color:#FF6170">CPR ხარისხი = გადარჩენა</b><br><br>
+<b>VF / pVT (Shockable):</b><br>
+• შოკი <b>120–200J</b> biphasic → CPR 2წთ → Epi 1mg → CPR 2წთ → Amiodarone 300mg (3შ)<br><br>
+<b>PEA / Asystole (Non-Shockable):</b><br>
+• CPR მაშინვე → <b>Epinephrine 1mg IV/IO q3–5წთ</b><br>
+• <b>H's &amp; T's!</b> — მიზეზი მოძებნე<br><br>
+<b>CPR სტანდარტი:</b> 100–120/წთ · ≥5სმ · CCF ≥80% · Full recoil · No pause &gt;10წმ`
+  },
+  hr: {
+    title: '🔵 HR შეფასება',
+    color: '#00C8FF',
+    body: `პულსი კი → HR გაზომე<br><br>
+• <b style="color:#FF6170">&gt;150/min →</b> Tachycardia პროტოკოლი<br>
+• <b style="color:#FFB340">&lt;50/min →</b> Bradycardia პროტოკოლი<br>
+• <b style="color:#00D25B">50–150/min →</b> სხვა მიზეზი (AFib, სტაბ. რიტმი)<br><br>
+<b>ინსტრუმენტები:</b> 12-lead ECG, SpO₂, BP, ეოს.`
+  },
+  tachy: {
+    title: '🔴 Tachycardia — HR >150',
+    color: '#FF6170',
+    body: `<b>პირველი კითხვა: სტაბილურია?</b><br><br>
+<b style="color:#FF6170">Unstable (რომელიმე):</b> BP↓, გონ.↓, მკ.ტკ., გულ.შეც.<br>
+→ <b>Synchronized Cardioversion მაშინვე!</b> სედ. + SYNC ჩართე<br><br>
+<b style="color:#00C8FF">Stable:</b> QRS შეაფასე<br>
+• <b>Narrow QRS (&lt;120ms):</b> SVT → Vagal → Adenosine 6→12→12mg<br>
+• <b>Wide QRS (≥120ms):</b> VT vs SVT-aberr → Amiodarone 150mg/10წთ<br>
+• <b>Irreg + Wide:</b> AFib + WPW → Cardioversion (ადენ. კი არა!)<br><br>
+<b style="color:#FFB340">WPW + AFib → Adenosine/Verapamil = სიკვდ.!</b>`
+  },
+  brady: {
+    title: '🟠 Bradycardia — HR <50',
+    color: '#FF9500',
+    body: `<b>სიმპტომები:</b> BP↓, გონ.↓, მკ.ტკ., სინ.უუ., შოკი<br><br>
+<b>Step 1:</b> Atropine <b>1mg IV</b> (ყ. 3–5წთ, max 3mg)<br>
+<b>Step 2:</b> TCP — Transcutaneous Pacing (rate 60–80, mA ↑ until capture)<br>
+<b>Step 3:</b> TVP — Transvenous Pacing (Mobitz II / 3° AV Block)<br><br>
+<b>Dopamine:</b> 2–10 mcg/kg/min (ატრ. წარუ. ან TCP ლოდ.)<br>
+<b>Epinephrine:</b> 2–10 mcg/min IV infusion<br><br>
+<b style="color:#FF6170">Mobitz II / 3° → TCP/TVP სწრ.! ატრ. ყოველთვის არ მუ.</b>`
+  },
+  shockable: {
+    title: '⚡ Shockable — VF / pVT',
+    color: '#FF6170',
+    body: `<b>VF (Ventricular Fibrillation):</b> ქაოტური · პულსი ✗<br>
+<b>pVT (Pulseless VT):</b> ორგ. VT · პულსი ✗<br><br>
+<b>მართვა:</b><br>
+• <b>შოკი 120–200J</b> (biphasic) / 360J (monophasic) → UNSYNC!<br>
+• CPR 2წთ უმ. შეფ. → rhythm check<br>
+• <b>Epinephrine 1mg</b> → ყ. 2ციკ. (q3–5წთ)<br>
+• <b>Amiodarone 300mg IV</b> → მე-3 შოკ.შ. / 150mg მე-2 დოზ.<br><br>
+<span style="color:#00D25B">ETCO₂ &gt;10 = კარგი CPR / ROSC შ.</span>`
+  },
+  nonshock: {
+    title: '🟠 Non-Shockable — PEA · Asystole',
+    color: '#FF9500',
+    body: `<b>PEA (Pulseless Electrical Activity):</b> ორგ. ECG · პულსი ✗<br>
+<b>Asystole:</b> "flat line" · პულსი ✗<br><br>
+<b>მართვა:</b><br>
+• CPR მაშინვე + <b>Epinephrine 1mg IV/IO q3–5წთ</b><br>
+• <b>H's &amp; T's!</b> — შექცევ. მიზ. პ. 2წთ-ში<br>
+• შოკი <b>არ</b> — rhythm არ არის shockable<br><br>
+<b style="color:#FFB340">H's &amp; T's:</b> Hypovolemia · Hypoxia · H⁺(acidosis) · Hypo/hyperK · Hypothermia | Tension PTX · Tamponade · Toxins · Thrombosis (PE/MI)`
+  },
+  hnt: {
+    title: "🔍 H's & T's — 10 შექცევადი მიზეზი",
+    color: '#8E98B0',
+    body: `<b>H's:</b><br>
+• <b>H</b>ypovolemia — IV fluids სწრ.<br>
+• <b>H</b>ypoxia — ოქსიგ. / ინტ.<br>
+• <b>H</b>ydrogen ion (Acidosis) — NaHCO₃<br>
+• <b>H</b>ypo/Hyperkalemia — K⁺ კალ. / CaCl₂<br>
+• <b>H</b>ypothermia — გათბ.<br><br>
+<b>T's:</b><br>
+• <b>T</b>ension Pneumothorax — ნემ. დეკ.<br>
+• <b>T</b>amponade (cardiac) — პერ. პუნქ.<br>
+• <b>T</b>oxins — antidote / naloxone<br>
+• <b>T</b>hrombosis (PE) — tPA<br>
+• <b>T</b>hrombosis (MI) — PCI`
+  },
+  cardio: {
+    title: '⚡ Cardioversion — Sync vs Unsync',
+    color: '#00C8FF',
+    body: `<b>SYNC Cardioversion:</b> R-wave-ზე შოკი → VF პ.<br>
+გამ.: AFib (120–200J) · A-Flutter (50–100J) · SVT · Mono VT<br><br>
+<b>UNSYNC Defibrillation:</b> ნებ. დ. · VF / pVT<br>
+გამ.: VF · pVT · Poly VT (R-wave ✗)<br><br>
+<b>⚠️ კრიტ.:</b> ყ. SYNC shock → device AUTO UNSYNC! SYNC-ი ყ. shock-შ. ჩ.!<br><br>
+<b>სედაცია (Stable):</b> Midazolam 1–2mg + Fentanyl 1–2mcg/kg<br>
+<b>Handheld paddles →</b> SYNC ✗ — adhesive pads ყ.!`
+  },
+  narrow: {
+    title: '🔵 Narrow / Wide QRS — Tachycardia Dx',
+    color: '#00C8FF',
+    body: `<b>Narrow QRS (&lt;120ms):</b><br>
+• Reg: SVT / Sinus Tach / AVNRT<br>
+→ Vagal maneuver → <b>Adenosine 6→12→12mg</b> rapid IV<br>
+• Irreg: AFib / A-Flutter → rate control: Metoprolol / Diltiazem<br><br>
+<b>Wide QRS (≥120ms):</b><br>
+• Reg: VT (პრეს. VT) → <b>Amiodarone 150mg/10წთ</b><br>
+• Irreg: AFib+WPW / Poly VT → Cardioversion<br><br>
+<b style="color:#FF6170">Wide + Irreg → ადენ./ვერაპ. კატ. კონტ.! → VF!`
+  },
+  tcp: {
+    title: '🟠 TCP / TVP — Pacing',
+    color: '#FF9500',
+    body: `<b>TCP (Transcutaneous Pacing):</b><br>
+• Rate: 60–80/წთ<br>
+• mA: 0-დან ↑ capture-მდე (ECG + პულსი)<br>
+• <b>სედ.!</b> — მტკ.!: Fentanyl + Midazolam<br><br>
+<b>TVP (Transvenous Pacing):</b><br>
+• Mobitz II / 3° AV Block → TVP სწრ.!<br>
+• TCP bridging-ად მანამდე<br><br>
+<b>TCP failure →</b> Dopamine 2–10mcg/kg/min ან Epi 2–10mcg/min infusion<br><br>
+<b style="color:#FF6170">Mobitz II / 3° → ატრ. ყ.შ. მუ. · TVP = ოქ. სტ.!</b>`
+  },
+  rosc: {
+    title: '🟢 ROSC — სამიზნეები',
+    color: '#00D25B',
+    body: `<b>Return of Spontaneous Circulation</b><br><br>
+• <b>SpO₂:</b> 92–98% (>98% = hyperoxia = ↑ mortality!)<br>
+• <b>SBP:</b> ≥90 mmHg / MAP ≥65<br>
+• <b>ETCO₂:</b> 35–45 mmHg<br>
+• <b>TTM:</b> 32–36°C (Targeted Temperature Management 24სთ)<br>
+• <b>12-lead ECG →</b> STEMI? → Cath Lab სწრ.!<br>
+• <b>Glucose:</b> 140–180 mg/dL<br><br>
+<b style="color:#FFB340">⚠️ ჰიპერვენტ. = ↓PaCO₂ = ვაზ.კ. = ↑ICP → ცუდი!</b>`
+  }
+};
+
+function showInfo(key) {
+  const d = INFO[key];
+  if (!d) return;
+  const panel = document.getElementById('info-panel');
+  const header = document.getElementById('info-header');
+  const title = document.getElementById('info-title');
+  const body = document.getElementById('info-body');
+  title.textContent = d.title;
+  title.style.color = d.color;
+  header.style.borderBottom = '1px solid ' + d.color + '33';
+  body.innerHTML = d.body;
+  panel.style.display = 'block';
+  panel.style.borderColor = d.color + '40';
+  // Scroll panel into view
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 </body>
