@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ტრავმის სახელმძღვანელო — პრეჰოსპიტალური</title>
+<style>
+:root {
+  --bg: #0B0C0E;
+  --bg-card: #15171A;
+  --bg-card-raised: #1C1F23;
+  --bg-input: #202327;
+  --line: #2A2D32;
+  --line-bright: #3A3E45;
+  --text: #ECEDEE;
+  --text-dim: #9A9DA3;
+  --text-faint: #6B6E74;
+  --red: #FF4D4D;
+  --red-bg: #2A1416;
+  --red-line: #5C2226;
+  --amber: #FFB020;
+  --amber-bg: #2A1F0E;
+  --amber-line: #5C4318;
+  --green: #3DD68C;
+  --green-bg: #0F2A1E;
+  --green-line: #1E5C3D;
+  --blue: #4DA3FF;
+  --blue-bg: #0E1F2E;
+  --blue-line: #1E4060;
+  --black-tier: #8A8D93;
+  --black-bg: #1C1D1F;
+  --black-line: #3A3D42;
+  --mono: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+body {
+  padding-bottom: calc(64px + var(--safe-bottom));
+}
+
+/* ===== TOP BAR ===== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11,12,14,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding-top: var(--safe-top);
+}
+.topbar-inner {
+  padding: 14px 16px 10px;
+}
+.topbar-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+.topbar-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  font-family: var(--mono);
+}
+
+/* ===== SEARCH ===== */
+.search-wrap {
+  padding: 0 16px 10px;
+}
+.search-box {
+  background: var(--bg-input);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 14px;
+  color: var(--text);
+  width: 100%;
+  display: block;
+}
+.search-box::placeholder { color: var(--text-faint); }
+
+/* ===== SECTION NAV (horizontal scroll chips) ===== */
+.navscroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 16px 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.navscroll::-webkit-scrollbar { display: none; }
+.navchip {
+  flex-shrink: 0;
+  padding: 7px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.navchip.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+/* ===== MAIN PAGE SECTIONS ===== */
+.page { display: none; padding: 4px 16px 24px; }
+.page.active { display: block; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 22px 0 10px;
+}
+.section-head:first-child { margin-top: 6px; }
+.section-head h2 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-dim);
+}
+.section-head .tag {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-faint);
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 14px 15px;
+  margin-bottom: 10px;
+}
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  letter-spacing: -0.1px;
+}
+.card-sub {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-top: -6px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* ===== BADGES ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-family: var(--mono);
+}
+.badge-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-line); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-line); }
+.badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-line); }
+.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-line); }
+.badge-gray { background: var(--bg-input); color: var(--text-dim); border: 1px solid var(--line-bright); }
+
+/* ===== GRIDS ===== */
+.row { display: grid; gap: 8px; }
+.row-2 { grid-template-columns: 1fr 1fr; }
+.row-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 420px) {
+  .row-3 { grid-template-columns: 1fr 1fr; }
+}
+
+.mini-card {
+  background: var(--bg-card-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 11px;
+}
+.mini-label {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.mini-val {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.mini-body {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin-top: 3px;
+}
+
+/* ===== LISTS ===== */
+.list { list-style: none; }
+.list li {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 9px;
+  line-height: 1.5;
+}
+.list li:last-child { border-bottom: none; }
+.list li::before {
+  content: "▸";
+  color: var(--blue);
+  flex-shrink: 0;
+  font-size: 12px;
+  margin-top: 2px;
+}
+.list strong { color: var(--text); font-weight: 700; }
+
+/* ===== ABCDE GRID ===== */
+.abcde { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+@media (max-width: 420px) { .abcde { grid-template-columns: repeat(3, 1fr); } }
+.abcde-item {
+  background: var(--bg-card-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  text-align: center;
+}
+.abcde-letter { font-size: 22px; font-weight: 800; color: var(--blue); font-family: var(--mono); }
+.abcde-word { font-size: 10.5px; color: var(--text-dim); margin-top: 2px; font-weight: 600; }
+.abcde-desc { font-size: 10px; color: var(--text-faint); margin-top: 4px; line-height: 1.35; }
+
+/* ===== TABLES (scroll horizontally on mobile) ===== */
+.tablewrap { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--line); -webkit-overflow-scrolling: touch; }
+table.data {
+  width: 100%;
+  font-size: 12.5px;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+table.data th {
+  font-weight: 700;
+  padding: 8px 10px;
+  background: var(--bg-card-raised);
+  text-align: left;
+  border-bottom: 1px solid var(--line-bright);
+  white-space: nowrap;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  color: var(--text-dim);
+}
+table.data td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-dim);
+}
+table.data tr:last-child td { border-bottom: none; }
+.c1 { color: var(--green); font-weight: 700; }
+.c2 { color: var(--amber); font-weight: 700; }
+.c3 { color: #FF8A4D; font-weight: 700; }
+.c4 { color: var(--red); font-weight: 700; }
+
+/* ===== ALERT/INFO BOXES ===== */
+.box { border-left: 3px solid; padding: 10px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 8px; }
+.box:last-child { margin-bottom: 0; }
+.box-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+.box-row { font-size: 12.5px; margin-top: 4px; line-height: 1.55; }
+.box-row b { font-weight: 700; }
+.box-tx { font-size: 12.5px; margin-top: 6px; line-height: 1.55; padding-top: 6px; border-top: 1px dashed; }
+
+.injury-box { border-color: var(--red); background: var(--red-bg); }
+.injury-box .box-title { color: #FF8A8A; }
+.injury-box .box-row { color: #E8A5A5; }
+.injury-box .box-tx { color: #FFD0D0; border-top-color: var(--red-line); }
+
+.safe-box { border-color: var(--green); background: var(--green-bg); }
+.safe-box .box-title { color: #6FE3AE; }
+.safe-box .box-row { color: #9FCDB6; }
+.safe-box .box-tx { color: #C9F2DD; border-top-color: var(--green-line); }
+
+.warn-box { border-color: var(--amber); background: var(--amber-bg); }
+.warn-box .box-title { color: #FFCB6B; }
+.warn-box .box-row { color: #D8B98A; }
+.warn-box .box-tx { color: #FFE3AE; border-top-color: var(--amber-line); }
+
+.blue-box { border-color: var(--blue); background: var(--blue-bg); }
+.blue-box .box-title { color: #8AC4FF; }
+.blue-box .box-row { color: #9DB8D4; }
+.blue-box .box-tx { color: #C8E2FF; border-top-color: var(--blue-line); }
+
+/* ===== STEP LIST ===== */
+.step-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.step-row:last-child { margin-bottom: 0; }
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bg-input); border: 1px solid var(--line-bright);
+  color: var(--text); font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px; font-family: var(--mono);
+}
+.step-num.crit { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+.step-text { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; padding-top: 1px; }
+.step-text strong { color: var(--text); font-weight: 700; }
+
+/* ===== TRIAGE GRID ===== */
+.triage-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.triage-item { border-radius: var(--radius-sm); padding: 12px 10px; text-align: center; border: 1px solid; }
+.t-red { background: var(--red-bg); border-color: var(--red-line); }
+.t-yellow { background: var(--amber-bg); border-color: var(--amber-line); }
+.t-green { background: var(--green-bg); border-color: var(--green-line); }
+.t-black { background: var(--black-bg); border-color: var(--black-line); }
+.t-num { font-size: 22px; font-weight: 800; font-family: var(--mono); }
+.t-red .t-num { color: var(--red); }
+.t-yellow .t-num { color: var(--amber); }
+.t-green .t-num { color: var(--green); }
+.t-black .t-num { color: var(--black-tier); }
+.t-name { font-size: 12.5px; font-weight: 700; margin-top: 2px; }
+.t-red .t-name { color: #FF8A8A; }
+.t-yellow .t-name { color: #FFCB6B; }
+.t-green .t-name { color: #6FE3AE; }
+.t-black .t-name { color: var(--black-tier); }
+.t-desc { font-size: 10.5px; margin-top: 4px; line-height: 1.4; }
+.t-red .t-desc { color: #D49C9C; }
+.t-yellow .t-desc { color: #C9AB76; }
+.t-green .t-desc { color: #8FBFA4; }
+.t-black .t-desc { color: #8A8D93; }
+
+/* ===== PITFALLS ===== */
+.pitfall { margin-bottom: 8px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); }
+.pitfall-q { font-size: 12.5px; color: #FF8A8A; background: var(--red-bg); padding: 8px 10px; line-height: 1.5; }
+.pitfall-a { font-size: 12.5px; color: #6FE3AE; background: var(--green-bg); padding: 8px 10px; line-height: 1.5; border-top: 1px solid var(--line); }
+
+/* ===== DIVIDER ===== */
+.divider { border: none; border-top: 1px solid var(--line); margin: 14px 0; }
+
+/* ===== SCENARIO MODE ===== */
+.scenario-banner {
+  background: linear-gradient(135deg, var(--blue-bg), var(--bg-card));
+  border: 1px solid var(--blue-line);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.scenario-banner .label { font-size: 11px; color: var(--blue); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; font-family: var(--mono); }
+.scenario-banner p { font-size: 13.5px; color: var(--text); margin-top: 6px; line-height: 1.6; }
+.scn-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.scn-tag { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-faint); margin-bottom: 6px; font-family: var(--mono); }
+.scn-vitals { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin: 10px 0; }
+.scn-vital { background: var(--bg-input); border-radius: 8px; padding: 7px 4px; text-align: center; }
+.scn-vital .v-label { font-size: 9px; color: var(--text-faint); font-weight: 700; }
+.scn-vital .v-val { font-size: 13px; font-weight: 700; font-family: var(--mono); margin-top: 1px; }
+.scn-vital.abn .v-val { color: var(--red); }
+details.scn-reveal { margin-top: 8px; }
+details.scn-reveal summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  padding: 8px 0;
+  list-style: none;
+}
+details.scn-reveal summary::-webkit-details-marker { display: none; }
+details.scn-reveal summary::before { content: "▸ "; }
+details.scn-reveal[open] summary::before { content: "▾ "; }
+details.scn-reveal .reveal-body { padding-top: 4px; }
+
+/* ===== BOTTOM TAB BAR ===== */
+.tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 60;
+  background: rgba(15,17,20,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--line);
+  display: flex;
+  padding-bottom: var(--safe-bottom);
+}
+.tabbar-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 2px 6px;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-family: var(--sans);
+}
+.tabbar-btn.active { color: var(--text); }
+.tabbar-btn .ico { font-size: 17px; line-height: 1; }
+.tabbar-btn .lbl { font-size: 10px; font-weight: 600; }
+
+/* utility */
+.mt8 { margin-top: 8px; }
+.mt10 { margin-top: 10px; }
+.fw { font-weight: 700; color: var(--text); }
+.dim { color: var(--text-dim); }
+.mono { font-family: var(--mono); }
+.hidden-section { display: none; }
+.hidden-section.active { display: block; }
+
+a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">ტრავმის სახელმძღვანელო</div>
+    <div class="topbar-sub">ATLS · პრეჰოსპიტალური რეფერენსი</div>
+  </div>
+</div>
+
+<!-- ============ TOP-LEVEL TAB: REFERENCE ============ -->
+<div id="view-reference" class="hidden-section active">
+
+  <div class="navscroll" id="navscroll">
+    <button class="navchip active" data-target="overview">საფუძვლები</button>
+    <button class="navchip" data-target="airway">Airway</button>
+    <button class="navchip" data-target="breathing">Breathing</button>
+    <button class="navchip" data-target="shock">Shock</button>
+    <button class="navchip" data-target="thoracic">Thoracic</button>
+    <button class="navchip" data-target="abdominal">Abdominal</button>
+    <button class="navchip" data-target="head">Head/TBI</button>
+    <button class="navchip" data-target="spine">Spine/Neck</button>
+    <button class="navchip" data-target="msk">მენჯი/კ-ები</button>
+    <button class="navchip" data-target="burns">დამწვრობა/გარემო</button>
+    <button class="navchip" data-target="peds">Peds/ორსული</button>
+    <button class="navchip" data-target="triage">Triage</button>
+    <button class="navchip" data-target="drugs">წამლები</button>
+  </div>
+
+  <!-- =================================================== -->
+  <!-- OVERVIEW                                             -->
+  <!-- =================================================== -->
+  <div id="overview" class="page active">
+
+    <div class="section-head"><h2>ფილოსოფია</h2></div>
+    <div class="card">
+      <div class="card-title">სიკვდილის სამი პიკი <span class="badge badge-blue">TRIMODAL</span></div>
+      <div class="card-sub">ტრავმული სიკვდილიანობა არ ხდება თანაბრად დროში — ის სამ მკაფიო ტალღად ნაწილდება. ეს განსაზღვრავს, რატომ არსებობს „ოქროს საათის" კონცეფცია.</div>
+      <div class="row" style="gap:8px;">
+        <div class="mini-card">
+          <div class="mini-label">პიკი 1 — წამები–წუთები (დაზიანების მომენტში)</div>
+          <div class="mini-body">აორტის გაგლეჯა, გულის გაგლეჯა, თავის ღრუს ღეროს/ტვინის უხეში დაზიანება, ზედა საჰაერო გზების სრული გადაკეტვა. სიკვდილის ~50%. პრაქტიკულად პრევენცია შესაძლებელია მხოლოდ უსაფრთხოების ზომებით (ქამარი, ჩაფხუტი) — არა მკურნალობით ადგილზე.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">პიკი 2 — წუთები–რამდენიმე საათი — „ოქროს საათი"</div>
+          <div class="mini-body">სუბდურალური/ეპიდურალური ჰემატომა, ჰემოთორაქსი, პნევმოთორაქსი, ელენთის/ღვიძლის გასკდომა, მენჯის მოტეხილობა მასიური სისხლდენით, მრავლობითი დაზიანებები სისხლის დაკარგვით. სიკვდილის ~30%. <span class="fw">ეს არის ის ფანჯარა, სადაც პრეჰოსპიტალურმა და ადრეულმა საჰოსპიტალურმა მოქმედებამ ცვლის გამოსავალს.</span> სწორი ABCDE-ის თანმიმდევრობა, სისხლდენის კონტროლი და სწრაფი ტრანსპორტირება ცენტრში — სიცოცხლის გადარჩენის მთავარი ბერკეტი.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">პიკი 3 — დღეები–კვირები</div>
+          <div class="mini-body">სეპსისი, მრავლობითი ორგანოს უკმარისობა (MODS), ARDS, ღრმა ვენების თრომბოზი/ემბოლია. სიკვდილის ~20%. ეს ფაზა საჰოსპიტალურია, მაგრამ მისი რისკი დაირგვება ადგილზევე — ჰიპოთერმია, არასწორი resuscitation და დაგვიანებული ჰემოსტაზი ზრდის შემდგომი ორგანული უკმარისობის ალბათობას.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>პირველადი შეფასება</h2></div>
+    <div class="card">
+      <div class="card-title">ABCDE — თანმიმდევრობა, რომელსაც არასდროს ვცვლით</div>
+      <div class="card-sub">თითოეული საფეხური მთავრდება მანამ, სანამ შემდეგზე გადავალთ — გარდა იმ შემთხვევისა, როცა წინა საფეხურზე პრობლემა ვლინდება ხელახლა (მაგ. ინტუბირებულ პაციენტს მოულოდნელად უვარდება SpO₂ → ვუბრუნდებით A/B-ს).</div>
+      <div class="abcde">
+        <div class="abcde-item">
+          <div class="abcde-letter">A</div>
+          <div class="abcde-word">Airway</div>
+          <div class="abcde-desc">სასუნთქი გზის გამავლობა + კისრის ხერხემლის ხელით/საყელურით დაცვა</div>
+        </div>
+        <div class="abcde-item">
+          <div class="abcde-letter">B</div>
+          <div class="abcde-word">Breathing</div>
+          <div class="abcde-desc">სუნთქვის ადეკვატურობა, ვენტილაცია, ოქსიგენაცია</div>
+        </div>
+        <div class="abcde-item">
+          <div class="abcde-letter">C</div>
+          <div class="abcde-word">Circulation</div>
+          <div class="abcde-desc">სისხლდენის გაჩერება + პერფუზიის შეფასება</div>
+        </div>
+        <div class="abcde-item">
+          <div class="abcde-letter">D</div>
+          <div class="abcde-word">Disability</div>
+          <div class="abcde-desc">ნევროლოგიური სტატუსი — GCS, გუგების ზომა/რეაქცია, მოტორული ფუნქცია</div>
+        </div>
+        <div class="abcde-item">
+          <div class="abcde-letter">E</div>
+          <div class="abcde-word">Exposure</div>
+          <div class="abcde-desc">სრული გახდა დაზიანების მოსაძებნად + დაუყოვნებლივი დათბობა ჰიპოთერმიის თავიდან არიდებისთვის</div>
+        </div>
+      </div>
+      <div class="box blue-box mt10">
+        <div class="box-title">⚡ პრინციპი: "Treat first what kills first"</div>
+        <div class="box-row">ABCDE არ არის დიაგნოსტიკური სია — ეს არის მკურნალობის თანმიმდევრობა. ყოველი ასო ერთდროულად არის შეფასება <span class="fw">და</span> ჩარევა. თუ A-ში პრობლემას აღმოაჩენ, მკურნალობ მაშინვე, არ გადადი B-ზე დაუმთავრებლად.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">პირველადი vs მეორადი შეფასება</div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">Primary Survey</div>
+          <div class="mini-body">ABCDE — სიცოცხლისთვის საშიში მდგომარეობების ძებნა და დაუყოვნებელი მკურნალობა. ხანგრძლივობა: წამები–წუთები. ხელახლა ვიმეორებთ ნებისმიერი გაუარესებისას.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">Secondary Survey</div>
+          <div class="mini-body">თავიდან ფეხებამდე სრული გასინჯვა, დეტალური ანამნეზი (AMPLE), ყველა დაზიანების დაფიქსირება — <span class="fw">მხოლოდ მას შემდეგ, რაც primary survey დასტაბილურდა</span> და resuscitation დაწყებულია. არასდროს ვაკეთებთ მანამ, სანამ ABCDE არ არის სტაბილური.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>კომუნიკაცია</h2></div>
+    <div class="card">
+      <div class="card-title">MIST — ჩაბარება სასწრაფოდან სტაციონარში</div>
+      <div class="card-sub">სტრუქტურირებული, 30 წამიანი ჩაბარება მიმღებ ჰოსპიტალურ ჯგუფზე ჰაერ-ბმის შენარჩუნებისას.</div>
+      <div class="row row-2">
+        <div class="mini-card"><div class="mini-label">M — Mechanism</div><div class="mini-body">დაზიანების მექანიზმი (საგზაო, ვაჟკა, ცემა, სხეულის სიმაღლიდან ჩავარდნა) და ზუსტი დრო დაზიანებიდან</div></div>
+        <div class="mini-card"><div class="mini-label">I — Injuries</div><div class="mini-body">ვიზუალურად ნაპოვნი დაზიანებები + მექანიზმის გათვალისწინებით სავარაუდო შინაგანი დაზიანებები</div></div>
+        <div class="mini-card"><div class="mini-label">S — Signs</div><div class="mini-body">სასიცოცხლო ნიშნები (პულსი, AD, RR, SpO₂, GCS) — ბოლო გაზომვა + ტენდენცია (უმჯობესობა/გაუარესება)</div></div>
+        <div class="mini-card"><div class="mini-label">T — Treatment</div><div class="mini-body">ადგილზე და ტრანსპორტირებისას გაწეული მკურნალობა — IV ხაზი, წამლები, იმობილიზაცია, ინტუბაცია</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">AMPLE — ფოკუსირებული ანამნეზი</div>
+      <div class="card-sub">გროვდება პაციენტისგან, ოჯახისგან, თვითმხილველებისგან ან წინა მედდოკუმენტაციისგან — secondary survey-ის ნაწილი.</div>
+      <ul class="list">
+        <li><strong>A</strong> — Allergies — ალერგიები (მედიკამენტებზე, ლატექსზე, საკვებზე)</li>
+        <li><strong>M</strong> — Medications — მუდმივად მიღებული მედიკამენტები (განსაკუთრებით ანტიკოაგულანტები — ვარფარინი, DOAC)</li>
+        <li><strong>P</strong> — Past illness / Pregnancy — ქრონიკული დაავადებები, ოპერაციები, ორსულობის სტატუსი ნაყოფმშობიარობის ასაკის ქალებში</li>
+        <li><strong>L</strong> — Last meal — ბოლო საკვების/სითხის მიღების დრო (აღმოყირჟვის რისკის შესაფასებლად ანესთეზიის/ინტუბაციის წინ)</li>
+        <li><strong>E</strong> — Events / Environment — დაზიანების ზუსტი გარემოება (სიჩქარე, სიმაღლე, აფეთქების ტიპი, ექსპოზიციის დრო ცივ/ცხელ გარემოში)</li>
+      </ul>
+    </div>
+
+    <div class="section-head"><h2>როგორ ვისარგებლო ამ გზამკვლევით</h2></div>
+    <div class="card">
+      <div class="card-title">ნავიგაცია</div>
+      <ul class="list">
+        <li>ზედა ჩიპებზე გადასვლა გადაგყავს თემაზე. ქვედა ბარით გადადიხარ <strong>რეფერენსსა</strong> და <strong>სცენარების რეჯიმს</strong> შორის.</li>
+        <li>წითელი ჩარჩო ყუთებში = სიცოცხლისთვის საშიში, მოქმედება ახლავე. ნარინჯისფერი = მნიშვნელოვანი, მაგრამ არც ისეთი წინასწარგანჭვრეტადი. მწვანე = დამშვიდებელი/ნორმის ნიშანი. ლურჯი = ინფორმაციული/პროტოკოლური.</li>
+        <li>ეს გზამკვლევი არ ჩაანაცვლებს ოფიციალურ ATLS კურსს ან ადგილობრივ პროტოკოლს — ის არის სარეპეტიციო/მეხსიერების ხელშემწყობი ინსტრუმენტი.</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /overview -->
+
+  <!-- =================================================== -->
+  <!-- AIRWAY                                               -->
+  <!-- =================================================== -->
+  <div id="airway" class="page">
+
+    <div class="section-head"><h2>შეფასება</h2></div>
+    <div class="card">
+      <div class="card-title">სასუნთქი გზის ობსტრუქციის ნიშნები</div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">სუბიექტური (პაციენტი/მომსვლელი იუბნებს)</div>
+          <div class="mini-body">ხმის ჩახლეჭილობა ან სიჩუმე, ხმაურიანი/მაღალი ხმის სუნთქვა (სტრიდორი), ხმის ცვლილება (დისფონია), „არ ვცდები ჰაერს"</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">ობიექტური ნიშნები</div>
+          <div class="mini-body">აგზნება ან ლეთარგია (ჰიპოქსიის ნიშანი), ციანოზი, ტრაქეის გვერდით გადანაცვლება, GCS-ის შემცირება, პათოლოგიური (paradoxical, see-saw) სუნთქვის მექანიკა, დამატებითი კუნთების მონაწილეობა სუნთქვაში</div>
+        </div>
+      </div>
+      <div class="box injury-box mt10">
+        <div class="box-title">⚠️ წამოწეული წესი</div>
+        <div class="box-row">სასუნთქი გზის ნებისმიერი კომპრომისი = მოქმედება ახლავე, არ ველოდებით დადასტურებას. ეჭვის შემთხვევაშიც — ჩვევრებურია ადრეული, პროაქტიული ინტუბაცია გაუარესებამდე, ვიდრე საგანგებო ინტუბაცია კოლაფსის დროს.</div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>მართვის ეტაპები</h2></div>
+    <div class="card">
+      <div class="card-title">საფეხურები — მარტივიდან რთულამდე</div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Chin-lift / Jaw-thrust</strong> — პირველი ნაბიჯი ყოველთვის ხელით. Chin-lift — ნორმალურ პაციენტს. Jaw-thrust — როცა საჭიროა კისრის ხერხემლის დაცვა (ტრავმის ეჭვი), რადგან თავის გადახრა საჭირო არ არის.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>ასპირაცია (Suction)</strong> — სისხლი, ნერწყვი, ღებინება ან სხვა შიგთავსი პირიდან/ხახიდან ამოვაცილოთ წვერამდე ხედვისთვის.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Oropharyngeal Airway (OPA)</strong> — მხოლოდ შემცირებული გონების დონის პაციენტში (gag reflex-ის გარეშე), რადგან გაცნობიერებულ პაციენტში ღებინებას/ლარინგოსპაზმს გამოწვევს. <strong>Nasopharyngeal Airway (NPA)</strong> — გამოსადეგი, თუ gag reflex შენარჩუნებულია, მაგრამ <span class="fw">არ გამოვიყენოთ</span> სახის შუა ნაწილის მძიმე ტრავმის ან ბაზილური ქალის ფუძის მოტეხილობის ეჭვისას (ცერებრალურ ღრუში ჩასვლის რისკი).</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Bag-Mask Ventilation (BVM)</strong> — ორი ადამიანის ტექნიკა ოპტიმალურია: ერთი ორივე ხელით ნიღაბს ჭერავს და სახის სანაცვლოს ქმნის (E-C grip), მეორე ბუშტს აწვება. ჟანგბადის ნაკადი ≥10–15 ლ/წთ, რეზერვუარით 100%-მდე FiO₂.</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>RSI და ენდოტრაქეული ინტუბაცია</strong> — განსაზღვრული საჰაერო გზის ოქროს სტანდარტი. ვიდეოლარინგოსკოპია სასურველია განსაკუთრებით კისრის ხერხემლის შეზღუდვის პირობებში, რადგან თავის გადახრის გარეშეც კარგ ხედვას იძლევა.</div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>ქირურგიული საჰაერო გზა</strong> — გადადის მაშინ, როცა ინტუბაცია ვერ ხერხდება და ვენტილაცია ნიღაბითაც შეუძლებელია ("cannot intubate, cannot oxygenate" — CICO).</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">BURP მანევრი და "Double Setup"</div>
+      <ul class="list">
+        <li><strong>BURP</strong> (Backward-Upward-Rightward Pressure) — ხორხის გარეგანი მანიპულაცია ლარინგოსკოპიის დროს ხედვის გასაუმჯობესებლად: ხორხს ხელით ვწევთ უკან (ხერხემლისკენ), ზევით და მარჯვნივ.</li>
+        <li><strong>Double Setup</strong — როცა airway-ის გართულება მოსალოდნელია (სახის/კისრის ტრავმა, შეშუპება), ერთდროულად ემზადება RSI-ის აღჭურვილობა <span class="fw">და</span> ქირურგიული airway-ის ნაკრები გაშლილი და მზადყოფნაში, რომ წამის დაკარგვის გარეშე გადავერთოთ, თუ ინტუბაცია ჩავარდა.</li>
+      </ul>
+    </div>
+
+    <div class="section-head"><h2>RSI — Rapid Sequence Intubation</h2></div>
+    <div class="card">
+      <div class="card-title">წამლები</div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">სედაცია/ინდუქცია</div>
+          <div class="mini-body">
+            <span class="mono fw">Ketamine</span> 1–2 mg/kg IV — საუკეთესო არჩევანი ჰემოდინამიკურად არასტაბილურ პაციენტში (კარდიოვასკულურად სტაბილიზებს)<br>
+            <span class="mono fw">Etomidate</span> 0.3 mg/kg IV — ჰემოდინამიკურად ნეიტრალური, კარგი არჩევანი ჰიპოვოლემიაში, მაგრამ თრგუნავს თირკმელზედა ჯირკვალს ერთჯერად დოზითაც<br>
+            <span class="mono fw">Propofol</span> 1.5–2 mg/kg IV — სტაბილურ პაციენტში, არიდება ჰიპოტენზიის რისკის გამო შოკში
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">პარალიზანტი</div>
+          <div class="mini-body">
+            <span class="mono fw">Succinylcholine</span> 1.5 mg/kg IV — სწრაფი დაწყება (45–60 წმ), მოქმედების ხანგრძლივობა 6–10 წთ<br>
+            <span class="mono fw">Rocuronium</span> 1.2 mg/kg IV — დაწყება ~60 წმ, მოქმედება 45–60 წთ. გამოიყენება, როცა Succinylcholine უკუჩვენებულია
+          </div>
+        </div>
+      </div>
+      <div class="box warn-box mt10">
+        <div class="box-title">⚠️ Succinylcholine-ის უკუჩვენებები</div>
+        <div class="box-row">ჰიპერკალიემია ან მისი რისკი, დამწვრობა >24 სთ, crush injury, ნეირომუსკულური დაავადებები, ხანგრძლივი იმობილიზაცია — ყველა ეს მდგომარეობა ზრდის სასიკვდილო ჰიპერკალიემიის რისკს. ამ შემთხვევებში Rocuronium.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">RSI 7P — მომზადების თანმიმდევრობა</div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Preparation</strong> — აღჭურვილობა, წამლები, გუნდის როლები, "double setup" გადადება საჭიროების შემთხვევაში</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Pre-oxygenation</strong> — 100% O₂ 3 წუთის განმავლობაში (ან 8 ღრმა სუნთქვა), რათა მაქსიმალურად გავაგრძელოთ უსაფრთხო აპნოეს დრო</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Pretreatment</strong> — Lidocaine 1.5 mg/kg IV თავის ტვინის ტრავმისას (ICP-ის მომატებული პასუხის შესამცირებლად ლარინგოსკოპიაზე)</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Paralysis with induction</strong> — სედატივი და პარალიზანტი სწრაფად, ერთმანეთის მიყოლებით</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Positioning</strong> — "sniffing position" სტანდარტულ პაციენტში; ნეიტრალური ხერხემლის პოზიცია + ხელით სტაბილიზაცია ტრავმის ეჭვისას</div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Placement</strong> — მილის გადატარება ხორხში ლარინგოსკოპის/ვიდეოლარინგოსკოპის ქვეშ</div></div>
+      <div class="step-row"><div class="step-num">7</div><div class="step-text"><strong>Post-intubation care</strong> — დადასტურება (capnography), ფიქსაცია, ვენტილატორზე გადასვლა, გაგრძელებითი სედაცია/ანალგეზია</div></div>
+    </div>
+
+    <div class="section-head"><h2>მონიტორინგი</h2></div>
+    <div class="card">
+      <div class="card-title">პულსოქსიმეტრია — ლიმიტაციები <span class="badge badge-amber">გახსოვდეს!</span></div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">SpO₂ → PaO₂ მიახლოებითი შესატყვისობა</div>
+          <div class="mini-body mono">
+            SpO₂ 100% → PaO₂ ≥90 mmHg<br>
+            SpO₂ 95% → PaO₂ ~70 mmHg (ადეკვატური)<br>
+            SpO₂ 90% → PaO₂ ~60 mmHg (⚠️ კრიტიკული ზღვარი)<br>
+            SpO₂ 75% → PaO₂ ~40 mmHg (ვენური დონის ტოლი)
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">სად არ ვენდობით პულსოქსიმეტრს</div>
+          <div class="mini-body">
+            ❌ ნახშირჟანგით მოწამვლა (კარბოქსიჰემოგლობინი ცრუდ მაღალ ციფრებს აჩვენებს)<br>
+            ❌ მეტჰემოგლობინემია<br>
+            ❌ მძიმე ვაზოკონსტრიქცია/შოკი (პერიფერული სიგნალის ცვალებადობა)<br>
+            ❌ მძიმე ანემია (Hb &lt;5 გ/დლ)<br>
+            ❌ ჰიპოთერმია &lt;30°C<br>
+            ❌ ცუდი პერიფერული პერფუზია, ფრჩხილის ლაკი, მოძრაობის არტეფაქტი
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ინტუბაციის დადასტურება</div>
+      <ul class="list">
+        <li><strong>End-tidal CO₂ (capnography)</strong> — ოქროს სტანდარტი; მუდმივი ETCO₂ &gt;35 mmHg ტალღოვანი მრუდით = ტრაქეაში მდებარეობა დადასტურებულია</li>
+        <li>ორმხრივი გულმკერდის ამაღლება ვენტილაციის დროს</li>
+        <li>აუსკულტაცია — ორმხრივი ვეზიკულური სუნთქვა აქსილებზე + ეპიგასტრიუმზე სიჩუმე (ჰაერის კუჭში არშეღწევა)</li>
+        <li>SpO₂-ის გაუმჯობესება დინამიკაში</li>
+        <li>გულმკერდის რენტგენი — მილის წვერი კარინადან 2–3 სმ ზემოთ</li>
+      </ul>
+    </div>
+
+    <div class="section-head"><h2>რთული საჰაერო გზის შეფასება</h2></div>
+    <div class="card">
+      <div class="card-title">LEMON — სკრინინგი ინტუბაციის სირთულეზე</div>
+      <div class="row row-3">
+        <div class="mini-card"><div class="mini-label">L — Look externally</div><div class="mini-body">სახის ანომალია, მცირე ნიკაპი (მიკროგნათია), დიდი ენა, წვერი, კბილების მდგომარეობა</div></div>
+        <div class="mini-card"><div class="mini-label">E — Evaluate 3-3-2</div><div class="mini-body">პირის გახსნა ≥3 თითი; ნიკაპი–ენისძირი ≥3 თითი; ხორხის ფაშვი–ენისძირი ≥2 თითი</div></div>
+        <div class="mini-card"><div class="mini-label">M — Mallampati</div><div class="mini-body">კლასი I–IV ხორხის ხედვადობაზე; III–IV კლასი = სავარაუდოდ რთული ინტუბაცია</div></div>
+        <div class="mini-card"><div class="mini-label">O — Obstruction</div><div class="mini-body">ეპიგლოტიტი, ჩახშობილი ჰემატომა, უცხო სხეული, შეშუპება ხორხის გარშემო</div></div>
+        <div class="mini-card"><div class="mini-label">N — Neck mobility</div><div class="mini-body">კისრის მოქნილობა შეზღუდულია? C-collar დადგმული? ანკილოზური სპონდილიტი?</div></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>ქირურგიული საჰაერო გზა</h2></div>
+    <div class="card">
+      <div class="card-title">კრიკოთირეოიდოტომია</div>
+      <div class="blue-box box">
+        <div class="box-title">ჩვენება: CICO — "Cannot Intubate, Cannot Oxygenate"</div>
+        <div class="box-row">მძიმე სახის ტრავმა, ხორხის შეშუპება ან დაჟეჯილობა, აქტიური სისხლდენა ხახაში, ანატომიური დეფორმაცია — სტანდარტული ან ვიდეო-ლარინგოსკოპიით ინტუბაცია ჩავარდა, ნიღაბითაც ვერ ვახდენთ ვენტილაციას.</div>
+      </div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text">კანის განივი ჭრა cricothyroid membrane-ის დონეზე (ფარისებრი და კრიკოიდული ხრტილების შორის)</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text">თავად მემბრანის განივი (ჰორიზონტალური) გაჭრა — ფრთხილად, რადგან ახლომდებარეობს კისრის წვრილი სისხლძარღვები</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text">Hemostat-ის ან ტრახეალური დილატატორის ჩასმა ხვრელში და 90°-ით ღია გასაშლელად, რომ ტრაქეის სანათური გაფართოვდეს</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text">Cuffed ენდოტრაქეული მილის (ან მცირე ზომის ტრაქეოსტომიული მილის) ჩასმა დისტალურად ტრაქეაში, ბუშტუკის გასაბერავი და ვენტილაციის დაწყება</div></div>
+      <div class="box warn-box mt10">
+        <div class="box-title">პედიატრიული თავისებურება</div>
+        <div class="box-row">12 წლამდე ასაკის ბავშვებში პრეფერენციულია <strong>Needle Cricothyroidotomy</strong> (14G კათეტერი + jet ventilation) ქირურგიული ტექნიკის ნაცვლად, რადგან ბავშვის ხორხის ანატომია (პატარა, კონუსური ფორმა) ზრდის ღია ტექნიკის გართულების რისკს.</div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>ხშირი შეცდომები</h2></div>
+    <div class="card">
+      <div class="card-title">Pitfalls — ხაფანგები Airway-ში</div>
+      <div class="pitfall">
+        <div class="pitfall-q">⚠️ უკბილო პაციენტი — ნიღაბი არ ეკვრება სახეს ვაკუუმის უქონლობის გამო</div>
+        <div class="pitfall-a">✓ ღრძილ-ლოყის სივრცე გაახვიე გაზის ლენტით ვოლუმის შესაქმნელად ნიღაბის ჯობინებამდე</div>
+      </div>
+      <div class="pitfall">
+        <div class="pitfall-q">⚠️ RSI-ის ჩატარების შემდეგ ვერ ხერხდება ინტუბაცია</div>
+        <div class="pitfall-a">✓ დაუყოვნებლივ BVM ვენტილაცია + ქირურგიული airway-ის ნაკრები წინასწარ მზადყოფნაში (double setup)</div>
+      </div>
+      <div class="pitfall">
+        <div class="pitfall-q">⚠️ ტრანსპორტირებამდე airway არ იქნა დასტაბილურებული</div>
+        <div class="pitfall-a">✓ ადრეული, პროაქტიული ინტუბაცია სიტუაციის გაუარესებამდე, ვიდრე გადაუდებელი ტრანსპორტში</div>
+      </div>
+      <div class="pitfall">
+        <div class="pitfall-q">⚠️ ნახშირჟანგით მოწამვლისას SpO₂ ნორმალურს გვაჩვენებს</div>
+        <div class="pitfall-a">✓ ანამნეზში ხანძარი/დახურული სივრცე → ABG + CO-oximetry; 100% O₂ ეჭვის შემთხვევაშიც</div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /airway -->
+
+  <!-- =================================================== -->
+  <!-- BREATHING                                            -->
+  <!-- =================================================== -->
+  <div id="breathing" class="page">
+
+    <div class="section-head"><h2>შეფასება</h2></div>
+    <div class="card">
+      <div class="card-title">Breathing-ის სისტემური შეფასება</div>
+      <div class="card-sub">A უკვე გამავალია — ახლა ვამოწმებთ, რეალურად ხდება თუ არა ადეკვატური გაზცვლა.</div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">დათვალიერება (Look)</div>
+          <div class="mini-body">სუნთქვის სიხშირე და სიმეტრიულობა, კისრის ვენების გაბერილობა, ტრაქეის პოზიცია, ჭრილობები/გვერდის გადაჭიდულობა, ციანოზი, დამატებითი კუნთების მუშაობა</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">პალპაცია/აუსკულტაცია</div>
+          <div class="mini-body">პოდკოჟული ემფიზემა (ხრიაკი ფისტისებური ხმა ხელით პალპაციისას), ნეკნების სტაბილურობა, ორმხრივი სუნთქვის ხმები, პერკუსიის ხმა (ტიმპანული vs ჩახშული)</div>
+        </div>
+      </div>
+      <ul class="list mt10">
+        <li>სუნთქვის სიხშირე &lt;10 ან &gt;29/წთ — ნორმის ფარგლებს გარეთ, ტრავმის ცენტრის ჩვენება ერთ-ერთი ფიზიოლოგიური კრიტერიუმია</li>
+        <li>ერთმხრივად შემცირებული/გაუჩინარებული სუნთქვის ხმა + ჰემოდინამიკური უსტაბილურობა → ფიქრობ pneumothorax/hemothorax-ზე, არ ელოდები რენტგენს</li>
+      </ul>
+    </div>
+
+    <div class="section-head"><h2>ჟანგბადი და ვენტილაცია</h2></div>
+    <div class="card">
+      <div class="card-title">ჟანგბადის მიწოდების საფეხურები</div>
+      <div class="row row-3">
+        <div class="mini-card"><div class="mini-label">ცხვირის კანულა</div><div class="mini-body">1–6 ლ/წთ → FiO₂ ~24–44%. მსუბუქი ჰიპოქსემიისთვის, ცნობიერი პაციენტი</div></div>
+        <div class="mini-card"><div class="mini-label">სახის ნიღაბი (resv.)</div><div class="mini-body">10–15 ლ/წთ → FiO₂ ~60–95%. ნებისმიერ ტრავმის პაციენტს მისცე ადგილზევე</div></div>
+        <div class="mini-card"><div class="mini-label">BVM / ვენტილატორი</div><div class="mini-body">FiO₂ 100% შესაძლებელია. გამოიყენე, თუ სუნთქვა არასაკმარისია მხოლოდ ჟანგბადით</div></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>აღმოყირჟვის (Aspiration) პრევენცია</h2></div>
+    <div class="card">
+      <div class="card-title">რისკები და ზომები</div>
+      <ul class="list">
+        <li>ტრავმის პაციენტი ითვლება "სავსე კუჭის" მქონედ ბოლო ჭამის დროის მიუხედავად — სტრესი აყოვნებს კუჭის გამოცარიელებას</li>
+        <li>ღებინების ნიშნებზე — დაუყოვნებლივი გვერდზე შემოტრიალება (თუ ხერხემლის დაცვა საშუალებას აძლევს log-roll ტექნიკით) ან ასპირაცია</li>
+        <li>RSI-ის წინ მზადყოფნაში ჰქონდეს ასპირატორი ხელის გასწვრივ</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /breathing -->
+
+  <!-- =================================================== -->
+  <!-- SHOCK                                                -->
+  <!-- =================================================== -->
+  <div id="shock" class="page">
+
+    <div class="section-head"><h2>განმარტება და ტიპები</h2></div>
+    <div class="card">
+      <div class="card-title">შოკის ფიზიოლოგია</div>
+      <div class="card-sub">შოკი = ორგანოების არაადეკვატური პერფუზია და ქსოვილოვანი ჰიპოქსია, არა მხოლოდ დაბალი არტერიული წნევა. გულის გამოსავალი (CO) = გულის რიტმი (HR) × ინსულტური მოცულობა (SV).</div>
+      <ul class="list">
+        <li><strong>ჰიპოვოლემიური</strong> — ტრავმაში ყველაზე ხშირი. სისხლდენა ან სითხის დანაკარგი → შემცირებული preload</li>
+        <li><strong>ობსტრუქციული</strong> — Tension pneumothorax, კარდიული ტამპონადა, მასიური ფილტვის ემბოლია → შემცირებული ვენური დაბრუნება გულში</li>
+        <li><strong>კარდიოგენური</strong> — გულის კონტუზია, მიოკარდიუმის მწვავე იშემია → შემცირებული შეკუმშვითი ფუნქცია</li>
+        <li><strong>ნეიროგენური</strong> — კისრის ან ზედა გულმკერდის ხერხემლის ზიანი → სიმპათიკური ტონუსის დაკარგვა → ვაზოდილატაცია + ბრადიკარდია</li>
+        <li><strong>სეპტიკური</strong> — ტრავმაში შედარებით იშვიათი, ვლინდება დაგვიანებით (&gt;6 სთ დაზიანებიდან) → შემცირებული პერიფერიული წინააღმდეგობა (SVR)</li>
+      </ul>
+      <div class="box blue-box mt10">
+        <div class="box-title">💡 ნეიროგენული vs ჰიპოვოლემიური შოკის გარჩევა</div>
+        <div class="box-row">ორივეში დაბალი წნევა, მაგრამ ჰიპოვოლემიურში — ტაქიკარდია კომპენსატორულად. ნეიროგენულში — <span class="fw">ბრადიკარდია ან ნორმოკარდია</span> სიმპათიკური ტონუსის დაკარგვის გამო — ეს კონტრინტუიციური კომბინაცია (ჰიპოტენზია + ბრადიკარდია) მთავარი საკვანძო ნიშანია. მკურნალობა: კრისტალოიდები + ვაზოპრესორი (ნორეპინეფრინი) ტონუსის აღსადგენად.</div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>კლასიფიკაცია</h2></div>
+    <div class="card">
+      <div class="card-title">სისხლდენის კლასიფიკაცია (ATLS) <span class="badge badge-red">ზეპირად!</span></div>
+      <div class="card-sub">გათვლილია 70 კგ წონის სტანდარტული მოზრდილისთვის, საერთო წითელი უჯრის მოცულობა ~5 ლიტრი.</div>
+      <div class="tablewrap">
+      <table class="data">
+        <tr>
+          <th>პარამეტრი</th>
+          <th class="c1">I კლასი</th>
+          <th class="c2">II კლასი</th>
+          <th class="c3">III კლასი</th>
+          <th class="c4">IV კლასი</th>
+        </tr>
+        <tr><td>სისხლის დაკარგვა</td><td class="c1">&lt;750 მლ / &lt;15%</td><td class="c2">750–1500 მლ / 15–30%</td><td class="c3">1500–2000 მლ / 31–40%</td><td class="c4">&gt;2000 მლ / &gt;40%</td></tr>
+        <tr><td>პულსი (/წთ)</td><td class="c1">&lt;100</td><td class="c2">100–120</td><td class="c3">120–140</td><td class="c4">&gt;140</td></tr>
+        <tr><td>AD სისტოლური</td><td class="c1">ნორმა</td><td class="c2">ნორმა</td><td class="c3">↓ შემცირებული</td><td class="c4">↓↓ მნიშვნელოვნად დაბალი</td></tr>
+        <tr><td>Pulse pressure</td><td class="c1">ნორმა/↑</td><td class="c2">↓ შემცირებული</td><td class="c3">↓↓</td><td class="c4">↓↓↓</td></tr>
+        <tr><td>სუნთქვა (/წთ)</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
+        <tr><td>დიურეზი (მლ/სთ)</td><td class="c1">&gt;30</td><td class="c2">20–30</td><td class="c3">5–15</td><td class="c4">უმნიშვნელო/არა</td></tr>
+        <tr><td>გონების მდგომარეობა</td><td class="c1">მცირედ შეშფოთებული</td><td class="c2">შფოთვა</td><td class="c3">შფოთვა/დაბნეულობა</td><td class="c4">დაბნეულობა/ლეთარგია</td></tr>
+        <tr><td>სითხის მართვა</td><td class="c1">მონიტორინგი, ჩვევრებური სითხეები</td><td class="c2">კრისტალოიდები</td><td class="c3">კრისტალოიდები + სისხლი</td><td class="c4">მასიური ტრანსფუზიის პროტოკოლი (1:1:1)</td></tr>
+      </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ობიექტური მარკერები — Base Deficit და Lactate</div>
+      <div class="card-sub">არტერიული წნევა "ნორმალური" შეიძლება ჯერ კიდევ იყოს კომპენსაციის ფაზაში (განსაკუთრებით ახალგაზრდებში) — ეს ორი მარკერი აჩვენებს ქსოვილოვან ჰიპოპერფუზიას მანამ, სანამ წნევა ჩავარდება.</div>
+      <div class="row row-2">
+        <div class="mini-card">
+          <div class="mini-label">სერუმის ლაქტატი</div>
+          <div class="mini-body">აირეკლავს ანაერობულ მეტაბოლიზმს. ნორმა &lt;2 mmol/L. მაღალი ლაქტატი ან ნელი კლირენსი resuscitation-ის დროს = მიმდინარე ან მკურნალობას არ ემორჩილება შოკი, მაშინაც, როცა AD უკვე ნორმალურია.</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-label">Base deficit (ABG-დან)</div>
+          <div class="mini-body">ნორმა −2-დან +2-მდე mmol/L. რაც უფრო უარყოფითია, მით უფრო მძიმეა მეტაბოლური აციდოზი/ჰიპოპერფუზია. გამოიყენება resuscitation-ის ეფექტურობის მონიტორინგისთვის სერიულად.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>ლოკალიზაცია</h2></div>
+    <div class="card">
+      <div class="card-title">სისხლდენის წყაროების ძებნა — "On the floor and four more"</div>
+      <div class="card-sub">დაუხერხავი ჰიპოტენზიის შემთხვევაში ეს ხუთი ლოკაცია უნდა შემოწმდეს თანმიმდევრულად.</div>
+      <div class="row row-3">
+        <div class="mini-card"><div class="mini-label">🩸 გარეთა (Floor)</div><div class="mini-body">ჭრილობებიდან ხილული სისხლდენა — ყველაზე აშკარა, დაუყოვნებლივი წნევით კონტროლი</div></div>
+        <div class="mini-card"><div class="mini-label">🫁 გულმკერდი</div><div class="mini-body">მასიური ჰემოთორაქსი — &gt;1500 მლ საწყისი ან &gt;200 მლ/სთ → ქირურგია</div></div>
+        <div class="mini-card"><div class="mini-label">🫃 მუცელი</div><div class="mini-body">ღვიძლის, ელენთის, მეზენტერული სისხლძარღვების დაზიანება → FAST + ქირურგია</div></div>
+        <div class="mini-card"><div class="mini-label">🦴 მენჯი/რეტროპერიტონეუმი</div><div class="mini-body">Binder + ანგიოემბოლიზაცია ± პრეპერიტონეალური ტამპონირება</div></div>
+        <div class="mini-card"><div class="mini-label">🦵 გრძელი ძვლები</div><div class="mini-body">ერთი ფემურის მოტეხილობა — დაკარგვა ~1500 მლ-მდე; ტიბია — ~750 მლ-მდე</div></div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>სითხის თერაპია</h2></div>
+    <div class="card">
+      <div class="card-title">ჩანაცვლება — საწყისი მიდგომა</div>
+      <div class="row row-2">
+        <div class="mini-card" style="border-left:3px solid var(--green);">
+          <div style="font-size:13px;font-weight:700;color:var(--green);">სწრაფი პასუხი</div>
+          <div class="mini-body">I კლასი. კრისტალოიდი 1–2 ლ საკმარისია, არ საჭიროებს სისხლს დაუყოვნებლივ — Type & Crossmatch მზადებაში</div>
+        </div>
+        <div class="mini-card" style="border-left:3px solid var(--amber);">
+          <div style="font-size:13px;font-weight:700;color:var(--amber);">გარდამავალი პასუხი</div>
+          <div class="mini-body">II–III კლასი. კრისტალოიდი + ერითროციტარული მასა — ქირურგია/ინტერვენციული რადიოლოგია მზადებაში</div>
+        </div>
+        <div class="mini-card" style="border-left:3px solid var(--red);">
+          <div style="font-size:13px;font-weight:700;color:var(--red);">პასუხი არ არის</div>
+          <div class="mini-body">IV კლასი. მასიური ტრანსფუზიის პროტოკოლი (pRBC:FFP:Plt = 1:1:1) — სასწრაფო ქირურგია</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Damage Control Resuscitation</div>
+      <ul class="list">
+        <li><strong>Permissive hypotension</strong> — სისტოლური AD 80–90 mmHg მისაღებია მანამ, სანამ მთავარი სისხლდენა არ კონტროლირდება (თავის ტრავმის გარეშე) — გადაჭარბებული სითხის მიწოდება ააქცევს ახალწარმოქმნილ თრომბებს. თავის ტრავმის თანმხლებობისას MAP-ი/AD უმაღლესია — სისტოლური ≥90 mmHg.</li>
+        <li><strong>ტრანექსამის მჟავა (TXA)</strong> — 1გ IV 10 წუთის განმავლობაში, შემდეგ 1გ ინფუზია 8 საათის განმავლობაში. ეფექტურია მხოლოდ <span class="fw">დაზიანებიდან 3 საათის განმავლობაში</span> მიცემული — შემდეგ შესაძლოა საზიანო იქნეს.</li>
+        <li><strong>მასიური ტრანსფუზიის ტრიგერი</strong> — სავარაუდო ≥10 ერითროციტარული მასის ერთეული 24 საათში, ან მკურნალობაზე არ რეაგირებადი მძიმე სისხლდენის ეჭვი (ABC score, Shock Index)</li>
+        <li><strong>კალციუმი</strong> — დიდი მოცულობის FFP/სისხლის ტრანსფუზიისას ციტრატის ტოქსიკურობის პრევენციისთვის CaCl₂ 1გ IV — იონიზებული კალციუმის მონიტორირება</li>
+        <li><strong>ჰიპოთერმიის პრევენცია</strong> — ტემპერატურა &lt;35°C მნიშვნელოვნად აქვეითებს კოაგულაციის ფაქტორების ფუნქციას ("lethal triad": ჰიპოთერმია + აციდოზი + კოაგულოპათია). ვათბობთ ყველა ინტრავენურ სითხეს, საბანი/თბილი ჰაერის სისტემა.</li>
+        <li><strong>TEG/ROTEM</strong> (ვისკოელასტური ტესტირება) — საჰოსპიტალურ პირობებში სასურველია სტანდარტული კოაგულოგრამის ნაცვლად, რადგან რეალურ დროში აჩვენებს კონკრეტულად რომელი კომპონენტი (თრომბოციტები, ფიბრინოგენი, ფაქტორები) აკლია — მიზანმიმართული ტრანსფუზია, ნაცვლად ემპირიულის</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /shock -->
+
+</div>
+<!-- /view-reference -->
+
+<div class="tabbar">
+  <button class="tabbar-btn active" data-view="view-reference">
+    <span class="ico">📖</span><span class="lbl">რეფერენსი</span>
+  </button>
+  <button class="tabbar-btn" data-view="view-scenarios">
+    <span class="ico">🚨</span><span class="lbl">სცენარები</span>
+  </button>
+</div>
+
+<script>
+// Section nav (chips)
+document.querySelectorAll('.navchip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.navchip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+    document.getElementById('navscroll').scrollLeft = 0;
+    window.scrollTo({top: 0, behavior: 'instant'});
+    btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  });
+});
+
+// Top-level view switch (reference vs scenarios)
+document.querySelectorAll('.tabbar-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabbar-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.hidden-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.view).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'instant'});
+  });
+});
+</script>
+
+</body>
+</html>
