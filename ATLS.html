@@ -1,376 +1,743 @@
-<!DOCTYPE html>
-<html lang="ka">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ტრავმის სახელმძღვანელო — PHTLS 9e ენციკლოპედია</title>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <style>
-:root {
-  --bg: #0B0C0E;
-  --bg-card: #15171A;
-  --bg-card-raised: #1C1F23;
-  --bg-input: #202327;
-  --line: #2A2D32;
-  --line-bright: #3A3E45;
-  --text: #ECEDEE;
-  --text-dim: #9A9DA3;
-  --text-faint: #6B6E74;
-  --red: #FF4D4D;
-  --red-bg: #2A1416;
-  --amber: #FFB020;
-  --amber-bg: #2A1F0E;
-  --green: #3DD68C;
-  --green-bg: #0F2A1E;
-  --blue: #3A82F6;
-}
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  -webkit-tap-highlight-color: transparent;
-  padding-bottom: 80px;
-}
-
-/* Header & Nav */
-.header {
-  position: sticky;
-  top: 0;
-  background: rgba(11, 12, 14, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 100;
-  border-bottom: 1px solid var(--line);
-  padding: 12px 16px 8px;
-}
-.header-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
-
-.navscroll {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scrollbar-width: none;
-}
-.navscroll::-webkit-scrollbar { display: none; }
-
-.navchip {
-  flex-shrink: 0;
-  background: var(--bg-input);
-  color: var(--text-dim);
-  border: 1px solid var(--line);
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.navchip.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
-
-/* Content Area */
-.content { padding: 16px; }
-.page { display: none; animation: fadeIn 0.3s ease; }
-.page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Cards & Typography */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-h2 { font-size: 18px; margin-bottom: 12px; color: var(--text); display: flex; align-items: center; gap: 8px; }
-h3 { font-size: 16px; margin: 16px 0 8px; color: var(--text); }
-h4 { font-size: 14px; margin: 12px 0 6px; color: var(--text); }
-p { margin-bottom: 12px; font-size: 15px; }
-.text-dim { color: var(--text-dim); }
-
-hr { border: none; height: 1px; background: var(--line); margin: 16px 0; }
-ul, ol { margin: 0 0 16px 20px; color: var(--text-dim); font-size: 15px; }
-li { margin-bottom: 8px; }
-strong { color: var(--text); }
-u { text-decoration-color: var(--amber); }
-
-blockquote {
-  background: var(--bg-card-raised);
-  border-left: 4px solid var(--amber);
-  padding: 12px 16px;
-  border-radius: 4px 8px 8px 4px;
-  margin: 16px 0;
-  font-size: 14.5px;
-  color: var(--text-dim);
-}
-
-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--line); }
-th { color: var(--text); font-weight: 600; border-bottom: 2px solid var(--line); }
-.td-red { color: var(--red); font-weight: bold; }
-.td-amber { color: var(--amber); font-weight: bold; }
-.td-green { color: var(--green); font-weight: bold; }
-
+body { font-family: var(--font-sans); color: var(--color-text-primary); }
+.guide { padding: 1rem 0; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.tab { padding: 7px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); font-size: 13px; cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; }
+.tab.active { background: #185FA5; color: #B5D4F4; border-color: #185FA5; font-weight: 500; }
+.tab:hover:not(.active) { background: var(--color-background-secondary); }
+.section { display: none; }
+.section.active { display: block; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-size: 15px; font-weight: 500; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: var(--border-radius-md); font-size: 12px; font-weight: 500; }
+.badge-red { background: #FCEBEB; color: #791F1F; }
+.badge-amber { background: #FAEEDA; color: #633806; }
+.badge-green { background: #EAF3DE; color: #27500A; }
+.badge-blue { background: #E6F1FB; color: #0C447C; }
+.badge-gray { background: #F1EFE8; color: #444441; }
+.badge-purple { background: #EFE9FB; color: #3D1F7A; }
+.row { display: grid; gap: 1rem; }
+.row-2 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.row-3 { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.row-4 { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+.mini-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; }
+.mini-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.mini-val { font-size: 15px; font-weight: 500; }
+.list { list-style: none; }
+.list li { font-size: 14px; color: var(--color-text-secondary); padding: 4px 0; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; gap: 8px; }
+.list li:last-child { border-bottom: none; }
+.list li::before { content: "→"; color: #378ADD; flex-shrink: 0; }
+.abcde { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.abcde-item { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; text-align: center; }
+.abcde-letter { font-size: 22px; font-weight: 500; color: #185FA5; }
+.abcde-word { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.abcde-desc { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; }
+.shock-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+.shock-table th { font-weight: 500; padding: 8px 10px; background: var(--color-background-secondary); text-align: left; border-bottom: 0.5px solid var(--color-border-secondary); }
+.shock-table td { padding: 7px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); }
+.shock-table tr:last-child td { border-bottom: none; }
+.c1 { color: #27500A; font-weight: 500; }
+.c2 { color: #633806; font-weight: 500; }
+.c3 { color: #993C1D; font-weight: 500; }
+.c4 { color: #791F1F; font-weight: 500; }
+.injury-box { border-left: 3px solid #E24B4A; padding: 8px 12px; background: #FCEBEB; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; margin-bottom: 8px; }
+.injury-title { font-size: 14px; font-weight: 500; color: #791F1F; }
+.injury-signs { font-size: 12px; color: #A32D2D; margin-top: 3px; }
+.injury-tx { font-size: 12px; color: #791F1F; margin-top: 4px; font-style: italic; }
+.safe-box { border-left: 3px solid #1D9E75; padding: 8px 12px; background: #E1F5EE; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; margin-bottom: 8px; }
+.safe-title { font-size: 14px; font-weight: 500; color: #085041; }
+.safe-signs { font-size: 12px; color: #0F6E56; margin-top: 3px; }
+.safe-tx { font-size: 12px; color: #085041; margin-top: 4px; font-style: italic; }
+.warn-box { border-left: 3px solid #E8A020; padding: 8px 12px; background: #FAEEDA; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; margin-bottom: 8px; }
+.warn-title { font-size: 14px; font-weight: 500; color: #633806; }
+.warn-signs { font-size: 12px; color: #854F0B; margin-top: 3px; }
+.warn-tx { font-size: 12px; color: #633806; margin-top: 4px; font-style: italic; }
+.blue-box { border-left: 3px solid #185FA5; padding: 8px 12px; background: #E6F1FB; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; margin-bottom: 8px; }
+.blue-title { font-size: 14px; font-weight: 500; color: #0C447C; }
+.blue-signs { font-size: 12px; color: #185FA5; margin-top: 3px; }
+.blue-tx { font-size: 12px; color: #0C447C; margin-top: 4px; font-style: italic; }
+.triage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.triage-item { border-radius: var(--border-radius-md); padding: 0.75rem; text-align: center; }
+.t-red { background: #FCEBEB; border: 1px solid #F7C1C1; }
+.t-yellow { background: #FAEEDA; border: 1px solid #FAC775; }
+.t-green { background: #EAF3DE; border: 1px solid #C0DD97; }
+.t-black { background: #D3D1C7; border: 1px solid #B4B2A9; }
+.t-num { font-size: 24px; font-weight: 500; }
+.t-red .t-num { color: #791F1F; }
+.t-yellow .t-num { color: #633806; }
+.t-green .t-num { color: #27500A; }
+.t-black .t-num { color: #2C2C2A; }
+.t-name { font-size: 13px; font-weight: 500; margin-top: 2px; }
+.t-red .t-name { color: #A32D2D; }
+.t-yellow .t-name { color: #854F0B; }
+.t-green .t-name { color: #3B6D11; }
+.t-black .t-name { color: #444441; }
+.t-desc { font-size: 11px; margin-top: 4px; }
+.t-red .t-desc { color: #A32D2D; }
+.t-yellow .t-desc { color: #854F0B; }
+.t-green .t-desc { color: #3B6D11; }
+.t-black .t-desc { color: #5F5E5A; }
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+.step-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: #185FA5; color: #B5D4F4; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; }
+.pitfall-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.pitfall-q { font-size: 13px; color: #791F1F; background: #FCEBEB; padding: 6px 10px; border-radius: var(--border-radius-md); }
+.pitfall-a { font-size: 13px; color: #27500A; background: #EAF3DE; padding: 6px 10px; border-radius: var(--border-radius-md); }
+@media (max-width: 500px) { .pitfall-row { grid-template-columns: 1fr; } }
 </style>
-</head>
-<body>
 
-<div class="header">
-  <div class="header-title">PHTLS 9e ენციკლოპედია</div>
-  <div class="navscroll" id="navscroll">
-    <button class="navchip active" data-target="page-general">ზოგადი & ტრიაჟი</button>
-    <button class="navchip" data-target="page-a">A - Airway</button>
-    <button class="navchip" data-target="page-b">B & გულმკერდი</button>
-    <button class="navchip" data-target="page-c">C & შოკი</button>
-    <button class="navchip" data-target="page-d">D & თავი/TBI</button>
-    <button class="navchip" data-target="page-e">E & მუცელი</button>
-    <button class="navchip" data-target="page-spine">ხერხემალი</button>
+<div class="guide">
+<h2 style="font-size: 18px; font-weight: 500; margin-bottom: 1rem;">ATLS — ტრავმის სრული სახელმძღვანელო</h2>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('overview')">საფუძვლები</button>
+  <button class="tab" onclick="show('airway')">Airway</button>
+  <button class="tab" onclick="show('shock')">Shock</button>
+  <button class="tab" onclick="show('thoracic')">Thoracic</button>
+  <button class="tab" onclick="show('abdominal')">Abdominal</button>
+  <button class="tab" onclick="show('head')">Head/TBI</button>
+  <button class="tab" onclick="show('spine')">Spine/Neck</button>
+  <button class="tab" onclick="show('triage')">Triage</button>
+</div>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div id="overview" class="section active">
+  <div class="card">
+    <div class="card-title">სიკვდილის 3 პიკი <span class="badge badge-blue">Trimodal Distribution</span></div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">1-ლი პიკი — წამები–წუთები</div>
+        <div class="mini-val" style="font-size:13px;">აორტის, გულის, ტვინის გლეჯა</div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:4px;">პრაქტიკულად გადარჩენა შეუძლებელია</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">2-ე პიკი — წუთები–საათები <span style="color:#185FA5">Golden Hour</span></div>
+        <div class="mini-val" style="font-size:13px;">ჰემატომები, ჰემო/პნევმოთორაქსი, ღვიძლ/ელენთის გლეჯა, მენჯის მოტეხ.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">3-ე პიკი — დღეები–კვირები</div>
+        <div class="mini-val" style="font-size:13px;">სეფსისი, მრავლობითი ორგანოს უკმარისობა</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">პირველადი შეფასება — ABCDE</div>
+    <div class="abcde">
+      <div class="abcde-item">
+        <div class="abcde-letter">A</div>
+        <div class="abcde-word">Airway</div>
+        <div class="abcde-desc">სასუნთქი გზა + კისრის ხერხემლის დაცვა</div>
+      </div>
+      <div class="abcde-item">
+        <div class="abcde-letter">B</div>
+        <div class="abcde-word">Breathing</div>
+        <div class="abcde-desc">სუნთქვა და ვენტილაცია</div>
+      </div>
+      <div class="abcde-item">
+        <div class="abcde-letter">C</div>
+        <div class="abcde-word">Circulation</div>
+        <div class="abcde-desc">სისხლდენის კონტროლი</div>
+      </div>
+      <div class="abcde-item">
+        <div class="abcde-letter">D</div>
+        <div class="abcde-word">Disability</div>
+        <div class="abcde-desc">ნევრო სტატუსი, GCS, გუგები</div>
+      </div>
+      <div class="abcde-item">
+        <div class="abcde-letter">E</div>
+        <div class="abcde-word">Exposure</div>
+        <div class="abcde-desc">ტანჯვის გახსნა + ჰიპოთერმიის პრევენცია</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">MIST — Handover (ჩაბარება სტაციონარში)</div>
+    <div class="row row-2">
+      <div class="mini-card"><div class="mini-label">M — Mechanism</div><div style="font-size:13px;color:var(--color-text-primary);">დაზიანების მექანიზმი და დრო</div></div>
+      <div class="mini-card"><div class="mini-label">I — Injuries</div><div style="font-size:13px;color:var(--color-text-primary);">ნაპოვნი და სავარაუდო დაზიანებები</div></div>
+      <div class="mini-card"><div class="mini-label">S — Signs</div><div style="font-size:13px;color:var(--color-text-primary);">სიმპტომები და სასიცოცხლო ნიშნები</div></div>
+      <div class="mini-card"><div class="mini-label">T — Treatment</div><div style="font-size:13px;color:var(--color-text-primary);">დანიშნული მკურნალობა ადგილზე</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">AMPLE — ანამნეზი</div>
+    <ul class="list">
+      <li><strong>A</strong>llergies — ალერგიები</li>
+      <li><strong>M</strong>edications — მიმდინარე მედიკამენტები</li>
+      <li><strong>P</strong>ast illness / Pregnancy — ქრონიკული დაავადებები / ორსულობა</li>
+      <li><strong>L</strong>ast meal — ბოლო ჭამა</li>
+      <li><strong>E</strong>vents/Environment — ტრავმის გარემოება</li>
+    </ul>
   </div>
 </div>
 
-<div class="content">
-
-  <div id="page-general" class="page active">
-    <div class="card">
-      <h2>📐 ტრავმის კინემატიკა და სასიკვდილო ტრიადა</h2>
-      <p class="text-dim">PHTLS-ის ფუნდამენტი: <strong>"Treat first what kills first"</strong>. დროის გადამწყვეტი როლი აისახება "ოქროს საათის" კონცეფციაში.</p>
-      
-      <h3>💥 ენერგიის გადაცემა</h3>
-      <p class="text-dim">კინეტიკური ენერგია ($KE$) განსაზღვრავს დაზიანების მასშტაბს:</p>
-      <div style="text-align: center; margin: 15px 0; font-size: 1.2em; color: var(--amber);">
-        $$KE = \frac{1}{2} m v^2$$
+<!-- ═══════════════ AIRWAY ═══════════════ -->
+<div id="airway" class="section">
+  <div class="card">
+    <div class="card-title">სასუნთქი გზის ობსტრუქციის ნიშნები</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">სუბიექტური</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px;">ხმის სიჩუმე, ჩახლეჩილი ხმა, სტრიდორი, დისფონია</div>
       </div>
-      <p class="text-dim">ვინაიდან სიჩქარე ($v$) კვადრატშია, სიჩქარის მცირე მატებაც კი ექსპონენციალურად ზრდის ქსოვილების დესტრუქციას. შინაგანი დაზიანებები ხშირად "ორგანოების შეჯახების" (მესამე შეჯახება) შედეგია.</p>
-
-      <hr>
-
-      <h3>💀 ტრავმის მომაკვდინებელი ტრიადა</h3>
-      <ul>
-        <li><strong>ჰიპოთერმია (&lt;35°C):</strong> თიშავს ფერმენტულ კასკადებს, რომლებიც პასუხისმგებელნი არიან სისხლის შედედებაზე.</li>
-        <li><strong>აციდოზი (pH &lt;7.35):</strong> შოკის გამო უჯრედები გადადიან ანაერობულ მეტაბოლიზმზე. გროვდება რძემჟავა (Lactate).</li>
-        <li><strong>კოაგულოპათია:</strong> ზემოთ აღნიშნული ორი ფაქტორი და სითხეების აგრესიული გადასხმა შლის შედედების უნარს. მანკიერი წრე იკვრება.</li>
-      </ul>
-
-      <hr>
-
-      <h3>📊 სიკვდილიანობის 3 პიკი</h3>
-      <table>
-        <tr><th>ფაზა</th><th>სიკვდილიანობა</th><th>მიზეზი</th></tr>
-        <tr><td>მყისიერი</td><td class="td-red">~50%</td><td>ტვინის/აორტის გაგლეჯა. მედიცინა აქ უძლურია.</td></tr>
-        <tr><td>ადრეული</td><td class="td-amber">~30%</td><td>სასუნთქი გზები, შოკი, პნევმოთორაქსი. <strong>ესაა სასწრაფოს მთავარი სამიზნე!</strong></td></tr>
-        <tr><td>გვიანი</td><td class="td-green">~20%</td><td>სეფსისი, MODS (ვითარდება ჰოსპიტალში).</td></tr>
-      </table>
+      <div class="mini-card">
+        <div class="mini-label">ობიექტური</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px;">აგიტაცია, ციანოზი, ტრაქეის გადაადგილება, ↓GCS, პათ. სუნთქვა</div>
+      </div>
     </div>
+    <div style="margin-top:10px;font-size:13px;color:var(--color-text-secondary);">⚠️ სასუნთქი გზის ნებისმიერი კომპრომეტირება = <strong>მოქმედება ახლავე</strong>. ეჭვის შემთხვევაშიც ინტუბაცია.</div>
+  </div>
 
-    <div class="card">
-      <h2>🚨 ტრიაჟი და მასობრივი ინციდენტები (MCI)</h2>
-      <p class="text-dim">ფილოსოფიის ცვლილება: <strong>"გააკეთე მაქსიმალური სიკეთე მაქსიმალურად ბევრისთვის."</strong> გულის გაჩერების მქონე პაციენტი ითვლება შავად (გარდაცვლილად), რადგან მასზე რესურსის ხარჯვა სხვებს კლავს.</p>
-      
-      <h3>🔄 START ალგორითმი (მაქს. 30 წამი პაციენტზე)</h3>
-      <p class="text-dim">შეფასება ხდება <strong>RPM (Respiration, Perfusion, Mental Status)</strong> კრიტერიუმებით:</p>
-      <ul>
-        <li><strong style="color:var(--green)">მწვანე (P3):</strong> დადის და ასრულებს ბრძანებას "გადმოდით ჩემსკენ".</li>
-        <li><strong style="color:var(--red)">წითელი (P1 - Immediate):</strong> სუნთქვა &gt;30 ან &lt;10. <em>ან</em> რადიალური პულსი არ ისინჯება/CRT&gt;2წმ. <em>ან</em> ვერ ასრულებს მარტივ ბრძანებას.</li>
-        <li><strong style="color:var(--amber)">ყვითელი (P2 - Delayed):</strong> სტაბილური RPM. სუნთქავს 10-30 ფარგლებში, პულსი აქვს, ბრძანებებს ასრულებს. მკურნალობა იცდის.</li>
-        <li><strong style="color:var(--text-faint)">შავი (P4):</strong> არ სუნთქავს სასუნთქი გზის მანუალური გახსნის შემდეგაც.</li>
-      </ul>
+  <div class="card">
+    <div class="card-title">სასუნთქი გზის მართვის ეტაპები</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Chin-lift / Jaw-thrust</strong> — პირველი ნაბიჯი ყოველთვის; Jaw-thrust — C-spine ტრავმის დროს</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Suction</strong> — სისხლი, სეკრეტი, სხვა შიგთავსი</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Oropharyngeal airway (OPA)</strong> — მხოლოდ GCS-ის შემცირებისას (gag reflex-ის გარეშე); Nasopharyngeal (NPA) — თუ gag reflex შენარჩუნებულია (არ გამოიყენო ბაზილური მოტეხ-ის ეჭვისას)</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Bag-Mask Ventilation</strong> — ორი ადამიანი: ერთი ნიღაბს, მეორე ბუშტს; O₂ ≥10 L/min. E-C grip.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>RSI / Orotracheal Intubation</strong> — ოქროს სტანდარტი. ვიდეოლარინგოსკოპია სასურველია C-spine შეზღუდვისას.</div></div>
+    <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Surgical Airway</strong> — როცა ინტუბაცია ვერ ხდება ("cannot intubate / cannot oxygenate")</div></div>
+  </div>
 
-      <blockquote>
-        <strong>👶 JumpSTART (პედიატრიული):</strong> თუ ბავშვი არ სუნთქავს სასუნთქი გზის გახსნისას, მაგრამ აქვს პულსი, <strong>მიეცი 5 მაშველი ჩასუნთქვა</strong>. თუ არ აღდგა - შავი. წითელი ზღვარია: &lt;15 ან &gt;45 სუნთქვა/წთ.
-      </blockquote>
-      
-      <h4>📋 ანამნეზი და გადაცემა</h4>
-      <p><strong>MIST:</strong> <strong>M</strong>echanism, <strong>I</strong>njuries, <strong>S</strong>igns/Vitals, <strong>T</strong>reatments.<br>
-      <strong>AMPLE:</strong> <strong>A</strong>llergies, <strong>M</strong>edications, <strong>P</strong>ast history, <strong>L</strong>ast meal, <strong>E</strong>vents.</p>
+  <div class="card">
+    <div class="card-title">RSI — Rapid Sequence Intubation</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">Sedation</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px;">Ketamine 1–2 mg/kg IV (ჰემოდინ. სტაბ.) · Etomidate 0.3 mg/kg (ჰიპოვ.) · Propofol (სტაბ. პაც.)</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">Paralytic</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px;">Succinylcholine 1.5 mg/kg IV (სწრაფი, 60–90 წმ) · Rocuronium 1.2 mg/kg (K↑, burn, crush-ის დროს Succ. ᲙᲐᲠᲒᲘ)</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+      <div class="mini-label" style="margin-bottom:6px;">RSI 7P — პრეპ. თანმიმდევრობა</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.8;">
+        <strong>P</strong>reparation → <strong>P</strong>re-oxygenation (3 წთ 100% O₂) → <strong>P</strong>retreatment (ლიდოკ. TBI-ში) → <strong>P</strong>aralysis+sedation → <strong>P</strong>ositioning → <strong>P</strong>lacement (tube) → <strong>P</strong>ost-intubation care
+      </div>
     </div>
   </div>
 
-  <div id="page-a" class="page">
-    <div class="card">
-      <h2>🗣️ A — Airway & კისრის მალები (C-Spine)</h2>
-      <p class="text-dim">ჰიპოქსია კლავს უსწრაფესად. ნებისმიერი ბლაგვი ტრავმა მხრებს ზემოთ მოითხოვს კისრის <strong>MILS</strong> (Manual In-Line Stabilization) ფიქსაციას ნეიტრალურ პოზიციაში.</p>
-
-      <h3>🪜 მართვის ესკალაციის კიბე</h3>
-      <ol>
-        <li><strong>მანუალური:</strong> ნიკაპის აწევა (Chin-lift) <em>ან</em> ქვედა ყბის წინ წამოწევა (<strong>Jaw-thrust</strong> — ერთადერთი უსაფრთხო გზა კისრის ტრავმისას).</li>
-        <li><strong>OPA (ოროფარინგეალური):</strong> მხოლოდ უგონო პაციენტში. ზომა: ტუჩიდან ყურის ბიბილომდე.</li>
-        <li><strong>NPA (ნაზოფარინგეალური):</strong> შენახული ცნობიერებისას. <em>უკუნაჩვენებია:</em> ქალას ფუძის მოტეხილობის ეჭვისას (Raccoon eyes, Battle's sign, ლიქვორეა).</li>
-        <li><strong>SGA (სუპრაგლოტური - i-gel/LMA):</strong> სწრაფი და მარტივი გამოსავალი პრეჰოსპიტალურად, როცა ინტუბაცია რთულდება.</li>
-        <li><strong>ETI (ინტუბაცია):</strong> ოქროს სტანდარტი, თუმცა თუ 2 ცდაში ვერ ხერხდება, გადადი ქირურგიულ გზაზე!</li>
-        <li><strong>ქირურგიული:</strong> კრიკოთირეოიდოტომია (Cannot Intubate, Cannot Ventilate სცენარისას).</li>
-      </ol>
-
-      <blockquote>
-        <strong>💡 გაიდლაინი:</strong> სისხლის ან ნაღებინები მასების არსებობისას უმთავრესი პრიორიტეტია ხისტი კათეტერით (Yankauer) სანაცია (Suction). არაუმეტეს 10-15 წამისა.
-      </blockquote>
+  <div class="card">
+    <div class="card-title">Pulse Oximetry — ლიმიტაციები <span class="badge badge-amber">გახსოვდეს!</span></div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">SpO₂ vs PaO₂ (ძირითადი ცხრილი)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;line-height:1.8;">
+          SpO₂ 100% → PaO₂ ≥90 mmHg<br/>
+          SpO₂ 95% → PaO₂ ~70 mmHg (ადეკვ.)<br/>
+          SpO₂ 90% → PaO₂ ~60 mmHg (⚠️ კრიტ.)<br/>
+          SpO₂ 75% → PaO₂ ~40 mmHg (ვენური)<br/>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">სად არ ვენდობით</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;line-height:1.8;">
+          ❌ CO მოწამვლა (CarboxyHb → ცრ. ↑)<br/>
+          ❌ MetHemoglobinemia<br/>
+          ❌ ვაზოკონსტრიქცია / შოკი<br/>
+          ❌ Hb &lt;5 g/dL (ანემია)<br/>
+          ❌ ჰიპოთერმია &lt;30°C
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="page-b" class="page">
-    <div class="card">
-      <h2>🫁 B — Breathing & გულმკერდის ტრავმები</h2>
-      <p class="text-dim">სასუნთქი გზის გახსნა არ ნიშნავს ადეკვატურ ვენტილაციას. აქ ვეძებთ სასიკვდილო თორაკალურ დაზიანებებს.</p>
+  <div class="card">
+    <div class="card-title">Surgical Airway — Cricothyroidotomy</div>
+    <div class="blue-box">
+      <div class="blue-title">ჩვენება: "Cannot Intubate / Cannot Oxygenate"</div>
+      <div class="blue-signs">მძიმე სახის ტრავმა, ხორხის ედემა, სისხლი, ანატ. დეფორმაცია — ვერ ვახერხებთ RSI-ს</div>
+    </div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text">კანი ჭრა cricothyroid membrane-ზე (thyroid + cricoid ხრტილს შორის)</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text">Membrane-ის განივი ჭრა (ჰორიზ.) — ფრთხილად, ვena jugularis-ის პატარა ტოტები აქვე</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">Hemostat ჩასვა და 90°-ით გახსნა — ტრაქეა გაიხსნება</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text">Cuffed ET ან Tracheostomy tube ჩასმა დისტალურად ტრაქეაში</div></div>
+    <div style="margin-top:8px;font-size:12px;color:var(--color-text-secondary);">⚠️ 12 წლამდე: Needle Cricothyroidotomy (14G კათ.) — surgical-ი ნებადართული.</div>
+  </div>
 
-      <h3>💥 სიცოცხლისთვის საშიში დაზიანებები</h3>
-      
-      <h4>1. დაძაბული პნევმოთორაქსი (Tension Pneumothorax)</h4>
-      <p class="text-dim"><strong>პათოფიზიოლოგია:</strong> პლევრაში ჰაერი სარქვლოვანი მექანიზმით შედის და ვეღარ გამოდის. მზარდი წნევა აკოლაფსებს ფილტვს, აწვება შუასაყარს და ჭყლეტს ქვემო ღრუ ვენას (IVC). ვენური სისხლი ვეღარ ბრუნდება გულში, ვითარდება ობსტრუქციული შოკი.</p>
-      <ul>
-        <li><strong>ნიშნები:</strong> ჰიპოტენზია, საუღლე ვენების დაბერვა (JVD), ცალმხრივად გამქრალი სუნთქვა.</li>
-        <li><strong>მკურნალობა:</strong> დაუყოვნებელი ნემსისებრი დეკომპრესია (Needle Decompression) მე-4/მე-5 ნეკნთაშუა სივრცეში (წინა აქსილარულ ხაზზე), ან მე-2 სივრცეში (ლავიწშუა ხაზზე). ყოველთვის ნეკნის ზედა კიდეზე!</li>
-      </ul>
+  <div class="card">
+    <div class="card-title">ინტუბაციის დადასტურება</div>
+    <ul class="list">
+      <li>End-tidal CO₂ (capnography) — ოქროს სტანდარტი; ETCO₂ &gt;35 = ტრაქეა ✓</li>
+      <li>გულმკერდის ბილატ. ამაღლება ვენტ.-ის დროს</li>
+      <li>აუსკულტაცია — ბილატ. ვეზიკ. სუნთქვა + ეპიგ. სიჩუმე</li>
+      <li>SpO₂ ↑ სიდინამიკეში</li>
+      <li>RTG — tube-ის პოზიცია (Carina-სგან 2–3 სმ ზემოთ)</li>
+    </ul>
+  </div>
 
-      <h4>2. ღია პნევმოთორაქსი ("მწოვავი ჭრილობა")</h4>
-      <ul>
-        <li><strong>პათოფიზიოლოგია:</strong> გულმკერდის კედლის დეფექტი, რომელიც ტრაქეის დიამეტრის 2/3-ზე მეტია. ჰაერი ამჯობინებს ჭრილობიდან შესვლას რეზისტენტობის ნაკლებობის გამო.</li>
-        <li><strong>მკურნალობა:</strong> ოკლუზიური (ჰერმეტული) სახვევი დაფიქსირებული <strong>3 მხრიდან</strong> (ქმნის სარქველს: ამოსუნთქვისას ჰაერი გადის, ჩასუნთქვისას იხურება).</li>
-      </ul>
-
-      <h4>3. სარქვლოვანი გულმკერდი (Flail Chest)</h4>
-      <ul>
-        <li><strong>პათოფიზიოლოგია:</strong> 3 ან მეტი მეზობელი ნეკნის 2-2 ადგილას მოტეხილობა. მოტეხილი სეგმენტი სუნთქავს <strong>პარადოქსულად</strong> (ჩასუნთქვისას ჩადის შიგნით).</li>
-        <li>მთავარი საფრთხეა ქვეშ მდებარე <strong>ფილტვის კონტუზია</strong>. საჭიროებს ადეკვატურ ოქსიგენაციას, ტკივილის მართვას და დადებითი წნევით ვენტილაციას (BVM/CPAP).</li>
-      </ul>
+  <div class="card">
+    <div class="card-title">Difficult Airway — LEMON <span class="badge badge-amber">სკრინინგი</span></div>
+    <div class="row row-3" style="gap:8px;">
+      <div class="mini-card"><div class="mini-label">L — Look</div><div style="font-size:12px;">სახე, კისერი, მიკროგნათია, კბილები</div></div>
+      <div class="mini-card"><div class="mini-label">E — Evaluate 3-3-2</div><div style="font-size:12px;">პირი ≥3 თ; ნიკაპი–ყელი ≥3 თ; ყელი–thyroid ≥2 თ</div></div>
+      <div class="mini-card"><div class="mini-label">M — Mallampati</div><div style="font-size:12px;">I–IV კლასი; III–IV = რთული</div></div>
+      <div class="mini-card"><div class="mini-label">O — Obstruction</div><div style="font-size:12px;">ეპიგლოტიტი, ჰემატომა, ახ.სხეული</div></div>
+      <div class="mini-card"><div class="mini-label">N — Neck mobility</div><div style="font-size:12px;">კისრის მოძრაობა შეზღუდული? C-collar?</div></div>
     </div>
   </div>
 
-  <div id="page-c" class="page">
-    <div class="card">
-      <h2>🩸 C — Circulation: X და ჰემორაგიული შოკი</h2>
-      <p class="text-dim">PHTLS 9e: ალგორითმი იწყება <strong>X-ით (Exsanguination)</strong>. არტერიულმა სისხლდენამ პაციენტი 60 წამში შეიძლება მოკლას.</p>
+  <div class="card">
+    <div class="card-title">Pitfalls — ხაფანგები Airway-ში</div>
+    <div class="pitfall-row"><div class="pitfall-q">⚠️ უკბილო პაციენტი — ნიღბი არ ეკვრება</div><div class="pitfall-a">✓ ღრძილ-ლოყის სივრცე გაახვიე გაზით</div></div>
+    <div class="pitfall-row"><div class="pitfall-q">⚠️ RSI-ს შემდეგ ვერ ვინტუბებ</div><div class="pitfall-a">✓ BVM ვენტ. + surgical airway გეგმა მზადაა</div></div>
+    <div class="pitfall-row"><div class="pitfall-q">⚠️ ტრანსპორტამდე airway არ მოვამზადე</div><div class="pitfall-a">✓ Early intubation სიტუაციის გაუარესებამდე</div></div>
+    <div class="pitfall-row"><div class="pitfall-q">⚠️ CO მოწამვლა — SpO₂ ნორმ. გვეჩვ.</div><div class="pitfall-a">✓ ABG + CO-oximetry; 100% O₂ ყოველთვის</div></div>
+  </div>
+</div>
 
-      <h3>🛠️ სისხლდენის მართვა</h3>
-      <ul>
-        <li><strong>ტურნიკეტი:</strong> კიდურებზე. ჭრილობიდან 5-8 სმ-ით ზემოთ. დააფიქსირე დრო.</li>
-        <li><strong>ტამპონადა (Wound Packing):</strong> გარდამავალ ზონებში (საზარდული, იღლია). ჰემოსტატიკური ბინტი + 3 წუთიანი პირდაპირი ზეწოლა.</li>
-      </ul>
+<!-- ═══════════════ SHOCK ═══════════════ -->
+<div id="shock" class="section">
+  <div class="card">
+    <div class="card-title">შოკის განმარტება და ტიპები</div>
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;">შოკი = სისხლის მიმოქცევის დარღვევა → ორგანოების არაადეკვატური პერფუზია და ქსოვილის ჰიპოქსია. CO = HR × SV</div>
+    <ul class="list">
+      <li><strong>ჰიპოვოლემიური</strong> (ყველაზე ხშირი) — სისხლდენა; ↓ preload</li>
+      <li><strong>ობსტრუქციული</strong> — Tension PTX, Cardiac tamponade; ↓ venous return</li>
+      <li><strong>კარდიოგენური</strong> — გულის კონტუზია, AMI; ↓ contractility</li>
+      <li><strong>ნეიროგენური</strong> — კისრის/ზედა გულმკ. ზ.ტ.; სიმპ. ტონუსის ↓ → ვაზოდილ. + ბრადიკარდია</li>
+      <li><strong>სეპტიკური</strong> — იშვიათი ტრავმაში; დაგვიანებ. პრეზ. (&gt;6სთ); ↓ SVR</li>
+    </ul>
+    <div style="margin-top:8px;font-size:12px;color:var(--color-text-secondary);">💡 ნეიროგ. შოკი: ჰიპოტ. + ბრადიკ. + ვაზოდილ. — ჰიპოვ. შოკთ. განსხ. (რომ ბრადიკ. + ვარდიც. კი). IVF + ვაზოპ. (Norepinephrine)</div>
+  </div>
 
-      <hr>
-
-      <h3>📊 შოკის კლასიფიკაცია (ACS-COT)</h3>
-      <table>
-        <tr><th>კლასი</th><th>დანაკარგი</th><th>კლინიკა და პათოფიზიოლოგია</th></tr>
-        <tr><td class="td-green">I</td><td>&lt;15%</td><td>ნორმალური წნევა, პულსი &lt;100. კომპენსირებული.</td></tr>
-        <tr><td class="td-amber">II</td><td>15-30%</td><td>პულსი 100-120. <strong>სისტოლური წნევა ნორმაშია</strong> სიმპათიკური ვაზოკონსტრიქციის გამო, მაგრამ პულსური წნევა ვიწროვდება.</td></tr>
-        <tr><td class="td-red">III</td><td>30-40%</td><td><strong>ჰიპოტენზია (SBP &lt;90).</strong> დეკომპენსაცია დაიწყო! პულსი 120-140, კონფუზია.</td></tr>
-        <tr><td style="color:#FF4D4D;font-weight:bold;">IV</td><td>&gt;40%</td><td>პულსი &gt;140 (ძაფისებრი), მძიმე ლეთარგია, სიკვდილის წინა სტადია.</td></tr>
-      </table>
-
-      <h3>💧 პერმისიული ჰიპოტენზია (Permissive Hypotension)</h3>
-      <blockquote>
-        <strong>❌ ძველი დოგმის მსხვრევა:</strong> 2 ლიტრი კრისტალოიდის აგრესიული გადასხმა კლავს! ის შლის თრომბს ("Pop the clot") და აზავებს სისხლს.
-      </blockquote>
-      <p>პრეჰოსპიტალურად სითხე ესხმება მხოლოდ 250 მლ ბოლუსებად, რათა სისტოლური წნევა შენარჩუნდეს <strong>80-90 mmHg</strong> (რადიალური პულსის არსებობა). <em>გამონაკლისი: TBI-ის დროს წნევა უნდა იყოს >90 mmHg!</em></p>
-      <p><strong>TXA (ტრანექსამის მჟავა):</strong> 1 გრამი ტრავმიდან პირველი 3 საათის განმავლობაში.</p>
+  <div class="card">
+    <div class="card-title">სისხლდენის კლასიფიკაცია <span class="badge badge-red">ზეპირად!</span></div>
+    <div style="overflow-x:auto;">
+    <table class="shock-table">
+      <tr>
+        <th>პარამეტრი</th>
+        <th class="c1">I კლასი</th>
+        <th class="c2">II კლასი</th>
+        <th class="c3">III კლასი</th>
+        <th class="c4">IV კლასი</th>
+      </tr>
+      <tr><td>სისხ. დაკარგვა (70 კგ)</td><td class="c1">&lt;750 mL / &lt;15%</td><td class="c2">750–1500 / 15–30%</td><td class="c3">1500–2000 / 31–40%</td><td class="c4">&gt;2000 mL / &gt;40%</td></tr>
+      <tr><td>პულსი</td><td class="c1">&lt;100</td><td class="c2">100–120</td><td class="c3">120–140</td><td class="c4">&gt;140</td></tr>
+      <tr><td>AD სისტ.</td><td class="c1">ნ.</td><td class="c2">ნ.</td><td class="c3">↓</td><td class="c4">↓↓</td></tr>
+      <tr><td>Pulse pressure</td><td class="c1">ნ./↑</td><td class="c2">↓</td><td class="c3">↓↓</td><td class="c4">↓↓↓</td></tr>
+      <tr><td>სუნთქვა/წთ</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
+      <tr><td>შარდი mL/სთ</td><td class="c1">&gt;30</td><td class="c2">20–30</td><td class="c3">5–15</td><td class="c4">უმნიშ.</td></tr>
+      <tr><td>GCS</td><td class="c1">ნ.</td><td class="c2">ნ./შ-ბული</td><td class="c3">↓</td><td class="c4">↓↓</td></tr>
+      <tr><td>სითხე</td><td class="c1">მონიტ.</td><td class="c2">კრისტ.</td><td class="c3">კრისტ.+სისხლი</td><td class="c4">MTP (1:1:1)</td></tr>
+    </table>
     </div>
   </div>
 
-  <div id="page-d" class="page">
-    <div class="card">
-      <h2>🧠 D — Disability & თავის ტვინის ტრავმა (TBI)</h2>
-      <p class="text-dim">ნევროლოგიური სტატუსის სწრაფი შეფასება: AVPU, გლაზგოს კომის სკალა (GCS) და გუგები.</p>
-
-      <h3>📏 შეფასების ინსტრუმენტები</h3>
-      <ul>
-        <li><strong>AVPU:</strong> Alert, Verbal, Pain, Unresponsive.</li>
-        <li><strong>GCS &le; 8:</strong> ნიშნავს კომას! <em>"Less than 8, intubate"</em> - სასუნთქი გზის დაცვის ინდიკაცია.</li>
-        <li><strong>გუგები:</strong> ცალმხრივად გაფართოებული, სინათლეზე რეაქციის არმქონე გუგა (Anisocoria) = ტვინის თიაქარი (Herniation).</li>
-      </ul>
-
-      <hr>
-
-      <h3>💥 TBI-ის პათოფიზიოლოგია</h3>
-      <p class="text-dim">ჩვენ არ შეგვიძლია განვკურნოთ <strong>პირველადი დაზიანება</strong> (დარტყმის მომენტში ტვინის ქსოვილის გლეჯა). სასწრაფოს მიზანია <strong>მეორადი დაზიანების</strong> (ჰიპოქსია და ჰიპოტენზია) პრევენცია.</p>
-      
-      <ul>
-        <li><strong>ქალასშიდა წნევა (ICP):</strong> ქალა დახურული ყუთია. სისხლდენისას წნევა იზრდება, რაც ტვინს ძირს, ხვრელისკენ (Foramen magnum) მიერეკება.</li>
-        <li><strong>კუშინგის ტრიადა (Cushing's Triad):</strong> ჰიპერტენზია (გაფართოებული პულსური წნევით), ბრადიკარდია და არარეგულარული სუნთქვა. ეს თიაქარის და კრიტიკული ICP-ის ნიშანია!</li>
-      </ul>
-
-      <blockquote>
-        <strong>⚠️ ჰიპერვენტილაციის პარადოქსი:</strong> რუტინული ჰიპერვენტილაცია აკრძალულია, რადგან იწვევს ვაზოკონსტრიქციას და ტვინის იშემიას. ჰიპერვენტილაცია (20 სუნთქვა/წთ) დასაშვებია <strong>მხოლოდ</strong> თიაქარის მკაფიო ნიშნებისას (გუგის გაფართოება + GCS კლება), როგორც დროებითი, სიცოცხლის გადამრჩენი ღონისძიება ტრანსპორტირებისას.
-      </blockquote>
+  <div class="card">
+    <div class="card-title">სისხლდენის ლოკალიზაცია — "Floor + 4 More"</div>
+    <div class="row row-3" style="gap:8px;">
+      <div class="mini-card"><div class="mini-label">🩸 გარე</div><div style="font-size:13px;">ჭრილობიდან პირდაპირ — დაუყ. კ-ოლი</div></div>
+      <div class="mini-card"><div class="mini-label">🫁 მკერდი</div><div style="font-size:13px;">ჰემოთ.: &gt;1500mL → ოპ.</div></div>
+      <div class="mini-card"><div class="mini-label">🫃 მუცელი</div><div style="font-size:13px;">ღვ., ელ., მეზ. → FAST + ოპ.</div></div>
+      <div class="mini-card"><div class="mini-label">🦴 მენჯი / retro</div><div style="font-size:13px;">Binder + angioemboliz. ±preperitoneal packing</div></div>
+      <div class="mini-card"><div class="mini-label">🦵 გრძ. ძვლები</div><div style="font-size:13px;">Femur → 1500 mL; Tibia → 750 mL</div></div>
     </div>
   </div>
 
-  <div id="page-e" class="page">
-    <div class="card">
-      <h2>🥶 E — Exposure / მუცლის ტრავმა</h2>
-      
-      <h3>🌡️ გარემო და ექსპოზიცია</h3>
-      <p class="text-dim">პაციენტი უნდა გაშიშვლდეს სრულად (ტანსაცმლის მოჭრით), რათა არ გამოგვრჩეს ფარული ჭრილობები (იღლია, უკანა ტორსი). შემოწმებისთანავე <strong>აუცილებელია პაციენტის გათბობა</strong> თერმული საბნით. ჰიპოთერმია კოაგულოპათიის მთავარი ტრიგერია.</p>
-
-      <hr>
-
-      <h3>🔪 მუცლის ტრავმები</h3>
-      <p class="text-dim">მუცლის ღრუ შეიძლება იყოს მასიური ფარული სისხლდენის (შოკის) მიზეზი.</p>
-      
-      <ul>
-        <li><strong>პარენქიმული (მკვრივი) ორგანოები:</strong> ღვიძლი, ელენთა, თირკმელი. მათი დაზიანების მთავარი საფრთხე <strong>მასიური სისხლდენა და ჰემორაგიული შოკია</strong>.</li>
-        <li><strong>ღრუ ორგანოები:</strong> კუჭი, ნაწლავები, შარდის ბუშტი. მთავარი საფრთხე <strong>პერიტონიტი და სეფსისია</strong> (შინაარსის ჩაღვრის გამო).</li>
-        <li><strong>ევიცერაცია (Evisceration):</strong> ნაწლავების გადმოსვლა მუცლის ჭრილობიდან. <em>არასოდეს სცადოთ მათი უკან ჩაბრუნება!</em> გადააფარეთ სტერილური, ფიზიოლოგიური ხსნარით დასველებული საფენი და ზემოდან მშრალი ჰერმეტული ფენა სითბოს შესანარჩუნებლად.</li>
-      </ul>
-      <p><strong>მენჯის სარტყელი (Pelvic Binder):</strong> გაურკვეველი ჰიპოტენზიის დროს, თუ ეჭვია მენჯის მოტეხილობაზე, დიდი ტროქანტერების (Trochanters) დონეზე ედება მენჯის ფიქსატორი სისხლდენის შესაჩერებლად.</p>
+  <div class="card">
+    <div class="card-title">სითხის თერაპია და სისხლის ჩანაცვლება</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card" style="border-left:3px solid #27500A;">
+        <div style="font-size:13px;font-weight:500;color:#27500A;">სწრაფი პასუხი</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">I კლ. · კრისტ. 1–2L საკ. · T&amp;C</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #854F0B;">
+        <div style="font-size:13px;font-weight:500;color:#854F0B;">გარდამავალი პასუხი</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">II–III კლ. · კრ.+pRBC · ოპ./IR სავ.</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #791F1F;">
+        <div style="font-size:13px;font-weight:500;color:#791F1F;">პასუხი არ არის</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">IV კლ. · MTP (pRBC:FFP:Plt = 1:1:1) · სასწ. ოპ.</div>
+      </div>
     </div>
-  </div>
-
-  <div id="page-spine" class="page">
-    <div class="card">
-      <h2>脊 ხერხემლისა და ზურგის ტვინის ტრავმა</h2>
-      <p class="text-dim">PHTLS 9e მკვეთრად ცვლის ხერხემლის მართვის დოგმებს: ხისტი ფიცრები (Long Backboards) მეტწილად გამოიყენება მხოლოდ ექსტრიკაციისთვის (ამოყვანისთვის) და არა ხანგრძლივი ტრანსპორტირებისთვის, რადგან იწვევენ ნაწოლებს და სუნთქვის გაძნელებას.</p>
-
-      <h3>⚡ ნეიროგენული vs. სპინალური შოკი</h3>
-      <table>
-        <tr><th>შოკის ტიპი</th><th>პათოფიზიოლოგია და კლინიკა</th></tr>
-        <tr>
-          <td class="td-red">ნეიროგენული</td>
-          <td>წმინდა ჰემოდინამიკური პრობლემა (Distributive shock). ზურგის ტვინის მაღალი დაზიანებისას წყდება სიმპათიკური იმპულსები. სისხლძარღვები ფართოვდება (ჰიპოტენზია) და გული ვეღარ აჩქარდება. <strong>ტრიადა: ჰიპოტენზია, ბრადიკარდია, თბილი/მშრალი კანი.</strong></td>
-        </tr>
-        <tr>
-          <td class="td-amber">სპინალური</td>
-          <td>ნევროლოგიური ფენომენი. ტრავმის შემდგომი ზურგის ტვინის დროებითი გათიშვა (Concussion). ვლინდება სრული მოდუნებით (Flaccid paralysis) და რეფლექსების გაქრობით ტრავმის დონის ქვემოთ. ჰემოდინამიკა სტაბილურია.</td>
-        </tr>
-      </table>
-
-      <h3>🛡️ კისრის საყელო (Cervical Collar)</h3>
-      <ul>
-        <li>საყელო <strong>არ აფიქსირებს</strong> კისერს სრულად, ის მხოლოდ ზღუდავს მოძრაობას და არის შეხსენება პაციენტისთვის, რომ თავი არ ამოძრაოს. ძირითადი ფიქსაცია მაინც ხელით ხდება (MILS), სანამ პაციენტი ბლოკებით (Head blocks) არ დაფიქსირდება საკაცეზე.</li>
-        <li><strong>პენეტრირებადი ტრავმა:</strong> კისრის იზოლირებული პენეტრირებადი (დანით, ტყვიით) ტრავმისას კისრის საყელოს დადება <strong>უკუნაჩვენებია</strong>, თუ არ არის ნევროლოგიური დეფიციტი, რადგან ის ფარავს სისხლდენას და ზრდის ინფექციის/ჰიპოქსიის რისკს!</li>
+    <div style="margin-top:10px;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:6px;">Damage Control Resuscitation</div>
+      <ul class="list">
+        <li>Permissive hypotension: SAP 80–90 mmHg (TBI-ის გარეშე). TBI-ში ≥90.</li>
+        <li>Tranexamic Acid: &lt;3 სთ-ში ტრავმიდან 1g IV (15 წთ) → შემდ. 1g 8 სთ-ში</li>
+        <li>MTP trigger: ≥10U pRBC 24სთ-ში / მასიური სისხლდ. ეჭვი</li>
+        <li>Calcium: FFP-ს დიდი მოც.-ის დროს CaCl₂ 1g IV (chelation)</li>
+        <li>Hypothermia &lt;35°C → კოაგ. ↓↓; ვათბობთ სითხეებს, ბლანკეტი</li>
       </ul>
     </div>
   </div>
+</div>
+
+<!-- ═══════════════ THORACIC ═══════════════ -->
+<div id="thoracic" class="section">
+  <div class="card">
+    <div class="card-title">Primary Survey — სიცოცხლ. საშ. <span class="badge badge-red">6 "Killers"</span></div>
+    <div class="injury-box">
+      <div class="injury-title">1. Tension Pneumothorax</div>
+      <div class="injury-signs">ნიშნები: ტაქიკ., ჰიპოტ., ↓სუნთქვა ერთ მხ., ↑ კისრ. ვ., ტრაქ. გადახ. (გვიანი), ↑ IVP</div>
+      <div class="injury-tx">მკ-ობა: კლინიკ. დიაგნ. → არ ელ. RTG! → Needle decompression 2-ე ICS MCL ან 4–5 ICS AAL → Chest tube</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">2. Open Pneumothorax (Sucking Chest Wound)</div>
+      <div class="injury-signs">ნიშნები: ჭრ-ბა გ-მკ., ჰაერი სუნთ. დროს, ≥2/3 ტრ.-ის დიამ.</div>
+      <div class="injury-tx">მკ-ობა: 3-მხრ. დახ. სახ. (Asherman) → Chest tube ცალკე ადგ.</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">3. Massive Hemothorax</div>
+      <div class="injury-signs">ნიშნები: ჰიპოვ., ↓სუნთ. ქვ., სტომატიკ. პერკ. → blunting, IV access</div>
+      <div class="injury-tx">მკ-ობა: 2 IV + სისხ. + Chest tube 5-ე ICS AAL. &gt;1500mL ან &gt;200mL/სთ → ოპ.</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">4. Flail Chest</div>
+      <div class="injury-signs">ნიშნები: ≥2 ნ-ნი ≥2 ადგ., პარად. სუნთ., ჰიპოქ., ტკივ. (splinting)</div>
+      <div class="injury-tx">მკ-ობა: O₂, ანალგ., CPAP; ოფ. ინდ.: ჰიპოქ. + სუნთ.ჩ. → ინტ-ია; ძირ. პრობ.: პულმ. კონტ.</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">5. Cardiac Tamponade</div>
+      <div class="injury-signs">Beck's Triad: ↓AD + ↑კისრ. ვ. + ჩახშ. გ-სხ. (ხ-ად არ არის სრ.). FAST ≈ 100%</div>
+      <div class="injury-tx">მკ-ობა: FAST → Pericardiocentesis (გარდ.) → ოპ. (საბ.)</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">6. Tracheobronchial Injury</div>
+      <div class="injury-signs">ნიშნები: ჰემოფტ., კრეპ., Chest tube → მუდ. ჰ-ის ნ-ადი, subcutaneous emphysema</div>
+      <div class="injury-tx">მკ-ობა: სასწ. ინტ. + ბრ-სკ. → ოპ.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Secondary Survey — პოტ. საშ. <span class="badge badge-amber">დამატებ.</span></div>
+    <ul class="list">
+      <li>Simple pneumothorax / hemothorax → Chest tube</li>
+      <li>ნეკნების მოტეხ. (≥3) → ტკ. კუპ., epidural; Elder → ICU</li>
+      <li>Pulmonary contusion → O₂ მ-ბა, ვენტ. მხ.; RTG 24–48სთ-ში</li>
+      <li>Aortic disruption — Widened mediastinum &gt;8cm → CT ანგ.; ჰიპ. რეზ.</li>
+      <li>Diaphragm rupture — ნასოგ. ზ-დი (↑ in chest RTG); ოპ.</li>
+      <li>Myocardial contusion — ECG (RBBB, ST), ტრ-ბ., 24სთ მ-ბა, Echo</li>
+      <li>Esophageal rupture — Boerhaave; მედ-სტ. ჰავა RTG-ზე → ოპ.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ ABDOMINAL ═══════════════ -->
+<div id="abdominal" class="section">
+  <div class="card">
+    <div class="card-title">მუცლის ანატომიური ზონები</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card"><div class="mini-label">Anterior abdomen</div><div style="font-size:12px;">ნეკნ. რ-ლი → სიმ-ი. პ-ბი, წ-ა მ-ე ხ-ამდე</div></div>
+      <div class="mini-card"><div class="mini-label">Thoracoabdomen</div><div style="font-size:12px;">ძ. წვ-ამდე — დ-მი, ღვ., ელ., კ-ი; ქვ. ნ-ები</div></div>
+      <div class="mini-card"><div class="mini-label">Flank / Back</div><div style="font-size:12px;">Retroperitoneal: aorta, IVC, თ-ლი, პ-ა, 12გ</div></div>
+      <div class="mini-card"><div class="mini-label">Pelvic cavity</div><div style="font-size:12px;">სწ. ნ-ავი, შ-ი, საშ., სისხლ. ჭ.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">მექანიზმი და ხ-ი ორგანოები</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card" style="border-left:3px solid #993C1D;">
+        <div style="font-size:13px;font-weight:500;color:#993C1D;">Blunt (ბლ-ი)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">ელ. 40–55% · ღვ. 35–45% · წ-ი ნ. 5–10% · Decel. → Bucket handle</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #533AB7;">
+        <div style="font-size:13px;font-weight:500;color:#533AB7;">Penetrating</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Stab: ღვ.40% · წ.ნ.30% · დ-ი.20%<br/>GSW: წ.ნ.50% · მ.ნ.40% · ღვ.30%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">დიაგნოსტიკა</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>FAST</strong> — სწ. სკ-გი თ-ი სითხ-ზე (4 ფ-რა + პ-ი); ≥200mL = (+)</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>eFAST</strong> — + პლ. ღ. (PTX, HTX); M-mode lungsliding</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>CT მუცელი</strong> — ჰ.სტ. პ-ში; retro-ის კ-ი შ-ება; IV contrast</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>DPL</strong> — FAST (-)/ვ-ა, ან სედ. გ-ის ნ.; RBC &gt;100k / WBC &gt;500 = (+). არ: retro</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ლაპარატომიის ჩვენება</div>
+    <ul class="list">
+      <li>ჰ.არ-სტ. + FAST/DPL (+) → სასწ. ოპ.</li>
+      <li>Penetrating + peritoneal signs → ოპ.</li>
+      <li>GSW ინტრაპ. ეჭვ. → ოპ.</li>
+      <li>Free air under diaphragm → hollow viscus → ოპ.</li>
+      <li>Pelvic fx + ჰ.არ-სტ. → Binder + angioembol.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ HEAD / TBI ═══════════════ -->
+<div id="head" class="section">
+  <div class="card">
+    <div class="card-title">TBI — კლასიფიკაცია GCS-ით <span class="badge badge-red">ზეპირ.!</span></div>
+    <div class="row row-3" style="gap:8px;">
+      <div class="mini-card" style="border-left:3px solid #27500A;">
+        <div style="font-size:13px;font-weight:500;color:#27500A;">მსუბ. TBI</div>
+        <div style="font-size:13px;margin-top:4px;">GCS 13–15</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;">CT: ყოველ. ≥1 კ.ფ. / LOC / PTA</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #854F0B;">
+        <div style="font-size:13px;font-weight:500;color:#854F0B;">საშ. TBI</div>
+        <div style="font-size:13px;margin-top:4px;">GCS 9–12</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;">CT → ICU / ნეიროქ. კ-ია</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #791F1F;">
+        <div style="font-size:13px;font-weight:500;color:#791F1F;">მძ. TBI</div>
+        <div style="font-size:13px;margin-top:4px;">GCS ≤8</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;">ინტ. + CT + ICP monitoring + ნეიროქ.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">GCS სკალა <span class="badge badge-blue">3–15</span></div>
+    <div style="overflow-x:auto;">
+    <table class="shock-table">
+      <tr><th>კომპ.</th><th>პასუხი</th><th>ქულა</th></tr>
+      <tr><td rowspan="4" style="font-weight:500;">თვალი (E)</td><td>სპ-ანი</td><td class="c1">4</td></tr>
+      <tr><td>ხმ-ზე</td><td class="c2">3</td></tr>
+      <tr><td>ტკ-ზე</td><td class="c3">2</td></tr>
+      <tr><td>არ ხ-ება</td><td class="c4">1</td></tr>
+      <tr><td rowspan="5" style="font-weight:500;">მეტყ. (V)</td><td>ორიენტ.</td><td class="c1">5</td></tr>
+      <tr><td>დეზ-ბული</td><td class="c2">4</td></tr>
+      <tr><td>სიტ. (მ-ება)</td><td class="c3">3</td></tr>
+      <tr><td>ბგ-ები</td><td class="c3">2</td></tr>
+      <tr><td>არ</td><td class="c4">1</td></tr>
+      <tr><td rowspan="6" style="font-weight:500;">მოძრ. (M)</td><td>ბ-ობს</td><td class="c1">6</td></tr>
+      <tr><td>ლოკ-ებს</td><td class="c1">5</td></tr>
+      <tr><td>ი-ებს</td><td class="c2">4</td></tr>
+      <tr><td>Decorticate (F)</td><td class="c3">3</td></tr>
+      <tr><td>Decerebrate (E)</td><td class="c4">2</td></tr>
+      <tr><td>არ</td><td class="c4">1</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ინტრაკრ. ჰემატომები <span class="badge badge-red">CT-ზე ნახ.!</span></div>
+    <div class="injury-box">
+      <div class="injury-title">Epidural Hematoma (EDH)</div>
+      <div class="injury-signs">CT: biconvex (ოჭოპი ფ-ი), hyperdense. "Lucid interval" — ბრ-ა, შემ. გ-ს-ბა. ა.ა. სისხლ. შ-ა (MMA). ახ-ი</div>
+      <div class="injury-tx">მკ-ობა: GCS ↓ → სასწ. ოპ. (კ-ია). Burr hole — ინ-ი 30 წ-ში.</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">Subdural Hematoma (SDH)</div>
+      <div class="injury-signs">CT: crescent ფ-ი, midsagittal-ს მ-ს. Bridging veins. ხ-ად Elder, მ-ები. მ-ა ელ-ს ატ-ს.</div>
+      <div class="injury-tx">მკ-ობა: მ-ი → კ-ატ. მ-ბა; ქ-ი → ოპ. (ცუდი პ-ი)</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">Diffuse Axonal Injury (DAI)</div>
+      <div class="injury-signs">CT: ხ-ად ნ-ი. MRI კ-ი. ძ-ა ჰ-ქ. კ-იდ. ტ-ა შ. კ-ჯა. ↓GCS მ-ი ა-ის გ-ს.</div>
+      <div class="injury-tx">მკ-ობა: ICP ↓ + ნ-ო პ-ე + ტ-ი</div>
+    </div>
+    <div class="warn-box">
+      <div class="warn-title">Subarachnoid Hemorrhage (SAH)</div>
+      <div class="warn-signs">CT: ​გ-ი ი-ბ-ი სივ-ში (hyperdense); თ-ი ტ-ი → cerebral vasospasm.</div>
+      <div class="warn-tx">მკ-ობა: Nimodipine (vasospasm ↓), ჰ-ია, ს-ობ. ♥</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ICP ↑ — Herniation-ის ნიშნები <span class="badge badge-red">გ-ი!</span></div>
+    <div class="injury-box">
+      <div class="injury-title">Cushing's Triad</div>
+      <div class="injury-signs">↑ SAP (widened pulse pressure) + ბრადიკარდია + არარ. სუნთქვა (iroegular Cheyne-Stokes). ❗ გვიანი, ტერმ. ნ.</div>
+    </div>
+    <div class="row row-2" style="gap:8px;margin-top:8px;">
+      <div class="mini-card">
+        <div class="mini-label">Transtentorial (uncal) herniation</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">↓GCS → CN III palsy (ipsilateral dilated fixed pupil) → Decerebrate posturing → სიკვდ.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">Tonsillar herniation</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">ტვინის ღ-ე foramen magnum-ში → ბ-ია, resp. arrest</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">TBI-ს მართვა — ATLS პრინციპები</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>A/B/C პირველ.</strong> ↓PaO₂ &lt;60 ან ↑PaCO₂ &gt;50 = secondary brain injury. O₂ +++ </div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>BP:</strong> SAP ≥90 mmHg (TBI-ში ≥110 ≥50 წ.); MAP ≥80. ჰიპოტ. = secondary injury!</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Glucose:</strong> ჰიპოგლ. → ↓GCS; ჰიპ-ია (>180) = ↑ secondary injury. ნ. შ. ინ.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ICP ↑ მართვა:</strong> HOB 30° · Mannitol 0.5–1g/kg ან HyperSaline 3% · ნო-ვ-ია PaCO₂ 35–40. ჰიპ-ვ. მ-ლ. (PaCO₂ 30–35) — მ-ლ. Herniation-ის დ.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Seizure:</strong> Levetiracetam (Keppra) ან Phenytoin — პ-ფ. 7 დ-ე. GCS ≤8 → ა-ები.</div></div>
+    <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Intubation:</strong> GCS ≤8 → RSI. RSI-ს წ-: Lidocaine 1.5mg/kg IV (ICP spike ↓). ჰ-ვ. PaCO₂ 35–40.</div></div>
+    <div class="step-row"><div class="step-num">7</div><div class="step-text"><strong>CT head:</strong> ყ-ლი GCS &lt;15 ტ-ა + LOC/ამ-ზ./სათ. ნ. → CT. ო-ტ. გ-ბა.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Skull Fractures</div>
+    <div class="safe-box">
+      <div class="safe-title">Linear (ხ-ი) — ყ-ლ. ხ-ი</div>
+      <div class="safe-signs">CT-ზე hypodense ხ-ი. კ-ი თ-ა — EDH (MMA ჭ-ვა).</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">Depressed — ↓ გ-ა ≥ კ-ის სიმ.</div>
+      <div class="injury-signs">Open → ინ-ა ↑; closed. ო-ბ → seizure ↑.</div>
+      <div class="injury-tx">Open depressed → სასწ. ოპ.</div>
+    </div>
+    <div class="warn-box">
+      <div class="warn-title">Basilar Skull Fracture</div>
+      <div class="warn-signs">Battle's sign (retroaur.), Raccoon eyes (periorbital), CSF otorrhea/rhinorrhea, Hemotympanum. CT კ-ი.</div>
+      <div class="warn-tx">⚠️ Nasogastric tube CONTRAINDICATED → ო-ი (OGT). ≈ 4–8 კვ-ში თ-ვ-ა.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Pediatric TBI — სპეც. საკ.</div>
+    <ul class="list">
+      <li>ახ-ი: Open fontanelle → ICP-ის ბ. პ-ა. Sutures → "Macewen's crack-pot" ც.</li>
+      <li>Growing fracture — dura ჭ. → ლ-ი ე-ბა წ-ბ-ში</li>
+      <li>Shaken Baby Syndrome: ret. ჰ-ა, SDH bilateral, &#8593;ICP — ხ-ად ს-ვ. ბ-ი ნ.</li>
+      <li>GCS-ს პ-ატ. ვ-ა (&lt;2 წ.): Grimace = V; Cry = V4; Flexion M</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ SPINE / NECK ═══════════════ -->
+<div id="spine" class="section">
+  <div class="card">
+    <div class="card-title">კისრის ზონები — Zone System <span class="badge badge-blue">Penetrating</span></div>
+    <div class="row row-3" style="gap:8px;">
+      <div class="mini-card" style="border-left:3px solid #27500A;">
+        <div style="font-size:13px;font-weight:500;color:#27500A;">Zone I</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Clavicle → Cricoid. ა-ი. ვ-ია: aorta, subclavian, lung apex, esophagus, trachea. მ-ი CT angio + ბ.</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #854F0B;">
+        <div style="font-size:13px;font-weight:500;color:#854F0B;">Zone II</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Cricoid → Angle of Mandible. ყ-ლ. ხ-ი. Carotid, jugular, esophagus, trachea. Direct exploration ა-ი.</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #791F1F;">
+        <div style="font-size:13px;font-weight:500;color:#791F1F;">Zone III</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Angle of Mandible → Skull base. რ-ი ო-ი. Distal carotid, vertebral. ა-ი CT angio + ა-ი.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Blunt Neck Trauma — სასიცოც. დ.</div>
+    <div class="injury-box">
+      <div class="injury-title">Laryngeal Fracture</div>
+      <div class="injury-signs">ნ-ი: ხმ. ჩ-ა/სტ-ი, დ-ფ., subcutaneous emphysema, tender larynx, hemoptysis</div>
+      <div class="injury-tx">⚠️ RSI სახ. — ლ. პ. შეიძ. ინტ. ჩ-ბ. → Surgical airway პ-ბა! Awake trach. ო-ი.</div>
+    </div>
+    <div class="injury-box">
+      <div class="injury-title">Vascular Injury (Carotid/Vertebral) — BCVI</div>
+      <div class="injury-signs">Denver Screening: GCS &lt;8 ე-ვ. ნ-ით, შ-ი ტ-ა, C1-C3 fx, Horner's, ს-ი ინ. stroke, Zone I/II/III პ.</div>
+      <div class="injury-tx">CT Angiography → Anticoagulation (heparin) ან Antiplatelet. ო-ი — სტ-ი პ-ა.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Cervical Spine Clearance <span class="badge badge-amber">C-collar</span></div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>NEXUS კ-ი (ყ-ლი 5 +):</strong> ტ-ა შ-ა, ს-ც. ა-ტ., ფ. დ-ა, ინ-ია, ვ-ზ. ლ. ს-ა → CT ან X-Ray</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Canadian C-Spine Rule:</strong> High Risk? → CT. Low Risk + Able to rotate → Clinical Clearance (ყ-ლ. კ)</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">CT C-Spine — ყ-ლი ს-ა ტ-ში (კ, ა-ტ., ს-ი, ს-ი) · MRI — Ligament/cord injury ე-ვ.</div></div>
+    <div style="margin-top:8px;font-size:12px;color:#791F1F;background:#FCEBEB;padding:8px 10px;border-radius:var(--border-radius-md);">⚠️ Inline stabilization RSI-ს დ.: 1 ად. კ-ებს, 1 ა-ს. C-collar ა-ბ-ს პ-ს ა-ს პ-ს დ.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Spinal Cord Injury — SCI</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">Complete SCI</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">დ-ბის ქვ. ყ-ლი ფ-ა + ს-ა გ-ლი. ASIA A. ნ. გ-ა ↓. Sacral sparing ა-ი? = incomplete</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">Incomplete SCI (Syndromes)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Central cord: ✋ &gt; 🦵 ს-ა; Anterior cord: ფ. ↓ ს-ი ↓ → ვ. ↑; Brown-Séquard: ipsilat. ფ+prop / contralat. pain+temp</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+    <div class="warn-box">
+      <div class="warn-title">Spinal Shock vs Neurogenic Shock</div>
+      <div class="warn-signs">Spinal Shock: areflexia + flaccidity — ნ-ა სასიც. ა-ი; Neurogenic Shock: ჰ-ტ. + ბ-ია + ვ-ა — სისხლ. ი-ა</div>
+      <div class="warn-tx">Bulbocavernosus Reflex ბ. → spinal shock → ASIA ადრ. ა-ი.</div>
+    </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">SCI მართვა — ATLS</div>
+    <ul class="list">
+      <li>MAP ≥85–90 mmHg პ-ლ. 7 დ-ე (IVF ± ვ-ბ.)</li>
+      <li>Methylprednisolone — ა-ლ. ATLS-ში (2013+); ა-ლ. გ-ბ. აჩ-ს ✗ (NASCIS III)</li>
+      <li>T4-ს ზ. SCI → ა-ო დ-ი; გ-ს ღ-ა ← Foley!</li>
+      <li>Ileus / Urinary retention — ადრ. ი-ია</li>
+      <li>DVT პ-ია: LMWH + Compression. SCI = ↑ VTE ი</li>
+      <li>Autonomic Dysreflexia (T6 ზ.): ↑ BP + ბ. + ო-ი. → ი-ი (ფ., Foley კ.)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Thoracolumbar Spine Injury</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card">
+        <div class="mini-label">TLICS სკ. (კლ-ია)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">მ-ი + ლ. ი. + ნ. სტ. → ≤3: კ-ატ.; 4: ს-ვ.; ≥5: ოპ.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-label">Denis 3-Column</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">Anterior + Middle + Posterior. ≥2 კ. = Unstable. Burst fx: Ant+Mid.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TRIAGE ═══════════════ -->
+<div id="triage" class="section">
+  <div class="card">
+    <div class="card-title">ტრიაჟის სახეები</div>
+    <div class="row row-2" style="gap:8px;">
+      <div class="mini-card" style="border-left:3px solid #27500A;">
+        <div style="font-size:13px;font-weight:500;color:#27500A;">Multiple Casualties</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">პ. რ. ≤ გ. რ. → ყვ. ვ., პ-ი — სიმ.-ის მ.</div>
+      </div>
+      <div class="mini-card" style="border-left:3px solid #791F1F;">
+        <div style="font-size:13px;font-weight:500;color:#791F1F;">Mass Casualties (MCI)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;">პ. რ. &gt; გ. რ. → ვ-ავ ვ-ს ნ-ლ. რ-ვ. სჭ.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ფ-ი კ-ბი <span class="badge badge-gray">START System</span></div>
+    <div class="triage-grid">
+      <div class="triage-item t-red"><div class="t-num">I</div><div class="t-name">Immediate</div><div class="t-desc">სასიც. საფ., გ-ა შეს. → სასწ. მ.</div></div>
+      <div class="triage-item t-yellow"><div class="t-num">II</div><div class="t-name">Delayed</div><div class="t-desc">მ-ი, 30–60 წ. შ. დ. → შ. დ.</div></div>
+      <div class="triage-item t-green"><div class="t-num">III</div><div class="t-name">Minor</div><div class="t-desc">"Walking wounded" → ბ.</div></div>
+      <div class="triage-item t-black"><div class="t-num">0</div><div class="t-name">Expectant/Dead</div><div class="t-desc">გ-ა ა. ე. ან უ. გ.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Field Triage Decision — ეტ-ბი</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ფ-ი:</strong> GCS &lt;14, SAP &lt;90, RR &lt;10 ან &gt;29 → Trauma Center</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>ა-ი:</strong> pen. trunk/head, flail chest, 2+ long bone fx, crush, burn &gt;10%, amput. → TC</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>მ-ი:</strong> გ-ბა, ქ. დ., სიბ. &gt;6მ, სიბ. &gt;30 კმ/სთ → TC განხ.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>სპ. პ.:</strong> ასაკი &gt;55, ბ-ბი, ანტ., ო-ობა &gt;20კვ., გ-ი → TC განხ.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">პ-ი ფ-ის პ-ები</div>
+    <ul class="list">
+      <li>Scene time minimization — "Load and Go"</li>
+      <li>Airway + სისხ-ა კ. + ი-ი</li>
+      <li>სტ-ს შ-ბა (MIST)</li>
+      <li>Closest appropriate facility → Trauma Center</li>
+      <li>Tranexamic acid: &lt;3 სთ-ში 1g IV</li>
+    </ul>
+  </div>
+</div>
 
 </div>
 
 <script>
-  // ნავიგაციის ჩიფსების ლოგიკა
-  const chips = document.querySelectorAll('.navchip');
-  const pages = document.querySelectorAll('.page');
-
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      // 1. მოხსენი active კლასი ყველას
-      chips.forEach(c => c.classList.remove('active'));
-      pages.forEach(p => p.classList.remove('active'));
-      
-      // 2. დაამატე active არჩეულს
-      chip.classList.add('active');
-      const targetId = chip.getAttribute('data-target');
-      document.getElementById(targetId).classList.add('active');
-      
-      // 3. სქროლი ჩიფსის ცენტრში მოსაქცევად
-      chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    });
-  });
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
 </script>
-</body>
-</html>
