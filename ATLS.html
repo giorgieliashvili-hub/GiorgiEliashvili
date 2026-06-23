@@ -44,6 +44,7 @@
 html, body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; }
 body { padding-bottom: calc(64px + var(--safe-bottom)); }
 
+/* ── TOP BAR ── */
 .topbar { position: sticky; top: 0; z-index: 50; background: rgba(11,12,14,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); padding-top: var(--safe-top); }
 .topbar-inner { padding: 12px 16px 8px; display: flex; align-items: center; gap: 10px; }
 .topbar-icon { font-size: 20px; }
@@ -51,12 +52,14 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .topbar-title { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
 .topbar-sub { font-size: 11px; color: var(--text-dim); margin-top: 1px; font-family: var(--mono); }
 
+/* ── NAV CHIPS ── */
 .navscroll { display: flex; gap: 6px; overflow-x: auto; padding: 8px 16px 10px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .navscroll::-webkit-scrollbar { display: none; }
 .navchip { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1px solid var(--line); background: var(--bg-card); color: var(--text-dim); font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: all 0.15s; }
 .navchip.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .navchip:hover:not(.active) { border-color: var(--line-bright); color: var(--text); }
 
+/* ── PAGES ── */
 .page { display: none; padding: 4px 16px 28px; }
 .page.active { display: block; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 20px 0 8px; }
@@ -64,10 +67,12 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .section-head h2 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-faint); }
 .section-head .tag { font-size: 10px; font-family: var(--mono); color: var(--text-faint); }
 
+/* ── CARDS ── */
 .card { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; margin-bottom: 10px; }
 .card-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; letter-spacing: -0.1px; line-height: 1.4; }
 .card-sub { font-size: 13px; color: var(--text-dim); margin-top: -6px; margin-bottom: 12px; line-height: 1.6; }
 
+/* ── BADGES ── */
 .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px; font-family: var(--mono); white-space: nowrap; }
 .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-line); }
 .badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-line); }
@@ -77,6 +82,7 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .badge-gray { background: var(--bg-input); color: var(--text-dim); border: 1px solid var(--line-bright); }
 .badge-teal { background: var(--teal-bg); color: var(--teal); border: 1px solid var(--teal-line); }
 
+/* ── GRIDS ── */
 .row { display: grid; gap: 8px; }
 .row-2 { grid-template-columns: repeat(2, 1fr); }
 .row-3 { grid-template-columns: repeat(3, 1fr); }
@@ -88,6 +94,7 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .mini-val { font-size: 14px; font-weight: 700; line-height: 1.4; }
 .mini-body { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; margin-top: 3px; }
 
+/* ── LISTS ── */
 .list { list-style: none; }
 .list li { font-size: 13.5px; color: var(--text-dim); padding: 7px 0; border-bottom: 1px solid var(--line); display: flex; gap: 9px; line-height: 1.6; }
 .list li:last-child { border-bottom: none; }
@@ -95,6 +102,7 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .list strong { color: var(--text); font-weight: 700; }
 .list em { color: var(--amber); font-style: normal; font-weight: 600; }
 
+/* ── ABCDE ── */
 .abcde { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 @media (max-width: 420px) { .abcde { grid-template-columns: repeat(3, 1fr); } }
 .abcde-item { background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--rs); padding: 10px 5px; text-align: center; }
@@ -102,6 +110,7 @@ body { padding-bottom: calc(64px + var(--safe-bottom)); }
 .abcde-word { font-size: 10px; color: var(--text-dim); margin-top: 2px; font-weight: 700; }
 .abcde-desc { font-size: 9.5px; color: var(--text-faint); margin-top: 4px; line-height: 1.4; }
 
+/* ── TABLE ── */
 .tablewrap { overflow-x: auto; border-radius: var(--rs); border: 1px solid var(--line); -webkit-overflow-scrolling: touch; }
 table.data { width: 100%; font-size: 12.5px; border-collapse: collapse; min-width: 500px; }
 table.data th { font-weight: 700; padding: 8px 10px; background: var(--bg-raised); text-align: left; border-bottom: 1px solid var(--line-bright); white-space: nowrap; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-dim); }
@@ -112,6 +121,7 @@ table.data tr:last-child td { border-bottom: none; }
 .c3 { color: #FF8A4D; font-weight: 700; }
 .c4 { color: var(--red); font-weight: 700; }
 
+/* ── ALERT BOXES ── */
 .box { border-left: 3px solid; padding: 10px 12px; border-radius: 0 var(--rs) var(--rs) 0; margin-bottom: 8px; }
 .box:last-child { margin-bottom: 0; }
 .box-title { font-size: 13.5px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; }
@@ -149,6 +159,7 @@ table.data tr:last-child td { border-bottom: none; }
 .teal-box .box-body { color: #6ABFB3; }
 .teal-box .box-tx { color: #BCEEE8; border-top-color: var(--teal-line); }
 
+/* ── STEPS ── */
 .step-row { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 11px; }
 .step-row:last-child { margin-bottom: 0; }
 .step-num { width: 23px; height: 23px; border-radius: 50%; background: var(--bg-input); border: 1px solid var(--line-bright); color: var(--text); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-family: var(--mono); }
@@ -158,6 +169,7 @@ table.data tr:last-child td { border-bottom: none; }
 .step-text { font-size: 13.5px; color: var(--text-dim); line-height: 1.65; padding-top: 1px; }
 .step-text strong { color: var(--text); font-weight: 700; }
 
+/* ── TRIAGE GRID ── */
 .triage-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .triage-item { border-radius: var(--rs); padding: 12px 10px; text-align: center; border: 1px solid; }
 .t-red { background: var(--red-bg); border-color: var(--red-line); }
@@ -174,10 +186,12 @@ table.data tr:last-child td { border-bottom: none; }
 .t-red .t-desc { color: #C49090; } .t-yellow .t-desc { color: #C9A870; }
 .t-green .t-desc { color: #7EB89A; } .t-black .t-desc { color: #70737A; }
 
+/* ── PITFALLS ── */
 .pitfall { margin-bottom: 8px; border-radius: var(--rs); overflow: hidden; border: 1px solid var(--line); }
 .pitfall-q { font-size: 12.5px; color: #FF9090; background: var(--red-bg); padding: 9px 11px; line-height: 1.55; }
 .pitfall-a { font-size: 12.5px; color: #6FE3AE; background: var(--green-bg); padding: 9px 11px; line-height: 1.55; border-top: 1px solid var(--line); }
 
+/* ── ROLE CARDS ── */
 .role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 @media (max-width: 380px) { .role-grid { grid-template-columns: 1fr; } }
 .role-card { border-radius: var(--rs); padding: 11px 12px; border: 1px solid; }
@@ -192,6 +206,7 @@ table.data tr:last-child td { border-bottom: none; }
 .role-tl .role-text { color: #7AAAC0; } .role-a .role-text { color: #78C4A0; }
 .role-pa .role-text { color: #C49090; } .role-m .role-text { color: #C9A870; }
 
+/* ── PHASE BLOCK ── */
 .phase-block { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 10px; overflow: hidden; }
 .phase-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--bg-raised); border-bottom: 1px solid var(--line); }
 .phase-time { font-size: 11px; font-family: var(--mono); font-weight: 700; color: var(--text-faint); background: var(--bg-input); border: 1px solid var(--line); border-radius: 5px; padding: 2px 8px; white-space: nowrap; }
@@ -211,15 +226,18 @@ table.data tr:last-child td { border-bottom: none; }
 .phase-row-speech { font-size: 11.5px; margin-top: 5px; font-style: italic; opacity: 0.85; }
 .sync-note { margin: 0 0 7px; font-size: 12px; color: var(--blue); background: var(--blue-bg); border: 1px solid var(--blue-line); border-radius: var(--rs); padding: 7px 10px; font-weight: 600; }
 
+/* ── BOTTOM TAB BAR ── */
 .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; background: rgba(13,15,17,0.97); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-top: 1px solid var(--line); display: flex; padding-bottom: var(--safe-bottom); }
 .tabbar-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px 6px; background: none; border: none; color: var(--text-faint); font-family: var(--sans); cursor: pointer; transition: color 0.15s; }
 .tabbar-btn.active { color: var(--text); }
 .tabbar-btn .ico { font-size: 18px; line-height: 1; }
 .tabbar-btn .lbl { font-size: 10px; font-weight: 700; }
 
+/* ── HIDDEN SECTIONS ── */
 .hidden-section { display: none; }
 .hidden-section.active { display: block; }
 
+/* ── UTILITY ── */
 .mt8 { margin-top: 8px; }
 .mt10 { margin-top: 10px; }
 .mt12 { margin-top: 12px; }
@@ -235,48 +253,52 @@ table.data tr:last-child td { border-bottom: none; }
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-inner">
     <div class="topbar-icon">🚑</div>
     <div class="topbar-text">
       <div class="topbar-title">ტრავმის სახელმძღვანელო</div>
-      <div class="topbar-sub">ATLS · პრეჰოსპიტალური · v2.0</div>
+      <div class="topbar-sub">ATLS · პრეჰოსპიტალური · v2.1</div>
     </div>
   </div>
 </div>
 
-<!-- ════ VIEW 1: REFERENCE ════ -->
+<!-- ════════════════════════════════════════
+     VIEW 1: REFERENCE
+     ════════════════════════════════════════ -->
 <div id="view-reference" class="hidden-section active">
 
   <div class="navscroll" id="navscroll">
     <button class="navchip active" data-target="overview">საფუძვლები</button>
-    <button class="navchip" data-target="airway">Airway</button>
-    <button class="navchip" data-target="shock">Shock</button>
-    <button class="navchip" data-target="thoracic">Thoracic</button>
-    <button class="navchip" data-target="abdominal">Abdominal</button>
-    <button class="navchip" data-target="head">Head / TBI</button>
-    <button class="navchip" data-target="spine">Spine / Neck</button>
-    <button class="navchip" data-target="triage">Triage</button>
+    <button class="navchip" data-target="airway">სასუნთქი გზა</button>
+    <button class="navchip" data-target="shock">შოკი</button>
+    <button class="navchip" data-target="thoracic">გულმკერდი</button>
+    <button class="navchip" data-target="abdominal">მუცელი</button>
+    <button class="navchip" data-target="head">თავის ტვინი</button>
+    <button class="navchip" data-target="spine">ხერხემალი/კისერი</button>
+    <button class="navchip" data-target="triage">ტრიაჟი</button>
   </div>
 
-  <!-- ══ OVERVIEW ══ -->
+  <!-- ══════════════ OVERVIEW ══════════════ -->
   <div id="overview" class="page active">
+
     <div class="section-head"><h2>ფილოსოფია</h2></div>
     <div class="card">
-      <div class="card-title">სიკვდილის სამი პიკი <span class="badge badge-blue">TRIMODAL</span></div>
-      <div class="card-sub">ტრავმული სიკვდილიანობა სამ განსხვავებულ ტალღად ნაწილდება. ეს განსაზღვრავს, რატომ არსებობს „ოქროს საათის" კონცეფცია და სად ჩაერევა პრეჰოსპიტალური გუნდი ყველაზე ეფექტურად.</div>
+      <div class="card-title">სიკვდილის სამი პიკი <span class="badge badge-blue">სამფაზიანი მოდელი</span></div>
+      <div class="card-sub">ტრავმული სიკვდილიანობა სამ განსხვავებულ ტალღად ნაწილდება დროში. ეს განსაზღვრავს, რატომ არსებობს „ოქროს საათის“ კონცეფცია და სად ჩაერევა პრეჰოსპიტალური (საავადმყოფოს გარეთ მოქმედი) გუნდი ყველაზე ეფექტურად.</div>
       <div class="row" style="gap:8px;">
         <div class="mini-card">
           <div class="mini-label">პიკი 1 — წამები–წუთები (დაზიანების მომენტში)</div>
-          <div class="mini-body">აორტის გაგლეჯა, გულის გაგლეჯა, ტვინის ღეროს / ზედა სასუნთქი გზების სრული გადაკეტვა. სიკვდილის ~50%. გადარჩენა პრაქტიკულად შეუძლებელია სამედიცინო ჩარევით — მხოლოდ პრევენცია (ქამარი, ჩაფხუტი) ამცირებს ამ კატეგორიას.</div>
+          <div class="mini-body">აორტის გასკდომა, გულის გასკდომა, თავის ღრუს ან ზედა სასუნთქი გზების სრული დაზიანება. სიკვდილიანობის დაახლოებით 50%. გადარჩენა პრაქტიკულად შეუძლებელია სამედიცინო ჩარევით — მხოლოდ პრევენცია (უსაფრთხოების ღვედი, ჩაფხუტი) ამცირებს ამ კატეგორიის სიკვდილიანობას.</div>
         </div>
         <div class="mini-card">
-          <div class="mini-label">პიკი 2 — წუთები–საათები — „ოქროს საათი" ⭐</div>
-          <div class="mini-body">სუბდურალური / ეპიდურალური ჰემატომა, ჰემოთორაქსი, პნევმოთორაქსი, ელენთის / ღვიძლის გასკდომა, მენჯის მოტეხილობა მასიური სისხლდენით. სიკვდილის ~30%. <strong>ეს არის ის ფანჯარა, სადაც სწორი ABCDE-ი, სისხლდენის კონტროლი და სწრაფი ტრანსპორტირება სიცოცხლეს გადარჩენს.</strong></div>
+          <div class="mini-label">პიკი 2 — წუთები–საათები — „ოქროს საათი“ ⭐</div>
+          <div class="mini-body">სუბდურალური ან ეპიდურალური სისხლჩაქცევა, სისხლი გულმკერდის ღრუში, ფილტვის ჩავარდნა, ელენთის ან ღვიძლის გასკდომა, მენჯის მოტეხილობა მასიური სისხლდენით. სიკვდილიანობის დაახლოებით 30%. <strong>ეს არის ის ფანჯარა, სადაც სწორად შესრულებული პირველადი შეფასება, სისხლდენის კონტროლი და სწრაფი ტრანსპორტირება სიცოცხლეს გადარჩენს.</strong></div>
         </div>
         <div class="mini-card">
           <div class="mini-label">პიკი 3 — დღეები–კვირები</div>
-          <div class="mini-body">სეფსისი, მრავლობითი ორგანოს უკმარისობა (MODS — Multiple Organ Dysfunction Syndrome), ARDS (მწვავე რესპირატორული დისტრეს-სინდრომი). სიკვდილის ~20%. ადგილზევე ირგვება — ჰიპოთერმია, არასწორი რეანიმაცია და დაგვიანებული ჰემოსტაზი ზრდის შემდგომი ორგანული უკმარისობის ალბათობას.</div>
+          <div class="mini-body">სისხლის გენერალიზებული ინფექცია (სეპსისი), მრავლობითი ორგანოს უკმარისობა, ფილტვის მწვავე დისტრესის სინდრომი. სიკვდილიანობის დაახლოებით 20%. ამ ფაზის რისკი ადგილზევე ისახება — სხეულის გადაცივება, არასწორად შერჩეული სითხური თერაპია და დაგვიანებული სისხლდენის შეჩერება ზრდის შემდგომი ორგანული უკმარისობის ალბათობას.</div>
         </div>
       </div>
     </div>
@@ -284,54 +306,53 @@ table.data tr:last-child td { border-bottom: none; }
     <div class="section-head"><h2>პირველადი შეფასება</h2></div>
     <div class="card">
       <div class="card-title">ABCDE — თანმიმდევრობა, რომელსაც არასდროს ვცვლით</div>
-      <div class="card-sub">ABCDE არ არის მხოლოდ დიაგნოსტიკური სია — ეს არის მკურნალობის თანმიმდევრობა. ყოველი ასო ერთდროულად შეფასებაა და ჩარევა. თუ A-ში პრობლემა გამოჩნდა, მკურნალობ მაშინვე; B-ზე გადადიხარ მხოლოდ A-ს მოგვარების შემდეგ.</div>
+      <div class="card-sub">ABCDE (Airway-Breathing-Circulation-Disability-Exposure — სასუნთქი გზა, სუნთქვა, სისხლის მიმოქცევა, ნევროლოგიური მდგომარეობა, სხეულის სრული გახდა) არ არის მხოლოდ შესაფასებელი სია — ეს არის მკურნალობის თანმიმდევრობა. ყოველი საფეხური ერთდროულად შეფასებაც არის და ჩარევაც. თუ პირველ საფეხურზე პრობლემა გამოვლინდა, მკურნალობ მაშინვე და მომდევნო საფეხურზე გადახდი მხოლოდ მის მოგვარების შემდეგ.</div>
       <div class="abcde">
-        <div class="abcde-item"><div class="abcde-letter">A</div><div class="abcde-word">Airway</div><div class="abcde-desc">სასუნთქი გზა + კისრის ხერხემლის დაცვა</div></div>
-        <div class="abcde-item"><div class="abcde-letter">B</div><div class="abcde-word">Breathing</div><div class="abcde-desc">სუნთქვა, ვენტილაცია, ოქსიგენაცია</div></div>
-        <div class="abcde-item"><div class="abcde-letter">C</div><div class="abcde-word">Circulation</div><div class="abcde-desc">სისხლდენის კონტროლი + პერფუზია</div></div>
-        <div class="abcde-item"><div class="abcde-letter">D</div><div class="abcde-word">Disability</div><div class="abcde-desc">GCS, გუგები, მოტორული ფუნქცია</div></div>
-        <div class="abcde-item"><div class="abcde-letter">E</div><div class="abcde-word">Exposure</div><div class="abcde-desc">სრული გახდა + ჰიპოთერმიის პრევენცია</div></div>
+        <div class="abcde-item"><div class="abcde-letter">A</div><div class="abcde-word">სასუნთქი გზა</div><div class="abcde-desc">სასუნთქი გზის გამტარობა + კისრის ხერხემლის დაცვა</div></div>
+        <div class="abcde-item"><div class="abcde-letter">B</div><div class="abcde-word">სუნთქვა</div><div class="abcde-desc">სუნთქვის მექანიკა, ვენტილაცია, ჟანგბადით გაჯერება</div></div>
+        <div class="abcde-item"><div class="abcde-letter">C</div><div class="abcde-word">სისხლის მიმოქცევა</div><div class="abcde-desc">სისხლდენის კონტროლი + ორგანოების სისხლით მომარაგება</div></div>
+        <div class="abcde-item"><div class="abcde-letter">D</div><div class="abcde-word">ნევროლოგია</div><div class="abcde-desc">გლასგოს კომის შკალა, გუგების რეაქცია, საავი ფუნქცია</div></div>
+        <div class="abcde-item"><div class="abcde-letter">E</div><div class="abcde-word">გახდა</div><div class="abcde-desc">სრული გახდა + სხეულის გადაცივების პრევენცია</div></div>
       </div>
       <div class="blue-box box mt10">
-        <div class="box-title">⚡ „Treat first what kills first"</div>
-        <div class="box-body">სასიცოცხლო საფრთხე, რომელიც პირველ რიგში კლავს, პირველ რიგში იმკურნალება. Primary Survey-ს დროს ადამიანი, რომელიც ვერ ინარჩუნებს სასუნთქ გზას, გარდაიცვლება 3–5 წუთში — სხვა ყველა შეფასება მეორეხარისხოვანია.</div>
+        <div class="box-title">⚡ „ჯერ ის მკურნალობა, რაც ჯერ კლავს“</div>
+        <div class="box-body">სასიცოცხლო საფრთხე, რომელიც პირველ რიგში კლავს, პირველ რიგში უნდა იმკურნალდეს. პირველადი შეფასების დროს ადამიანი, რომელსაც სასუნთქი გზის გამტარობა არ აქვს, გარდაიცვლება 3–5 წუთში — ყველა სხვა შეფასება ამის შემდეგ მნიშვნელობს.</div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">MIST — სტრუქტურირებული ჩაბარება სტაციონარში</div>
-      <div class="card-sub">30–45 წამიანი, სტრუქტურირებული ინფორმაციის გადაცემა — ხარვეზის გარეშე, ემოციების გარეშე, ფაქტებზე ორიენტირებული.</div>
+      <div class="card-sub">MIST (Mechanism-Injuries-Signs-Treatment) — 30–45 წამიანი, სტრუქტურირებული ინფორმაციის გადაცემა საავადმყოფოს გუნდისთვის — ხარვეზის გარეშე, ემოციების გარეშე, მხოლოდ ფაქტებზე ორიენტირებული.</div>
       <div class="row row-2">
-        <div class="mini-card"><div class="mini-label">M — Mechanism (მექანიზმი)</div><div class="mini-body">დაზიანების მექანიზმი (ავტოავარია, სიმაღლიდან ვარდნა, ჭრილობა, ცეცხლსასროლი) და ზუსტი დრო ინციდენტიდან</div></div>
-        <div class="mini-card"><div class="mini-label">I — Injuries (დაზიანებები)</div><div class="mini-body">ვიზუალურად ნაპოვნი + მექანიზმის გათვალისწინებით სავარაუდო დაზიანებები (კომპრომისის ოქმი)</div></div>
-        <div class="mini-card"><div class="mini-label">S — Signs (სასიცოცხლო ნიშნები)</div><div class="mini-body">პულსი, არტერიული წნევა, სუნთქვა, SpO₂ (ჟანგბადის სატურაცია), GCS — ბოლო გაზომვა + ტენდენცია</div></div>
-        <div class="mini-card"><div class="mini-label">T — Treatment (მკურნალობა)</div><div class="mini-body">ადგილზე და გზაში გაწეული მკურნალობა — ინტრავენური ხაზი, წამლები, ინტუბაცია, ტურნიკეტი, ინიექციები</div></div>
+        <div class="mini-card"><div class="mini-label">M — დაზიანების მექანიზმი</div><div class="mini-body">დაზიანების გამომწვევი მექანიზმი (ავტოავარია, სიმაღლიდან ჩავარდნა, დანის ჭრილობა, ცეცხლსასროლი ჭრილობა) და ზუსტი დრო ინციდენტიდან</div></div>
+        <div class="mini-card"><div class="mini-label">I — დაზიანებები</div><div class="mini-body">ვიზუალურად აღმოჩენილი დაზიანებები და მექანიზმის გათვალისწინებით სავარაუდო, მაგრამ ჯერ არნახული დაზიანებები</div></div>
+        <div class="mini-card"><div class="mini-label">S — სასიცოცხლო ნიშნები</div><div class="mini-body">პულსი, არტერიული წნევა, სუნთქვის სიხშირე, ჟანგბადით გაჯერება, გლასგოს კომის შკალა — ბოლო გაზომვა და მისი ტენდენცია დროში</div></div>
+        <div class="mini-card"><div class="mini-label">T — გაწეული მკურნალობა</div><div class="mini-body">ადგილზე და გზაში გაწეული მკურნალობა — ვენური წვდომა, შეყვანილი მედიკამენტები, ინტუბაცია, ტურნიკეტი, ჩატარებული ინექციები</div></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">AMPLE — ფოკუსირებული ანამნეზი</div>
       <ul class="list">
-        <li><strong>A — Allergies (ალერგიები)</strong> — ალერგიები მედიკამენტებზე, ლატექსზე, საკვებზე</li>
-        <li><strong>M — Medications (მედიკამენტები)</strong> — მუდმივად მიღებული პრეპარატები; განსაკუთრებით ანტიკოაგულანტები (ვარფარინი, Apixaban), ბეტა-ბლოკატორები (ნიღბავენ ტაქიკარდიას), კორტიკოსტეროიდები</li>
-        <li><strong>P — Past illness / Pregnancy (წარსული დაავადებები / ორსულობა)</strong> — ქრონიკული დაავადებები, გადატანილი ოპერაციები; ორსულობა სამშობიარო ასაკის ქალებში</li>
-        <li><strong>L — Last meal (ბოლო კვება)</strong> — ბოლო საკვების / სითხის მიღება; ტრავმის პაციენტი ყოველთვის ითვლება „სავსე კუჭის" მქონედ</li>
-        <li><strong>E — Events / Environment (გარემოება)</strong> — ზუსტი გარემოება: სიჩქარე, სიმაღლე, ტემპერატურული ექსპოზიცია, ნარკოტიკები / ალკოჰოლი</li>
+        <li><strong>A — ალერგიები</strong> — ალერგიული რეაქციები მედიკამენტებზე, ლატექსზე, საკვადზე</li>
+        <li><strong>M — მუდმივად მიღებული მედიკამენტები</strong> — განსაკუთრებით სისხლის გასათხელებელი პრეპარატები (ვარფარინი, აპიქსაბანი), ბეტა-ბლოკატორები (ნიღბავენ გულის გახშირებულ ცემას, რაც ართულებს შოკის ადრეულ ამოცნობას), კორტიკოსტეროიდები</li>
+        <li><strong>P — გადატანილი დაავადებები / ორსულობა</strong> — ქრონიკული დაავადებები, გადატანილი ოპერაციები; ორსულობის ეჭვი ნაყოფშობიარობის ასაკის ყველა ქალში</li>
+        <li><strong>L — ბოლო საკვები</strong> — ბოლო საკვების ან სითხის მიღების დრო; ტრავმის ნებისმიერი პაციენტი ყოველთვის ითვლება „სავსე კუჭის“ მქონედ, რადგან ნარკოზის დროს ღებინების ასპირაციის რისკი იზრდება</li>
+        <li><strong>E — ინციდენტისა და გარემოს დეტალები</strong> — ზუსტი გარემოება: სატრანსპორტო საშუალების სიჩქარე, ვარდნის სიმაღლე, ცივ ან ცხელ გარემოში ხანგრძლივობა, ნარკოტიკული ან ალკოჰოლური ინტოქსიკაცია</li>
       </ul>
     </div>
+
   </div><!-- /overview -->
 
-  <!-- ══ AIRWAY ══ -->
+  <!-- ══════════════ AIRWAY ══════════════ -->
   <div id="airway" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
       <div class="card-title">სასუნთქი გზის ობსტრუქციის მექანიზმები</div>
       <div class="purple-box box">
         <div class="box-title">რატომ ხდება ობსტრუქცია ტრავმაში?</div>
-        <div class="box-body">ტრავმა იწვევს სასუნთქი გზის კომპრომისს სამი ძირითადი გზით:<br><br>
-        (1) <strong>მექანიკური ობსტრუქცია</strong> — სისხლი, ნახველი, ჩამოვარდნილი ხბო / ენა, უცხო სხეული — გამოიყვება მექანიზმიდან.<br><br>
-        (2) <strong>ანატომიური დეფორმაცია</strong> — სახის, ყბის, ხორხის ან კისრის ჰემატომა / მოტეხილობა ახდენს ტრაქეის გადაადგილებას ან ჭყლეტს ლუმენს.<br><br>
-        (3) <strong>ნეიროლოგიური კომპრომისი</strong> — GCS-ის დაქვეითება TBI-ს (თავის ტვინის ტრავმა) ან შოკის გამო ახდენს ხბო-ხორხის რეფლექსის ჩახშვას, ენა ეშვება, ობსტრუქცია ვითარდება.</div>
+        <div class="box-body">ტრავმა იწვევს სასუნთქი გზის გადაკეტვას სამი ძირითადი გზით: (1) <strong>მექანიკური დაგუმვა</strong> — სისხლი, ნატეხი კბილი, ჩავარდნილი ენა ან უცხო სხეული ხდის ხელისშემშლელ ბარიერს სასუნთქ გზაში; (2) <strong>ანატომიური დეფორმაცია</strong> — სახის, ქვედა ან ზედა ყბის, ხორხის ან კისრის სისხლჩაქცევა ან მოტეხილობა ახდენს სასუნთქი გზის ლუმენის გადაადგილებას ან შევსებას; (3) <strong>ნერვული სისტემის დათრგუნვა</strong> — გლასგოს კომის შკალის დაცემა, თავის ტვინის ტრავმის ან შოკის გამო, ახდენს ხახა-ხორხის რეფლექსების დათრგუნვას, ენა ეშვება უკან და ხურავს სასუნთქ გზას.</div>
       </div>
     </div>
 
@@ -340,301 +361,307 @@ table.data tr:last-child td { border-bottom: none; }
       <div class="card-title">ობსტრუქციის ნიშნები</div>
       <div class="row row-2">
         <div class="mini-card">
-          <div class="mini-label">სუბიექტური ნიშნები</div>
-          <div class="mini-body">სტრიდორი (ხრინწიანი ხმა ინსპირაციაზე), ხმის ჩახლეჩილობა ან სიჩუმე, დისფონია (ხმის ხარისხის ცვლილება), „ვერ ვსუნთქავ" — პაციენტის ჩივილი</div>
+          <div class="mini-label">სუბიექტური</div>
+          <div class="mini-body">სტრიდორი (ხრინწიანი ხმა ჩასუნთქვისას), ხმის ჩახლეჭილობა ან სრული უხმობა, ხმის ხარისხის ცვლილება, „სუნთქვის გასტუმრება“ — პაციენტი ვერ ახერხებს ჩასუნთქული ჰაერის გამოთქმას</div>
         </div>
         <div class="mini-card">
-          <div class="mini-label">ობიექტური ნიშნები</div>
-          <div class="mini-body">აგზნება ან ლეთარგია (ჰიპოქსიის ნიშნები), ციანოზი, ტრაქეის გვერდიდან გადაადგილება, GCS-ის დაქვეითება, ინტერკოსტალური / სუპრაკლავიკულარული რეტრაქცია, დამატებითი კუნთების სუნთქვაში ჩართვა</div>
+          <div class="mini-label">ობიექტური</div>
+          <div class="mini-body">აგზნება ან ლეთარგია (ჰიპოქსიის — ჟანგბადის უკმარისობის ნიშნები), ციანოზი (კანის ლურჯად შეფერადება), ხორხის გვერდულად გადაადგილება, გლასგოს კომის შკალის დაცემა, გულმკერდის შუაშუბლეთის ან ნეკნთაშუა სივრცეების ჩაცვენა სუნთქვისას, დამატებითი სასუნთქი კუნთების ჩართვა</div>
         </div>
       </div>
       <div class="injury-box box mt10">
         <div class="box-title">⚠️ ოქროს წესი</div>
-        <div class="box-body">სასუნთქი გზის ნებისმიერი კომპრომისი = მოქმედება დაუყოვნებლივ. ადრეული, პროაქტიული ინტუბაცია სიტუაციის გაუარესებამდე ყოველთვის სჯობს გადაუდებელ ინტუბაციას კოლაფსის მომენტში — მაშინ ანატომია უარესია, დრო არ არის, სტრესი მაღლაა.</div>
+        <div class="box-body">სასუნთქი გზის ნებისმიერი დაგუმვა ნიშნავს მოქმედებას ახლავე. ადრეული, პროაქტიული ინტუბაცია — სასუნთქი მილის ენდოტრაქეული ტუბუსით უზრუნველყოფა — სიტუაციის გაუარესებამდე, ყოველთვის სჯობს გადაუდებელ ინტუბაციას კოლაფსის მომენტში, როცა ანატომია უარესია, დრო არ არის და სტრესი მაღალია.</div>
       </div>
     </div>
 
     <div class="section-head"><h2>მართვის ეტაპები</h2></div>
     <div class="card">
       <div class="card-title">საფეხურები — მარტივიდან რთულამდე</div>
-      <div class="step-row"><div class="step-num ok">1</div><div class="step-text"><strong>Chin-lift / Jaw-thrust.</strong> Chin-lift — ნებისმიერ პაციენტში, სადაც კისრის ხერხემლის ტრავმა გამორიცხულია. Jaw-thrust — ტრავმის ეჭვისას; ქვედა ყბა წინ იწევს, ენა სასუნთქ გზას ათავისუფლებს კისრის მოუქნელობის გარეშე.</div></div>
-      <div class="step-row"><div class="step-num ok">2</div><div class="step-text"><strong>ასპირაცია (Suction).</strong> სისხლი, ნერწყვი, ღებინება, უცხო სხეული ამოვაცილოთ ხელით ან ასპირატორით. Yankauer-ის ნაკრები ოპტიმალურია სქელი შიგთავსისთვის. ასპირაციამდე ვიყენებთ ლარინგოსკოპს ხახის ვიზუალიზაციისთვის.</div></div>
-      <div class="step-row"><div class="step-num ok">3</div><div class="step-text"><strong>Oropharyngeal Airway (OPA) — პირხახიანი სასუნთქი მილი.</strong> გამოვიყენოთ მხოლოდ პაციენტში, რომელსაც Gag Reflex (ყლაპვის რეფლექსი) არ აქვს — სხვა შემთხვევაში გამოიწვევს ლარინგოსპაზმს ან ღებინებას. ზომა: პირის კუთხიდან ყურის ბიბილომდე. <strong>Nasopharyngeal Airway (NPA) — ცხვირხახიანი სასუნთქი მილი</strong> — Gag Reflex-ის შენარჩუნებისას; <span class="red">უკუჩვენება</span> ქალის ძვლის ბაზის მოტეხილობის ეჭვისას.</div></div>
-      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>Bag-Mask Ventilation (BMV) — პარკი-ნიღბიანი ვენტილაცია.</strong> ორი ადამიანის ტექნიკა — ერთი ორივე ხელით ნიღაბს ჭერავს E-C grip-ით, მეორე პარკს ფრთხილად აჭყლეტს (400–600 მლ). ჟანგბადი ≥10–15 ლ/წთ, რეზერვუარული ნიღბი → FiO₂ ≈ 100%. ვაკვირდებით გულმკერდის ამაღლებას.</div></div>
-      <div class="step-row"><div class="step-num warn">5</div><div class="step-text"><strong>RSI — Rapid Sequence Intubation (სწრაფი თანმიმდევრული ინტუბაცია).</strong> ოქროს სტანდარტი განსაზღვრული სასუნთქი გზისთვის. ვიდეოლარინგოსკოპია სასურველია კისრის ხერხემლის შეზღუდვისას. ტუბუსი Carina-სგან 2–3 სმ ზემოთ — ვამოწმებთ კაპნოგრაფიით (ETCO₂), აუსკულტაციით და გულმკერდის რენტგენით.</div></div>
-      <div class="step-row"><div class="step-num crit">6</div><div class="step-text"><strong>ქირურგიული სასუნთქი გზა — Cricothyroidotomy (კრიკოთიროიდოტომია).</strong> CICO: „Cannot Intubate, Cannot Oxygenate" — ინტუბაციის ჩავარდნა + BMV-ით ვენტილაციის შეუძლებლობა. ყოველი RSI-ის წინ „Double Setup" — ქირურგიული ნაკრები მზადყოფნაში.</div></div>
+      <div class="step-row"><div class="step-num ok">1</div><div class="step-text"><strong>ნიკაპის ამაღლება (Chin-lift) / ქვედა ყბის წაწევა (Jaw-thrust).</strong> ნიკაპის ამაღლება — ნებისმიერ პაციენტში, სადაც კისრის ხერხემლის დაზიანება გამორიცხულია. ქვედა ყბის წაწევა — ტრავმის ეჭვისას, რადგან თავის გადახრა საჭირო არ არის — ქვედა ყბა წინ იწევა, ენა სასუნთქ გზას ათავისუფლებს კისრის გადახრის გარეშე.</div></div>
+      <div class="step-row"><div class="step-num ok">2</div><div class="step-text"><strong>გამოწოვა (Suction/ასპირაცია).</strong> სისხლი, ნერწყვი, ღებინებითი მასები, უცხო სხეული უნდა ამოვაცილოთ ხელით ან ასპირატორით. ხისტი, მსხვილხვრელიანი ასპირაციული ბუჩკი (Yankauer) ოპტიმალურია სქელი შიგთავსისთვის. ასპირაციამდე ხახაში ლარინგოსკოპს (ხახის ვიზუალიზაციის ხელსაწყოს) ვუყურებთ.</div></div>
+      <div class="step-row"><div class="step-num ok">3</div><div class="step-text"><strong>პირღრუს სასუნთქი მილი (ოროფარინგეალური საშუალება).</strong> გამოვიყენოთ მხოლოდ პაციენტში, რომელსაც ხახის რეფლექსი არ აქვს — სხვა შემთხვევაში გამოიწვევს ხორხის სპაზმს ან ღებინებას. ზომის განსაზღვრა: პირის კუთხიდან ყურის ბიბილომდე. <strong>ცხვირღრუს სასუნთქი მილი (ნაზოფარინგეალური საშუალება)</strong> — ხახის რეფლექსის შენარჩუნებისას ვიყენებთ; <span class="red">უკუჩვენებაა</span> თავის ქალას ფუძის მოტეხილობის ეჭვისას.</div></div>
+      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>პირბადით ვენტილაციის ბუშტი (ბაგ-ვალვ-მასკი, შემოკლებით BVM).</strong> ორი ადამიანის ტექნიკა — ერთი ორივე ხელით ნიღაბს ჭერავს „E-C“ ხელის ხელჭიდით (სახელწოდება ხელის ფორმის გამო), მეორე ბუშტს ფრთხილად აჭყლეტს (400–600 მილილიტრი მოცულობით). ჟანგბადი ≥10–15 ლიტრი წუთში, რეზერვუარული ნიღაბი → ჩასუნთქული ჟანგბადის კონცენტრაცია ≈ 100%-ს. ვაკვირდებით გულმკერდის ამაღლებას.</div></div>
+      <div class="step-row"><div class="step-num warn">5</div><div class="step-text"><strong>სასწრაფო თანმიმდევრობით ინტუბაცია (Rapid Sequence Intubation, შემოკლებით RSI).</strong> ოქროს სტანდარტია განსაზღვრული სასუნთქი გზისთვის. ვიდეოლარინგოსკოპია (ეკრანზე გამოსახვის ხელსაწყოთი ხორხის დათვალიერება) სასურველია კისრის ხერხემლის შეზღუდულობისას. ტუბუსის ბოლო ხორხის ღრუს ძირზე (კარინაზე) უნდა იყოს 2–3 სანტიმეტრით ზემოთ — ვამოწმებთ ამოსუნთქული ნახშირორჟანგის გაზომვით (კაპნოგრაფიით), მოსმენით და გულმკერდის რენტგენით.</div></div>
+      <div class="step-row"><div class="step-num crit">6</div><div class="step-text"><strong>ქირურგიული სასუნთქი გზა — ხორხის ღვედისებრი მემბრანის გახსნა (კრიკოთირეოიდოტომია).</strong> ჩვენებაა „არ ხერხდება ინტუბაცია, არ ხერხდება ჟანგბადით უზრუნველყოფა“ — ანუ ინტუბაციის წამოცდენა და პირბადით ვენტილაციის ბუშტითაც ვენტილაცია შეუძლებელია. ყოველი პაციენტის ინტუბაციის წინ უნდა იყოს მომზადებული „ორმაგი მზადყოფნა“ — ქირურგიული ნაკრები ხელშესახებ მანძილზე.</div></div>
     </div>
 
-    <div class="section-head"><h2>RSI — Rapid Sequence Intubation</h2></div>
+    <div class="section-head"><h2>სასწრაფო თანმიმდევრობით ინტუბაცია — დეტალურად</h2></div>
     <div class="card">
-      <div class="card-title">RSI 7P — მომზადების პროტოკოლი</div>
-      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Preparation (მომზადება)</strong> — მოწყობილობები (ლარინგოსკოპი, ტუბუსები ×2, სტილეტი, BMV, ასპირატორი, ენდოტრაქეული ტუბუსი გასახევი), წამლები შპრიცებში, გუნდის როლების განაწილება, Double Setup.</div></div>
-      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Pre-oxygenation (წინასწარი ჟანგბადით გამდიდრება)</strong> — 100% ჟანგბადი 3 წუთი (ან 8 ღრმა სუნთქვა), რათა აზოტი ამოვაგდოთ ფილტვის ფუნქციური ნარჩენი მოცულობიდან. ეს გაგრძელებს უსაფრთხო აპნოეს ფანჯარას.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Pretreatment (წინარმკურნალობა)</strong> — Lidocaine 1.5 მგ/კგ ინტრავენურად, თუ TBI ეჭვია — ამცირებს ინტრაკრანიალური წნევის (ICP) მომატებულ პასუხს ლარინგოსკოპიაზე. ატროპინი ბავშვებში (&lt;5 წ.) ბრადიკარდიის პრევენციისთვის.</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Paralysis with Induction (დამბლა + ინდუქცია)</strong> — სედატივი + პარალიზანტი ერთ სხვაობაში, სწრაფად. სედატივი ჯერ, პარალიზანტი 30 წამში. Succinylcholine ან Rocuronium (იხ. ქვემოთ).</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Positioning (პოზიციონირება)</strong> — „Sniffing position" (ყელი ქვეშ ბალიში): თავი ოდნავ გადახრილი, კისერი წინ — ოპტიმალური ლარინგოსკოპის ღერძი. ტრავმაში — ნეიტრალური პოზა + inline სტაბილიზაცია.</div></div>
-      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Placement (ტუბუსის ჩასმა)</strong> — ლარინგოსკოპი, ხმოვანი ტვინების ვიზუალიზაცია, ტუბუსი. BURP მანევრი ხედის გასაუმჯობესებლად (Backward-Upward-Rightward Pressure ხორხზე). პირველი მცდელობა ≤30 წმ.</div></div>
-      <div class="step-row"><div class="step-num">7</div><div class="step-text"><strong>Post-intubation care (ინტუბაციის შემდგომი მოვლა)</strong> — კაპნოგრაფიით დადასტურება (ETCO₂ &gt;35 mmHg + ტალღოვანი მრუდი), ბუშტუკის გაბერება, ტუბუსის ფიქსაცია, გამაგრძელებელი სედაცია / ანალგეზია, ვენტილატორის პარამეტრები.</div></div>
+      <div class="card-title">შვიდსაფეხურიანი მომზადების პროტოკოლი</div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>მომზადება.</strong> მოწყობილობები (ხორხის სანახავი ხელსაწყო, ტუბუსები ორ ზომაში, ლითონის გამმართველი ღერო, პირბადით ვენტილაციის ბუშტი, ასპირატორი, ენდოტრაქეული ტუბუსის ფიქსატორი), მედიკამენტები შესაყვან შლირცებში გამზადებული, გუნდის როლების განაწილება, ქირურგიული გზის ნაკრები გაშლილი.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>წინასწარი ჟანგბადით გაჯერება.</strong> 100%-იანი ჟანგბადი 3 წუთის განმავლობაში (ან 8 ღრმა ჩასუნთქვა), რათა ფილტვის ფუნქციური ნარჩენი მოცულობიდან ამოვდინოთ აზოტი. ეს ზრდის უსაფრთხო სუნთქვის შეჩერების ფანჯარას ინტუბაციის დროს.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>წინასწარი მედიკამენტური მომზადება.</strong> ლიდოკაინი 1.5 მგ/კგ ვენაში, თუ თავის ტვინის ტრავმის ეჭვია — ამცირებს ლარინგოსკოპიაზე (ხორხის დათვალიერებაზე) თავის ტვინში წნევის მომატებულ პასუხს. ატროპინი ბავშვებში (5 წლამდე) გულის შემცირებული ცემის (ბრადიკარდიის) პრევენციისთვის.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>დანამცეცებლობა ინდუქციით.</strong> დამამშვიდებელი + კუნთის დამნამცეცებელი მედიკამენტი ერთმანეთის მიყოლებით, სწრაფად — დამამშვიდებელი ჯერ, კუნთის დამნამცეცებელი 30 წამში. სუქცინილქოლინი ან როკურონიუმი (იხილეთ ქვემოთ).</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>პოზიციონირება.</strong> „დამყნობის პოზიცია“ (კისრის ქვეშ ბალიში): თავი ოდნავ გადახრილი, კისერი წინ გადმოწეული — ეს ქმნის ხორხის სანახავი ხელსაწყოს ოპტიმალურ ღერძს. ტრავმის შემთხვევაში — ნეიტრალური პოზა + ხერხემლის ღერძული ფიქსაცია.</div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>ტუბუსის შეყვანა.</strong> ხორხის სანახავი ხელსაწყოთი ხორხის ღეჭების ვიზუალიზაცია, შემდეგ ტუბუსის შეყვანა. გარეგანი ხორხზე დაწოლის მანევრი (უკან-ზევით-მარჯვნივ მიმართულებით) ხედის გასაუმჯობესებლად. პირველი მცდელობა უნდა გაგრძელდეს არასცილოს 30 წამს.</div></div>
+      <div class="step-row"><div class="step-num">7</div><div class="step-text"><strong>ინტუბაციის შემდგომი მოვლა.</strong> ამოსუნთქული ნახშირორჟანგის გაზომვით დადასტურება (35 მმ ვწყ. სვ.-ზე მეტი + ტალღოვანი მრუდი), ბუშტუკის გაბერვა, ტუბუსის ფიქსაცია, გამაგრძელებელი დამამშვიდებელი/გამაყუჩებელი თერაპია, სუნთქვის აპარატის პარამეტრების დარეგულირება.</div></div>
     </div>
 
     <div class="card">
-      <div class="card-title">RSI წამლები</div>
+      <div class="card-title">ინტუბაციის მედიკამენტები</div>
       <div class="row row-2">
         <div class="mini-card">
-          <div class="mini-label">სედაცია / ინდუქცია</div>
-          <div class="mini-body"><span class="fw mono">Ketamine (კეტამინი)</span> 1–2 მგ/კგ ინტრავენურად — საუკეთესო ჰემოდინამიკურად არასტაბილური პაციენტისთვის; ზრდის კატექოლამინებს, ინარჩუნებს სისტოლურ წნევას. ბრონქოდილატატორული ეფექტი.<br><br><span class="fw mono">Etomidate (ეტომიდატი)</span> 0.3 მგ/კგ ინტრავენურად — ჰემოდინამიკურად ნეიტრალური; ერთჯერადი დოზაც კი თრგუნავს თირკმელზედა ჯირკვლის ფუნქციას (კორტიზოლი ↓).<br><br><span class="fw mono">Propofol (პროპოფოლი)</span> 1.5–2 მგ/კგ ინტრავენურად — სტაბილური პაციენტი; ჰიპოვოლემიაში ჰიპოტენზიის გამო ვიყენებთ სიფრთხილით ან საერთოდ ვარიდებთ.</div>
+          <div class="mini-label">დამამშვიდებელი / ინდუქციური საშუალება</div>
+          <div class="mini-body"><span class="fw mono">კეტამინი</span> 1–2 მგ/კგ ვენაში — საუკეთესო ჰემოდინამიკურად არასტაბილური (დაბალწნევიანი) პაციენტისთვის; ზრდის სტრესის ჰორმონების დონეს, ინარჩუნებს არტერიულ წნევას. ბრონქგამაფართოებელი ეფექტი. <br><br><span class="fw mono">ეტომიდატი</span> 0.3 მგ/კგ ვენაში — ჰემოდინამიკურად ნეიტრალური; ერთჯერადი დოზაც ათრგუნებს თირკმელზედა ჯირკვლის კორტიზოლის გამომუშავებას.<br><br><span class="fw mono">პროპოფოლი</span> 1.5–2 მგ/კგ ვენაში — ჰემოდინამიკურად სტაბილური პაციენტისთვის; ჰიპოტენზიის (წნევის დაცემის) რისკის გამო, სითხის დანაკლისის შემთხვევაში ვიყენებთ სიფრთხილით ან ვერიდებით.</div>
         </div>
         <div class="mini-card">
-          <div class="mini-label">პარალიზანტი (კუნთდამბლავი)</div>
-          <div class="mini-body"><span class="fw mono">Succinylcholine (სუქცინილქოლინი)</span> 1.5 მგ/კგ ინტრავენურად — სწრაფი (45–60 წმ), მოკლე მოქმედება (6–10 წთ). <span class="red">უკუჩვენება:</span> ჰიპერკალიემია, დამწვრობა &gt;24სთ, Crush injury (განლეჩხვის ტრავმა), ნეირომუსკულური დაავადება, ხანგრძლივი იმობილიზაცია.<br><br><span class="fw mono">Rocuronium (როკურონიუმი)</span> 1.2 მგ/კგ ინტრავენურად — ალტერნატივა Succinylcholine-ის უკუჩვენებებისას; მოქმედება 60 წმ-ში; ხანგრძლივობა 45–60 წთ. Sugammadex-ით შებრუნება შესაძლებელია.</div>
+          <div class="mini-label">კუნთის დამნამცეცებელი</div>
+          <div class="mini-body"><span class="fw mono">სუქცინილქოლინი</span> 1.5 მგ/კგ ვენაში — სწრაფი დაწყება (45–60 წამი), მოკლე ხანგრძლივობა (6–10 წუთი). <span class="red">უკუჩვენება:</span> სისხლში კალიუმის მომატება, 24 საათზე მეტი ხნის წინ მიღებული დამწვრობა, ჭყლეტითი დაზიანება, ნერვ-კუნთოვანი დაავადება, ხანგრძლივი იძულებითი უმოძრაობა.<br><br><span class="fw mono">როკურონიუმი</span> 1.2 მგ/კგ ვენაში — ალტერნატივა, როცა სუქცინილქოლინი უკუჩვენებულია; დაწყება 60 წამში; ხანგრძლივობა 45–60 წუთი. სუგამადექსით შესაძლებელია ეფექტის გაუვალდებულობა.</div>
         </div>
       </div>
       <div class="warn-box box mt10">
-        <div class="box-title">LEMON — რთული ინტუბაციის სკრინინგი</div>
-        <div class="box-body"><strong>L</strong>ook (დათვალიერება): სახის ანომალია, მიკროგნათია, დიდი ენა, კბილების პრობლემა<br><strong>E</strong>valuate 3-3-2 (შეაფასე): პირის გახსნა ≥3 თითი; ნიკაპი–ყელის ძირი ≥3 თითი; ხორხი–ენის ძირი ≥2 თითი<br><strong>M</strong>allampati: კლასი III–IV = სავარაუდოდ რთული ინტუბაცია<br><strong>O</strong>bstruction (ობსტრუქცია): ეპიგლოტიტი, ჰემატომა, შეშუპება<br><strong>N</strong>eck mobility (კისრის მოძრაობა): კისრის შეზღუდული მოქნილობა, კისრის საყელო (C-collar)</div>
+        <div class="box-title">რთული ინტუბაციის წინასწარი სკრინინგი — ხუთწერტილოვანი შემოწმება</div>
+        <div class="box-body"><strong>გარეგნული შეფასება:</strong> სახის ანომალია, ქვედა ყბის სიმცირე, დიდი ენა, კბილების პრობლემა<br><strong>3-3-2 წესი:</strong> პირის გახსნა ≥3 თითის სიგანე; ნიკაპი–ყელის ძირამდე მანძილი ≥3 თითის სიგანე; ხორხი–ენის ძირამდე მანძილი ≥2 თითის სიგანე<br><strong>მელამპატის კლასი:</strong> კლასი III–IV = სავარაუდოდ რთული ინტუბაცია<br><strong>დაგუმვის ნიშნები:</strong> ხორხის ანთება, სისხლჩაქცევა, შეშუპება<br><strong>კისრის მოძრაობა:</strong> კისრის შეზღუდული მოქნილობა, ხერხემლის საყელურის გამო</div>
       </div>
     </div>
 
     <div class="section-head"><h2>ქირურგიული სასუნთქი გზა</h2></div>
     <div class="card">
-      <div class="card-title">Cricothyroidotomy — ჩვენება და ტექნიკა</div>
+      <div class="card-title">კრიკოთირეოიდოტომია — ჩვენება და ტექნიკა</div>
       <div class="injury-box box">
-        <div class="box-title">ჩვენება: CICO — „Cannot Intubate, Cannot Oxygenate"</div>
-        <div class="box-body">ინტუბაციის ≥3 მცდელობა ჩავარდა + BMV ვენტილაცია შეუძლებელია. SpO₂ ეცემა. ეს სამედიცინო გადაუდებელი მდგომარეობაა — ყოველ წამში ტვინი ჰიპოქსიურია. Cricothyroidotomy ერთადერთი გამოსავალია.</div>
+        <div class="box-title">ჩვენება: „არ ხერხდება ინტუბაცია, არ ხერხდება ჟანგბადით უზრუნველყოფა“</div>
+        <div class="box-body">ინტუბაციის სამი ან მეტი მცდელობა ჩავარდა და პირბადით ვენტილაცია შეუძლებელია. ჟანგბადით გაჯერება ეცემა. ეს სამედიცინო გადაუდებელი მდგომარეობაა — ყოველ წამში ტვინი ჟანგბადდეფიციტშია. ხორხის ღვედისებრი მემბრანის გახსნა ერთადერთი გამოსავალია.</div>
       </div>
-      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>ლოკალიზაცია.</strong> Cricothyroid Membrane (კრიკოთიროიდული მემბრანა) — Thyroid ხრტილის ქვედა კიდე და Cricoid ხრტილის ზედა კიდე შორის. ვიპოვით პალპაციით (Laryngeal Handshake მანევრი).</div></div>
-      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>კანის ჭრა.</strong> სწორი, განივი ჭრა კანში მემბრანის დონეზე — ~4 სმ სიგრძის. ერთ მოძრაობაში, ფრთხილად — ახლომდებარე სისხლძარღვების გამო.</div></div>
-      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>მემბრანის გახსნა.</strong> Hemostat ან ტრაქეალური დილატატორი ჩაიდება ხვრელში, 90°-ით ფართოვდება. ტრაქეის ლუმენი ვიზუალიზდება.</div></div>
-      <div class="step-row"><div class="step-num crit">4</div><div class="step-text"><strong>ტუბუსის ჩასმა.</strong> Cuffed ენდოტრაქეული ტუბუსი (6.0–7.0) ან ტრაქეოსტომური ტუბუსი — დისტალურად, ბუშტუკი გაიბერება. ვენტილაცია დაიწყება, ETCO₂ გადამოწმება.</div></div>
+      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>ადგილის დადგენა.</strong> ხორხის ღვედისებრი მემბრანა მდებარეობს ფარისებრი ხრტილის ქვედა კიდესა და რკალისებრი ხრტილის ზედა კიდეს შორის. ვადგენთ პალპაციით (ხორხის „ხელის ჩამორთმევის“ მანევრით — თითების ჩამოსმით ზემოდან ქვემოთ).</div></div>
+      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>კანის გადაჭრა.</strong> სწორი, განივი ჭდევა კანში მემბრანის დონეზე — დაახლოებით 4 სანტიმეტრი სიგრძით. ერთი მოძრაობით, ფრთხილად — ახლომდებარე სისხლძარღვების გათვალისწინებით.</div></div>
+      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>მემბრანის გახსნა.</strong> სისხლის შემაჩერებელი მაშა ან ტრაქეის გამფართოებელი ხელსაწყო ჩაიდება ხვრელში და 90 გრადუსით ბრუნდება. ტრაქეის (სასუნთქი მილის) ღრუ ვიზუალურად ჩაიდება.</div></div>
+      <div class="step-row"><div class="step-num crit">4</div><div class="step-text"><strong>ტუბუსის შეყვანა.</strong> ბუშტუკიანი ენდოტრაქეული ტუბუსი (6.0–7.0 ზომით) ან ტრაქეოსტომური ტუბუსი — დისტალურად ჩაიდება, ბუშტუკი გაიბერება. ვენტილაცია იწყება, ხდება ამოსუნთქული ნახშირორჟანგის გადამოწმება.</div></div>
       <div class="warn-box box mt10">
-        <div class="box-title">პედიატრიული სპეციფიკა</div>
-        <div class="box-body">12 წლამდე — Needle Cricothyroidotomy (14G კათეტერი + ჯეტ-ვენტილაცია). ქირურგიული ტექნიკა ბავშვის ხორხის ანატომიასთან რთულია. Needle ვენტილაცია — შეზღუდული (CO₂ არ ამოდის, 30–45 წმ ფანჯარა).</div>
+        <div class="box-title">პედიატრიული (ბავშვთა) სპეციფიკა</div>
+        <div class="box-body">12 წლამდე ასაკში — ნემსით კრიკოთირეოიდოტომია (14G კათეტერი + ჭავლური ვენტილაცია). ქირურგიული ტექნიკა ბავშვის ხორხის ანატომიასთან რთულად შესაბამისია. ნემსით ჭავლური ვენტილაცია შეზღუდულია (ნახშირორჟანგი ვერ გამოდის, ფანჯარა მხოლოდ 30–45 წამი).</div>
       </div>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Airway — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>SpO₂ &lt;94% ან სუნთქვის გაუარესება</strong> → Jaw-thrust + OPA/NPA + ნიღაბი 100% ჟანგბადით. თუ GCS ≤8 → RSI-ის მომზადება.</div></div>
-      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>GCS ≤8 ან სასუნთქი გზის პოტენციური გაუარესება</strong> (სახის ტრავმა, შეშუპება, ცეცხლი) → ადრეული RSI სცენაზე, სანამ ანატომია კიდევ ხელსაყრელია.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ინტუბაციის შემდეგ:</strong> ETCO₂ გადამოწმება. TBI-ში — PaCO₂ 35–40 (ჰიპერვენტილაცია მხოლოდ Herniation-ის ეჭვისას — PaCO₂ 30–35, მაქსიმუმ 30 წთ).</div></div>
-      <div class="step-row"><div class="step-num crit">4</div><div class="step-text"><strong>CICO → Double Setup:</strong> ყოველი RSI-ის წინ Cricothyroidotomy-ის ნაკრები გაშლილი და მზად. RSI ჩავარდა → 1 BMV მცდელობა → Surgical Airway, არ ვაჭიანურებთ.</div></div>
+      <div class="card-title">სასუნთქი გზა — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ჟანგბადით გაჯერება &lt;94% ან სუნთქვის გაუარესება</strong> → ფაქიზად ქვედა ყბის წაწევა + პირღრუს/ცხვირღრუს სასუნთქი მილი + ნიღაბი 100%-იანი ჟანგბადით. თუ გლასგოს კომის შკალის ქულა ≤8 → ინტუბაციის მომზადება.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>გლასგოს კომის შკალის ქულა ≤8 ან სასუნთქი გზის სავარაუდო გაუარესება</strong> (სახის ტრავმა, შეშუპება, დამწვრობა) → ადრეული ინტუბაცია სცენაზე, სანამ ანატომია კიდევ ხელსაყრელია.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ინტუბაციის შემდეგ:</strong> ამოსუნთქული ნახშირორჟანგის გადამოწმება. თავის ტვინის ტრავმაში — სისხლში ნახშირორჟანგის წნევა 35–40 მმ ვწყ. სვ. (ჰიპერვენტილაცია მხოლოდ ტვინის გამოთხელების (ჰერნიაციის) ეჭვისას — 30–35 მმ ვწყ. სვ., მაქსიმუმ 30 წუთი).</div></div>
+      <div class="step-row"><div class="step-num crit">4</div><div class="step-text"><strong>ორმაგი მზადყოფნა:</strong> ყოველი ინტუბაციის წინ ხორხის ღვედისებრი მემბრანის გასახსნელი ნაკრები გაშლილი და მზადაა. ინტუბაცია ჩავარდა → ერთი მცდელობა პირბადით ვენტილაციით → ქირურგიული გზა, ყოვნება არ შეიძლება.</div></div>
     </div>
 
     <div class="section-head"><h2>ხშირი შეცდომები</h2></div>
     <div class="card">
-      <div class="card-title">Airway Pitfalls — გავრცელებული ხარვეზები</div>
-      <div class="pitfall"><div class="pitfall-q">⚠️ უკბილო პაციენტი — BMV ნიღაბი ვაკუუმს ვერ ქმნის</div><div class="pitfall-a">✓ ღრძილ-ლოყის სივრცე გამოახვიე გაზის ლენტით</div></div>
-      <div class="pitfall"><div class="pitfall-q">⚠️ RSI-ის შემდეგ ვერ ხერხდება ინტუბაცია</div><div class="pitfall-a">✓ BMV + Double Setup — Cricothyroidotomy-ის ნაკრები მზადაა, არ ვაჭიანურებთ</div></div>
-      <div class="pitfall"><div class="pitfall-q">⚠️ ნახშირჟანგბადით (CO) მოწამვლა — SpO₂ 100%-ს გვიჩვენებს</div><div class="pitfall-a">✓ ანამნეზი (ხანძარი, დახურული სივრცე) → სისხლის გაზები + CO-oximetry; 100% O₂</div></div>
-      <div class="pitfall"><div class="pitfall-q">⚠️ ტუბუსი მარჯვენა მთავარ ბრონქში</div><div class="pitfall-a">✓ ინტუბაციის შემდეგ — ბილატერალური აუსკულტაცია + გულმკერდის რენტგენი. ტუბუსის სიღრმე: კბილებიდან 23 სმ მამაკაცებში, 21 სმ ქალებში</div></div>
+      <div class="card-title">ხშირი შეცდომები სასუნთქი გზის მართვაში</div>
+      <div class="pitfall"><div class="pitfall-q">⚠️ უკბილო პაციენტი — ნიღაბი ვაკუუმს ვერ ქმნის სახეზე</div><div class="pitfall-a">✓ ღრძილ-ლოყის სივრცე გაახვიე დოლბანდით ჰერმეტიზაციისთვის</div></div>
+      <div class="pitfall"><div class="pitfall-q">⚠️ ინტუბაციის შემდეგ ვერ ხერხდება ტუბუსის გავლება</div><div class="pitfall-a">✓ პირბადით ვენტილაცია + ორმაგი მზადყოფნა — ქირურგიული ნაკრები მზადაა, ყოვნება არ შეიძლება</div></div>
+      <div class="pitfall"><div class="pitfall-q">⚠️ ნახშირჟანგით მოწამვლა — ჟანგბადით გაჯერების მაჩვენებელი 100%-ს გვაჩვენებს</div><div class="pitfall-a">✓ ანამნეზი (ხანძარი, დახურული სივრცე) → არტერიული სისხლის გაზების ანალიზი + ნახშირჟანგის ჯანგზიდინი ანალიზი; 100%-იანი ჟანგბადი</div></div>
+      <div class="pitfall"><div class="pitfall-q">⚠️ ტუბუსი მარჯვენა მთავარ ბრონქშია ჩასული</div><div class="pitfall-a">✓ ინტუბაციის შემდეგ — ორმხრივი მოსმენა + გულმკერდის რენტგენი. ტუბუსის სიღრმე: კბილებიდან 23 სანტიმეტრი მამაკაცებში, 21 სანტიმეტრი ქალებში</div></div>
     </div>
+
   </div><!-- /airway -->
 
-  <!-- ══ SHOCK ══ -->
+  <!-- ══════════════ SHOCK ══════════════ -->
   <div id="shock" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
       <div class="card-title">შოკის განმარტება და მექანიზმი</div>
-      <div class="card-sub">შოკი = ორგანოების არაადეკვატური პერფუზია და ქსოვილოვანი ჰიპოქსია. ეს არ არის მხოლოდ დაბალი წნევა — ნორმალური არტერიული წნევის მქონე პაციენტი შეიძლება შოკში იყოს კომპენსაციის ფაზაში.</div>
+      <div class="card-sub">შოკი — ორგანოების არაადეკვატური სისხლით მომარაგება და ქსოვილების ჟანგბადდეფიციტი. ეს არ არის მხოლოდ დაბალი არტერიული წნევა — ნორმალური წნევის მქონე პაციენტი შესაძლოა შოკის კომპენსაციის ფაზაში იყოს.</div>
       <div class="purple-box box">
-        <div class="box-title">ჰემოდინამიკის ფიზიოლოგია</div>
-        <div class="box-body"><strong>გულის გამოსავალი (CO — Cardiac Output) = HR (გულისცემა/წთ) × SV (ინსულტური მოცულობა)</strong><br><br>ინსულტური მოცულობა (SV) განისაზღვრება სამი ფაქტორით:<br>• <strong>Preload (წინასატვირთი)</strong> — ვენური დაბრუნება; სისხლდენა → Preload ↓ → SV ↓ → CO ↓<br>• <strong>Afterload (შემდგომსატვირთი)</strong> — პერიფერიული რეზისტენტობა; ვაზოდილატაცია → Afterload ↓ → CO ↓<br>• <strong>Contractility (შეკუმშვადობა)</strong> — გულის შეკუმშვა; კარდიული კონტუზია → Contractility ↓ → CO ↓<br><br>კომპენსაციის ფაზაში: ჯერ იზრდება გულისცემა (ადრეული კომპენსაცია), შემდეგ ვაზოკონსტრიქცია (კანი ცივდება, ოფლი), გვიანდება არტერიული წნევის დაქვეითება. <strong>არტერიული წნევა ეცემა მხოლოდ IV კლასის ჰემორაგიაში (&gt;30–40% მოცულობის დაკარგვა).</strong></div>
+        <div class="box-title">სისხლის მიმოქცევის ფიზიოლოგია</div>
+        <div class="box-body"><strong>გულის წუთმოცულობა = გულის ცემის სიხშირე × ინსულტური მოცულობა</strong><br><br>ინსულტური მოცულობა (ერთ შეკუმშვაზე გამოდენილი სისხლის მოცულობა) განისაზღვრება სამი ფაქტორით:<br>• <strong>წინასატვირთი მოცულობა (Preload)</strong> — ვენური სისხლის დაბრუნება გულში; სისხლდენა → წინასატვირთის შემცირება → ინსულტური მოცულობის შემცირება → გულის წუთმოცულობის შემცირება<br>• <strong>შემდგომი წინაღობა (Afterload)</strong> — პერიფერიული სისხლძარღვების წინაღობა; გაფართოება → წინაღობის შემცირება → წუთმოცულობის შემცირება<br>• <strong>კონტრაქტილობა</strong> — გულის კუნთის შეკუმშვის ძალა; გულის კონტუზია (დარტყმითი დაზიანება) → კონტრაქტილობის შემცირება → წუთმოცულობის შემცირება<br><br>კომპენსაციის ფაზაში: ჯერ მატულობს გულის ცემის სიხშირე (ადრეული კომპენსაცია), შემდეგ ვითარდება სისხლძარღვების შევიწროება (კანი ცივდება, ოფლიანობს), და მხოლოდ გვიან ეცემა არტერიული წნევა. <strong>არტერიული წნევა ეცემა მხოლოდ მე-4 კლასის სისხლდენაში (სისხლის მოცულობის 30-40%-ზე მეტი დაკარგვისას).</strong></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">შოკის ტიპები ტრავმაში</div>
       <ul class="list">
-        <li><strong>ჰიპოვოლემიური (ყველაზე ხშირი)</strong> — სისხლდენა ან სითხის დაკარგვა → Preload ↓. ნიშნები: ტაქიკარდია, ვაზოკონსტრიქცია (ცივი, ოფლიანი კანი), ჰიპოტენზია (გვიანი).</li>
-        <li><strong>ობსტრუქციული</strong> — Tension Pneumothorax (დაძაბვის პნევმოთორაქსი), კარდიული ტამპონადა, მასიური ფილტვის ემბოლია → ვენური დაბრუნება დაბლოკილია. ნიშნები: გამბერილი საჯდომი ვენები + ჰიპოტენზია.</li>
-        <li><strong>კარდიოგენური</strong> — მიოკარდიუმის კონტუზია, მიოკარდიუმის მწვავე ინფარქტი (AMI), სარქველის გაგლეჯა → Contractility ↓. ნიშნები: ჰიპოტენზია + ბილატერალური კრეფიტოსი ფილტვებზე.</li>
-        <li><strong>ნეიროგენური</strong> — ზედა გულმკერდის / კისრის ხერხემლის ზიანი (T4–T6 ზემოთ) → სიმპათიკური ტონუსის სრული დაკარგვა → ვაზოდილატაცია + ბრადიკარდია. <em>კლასიკური კომბინაცია: ჰიპოტენზია + ბრადიკარდია (≠ ჰიპოვოლემია, სადაც ტაქიკარდია)</em></li>
-        <li><strong>სეპტიკური</strong> — ტრავმაში შედარებით იშვიათი; ვლინდება &gt;6 სთ-ის შემდეგ → სისტემური ვასკულარული რეზისტენტობა (SVR) ↓ + Distributive (განაწილებითი). ნიშნები: თბილი / წითელი კანი, განსხვავება კლასიკური ჰიპოვოლემიური შოკისგან.</li>
+        <li><strong>ჰიპოვოლემიური (სისხლის ან სითხის დანაკარგით გამოწვეული, ყველაზე ხშირი)</strong> — სისხლდენა ან სითხის დანაკარგი → წინასატვირთის შემცირება. ნიშნები: გულის ცემის გახშირება, სისხლძარღვების შევიწროება (ცივი, ოფლიანი კანი), არტერიული წნევის დაცემა (გვიანი ნიშანი).</li>
+        <li><strong>ობსტრუქციული</strong> — დაჭიმული (ტენზიური) პნევმოთორაქსი, გულის გარსში სისხლის დაგროვება (ტამპონადა), მასიური ფილტვის სისხლძარღვის ემბოლია → ვენური დაბრუნების მექანიკური დაბლოკვა. ნიშნები: კისრის ვენების გადავსება + არტერიული წნევის დაცემა.</li>
+        <li><strong>კარდიოგენური (გულის წარმოშობის)</strong> — გულის კუნთის კონტუზია, მწვავე ინფარქტი, გულის ხალთის გაგლეჯა → კონტრაქტილობის შემცირება. ნიშნები: წნევის დაცემა + ორმხრივი ხიხინი ფილტვებში.</li>
+        <li><strong>ნეიროგენული</strong> — ზედა გულმკერდის ან კისრის ხერხემლის დაზიანება (T4–T6 დონის ზემოთ) → სიმპათიკური ნერვული ტონუსის სრული დაკარგვა → სისხლძარღვების გაფართოება + გულის ცემის შემცირება. <em>კლასიკური კომბინაცია: დაბალი წნევა + დაბალი პულსი (განსხვავებით ჰიპოვოლემიური შოკისგან, სადაც პულსი მაღალია)</em></li>
+        <li><strong>სეპტიკური (ინფექციური წარმოშობის)</strong> — ტრავმაში შედარებით იშვიათი; ჩვეულებრივ ვლინდება 6 საათზე მეტი დროის შემდეგ → პერიფერიული წინაღობის შემცირება + სისხლძარღვების განფანტული გაფართოება. ნიშნები: თბილი, წითელი კანი — კლასიკურისგან განსხვავებული სურათი.</li>
       </ul>
     </div>
 
     <div class="section-head"><h2>კლასიფიკაცია</h2></div>
     <div class="card">
-      <div class="card-title">ჰემორაგიის კლასიფიკაცია (ATLS) <span class="badge badge-red">ზეპირად!</span></div>
-      <div class="card-sub">გათვლილია 70 კგ-ის სტანდარტული მოზრდილისთვის, საერთო სისხლის მოცულობა ~5 ლიტრი.</div>
+      <div class="card-title">სისხლდენის კლასიფიკაცია (ATLS-ის მიხედვით) <span class="badge badge-red">ზეპირად!</span></div>
+      <div class="card-sub">გათვლილია 70 კილოგრამის სტანდარტული მოზრდილისთვის, საერთო სისხლის მოცულობა დაახლოებით 5 ლიტრი.</div>
       <div class="tablewrap">
         <table class="data">
           <tr><th>პარამეტრი</th><th class="c1">I კლასი</th><th class="c2">II კლასი</th><th class="c3">III კლასი</th><th class="c4">IV კლასი</th></tr>
-          <tr><td>სისხლის დაკარგვა</td><td class="c1">&lt;750 მლ / &lt;15%</td><td class="c2">750–1500 / 15–30%</td><td class="c3">1500–2000 / 31–40%</td><td class="c4">&gt;2000 მლ / &gt;40%</td></tr>
-          <tr><td>პულსი (/წთ)</td><td class="c1">&lt;100</td><td class="c2">100–120</td><td class="c3">120–140</td><td class="c4">&gt;140 (ბრადი. ← ტერმ.)</td></tr>
-          <tr><td>სისტოლური არტ. წნევა</td><td class="c1">ნორმა</td><td class="c2">ნორმა</td><td class="c3">↓</td><td class="c4">↓↓ &lt;90 mmHg</td></tr>
-          <tr><td>Pulse Pressure (პულსური წნევა)</td><td class="c1">ნ. ან ↑</td><td class="c2">↓</td><td class="c3">↓↓</td><td class="c4">↓↓↓</td></tr>
-          <tr><td>სუნთქვა (/წთ)</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
-          <tr><td>დიურეზი (მლ/სთ)</td><td class="c1">&gt;30</td><td class="c2">20–30</td><td class="c3">5–15</td><td class="c4">უმნიშვნელო</td></tr>
-          <tr><td>გონება</td><td class="c1">მცირე შეშფოთება</td><td class="c2">შეშფოთება</td><td class="c3">შეშფ./დაბნეულობა</td><td class="c4">დაბნ./ლეთარგია</td></tr>
-          <tr><td>სითხის მართვა</td><td class="c1">კრისტ. (1 ლ)</td><td class="c2">კრისტ. + სისხლ. შ.</td><td class="c3">კრისტ. + pRBC</td><td class="c4">MTP (1:1:1)</td></tr>
+          <tr><td>სისხლის დანაკარგი</td><td class="c1">&lt;750 მლ / &lt;15%</td><td class="c2">750–1500 მლ / 15–30%</td><td class="c3">1500–2000 მლ / 31–40%</td><td class="c4">&gt;2000 მლ / &gt;40%</td></tr>
+          <tr><td>პულსი (დარტყმა/წთ)</td><td class="c1">&lt;100</td><td class="c2">100–120</td><td class="c3">120–140</td><td class="c4">&gt;140 (ბრადიკარდია ტერმინალურ ფაზაში)</td></tr>
+          <tr><td>არტერიული წნევა (სისტოლური)</td><td class="c1">ნორმა</td><td class="c2">ნორმა</td><td class="c3">დაბალი (საწყისთან შედარებით)</td><td class="c4">დაბალი &lt;90 მმ ვწყ. სვ.</td></tr>
+          <tr><td>პულსური წნევა (სისტოლურისა და დიასტოლურის სხვაობა)</td><td class="c1">ნორმა ან მაღალი</td><td class="c2">დაბალი</td><td class="c3">დაბალი</td><td class="c4">ძალიან დაბალი (ვიწროვდება)</td></tr>
+          <tr><td>სუნთქვის სიხშირე (წუთში)</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
+          <tr><td>შარდის გამოყოფა (მლ/სთ)</td><td class="c1">&gt;30</td><td class="c2">20–30</td><td class="c3">5–15</td><td class="c4">უმნიშვნელო</td></tr>
+          <tr><td>გონებრივი მდგომარეობა</td><td class="c1">მცირედი შფოთვა</td><td class="c2">შფოთვა</td><td class="c3">შფოთვა / დაბნეულობა</td><td class="c4">დაბნეულობა / ლეთარგია</td></tr>
+          <tr><td>სითხური მართვა</td><td class="c1">კრისტალოიდი (1 ლიტრი)</td><td class="c2">კრისტალოიდი + შესაძლო სისხლის ჩასხმა</td><td class="c3">კრისტალოიდი + ერითროციტული მასა</td><td class="c4">მასიური ტრანსფუზიის პროტოკოლი (1:1:1)</td></tr>
         </table>
       </div>
       <div class="warn-box box mt10">
-        <div class="box-title">⚠️ კომპენსაციის „ფარდა"</div>
-        <div class="box-body">ახალგაზრდა, ათლეტი პაციენტი შეიძლება ახდენდეს ტაქიკარდიისა და ვაზოკონსტრიქციით 30%-მდე სისხლის დაკარგვის კომპენსაციას — არტერიული წნევა ნორმალური, პირველ შეხედვაზე „სტაბილური." <strong>პულსური წნევის ვიწრობა (სისტ. – დიასტ.) ადრეული კომპენსაციის ნიშანია.</strong> ბეტა-ბლოკატორზე მყოფი + ხნიერი პაციენტი ვერ ახდენს ტაქიკარდიას — ეცდება კლასიფიკაცია.</div>
+        <div class="box-title">⚠️ კომპენსაციის „ფარდა“</div>
+        <div class="box-body">ახალგაზრდა, ფიზიკურად აქტიური პაციენტი შესაძლოა გულის ცემის გახშირებითა და სისხლძარღვების შევიწროებით 30%-მდე სისხლის დაკარგვას ანაზღაურებდეს — წნევა ნორმალურია, პირველი შეხედვით „სტაბილური“ ჩანს. <strong>პულსური წნევის ვიწროვება ადრეული კომპენსაციის ნიშანია.</strong> ბეტა-ბლოკატორზე მყოფი ან ხანდაზმული პაციენტი ვერ ახდენს გულის ცემის გახშირებას — ეს არღვევს კლასიფიკაციის სიზუსტეს.</div>
       </div>
     </div>
 
     <div class="section-head"><h2>სისხლდენის ლოკალიზაცია</h2></div>
     <div class="card">
-      <div class="card-title">"On the Floor and Four More" — 5 ადგილი სისხლდენისთვის</div>
+      <div class="card-title">„იატაკზე და კიდევ ოთხგან“ — სისხლდენის ხუთი შესაძლო ადგილი</div>
       <div class="row row-3">
-        <div class="mini-card"><div class="mini-label">🩸 გარეთ (Floor)</div><div class="mini-body">ჭრილობებიდან ხილული სისხლდენა. პირდაპირი წნევა, ტურნიკეტი კიდურებზე.</div></div>
-        <div class="mini-card"><div class="mini-label">🫁 გულმკერდი</div><div class="mini-body">ჰემოთორაქსი. &gt;1500 მლ → გადაუდებელი ოპერაცია.</div></div>
-        <div class="mini-card"><div class="mini-label">🫃 მუცელი</div><div class="mini-body">ელენთა, ღვიძლი, მეზენტერული სისხლძარღვები. FAST → ოპერაცია.</div></div>
-        <div class="mini-card"><div class="mini-label">🦴 მენჯი / რეტროპერიტონეუმი</div><div class="mini-body">Pelvic Binder + ანგიოემბოლიზაცია ± პრეპერიტონეალური პაკინგი</div></div>
-        <div class="mini-card"><div class="mini-label">🦵 გრძელი ძვლები</div><div class="mini-body">Femur (ბარძაყი) ≤1500 მლ; Tibia (წვივი) ≤750 მლ. ტინა + სწორი იმობილიზაცია.</div></div>
+        <div class="mini-card"><div class="mini-label">🩸 გარეთ (იატაკზე)</div><div class="mini-body">ჭრილობებიდან ხილული სისხლდენა. პირდაპირი წნევა ჭრილობაზე, ტურნიკეტი კიდურებზე.</div></div>
+        <div class="mini-card"><div class="mini-label">🫁 გულმკერდი</div><div class="mini-body">სისხლი გულმკერდის ღრუში (ჰემოთორაქსი). &gt;1500 მლ → საჭიროა გადაუდებელი ოპერაცია.</div></div>
+        <div class="mini-card"><div class="mini-label">🫃 მუცელი</div><div class="mini-body">ელენთა, ღვიძლი, ნაწლავის შემკავი ხალთა და მისი სისხლძარღვები. ექოსკოპია (FAST) → ოპერაცია.</div></div>
+        <div class="mini-card"><div class="mini-label">🦴 მენჯი / საზარდულისშემდგომი სივრცე</div><div class="mini-body">მენჯის ფიქსატორი + ანგიოემბოლიზაცია ± საზარდულისშემდგომი ტამპონირება</div></div>
+        <div class="mini-card"><div class="mini-label">🦵 გრძელი ძვლები</div><div class="mini-body">ბარძაყის ძვალი ≤1500 მლ; წვივის ძვალი ≤750 მლ. ფიქსაცია + სწორი პოზიცია</div></div>
       </div>
     </div>
 
     <div class="section-head"><h2>მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Damage Control Resuscitation — დაზიანების კონტროლის რეანიმაცია</div>
+      <div class="card-title">ზიანის კონტროლის რეანიმაცია</div>
       <ul class="list">
-        <li><strong>Permissive Hypotension (ნებადართული ჰიპოტენზია)</strong> — სისტოლური 80–90 mmHg მისაღებია, სანამ სისხლდენა ქირურგიულად არ კონტროლდება. გადაჭარბებული კრისტალოიდი ახდენს ახლად ჩამოყალიბებული თრომბების გარეცხვას, ვაზოდილატაციას, ჰიპოთერმიას და კოაგულაციის დარღვევას. <span class="red">TBI-ს თანხლება — Permissive Hypotension კონტრინდიკირებულია! სისტოლური ≥90, MAP ≥80 TBI-ში.</span></li>
-        <li><strong>ტრანექსამის მჟავა (TXA)</strong> — 1 გ ინტრავენურად 10 წთ განმავლობაში, შემდეგ 1 გ 8 სთ-ის განმავლობაში. <span class="amber">ეფექტური მხოლოდ დაზიანებიდან 3 სთ-ის განმავლობაში!</span> შემდეგ — ეფექტი ± ნეიტრალური, რისკი ↑ (თრომბოზი). CRASH-2 კვლევა.</li>
-        <li><strong>მასიური ტრანსფუზია (MTP — Massive Transfusion Protocol)</strong> — პაკეტური სისხლი (pRBC) : გაყინული სუფრიტი (FFP) : თრომბოციტები (Plt) = 1:1:1 (Damage Control). ≥10 ერთეული 24 სთ-ში ან ≥4 ერთეული/სთ.</li>
-        <li><strong>კალციუმი</strong> — FFP-ს დიდი მოცულობის დროს ციტრატი ჩელატირებს Ca²⁺ → CaCl₂ 1 გ ინტრავენურად ბოლუსი (Ionized Ca²⁺ &lt;1.1 mmol/L). მიოკარდიუმის ფუნქცია ↓ Ca²⁺-ის გარეშე.</li>
-        <li><strong>ჰიპოთერმიის პრევენცია</strong> — &lt;35°C → კოაგულაცია ↓↓↓ ("Lethal Triad": ჰიპოთერმია + აციდოზი + კოაგულოპათია). ყველა ინტრავენური სითხე 39°C-ზე გათბობილი, თბილი საბანი, გარემოს ტემპ. ↑.</li>
+        <li><strong>ნებადართული ჰიპოტენზია (ოდნავი დაბალი წნევა)</strong> — სისტოლური წნევა 80–90 მმ ვწყ. სვ. მისაღებია, სანამ სისხლდენა ქირურგიულად არ შეჩერდება. გადაჭარბებული კრისტალოიდური სითხის შეყვანა ახდენს ახლად ჩამოყალიბებული თრომბების „გარეცხვას“, სისხლძარღვების გაფართოებას, სხეულის გადაცივებას და კოაგულაციის (სისხლის შედედების) დარღვევას. <span class="red">თავის ტვინის თანმხლები ტრავმისას ნებადართული ჰიპოტენზია უკუნაჩვენებია! სისტოლური წნევა ≥90, საშუალო არტერიული წნევა ≥80 თავის ტვინის ტრავმისას.</span></li>
+        <li><strong>ტრანექსამის მჟავა (სისხლდენის შემაჩერებელი მედიკამენტი)</strong> — 1 გრამი ვენაში 10 წუთის განმავლობაში, შემდეგ 1 გრამი 8 საათის განმავლობაში. <span class="amber">ეფექტურია მხოლოდ დაზიანებიდან 3 საათის განმავლობაში მიცემისას!</span> ამის შემდეგ ეფექტი ან ნეიტრალურია ან რისკიც კი იზრდება (თრომბოზის რისკი). დადასტურებულია CRASH-2 კვლევით.</li>
+        <li><strong>მასიური ტრანსფუზიის პროტოკოლი</strong> — ერითროციტული მასა : ახლადგაყინული პლაზმა : თრომბოციტები = 1:1:1 (ზიანის კონტროლის პრინციპით). ≥10 ერთეული 24 საათში ან კლინიკურ ნიშნებზე დაყრდნობით ≥4 ერთეული/საათში. გამოიყენება ABC ანგარიში და შოკის ინდექსი შესაფასებლად.</li>
+        <li><strong>კალციუმი</strong> — ახლადგაყინული პლაზმის დიდი მოცულობის გადასხმისას, კონსერვანტში არსებული ციტრატი აკავშირებს კალციუმის იონებს → კალციუმის ქლორიდი 1 გრამი ვენაში ბოლუსით (იონიზებული კალციუმი &lt;1.1 მმოლ/ლ-ზე). გულის კუნთის ფუნქცია მცირდება კალციუმის გარეშე.</li>
+        <li><strong>სხეულის გადაცივების პრევენცია</strong> — ტემპერატურა &lt;35°C → კოაგულაცია მკვეთრად ეცემა („მომაკვდინებელი სამეული“: გადაცივება + მჟავიანობა + კოაგულოპათია). ყველა ვენური სითხე 39°C-მდე გათბობილი, თბილი საბანი, გარემოს ტემპერატურის მომატება.</li>
       </ul>
     </div>
 
     <div class="card">
-      <div class="card-title">სითხით რეაგირება — 3 პატერნი</div>
+      <div class="card-title">სითხით რეაგირების სამი პატერნი</div>
       <div class="row" style="gap:8px;">
         <div class="mini-card" style="border-left:3px solid var(--green);">
-          <div style="font-size:13px;font-weight:700;color:var(--green);">სწრაფი პასუხი — Rapid Responder</div>
-          <div class="mini-body">I კლასი (&lt;15%). კრისტალოიდი 500–1000 მლ → სასიცოცხლო ნიშნები ნორმალიზდება. Type &amp; Crossmatch მზადაა. ოპერაცია ნაკლებად სავარაუდოა.</div>
+          <div style="font-size:13px;font-weight:700;color:var(--green);">სწრაფი პასუხი</div>
+          <div class="mini-body">I კლასი (&lt;15%). კრისტალოიდი 500–1000 მლ → მაჩვენებლები ნორმალდება. გადასასხმელი სისხლის ჯგუფის შესარჩევი ანალიზი მზადყოფნაშია, ოპერაცია ნაკლებად სავარაუდოა.</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--amber);">
-          <div style="font-size:13px;font-weight:700;color:var(--amber);">გარდამავალი პასუხი — Transient Responder</div>
-          <div class="mini-body">II–III კლასი (15–40%). სასიცოცხლო ნიშნები სწრაფად, მაგრამ სითხის შეწყვეტისას ↓. კრისტ. + pRBC. ოპ./IR სავარაუდოა — გრძელდება სისხლდენა.</div>
+          <div style="font-size:13px;font-weight:700;color:var(--amber);">გარდამავალი პასუხი</div>
+          <div class="mini-body">II–III კლასი (15–40%). მაჩვენებლები სწორდება, მაგრამ სითხის შეჩერებისას უარესდება. საჭიროა კრისტალოიდი + ერითროციტული მასა. ოპერაცია ან ინტერვენციული რადიოლოგია სავარაუდოდ საჭირო იქნება — გადაუდებლად მზადება.</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--red);">
-          <div style="font-size:13px;font-weight:700;color:var(--red);">პასუხი არ არის — Non-Responder</div>
-          <div class="mini-body">IV კლასი (&gt;40%). MTP იწყება + გადაუდებელი ოპერაცია ან ემერჯენსი. ობსტრუქციული შოკი? (ტამპონადა, Tension Pneumothorax) → კარდინალური განსხვავება.</div>
+          <div style="font-size:13px;font-weight:700;color:var(--red);">პასუხი არ არსებობს</div>
+          <div class="mini-body">IV კლასი (&gt;40%). საჭიროა მასიური ტრანსფუზიის პროტოკოლის დაუყოვნებლივ ჩართვა და გადაუდებელი ოპერაცია ან ემბოლიზაცია. გასათვალისწინებელია ობსტრუქციული შოკის შესაძლებლობა (ტამპონადა, დაჭიმული პნევმოთორაქსი) — ეს განსხვავებულ მართვას მოითხოვს.</div>
         </div>
       </div>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Shock — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ABCDE — Airway + Breathing:</strong> SpO₂ ≥95%, ინტუბაცია GCS ≤8-ზე. ჰიპოქსია = მეორადი ტვინის დაზიანება ↑↑.</div></div>
-      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Circulation — სისხლდენის კონტროლი:</strong> გარეთა სისხლდენა → პირდაპირი წნევა, ტურნიკეტი კიდურებზე. მენჯი → Pelvic Binder (Greater Trochanter-ის დონეზე). FAST, CT ადგილზე არ ხდება.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ინტრავენური წვდომა:</strong> 2 × 14–16G ვენა. სითხე 500 მლ ბოლუსი (საჭიროებისამებრ), გადამეორება. TBI-ში სისტ. წნ. ≥90; სხვა შემთხვევაში სისტ. 80–90 (Permissive Hypotension).</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>TXA (ტრანექსამის მჟავა):</strong> თუ სავარაუდო სისხლდენა &lt;3 სთ → 1 გ ინტრავენურად ბოლუსი სცენაზე. სასწრაფო ტრანსპორტი.</div></div>
-      <div class="step-row"><div class="step-num crit">5</div><div class="step-text"><strong>Load and Go (ჩატვირთე და გაემგზავრე):</strong> შოკი — ადგილზე სტაბილიზაცია 8–10 წუთის ლიმიტი → Trauma Center. მკურნალობა გზაში.</div></div>
+      <div class="card-title">შოკი — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>სასუნთქი გზა და სუნთქვა:</strong> ჟანგბადით გაჯერება ≥95%, ინტუბაცია გლასგოს კომის შკალის ქულა ≤8-ისას. ჟანგბადდეფიციტი ზრდის ტვინის მეორად დაზიანებას.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>სისხლის მიმოქცევა — სისხლდენის კონტროლი:</strong> გარეთა სისხლდენაზე → პირდაპირი წნევა, ტურნიკეტი კიდურებზე. მენჯის ტრავმაზე → მენჯის ფიქსატორი (დადებული დიდი ხორთუმის გამოწეულობის დონეზე). ექოსკოპია და კომპიუტერული ტომოგრაფია ადგილზე არ კეთდება.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ვენური წვდომა:</strong> ორი 14–16G ზომის ვენური კათეტერი. სითხე 500 მლ ბოლუსით (ბოლუსი ანუ ერთბაშად სითხის შეყვანა), საჭიროებისას გამეორება. თავის ტვინის ტრავმისას სისტოლური წნევა ≥90 უნდა იყოს; სხვა შემთხვევაში 80–90 (ნებადართული ჰიპოტენზიის პრინციპით).</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ტრანექსამის მჟავა:</strong> თუ სავარაუდო სისხლდენა &lt;3 საათისაა → 1 გრამი ვენაში ბოლუსით სცენაზე. სასწრაფოდ ტრანსპორტირება.</div></div>
+      <div class="step-row"><div class="step-num crit">5</div><div class="step-text"><strong>აიკიდე და გაიქეცი (Load and Go):</strong> შოკის ნიშნებზე ადგილზე 8–10 წუთზე მეტი არ ჩერდები — ტრანსპორტირება ტრავმის ცენტრში. მართვის გაგრძელება გზაში.</div></div>
     </div>
+
   </div><!-- /shock -->
 
-  <!-- ══ THORACIC ══ -->
+  <!-- ══════════════ THORACIC ══════════════ -->
   <div id="thoracic" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
       <div class="card-title">გულმკერდის ტრავმის სამი ძირითადი შედეგი</div>
       <div class="purple-box box">
-        <div class="box-title">Hypoxia + Hypercarbia + Acidosis — "Death Triad of Chest Trauma"</div>
+        <div class="box-title">ჟანგბადდეფიციტი + ნახშირორჟანგის დაგროვება + მჟავიანობა — გულმკერდის ტრავმის „მომაკვდინებელი სამეული“</div>
         <div class="box-body">
-          <strong>ჰიპოქსია</strong> — კონტუზია, ატელექტაზი, ინტრათორაქსული წნევის ↑/↓ (Tension PTX, ღია PTX) → ვენტილაცია/პერფუზიის (V/Q) პრობლემა → PaO₂ ↓ → ქსოვილოვანი ჰიპოქსია<br><br>
-          <strong>ჰიპერკარბია</strong> — ვენტილაციის ↓ → CO₂ ↑ → სუნთქვის ამოძრავება + ვაზოდილატაცია ↑ → ინტრაკრანიალური წნევა (ICP) ↑ TBI-ში<br><br>
-          <strong>Acidosis (აციდოზი)</strong> — ჰიპოქსია + გულის გამოსავლის (CO) ↓ → ანაერობული მეტაბოლიზმი → ლაქტატი ↑ → მეტაბოლური აციდოზი. სამივე ერთად = Death Triad<br><br>
-          <strong>Tension PTX-ის სპეც. მექანიზმი:</strong> „ერთმხრივი სარქველი" → ჰაერი შედის ინსპირაციაზე → ინტრათორაქსული წნევა (ITP) ↑ → ვენური დაბრუნება ↓ → გულის გამოსავალი (CO) ↓ → ობსტრუქციული შოკი + კარდიოვასკულარული კოლაფსი.
+          <strong>ჟანგბადდეფიციტი</strong> — ფილტვის კონტუზია (დარტყმითი დაზიანება), ფილტვის ნაწილის ჩაცვენა, გულმკერდშიდა წნევის მომატება ან დაცემა (დაჭიმული პნევმოთორაქსი, ღია პნევმოთორაქსი) → ვენტილაცია-პერფუზიის შეუთანხმებლობა → არტერიული ჟანგბადის წნევის დაცემა → ქსოვილოვანი ჟანგბადდეფიციტი<br><br>
+          <strong>ნახშირორჟანგის დაგროვება</strong> — ვენტილაციის შემცირება → ნახშირორჟანგის მომატება → სუნთქვის მჟავიანობა + სუნთქვის გახშირება → თავის ტვინში წნევის მომატება, თავის ტვინის ტრავმის შემთხვევაში<br><br>
+          <strong>მჟავიანობა</strong> — ჟანგბადდეფიციტი + გულის წუთმოცულობის შემცირება → ანაერობული მეტაბოლიზმი → რძემჟავას მომატება → მეტაბოლური მჟავიანობა. სამივე ერთად ქმნის „მომაკვდინებელ სამეულს“<br><br>
+          <strong>დაჭიმული პნევმოთორაქსის სპეციფიკური მექანიზმი:</strong> „ცალმხრივი სარქველის“ ეფექტი — ჰაერი ღრუში შედის, მაგრამ ვერ გამოდის → გულმკერდშიდა წნევა იმატებს → ვენური დაბრუნება ეცემა → გულის წუთმოცულობა ეცემა → ობსტრუქციული შოკი + სუნთქვის უკმარისობა → გულის გაჩერება, თუ ჩარევა არ მოხდება დროულად
         </div>
       </div>
     </div>
 
-    <div class="section-head"><h2>Primary Survey — 6 სიცოცხლისათვის საშიში</h2></div>
+    <div class="section-head"><h2>პირველადი შეფასება — 6 სასიცოცხლოდ საშიში მდგომარეობა</h2></div>
     <div class="card">
-      <div class="card-title">6 "Killers" — ყველა Primary Survey-ში ხვდება <span class="badge badge-red">MEMORIZE</span></div>
+      <div class="card-title">ექვსი „მკვლელი“ — ყველა პირველადი შეფასებისას უნდა გამოირიცხოს <span class="badge badge-red">დაამახსოვრე</span></div>
 
       <div class="injury-box box">
-        <div class="box-title">1. Tension Pneumothorax — დაძაბვის პნევმოთორაქსი</div>
-        <div class="box-body">ნიშნები: ტაქიკარდია, ჰიპოტენზია, ერთმხ. ↓/გაქრობილი სუნთქვის ხმა, კისრის ვენების გამბერვა (JVP ↑), ტრაქეის გადაადგილება კონტრალატერალურ მხარეს, ჰიპოქსია. პათოფიზ.: ჰაერი + ყოველი სუნთქვა + ტრაქეის ამოდევნება = Tension PTX.</div>
-        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> კლინიკური დიაგნოზი → რენტგენის მოლოდინი არ არის! → Needle Decompression (ნემსური დეკომპრესია) 2-ე ნეკნთაშუა სივრცე MCL (14G) ან 4–5 ICS AAL → Chest Tube (5 ICS AAL). <strong>🚑 ადგილზე:</strong> კლინიკური დიაგნოზი → Needle Decomp ადგილზე → O₂ 100% → სასწრაფო ტრანსპ. SpO₂ ↑ + წნევა ↑ → დიაგნოზი დადასტურდა.</div>
+        <div class="box-title">1. დაჭიმული პნევმოთორაქსი (Tension Pneumothorax)</div>
+        <div class="box-body">ნიშნები: გულის ცემის გახშირება, არტერიული წნევის დაცემა, ერთ მხარეს შემცირებული ან გაუგონარი სუნთქვითი ხმები, კისრის ვენების გადავსება, ხორხის გვერდულად გადახრა (გვიანი ნიშანი, არასოდეს არ უნდა ველოდოთ), პერკუსიული ხმის ტიმპანულობა (კოლოფისებური ხმა დაკაკუნებისას), ჟანგბადით გაჯერების შემცირება, ტაქიკარდია. ფორმულა: ჰაერი ჭდევშია + ერთმხრივი გაუგონარობა + ხორხის გადახრა = დაჭიმული პნევმოთორაქსი.</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> კლინიკური დიაგნოზია → რენტგენს არ ველოდებით! → ნემსით დეკომპრესია მეორე ნეკნთაშუა სივრცეში შუასაკისებრ ხაზზე (14G) ან მეოთხე-მეხუთე ნეკნთაშუა სივრცეში წინა საქვედავქედის ხაზზე → მკერდის მილის ჩადგმა (მეხუთე ნეკნთაშუა სივრცეში წინა საქვედავქედის ხაზზე). <strong>🚑 ადგილზე:</strong> კლინიკური დიაგნოზია → ნემსით დეკომპრესია ადგილზევე → ჟანგბადი 100% → სასწრაფო ტრანსპორტირება. ჟანგბადით გაჯერების მატება + წნევის მატება = დეკომპრესია წარმატებულია.</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">2. Open Pneumothorax — ღია პნევმოთორაქსი (Sucking Chest Wound)</div>
-        <div class="box-body">ნიშნები: ჭრილობა გულმკერდზე ≥2/3 ტრაქეის დიამეტრი (≥2–3 სმ), ჰაერი ჭრილობაში სუნთქვის დროს, ასიმეტრიული ვენტილაცია. მექანიზმი: გულმკერდის კედლის ↓↓ → ტრაქეალური ჰაერი → CO ↓.</div>
-        <div class="box-tx"><strong>🏥 სტ.:</strong> Asherman Seal (3-მხრიანი ოკლუზიური ნახვევი) → Chest Tube ცალ-ცალკე ადგილზე. <strong>🚑 ადგ.:</strong> 3-მხ. ოკ. ნახვ. (4-ვე მხარე ✘ → Tension!). O₂ → სასწ. ტრანსპ.</div>
+        <div class="box-title">2. ღია პნევმოთორაქსი („მწოვი“ გულმკერდის ჭრილობა)</div>
+        <div class="box-body">ნიშნები: ჭრილობა გულმკერდის კედელზე, რომლის დიამეტრი ≥2/3 სასუნთქი მილის დიამეტრისა (ანუ ≥2–3 სანტიმეტრი), ჰაერის ხმაური ჭრილობაში სუნთქვის დროს, ასიმეტრიული გულმკერდის მოძრაობა. მექანიზმი: ჰაერი არჩევანის ნაკლებობით ჭრილობით შემოდის → ფილტვის ნაწილობრივი ჩავარდნა → გულის წუთმოცულობის შემცირება.</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> სამმხრივი ჰერმეტული საფარველი (ერთი მხარეს ღია, დანარჩენი დაბჟენილი) → მკერდის მილის ჩადგმა შემდგომში სუფთა ადგილზე. <strong>🚑 ადგილზე:</strong> სამმხრივი ჰერმეტული საფარველი (ოთხივე მხრიდან არასოდეს არ ვაბჟენთ → გამოიწვევს დაჭიმულ პნევმოთორაქსს!). ჟანგბადი → სასწრაფო ტრანსპორტირება.</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">3. Massive Hemothorax — მასიური ჰემოთორაქსი</div>
-        <div class="box-body">ნიშნები: ჰიპოვოლემიური ნიშნები (↓ სისტ. წნ., ↑ გულისცემა, ↓ პულსური წნევა), ↓/გაქრობილი სუნთქვა ქვედა ნაწილში, სიმსივნე პერკუსიაზე (ჩახშობილი ხმა), ↓ JVP (≠ ↑ JVP tension-ში), ↓ SpO₂. Massive: &gt;1500 მლ ან &gt;200 მლ/სთ.</div>
-        <div class="box-tx"><strong>🏥 სტ.:</strong> 2× ინტრავ. 14G + სისხლი + Chest Tube (5 ICS AAL). &gt;1500 მლ ან &gt;200 მლ/სთ → გადაუდებელი ოპ. <strong>🚑 ადგ.:</strong> IV × 2, სითხე, O₂ → Trauma Center. Chest Tube TP-ში (გამო: ვენტილაცია ადგილზე ≥1500 მლ-ის დროს).</div>
+        <div class="box-title">3. მასიური ჰემოთორაქსი (გულმკერდის ღრუში დაგროვილი სისხლი)</div>
+        <div class="box-body">ნიშნები: ჰიპოვოლემიური შოკის ნიშნები (წნევის დაცემა, პულსის გახშირება, პულსური წნევის შემცირება), შემცირებული ან გაუგონარი სუნთქვითი ხმები დაზიანებულ მხარეს, პერკუსიაზე მკვრივი (ჩახშული) ხმა (განსხვავებით ტიმპანული ხმისგან პნევმოთორაქსში), კისრის ვენების ჩავარდნა (განსხვავებით გადავსებული ვენებისგან დაჭიმულ პნევმოთორაქსში), ჟანგბადით გაჯერების შემცირება. მასიურად ითვლება &gt;1500 მლ ერთბაშად ან &gt;200 მლ/საათში გამოყოფილი სისხლი.</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> ორი მსხვილი ვენური კათეტერი (14G) + სისხლის ჩასხმა + მკერდის მილის ჩადგმა (მეხუთე ნეკნთაშუა სივრცეში წინა საქვედავქედის ხაზზე). &gt;1500 მლ ან &gt;200 მლ/საათში → გადაუდებელი ოპერაცია (გულმკერდის გახსნა). <strong>🚑 ადგილზე:</strong> ვენური წვდომა, სითხეები, ჟანგბადი → სასწრაფო ტრანსპორტირება. მკერდის მილი ჩვეულებრივ ადგილზე არ ჩაიდგმება (გარდა იშვიათი შემთხვევებისა, როცა ტრანსპორტირება ხანგრძლივია &gt;1500 მლ-ის დაგროვებისთვის).</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">4. Flail Chest — ცოცხალი გულმკერდი (ნეკნების ჩვარსებული მოტეხილობა)</div>
-        <div class="box-body">ნიშნები: ≥2 ნეკნი ≥2 ადგილზე → გამოყოფილი კედლის სეგმენტი. პარადოქსული სუნთქვა (შებრუნებული — ινსპ.-ზე ↘ ექსპ.-ზე ↗). ცენტრალური ჰიპოქსია (SpO₂ &lt;90%), ტკივილი ← splinting-ი. ☆ ძირითადი პრობლემა: ფილტვის კონტუზია (ჰიპოქსია ↑↑ 24–48სთ).</div>
-        <div class="box-tx"><strong>🏥 სტ.:</strong> O₂, ანალგეზია (epidural), CPAP; ჰიპოქსია + ვენტ. ↓ → RSI + ინტუბ. <strong>🚑 ადგ.:</strong> O₂ → BMV ≥2 ადამიანი. ვენტ. ↓/ეხელება → Ketamine + ინტუბ. ✘ გულმკერდის მხარე სახვევი (ამცირებს ვენტ. ბევრად).</div>
+        <div class="box-title">4. „მფარდი“ გულმკერდი (Flail Chest)</div>
+        <div class="box-body">ნიშნები: ≥2 ნეკნის მოტეხილობა ≥2 ადგილზე — ანუ გულმკერდის კედლის ერთი ნაწილი დანარჩენისგან მექანიკურად გამოყოფილია. პარადოქსული სუნთქვის მოძრაობა (გულმკერდის გამოყოფილი ნაწილი ჩაისვება ჩასუნთქვისას, ეწეულობს ამოსუნთქვისას) — ინტენსივობა პროპორციულია გამოყოფილი ნაწილის ზომისა. ტკივილი ↓ სუნთქვის სიხშირე, ჟანგბადდეფიციტი (ჟანგბადით გაჯერება &lt;90%), ფერმკრთალობა — ტკივილით განპირობებული სუნთქვის შემზღუდველობა (splinting). ☆ მთავარი პრობლემაა არა თვითონ მფარდი ნაკაწრი, არამედ მის ქვეშ არსებული ფილტვის კონტუზია (ჟანგბადდეფიციტი მკვეთრად მატულობს 24-48 საათში).</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> ჟანგბადი, ადეკვატური ანალგეზია (ეპიდურალური ანესთეზია), დადებითი წნევით ვენტილაცია; ჟანგბადდეფიციტი + სუნთქვის შემცირება → ინტუბაცია სასწრაფო თანმიმდევრობით. <strong>🚑 ადგილზე:</strong> ჟანგბადი → პირბადით ვენტილაცია ≥2 პირის მონაწილეობით. სუნთქვის შემცირება ან გონების დაქვეითება → კეტამინი + ინტუბაცია. გამოყოფილ ნაკაწრს არ ვაფიქსირებთ ხელით ან საფარველით (ამძიმებს გაცვლას).</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">5. Cardiac Tamponade — კარდიული ტამპონადა</div>
-        <div class="box-body">ბეკის ტრიადა: ↓ სისტ. წნ. + ↑ JVP + ჩუმი გულის ხმები (≤33%-ში სამივე გვხვდება). FAST ≈ 100% სტდიული. Kussmaul sign (JVP ↑ ინსპ.-ზე). პათ.: სასუნთქი P. ერიკარდიუმი სისხლი პერიკარდში (≥200 მლ → კარდიული კომპ.) → CO ↓ → ობსტ. შოკი. Tension PTX-ისგ. განსხვ.: JVP ↑ ← ↑ ITP (Tension-ში), ტამპ.-ში JVP ↑ ← ↓ CO.</div>
-        <div class="box-tx"><strong>🏥 სტ.:</strong> FAST → Pericardiocentesis (გულგარდამომვლელი) → ოპ. (საბ. = Pericardial Window ან Sternotomy). <strong>🚑 ადგ.:</strong> IV × 2, სითხე (კომპ. ↑ → ↑ CO ♦). სასწ. ტრანსპ. → Pericardiocentesis ED-ში.</div>
+        <div class="box-title">5. გულის გარსის ტამპონადა (Cardiac Tamponade)</div>
+        <div class="box-body">ბეკის ტრიადა: დაბალი წნევა + კისრის ვენების გადავსება + გაყუჩული გულის ხმები (სამივე ერთად ვხედავთ მხოლოდ შემთხვევების ≤33%-ში). ექოსკოპიური შეფასება (FAST) ≈ 100% სტაბილურია დიაგნოსტიკაში. კუსმაულის ნიშანი (ჩასუნთქვისას კისრის ვენების კიდევ უფრო გადავსება). მექანიზმი: სისხლი იყრება გულის გარსის ღრუში (≥200 მლ → კრიტიკული შეკუმშვის ეფექტი) → გულის წუთმოცულობის შემცირება → ობსტრუქციული შოკი. განსხვავება დაჭიმული პნევმოთორაქსისგან: ტამპონადაში კისრის ვენების გადავსება გამოწვეულია გულის წუთმოცულობის შემცირებით, ხოლო დაჭიმულ პნევმოთორაქსში — გულმკერდშიდა წნევის მომატებით.</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> ექოსკოპია → გულის გარსის გახსნა ნემსით (გამოშვება) → ოპერაცია (საუკეთესო — გულის გარსის ფანჯარა ან მკერდის გახსნა). <strong>🚑 ადგილზე:</strong> ვენური წვდომა ×2, სითხის ჩასხმა (წინასატვირთის გაზრდა → წუთმოცულობის გაზრდა, დროებითი ეფექტი). სასწრაფო ტრანსპორტირება → გულის გარსის გახსნა საავადმყოფოს გადაუდებელ განყოფილებაში.</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">6. Tracheobronchial Injury — ტრაქეო-ბრონქული დაზიანება</div>
-        <div class="box-body">ნიშნები: ჰემოფტიზი, კრეფიტოსი (კანქვეშა ემფიზემა), Chest Tube → მუდმივი ჰაერის ჟონვა, ↓ SpO₂, ↓ GCS ← ჰიპოქსია. ბლუნტ: RTA Decel. + Carina-სგ. 2 სმ. Penetrating: ↑↑ ხშირი. ≤30% → სტ.-ში ცოცხლები.</div>
-        <div class="box-tx"><strong>🏥 სტ.:</strong> გადაუდებელი ინტ. (ვიდ.! AngioEdema → Surgical Airway) + ბრონქოსკ. → ოპ. <strong>🚑 ადგ.:</strong> O₂ → BVM → ინტ. 1 მცდ. → ✘ → Cric. სასწ. ტრანსპ. Chest Tube-ს არ ვსვამთ ადგილზე.</div>
+        <div class="box-title">6. ტრაქეობრონქული დაზიანება (სასუნთქი მილისა და ბრონქების დაზიანება)</div>
+        <div class="box-body">ნიშნები: ჰემოპტიზი (სისხლის ამოხველება), კანქვეშა ემფიზემა (ჰაერის დაგროვება კანქვეშ), მკერდის მილში მუდმივი ჰაერის გამოსვლა, ჟანგბადით გაჯერების შემცირება, გონების დაქვეითება ჟანგბადდეფიციტის გამო. დახურული ტრავმისას ხშირად კარინასთან (ბრონქების გაყოფის ადგილთან) 2 სანტიმეტრის სიახლოვეს ვითარდება. ღია (პენეტრაციული) ტრავმისას სიხშირე გაცილებით მაღალია. ≤30% პაციენტი მხოლოდ სტაციონარში ცოცხალი ჩამოდის.</div>
+        <div class="box-tx"><strong>🏥 სტაციონარში:</strong> სასწრაფო ინტუბაცია (ფრთხილად! სახის/კისრის შეშუპებამ შესაძლოა საჭირო გახადოს ქირურგიული სასუნთქი გზა) + ბრონქოსკოპია → ოპერაცია. <strong>🚑 ადგილზე:</strong> ჟანგბადი → პირბადით ვენტილაცია → ინტუბაცია ერთი მცდელობით → წარუმატებლობისას → ხორხის ღვედისებრი მემბრანის გახსნა. მკერდის მილის ჩადგმას ადგილზე არ ვაჩქარებთ, თუ მისთვის ნათელი ჩვენება არ არსებობს.</div>
       </div>
     </div>
 
-    <div class="section-head"><h2>Secondary Survey — დამატებითი</h2></div>
+    <div class="section-head"><h2>მეორადი შეფასება — დამატებითი დაზიანებები</h2></div>
     <div class="card">
-      <div class="card-title">პოტენციურად სახიფათო დაზიანებები <span class="badge badge-amber">Secondary</span></div>
+      <div class="card-title">პოტენციურად სახიფათო, მაგრამ პირველადში ხშირად გამოტეცილი დაზიანებები <span class="badge badge-amber">მეორადი შეფასება</span></div>
       <ul class="list">
-        <li><strong>Simple Pneumothorax / Hemothorax</strong> — ჩვ-ი: Chest Tube. Simple PTX: 2 ICS MCL; HTX: 5 ICS AAL. SpO₂ ↓ → ვენტ. ↑ ← Chest Tube.</li>
-        <li><strong>ნეკნების მოტ. (≥3)</strong> — ტკივ. კარ.; Elder: ≥2 ნ. → ICU; ≥6 ნ. → Flail risk. Epidural ანალ. კი ↑↑.</li>
-        <li><strong>Pulmonary Contusion (ფილტვის კონტუზია)</strong> — O₂ + SpO₂ მ-ბ; RTG 24–48სთ; ARDS risk. ≤2 ლ/კგ სუნთქვ. მოც. ვენტ.-ია, PEEP ↑ ← ატელ.</li>
-        <li><strong>Traumatic Aortic Disruption (ტრავმული აორტის გლეჯა)</strong> — RTG: ↑ მედიასტ. (&gt;8 სმ), ტრაქ. გადაადგ., NGT R-shift; CXR → CT Angio. ჰიპ. MAP 60–70. TEVAR.</li>
-        <li><strong>Diaphragm Rupture (დიაფრაგმის გასკდომა)</strong> — NGT ↑ CXR-ში → დიაფ. გ-ა (მარც. &gt; მარჯ. 3:1). CT + MRI. ოპ. → ლაპ. + ა-ია.</li>
-        <li><strong>Myocardial Contusion (მიოკარდიუმის კონტუზია)</strong> — ECG: RBBB, PVCs, ST ↑/↓; ტრ-ბ.; ექო; 24სთ ICU. AMI-ს მსგ.</li>
-        <li><strong>Esophageal Rupture (საყლაპავის გასკდომა)</strong> — Boerhaave-ის ანა. ← ბ. ↑ ინტ.-ი. CXR: მედ. ჰაერი ← ემფ. RTG → CT/Gastrografin → ოპ.</li>
+        <li><strong>მარტივი პნევმოთორაქსი / ჰემოთორაქსი</strong> — ჩვენებაა მკერდის მილის ჩადგმა. მარტივი პნევმოთორაქსისთვის: მეორე ნეკნთაშუა სივრცე შუასაკისებრ ხაზზე; ჰემოთორაქსისთვის: მეხუთე ნეკნთაშუა სივრცე წინა საქვედავქედის ხაზზე. ჟანგბადით გაჯერების შემცირებას არ ველოდებით მკერდის მილის ჩადგმამდე.</li>
+        <li><strong>ნეკნების მოტეხილობა (≥3 ნეკნი)</strong> — ტკივილის ადეკვატური მართვა კრიტიკულია; ხანდაზმულებში: ≥2 ნეკნის მოტეხილობა → საინტენსიური თერაპიის განყოფილებაში დაკვირვება; ≥6 ნეკნი → მფარდი გულმკერდის რისკი. ეპიდურალური ანესთეზია ამცირებს გართულებების რისკს მნიშვნელოვნად.</li>
+        <li><strong>ფილტვის კონტუზია (დარტყმითი დაზიანება)</strong> — ჟანგბადი + ჟანგბადით გაჯერების მონიტორინგი; რენტგენოლოგიური სურათი მკვეთრად უარესდება 24–48 საათში; ფილტვის მწვავე დისტრესის სინდრომის რისკი. ხელოვნური ვენტილაციისას სასუნთქი მოცულობა ≤2 მლ/კგ, მაღალი დადებითი ექსპირაციული წნევა — ფილტვის დამატებითი დაზიანების თავიდან აცილებისთვის.</li>
+        <li><strong>აორტის ტრავმული გასკდომა</strong> — რენტგენზე: შუასაყისის გაფართოება (&gt;8 სანტიმეტრი), ხორხის გადახრა, ცხვირ-კუჭის მილის გადახრა მარჯვნივ; რენტგენი → კომპიუტერული ტომოგრაფიის ანგიოგრაფია. წნევის მკაცრი კონტროლი — საშუალო არტერიული წნევა 60–70 მმ ვწყ. სვ. ენდოვასკულური აორტის რემონტი (ჩონჩხის ჩადგმა სისხლძარღვის შინაგან ნაწილში).</li>
+        <li><strong>დიაფრაგმის გასკდომა</strong> — ცხვირ-კუჭის მილი ჩატანილი გულმკერდის რენტგენზე ჩანს → დიაგნოზი (მარცხენა მხარეს 3:1 თანაფარდობით უფრო ხშირია, ვიდრე მარჯვნივ). კომპიუტერული ტომოგრაფია + მაგნიტურ-რეზონანსული გამოსახულება. ოპერაცია → ნაკარგვის ჩვენება და აღდგენა.</li>
+        <li><strong>გულის კუნთის კონტუზია (დარტყმითი დაზიანება)</strong> — ელექტროკარდიოგრაფია: მარჯვენა კონების ბლოკადა, ექსტრასისტოლები, ST-სეგმენტის ცვლილებები; ტროპონინის გაზომვა; ექოკარდიოგრაფია; 24 საათი საინტენსიური თერაპიის განყოფილებაში დაკვირვება. დიფერენცირება მწვავე ინფარქტისგან.</li>
+        <li><strong>საყლაპავის გასკდომა</strong> — ბურჰავეს სინდრომის ანალოგია (ღებინების შემდეგ წნევის მკვეთრი მატებით გამოწვეული გასკდომა). გულმკერდის რენტგენზე: შუასაყისში ჰაერი ემფიზემის გამო. რენტგენი → კომპიუტერული ტომოგრაფია/გასტროგრაფინით კონტრასტული გამოკვლევა → ოპერაცია.</li>
       </ul>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Thoracic Trauma — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>A/B შეფასება:</strong> SpO₂, სუნთქვის ბმები, კრეფიტ., ჩამონათვ. სუნ. ×4 ადგ. (ა-ტ.: 2 ICS MCL + ა-ე AAL ×2). ↑HR + ↓ სისტ. + ↓ სუნ. 1 მხ. → Tension PTX/HTX.</div></div>
-      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>Tension PTX ეჭვი → Needle Decomp ადგილზე:</strong> 2 ICS MCL 14G. ეფ.: „ჰაერის ჟონვა" ← PTX ← Tension. IMM-ი ↑ სისტ. + ↓ გულ. ← Decomp დადასტ.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ღია ჭრ.:</strong> 3-მ. ოკ. ნახვ. (Asherman Seal). ✘ 4-ვე გვ. → Tension! ► CT → სასწ.</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Flail Chest + ჰიპოქსია:</strong> BMV + ანალ. → Ketamine + RSI. SpO₂ &lt;90% + RR &lt;10/&gt;30 → ინტ.</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Cardiac Tamponade ეჭვი:</strong> ↑ JVP + ↓ სისტ. ← FAST-ი → IV + სითხები → სასწ. ტრანსპ. ED-ში Pericardiocentesis.</div></div>
-      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Massive HTX:</strong> ✘ ადგ. Chest Tube (გამო: ↑ SpO₂ ≤85% + ≥10 წ. → TP). IV + სითხე → Trauma Center.</div></div>
+      <div class="card-title">გულმკერდის ტრავმა — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>სასუნთქი გზისა და სუნთქვის შეფასება:</strong> ჟანგბადით გაჯერება, სუნთქვის მექანიკა, კანქვეშა ემფიზემა, მოსმენა ოთხ წერტილში (წინა: მეორე ნეკნთაშუა სივრცე შუასაკისებრ ხაზზე ორივე მხარეს; გვერდითი: წინა საქვედავქედის ხაზი ორივე მხარეს). გულის ცემის გახშირება + წნევის დაცემა + ერთ მხარეს სუნთქვის შემცირება → ეჭვი დაჭიმულ პნევმოთორაქსზე ან მასიურ ჰემოთორაქსზე.</div></div>
+      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>დაჭიმული პნევმოთორაქსის ეჭვისას → ნემსით დეკომპრესია ადგილზევე:</strong> მეორე ნეკნთაშუა სივრცე შუასაკისებრ ხაზზე, 14G ნემსი. ჰაერის ხმაური ნემსიდან გამოსვლისას ადასტურებს დაჭიმული პნევმოთორაქსის არსებობას. წნევის მატება დეკომპრესიის შემდეგ ადასტურებს წარმატებას.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ღია ჭრილობა:</strong> სამმხრივი ჰერმეტული საფარველი. ოთხივე მხრიდან არასოდეს არ ვაბჟენთ → გამოიწვევს დაჭიმულ პნევმოთორაქსს! ჟანგბადი → სასწრაფო ტრანსპორტირება.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>მფარდი გულმკერდი + ჟანგბადდეფიციტი:</strong> პირბადით ვენტილაცია + ანალგეზია → კეტამინი + ინტუბაცია სასწრაფო თანმიმდევრობით. ჟანგბადით გაჯერება &lt;90% ან სუნთქვის სიხშირე &lt;10/&gt;30 → ინტუბაცია.</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>გულის გარსის ტამპონადის ეჭვი:</strong> კისრის ვენების გადავსება + წნევის დაცემა + ექოსკოპიური დადასტურება → ვენური წვდომა + სითხეები → სასწრაფო ტრანსპორტირება საავადმყოფოს გადაუდებელ განყოფილებაში გულის გარსის გახსნისთვის.</div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>მასიური ჰემოთორაქსი:</strong> მკერდის მილი ჩვეულებრივ ადგილზე არ ჩაიდგმება (ჩვენებაა მხოლოდ ჟანგბადით გაჯერება ≤85% და ≥10 წუთიანი ტრანსპორტირება ტრავმის ცენტრამდე). ვენური წვდომა + სითხეები → ტრავმის ცენტრში სასწრაფო ტრანსპორტირება.</div></div>
     </div>
+
   </div><!-- /thoracic -->
 
-  <!-- ══ ABDOMINAL ══ -->
+  <!-- ══════════════ ABDOMINAL ══════════════ -->
   <div id="abdominal" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
       <div class="card-title">მუცლის ტრავმის ორი მთავარი საფრთხე</div>
       <div class="purple-box box">
-        <div class="box-title">სისხლდენა + კონტამინაცია</div>
+        <div class="box-title">სისხლდენა და ნაწლავის შემცველობით კონტამინაცია</div>
         <div class="box-body">
-          <strong>სისხლდენა — Solid Organs (მყარი ორგანოები) + სისხლძარღვები</strong> — ღვიძლი, ელენთა, თირკმელი, მეზენტერული სისხლძარღვები → ჰიპოვოლემიური შოკი → სისხ. ↓. Solid organs კაფსულის ↓ Pressure ← FAST (+). Retroperitoneal (retro-პ.) სისხლდ. (aorta, IVC, თირ.) FAST-ით არ ვიზუალიზდება.<br><br>
-          <strong>Hollow Viscus კონტამინაცია</strong> — კუჭი, ნაწლავი, ბუშტი → Perforation → კრიტ. + სეფ. ← Peritonitis. Delayed presentation! FAST (-) + CT (+). DPL (+) WBC.<br><br>
-          <strong>Pelvic Fracture (მენჯის მოტეხ.)</strong> — ვენური პლექსუსი + ილიაკური Art. → 3–5 ლ retro სისხლ. FAST ✘ retro! Pelvic Binder → ↓ სივ. → ↓ სისხლ. Unstable → Angioembol.
+          <strong>სისხლდენა მკვრივი ორგანოებიდან და სისხლძარღვებიდან</strong> — ღვიძლი, ელენთა, თირკმელი, ნაწლავის შემკავი ხალთის სისხლძარღვები → ჰიპოვოლემიური შოკი → წნევის შემცირება. მკვრივი ორგანოები ფარავენ კაფსულას, ხშირად სისხლდენა ღრუში თავსდება და ექოსკოპიით (FAST) აღმოჩენადია (დადებითი შედეგი). საზარდულისშემდგომი სივრცის (აორტა, ღრუ ვენა, თირკმელი) სისხლდენა ექოსკოპიით არ ვლინდება — საჭიროებს სხვა მეთოდებს.<br><br>
+          <strong>ცარიელი ორგანოს (ნაწლავის) დაზიანება და კონტამინაცია</strong> — კუჭი, ნაწლავი, ბუშტი → ხვრელის წარმოქმნა → ნაწლავის შემცველობის გადასვლა მუცლის ღრუში → პერიტონეუმის ანთება (პერიტონიტი) + ინფექცია. ხშირად ნიშნები გვიან ვლინდება! ექოსკოპია უარყოფითია, კომპიუტერული ტომოგრაფია დადებითი. დიაგნოსტიკური პერიტონეალური ლავაჯი დადებითია ლეიკოციტების მომატებით.<br><br>
+          <strong>მენჯის მოტეხილობა</strong> — ვენური წნურის დაზიანება და მენჯის ღრუს გაფართოება → 3–5 ლიტრი სისხლის დაკარგვა საზარდულისშემდგომ სივრცეში. ექოსკოპია ამ სივრცეს არ აღმოაჩენს! მენჯის ფიქსატორი → ღრუს მოცულობის შემცირება → სისხლდენის შემცირება. არასტაბილური მენჯის შემთხვევაში → ანგიოემბოლიზაცია.
         </div>
       </div>
     </div>
 
-    <div class="section-head"><h2>ანატომია + მექანიზმი</h2></div>
+    <div class="section-head"><h2>ანატომია და დაზიანების მექანიზმი</h2></div>
     <div class="card">
-      <div class="card-title">ხშირი ორგანოები — მექანიზმის მიხ. <span class="badge badge-amber">%</span></div>
+      <div class="card-title">ხშირი დაზიანებული ორგანოები — დაზიანების მექანიზმის მიხედვით <span class="badge badge-amber">%</span></div>
       <div class="tablewrap">
         <table class="data">
-          <tr><th>ორგანო</th><th>Blunt (ბლუნტ)</th><th>Stab (ჩხვლეტა)</th><th>GSW (ტყვია)</th></tr>
-          <tr><td>ელენთა</td><td class="c1">40–55%</td><td>15%</td><td>7%</td></tr>
+          <tr><th>ორგანო</th><th>დახურული</th><th>დანის ჭრილობა</th><th>ცეცხლსასროლი ჭრილობა</th></tr>
+          <tr><td>ელენთა</td><td class="c1">40–55%</td><td>10–15%</td><td>7%</td></tr>
           <tr><td>ღვიძლი</td><td class="c2">35–45%</td><td class="c1">40%</td><td class="c3">30%</td></tr>
           <tr><td>წვრილი ნაწლავი</td><td>5–10%</td><td class="c2">30%</td><td class="c1">50%</td></tr>
           <tr><td>მსხვილი ნაწლავი</td><td>3%</td><td>15%</td><td class="c2">40%</td></tr>
@@ -642,381 +669,385 @@ table.data tr:last-child td { border-bottom: none; }
         </table>
       </div>
       <div class="blue-box box mt10">
-        <div class="box-title">Blunt Trauma — სპეციფიკური სინდრომები</div>
+        <div class="box-title">დახურული ტრავმის სპეციფიკური სინდრომები</div>
         <div class="box-body">
-          <strong>Bucket Handle Injury</strong> — დეცელ. → ნაწლ. მეზ.-ა ↔ ეპ.-ა ← Mesentery გლეჯა ← CT<br>
-          <strong>Lap Belt Injury</strong> — Chance Fx (L-spine) + ნაწლ. რღვ. ← CT<br>
-          <strong>Handlebar Injury</strong> — პ-ა კ-ება, Duodenum/Pancreas კ-ა ← CT + ამ-ა
+          <strong>"Bucket Handle" დაზიანება (სათლის სახელურის ტიპის)</strong> — მკვეთრი შენელება მოძრაობისას → ნაწლავის მასა და მისი შემკავი ხალთა სხვადასხვა სიჩქარით ჩერდება → შემკავი ხალთის სისხლძარღვების გაგლეჯა → ექოსკოპია უარყოფითია, კომპიუტერული ტომოგრაფია დადებითია.<br>
+          <strong>უსაფრთხოების ღვედის დაზიანება</strong> — ლუმბარული ხერხემლის შენსის (Chance) ტიპის მოტეხილობა + ნაწლავის გასკდომა → საჭიროებს კომპიუტერული ტომოგრაფიით დათვალიერებას.<br>
+          <strong>საჭის (ველოსიპედის სახელურის) დაზიანება</strong> — წერტილოვანი დარტყმა მუცელზე, თორმეტგოჯა ნაწლავის ან პანკრეასის დაზიანება → საჭიროებს კომპიუტერული ტომოგრაფიასა და ფერმენტების ანალიზს.
         </div>
       </div>
     </div>
 
     <div class="section-head"><h2>დიაგნოსტიკა</h2></div>
     <div class="card">
-      <div class="card-title">FAST → eFAST → CT → DPL — ალგ. <span class="badge badge-blue">სექვ.</span></div>
+      <div class="card-title">ექოსკოპია → ფართო ექოსკოპია → კომპიუტერული ტომოგრაფია → დიაგნოსტიკური ლავაჯი — თანმიმდევრობა <span class="badge badge-blue">სექვენცია</span></div>
       <div class="safe-box box">
-        <div class="box-title">FAST — Focused Assessment with Sonography for Trauma</div>
-        <div class="box-body">4 ფანჯარა: Perihepatic (Morison's Pouch) · Perisplenic · Pelvic (Pouch of Douglas) · Pericardial.<br>(+) = ≥200 მლ თავისუფალი სითხე ← სისხლდენა.<br>ჰემოდინამ. ↓ + FAST(+) → გადაუდებელი ოპ. (CT არ ველოდებით!)<br><span class="red">Retroperitoneal არ ვიზუალიზდება. False(-) 30%!</span></div>
+        <div class="box-title">FAST — ტრავმის ფოკუსირებული ექოსკოპიური შეფასება</div>
+        <div class="box-body">ოთხი ფანჯარა: ღვიძლისპირა სივრცე (მორისონის ჭიქა) · ელენთისპირა სივრცე · მცირე მენჯის ღრუ (დუგლასის ჯიბე) · გულის გარსი.<br>დადებითი შედეგია ≥200 მლ თავისუფალი სითხის აღმოჩენა — სავარაუდოდ სისხლდენა.<br>ჰემოდინამიკური არასტაბილურობა + ექოსკოპია დადებითი → გადაუდებელი ოპერაცია (კომპიუტერული ტომოგრაფია არ ვითხოვთ!)<br><span class="red">საზარდულისშემდგომ სივრცეს ექოსკოპია არ აღმოაჩენს. ცრუ უარყოფითი შედეგი 30%-მდე!</span></div>
       </div>
       <div class="safe-box box">
-        <div class="box-title">eFAST — Extended FAST</div>
-        <div class="box-body">+ პლევრის ღრუები (M-mode: Lung Sliding ← PTX გამო; B-lines ← Contusion). სადის სპ-ა: eFAST ← ← ← ← ← ← 2 წ.</div>
+        <div class="box-title">eFAST — ფართო ფოკუსირებული ექოსკოპიური შეფასება</div>
+        <div class="box-body">+ პლევრის ღრუს დათვალიერება (M-რეჟიმი: ფილტვის გასწორებითი მოძრაობის გაუჩინარება → პნევმოთორაქსზე ეჭვი; B-ხაზების გამოჩენა → ფილტვის კონტუზიაზე ეჭვი). ჩატარების დრო: 2 წუთამდე.</div>
       </div>
       <div class="warn-box box">
-        <div class="box-title">CT მუცელი — ჰემოდინამ. სტაბ. პ-ში</div>
-        <div class="box-body">IV Contrast + PO (ა: ლ-ა პ-ში). Solid Organs Grading (I–VI). Active Blush = აქტიური სისხლდ. → Angioembol. Pneumoperitoneum = Hollow Viscus Perf → ოპ.</div>
+        <div class="box-title">კომპიუტერული ტომოგრაფია მუცლისა — ჰემოდინამიკურად სტაბილურ პაციენტში</div>
+        <div class="box-body">ვენური კონტრასტი + პერორალური კონტრასტი (საჭიროებისას). მკვრივი ორგანოების დაზიანების ხარისხის შეფასება (I–VI). აქტიური სისხლდენის ნიშანი (Active Blush) = მიმდინარე სისხლდენა → ანგიოემბოლიზაცია. პნევმოპერიტონეუმი (თავისუფალი ჰაერი მუცლის ღრუში) = ცარიელი ორგანოს გასკდომა → ოპერაცია.</div>
       </div>
       <div class="warn-box box">
-        <div class="box-title">DPL — Diagnostic Peritoneal Lavage</div>
-        <div class="box-body">(+): RBC &gt;100k/μL · WBC &gt;500 · ბილი/საკვები. Retroperitoneal არ ვიზ. CT-ის ალტ. (ა: CT ✘ ა-ი, სედ. გ-ის ნ-ები).</div>
+        <div class="box-title">დიაგნოსტიკური პერიტონეალური ლავაჯი</div>
+        <div class="box-body">დადებითად ითვლება: ერითროციტები &gt;100,000/მკლ · ლეიკოციტები &gt;500 · ნაწლავის შემცველობა ან ბაქტერია. საზარდულისშემდგომი სივრცის დაზიანებას არ აღმოაჩენს. გამოიყენება როცა კომპიუტერული ტომოგრაფია ხელმისაწვდომი არ არის ან პაციენტი დასათრობილია (სედირებული) და ნიშნების შეფასება შეუძლებელია.</div>
       </div>
     </div>
 
-    <div class="section-head"><h2>ლაპარატომიის ჩვენება</h2></div>
+    <div class="section-head"><h2>ლაპაროტომიის (მუცლის ღრუს გახსნის) ჩვენებები</h2></div>
     <div class="card">
-      <div class="card-title">ოპ. ჩვ. — გადაუდებელი <span class="badge badge-red">OP INDIC.</span></div>
+      <div class="card-title">როდის საჭიროა გადაუდებელი ოპერაცია <span class="badge badge-red">ჩვენებები</span></div>
       <ul class="list">
-        <li><strong>ჰემოდინ. ↓ + FAST(+)/DPL(+)</strong> → გადაუდ. ოპ. (CT არ ველოდებით!). ❗</li>
-        <li><strong>Penetrating + peritoneal signs</strong> (Guard, Rigidity, Rebound) → ოპ.</li>
-        <li><strong>GSW → ინტრა-პ. ტრ. ეჭ.</strong> → ოპ. (ყველა GSW ← ← ← ← ←)</li>
-        <li><strong>Pneumoperitoneum / Free Air RTG-ზე</strong> ← Hollow Viscus Perf → ოპ.</li>
-        <li><strong>Pelvic Fx + ჰემოდინ. ↓</strong> → Pelvic Binder → Preperiton. Packing ± Angioembol.</li>
-        <li><strong>FAST(-) + ჰემოდინ. სტაბ.</strong> → CT → Grading → NOM (Non-Operative Management) ან ოპ.</li>
+        <li><strong>ჰემოდინამიკური არასტაბილურობა + ექოსკოპია ან ლავაჯი დადებითია</strong> → გადაუდებელი ოპერაცია (კომპიუტერული ტომოგრაფია არ ვითხოვთ!). ❗</li>
+        <li><strong>ღია ჭრილობა + პერიტონეუმის ანთების ნიშნები</strong> (კედლის დაჯანდაგება, რიგიდულობა, უკუტკივილი) → ოპერაცია.</li>
+        <li><strong>ცეცხლსასროლი ჭრილობა + მუცლის ღრუში შეჭრის ეჭვი</strong> → ოპერაცია (ცეცხლსასროლი ჭრილობის შემთხვევაში პრაქტიკულად ყოველთვის).</li>
+        <li><strong>პნევმოპერიტონეუმი / თავისუფალი ჰაერი რენტგენზე</strong> → ცარიელი ორგანოს გასკდომის ნიშანი → ოპერაცია.</li>
+        <li><strong>მენჯის მოტეხილობა + ჰემოდინამიკური არასტაბილურობა</strong> → მენჯის ფიქსატორი → საზარდულისშემდგომი ტამპონირება ± ანგიოემბოლიზაცია.</li>
+        <li><strong>ექოსკოპია უარყოფითია + ჰემოდინამიკურად სტაბილური</strong> → კომპიუტერული ტომოგრაფია → დაზიანების ხარისხის შეფასება → არაოპერაციული მართვა ან ოპერაცია, ხარისხის მიხედვით.</li>
       </ul>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Abdominal Trauma — სცენაზე ალგ. <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ABCDE:</strong> Airway + O₂. 2× ინტრავ. (14–16G). გარეთა სისხლდ. → პ-ი წ-ა + Tourniquet კ-ზე.</div></div>
-      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>Evisceration (ნაწლ. გამოჩხვლეტა):</strong> ✘ ორგ. არ ვაბრუნებთ! ✘ შეჭყლეტვა ❌. სტ. გ-ხვ. (✘ სველი გ-ხვ. ← ლ-ება). სასწ. ტრანსპ.</div></div>
-      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>Penetrating (განმჭოლი ჭ.):</strong> ✘ ობ-ი მ-ი! ✘ ი-ბ-ი ✘ ი-ა (ჩ-ა ← ←). სტ. ნახვ. ← ←.</div></div>
-      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>Pelvic Fx ეჭვი</strong> (ბ-ო. ტ., ა-ი ფ.): Pelvic Binder → Greater Trochanter-ის დ-ზე (✘ ი-ზ. ← ← ←). ✘ PASG.</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>სითხე:</strong> სისტ. 80–90 (Permissive Hypotension; TBI → ≥90). TXA &lt;3სთ → 1 გ IV. Load and Go!</div></div>
+      <div class="card-title">მუცლის ტრავმა — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ABCDE შეფასება:</strong> სასუნთქი გზა + ჟანგბადი. ორი ვენური კათეტერი (14–16G). გარეთა სისხლდენაზე → პირდაპირი წნევა + ტურნიკეტი კიდურებზე.</div></div>
+      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>ნაწლავის ან ორგანოს გამოვარდნა (ევისცერაცია):</strong> ნაწლავს არასოდეს არ ვაბრუნებთ შინ! ხელით არ ვეხებით! სუფთა, სველი საფარველი (ფიზიოლოგიური ხსნარით დასველებული — გამშრობის თავიდან ასაცილებლად). სასწრაფო ტრანსპორტირება.</div></div>
+      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>ღია (პენეტრაციული) ჭრილობა:</strong> ჩასული საგანი არასოდეს არ ამოვაცილოთ! ჭდევაში არ ვჩხრეკავთ (გაზრდის სისხლდენას). სუფთა საფარველი ჭრილობაზე.</div></div>
+      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>მენჯის მოტეხილობის ეჭვი</strong> (ბარძაყის ტრიალი, ასიმეტრიული ფეხები, ლოკალური ტკივილი): მენჯის ფიქსატორი → დიდი ხორთუმის გამოწეულობის დონეზე (არ ვამოწმებთ მენჯის სტაბილურობას მექანიკურად, რადგან ეს ხელახლა ააქტიურებს სისხლდენას). ანტიშოკური სათრევიანი ტანსაცმელი (PASG) არ გამოიყენება.</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>სითხის მართვა:</strong> სისტოლური წნევა 80–90 (ნებადართული ჰიპოტენზია; თავის ტვინის ტრავმისას ≥90). ტრანექსამის მჟავა &lt;3 საათში → 1 გრამი ვენაში. აიკიდე და გაიქეცი!</div></div>
     </div>
+
   </div><!-- /abdominal -->
 
-  <!-- ══ HEAD / TBI ══ -->
+  <!-- ══════════════ HEAD / TBI ══════════════ -->
   <div id="head" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
-      <div class="card-title">Primary vs Secondary Brain Injury — პირველადი და მეორადი ტვინის დაზიანება</div>
+      <div class="card-title">პირველადი vs მეორადი თავის ტვინის დაზიანება</div>
       <div class="row row-2">
         <div class="mini-card" style="border-left:3px solid var(--red);">
-          <div class="mini-label" style="color:var(--red);">Primary Injury — დაზიანების მომენტში</div>
-          <div class="mini-body">პირველადი ანატ.: DAI (Diffuse Axonal Injury), კონტუზია, ლაცერ. ✘ შეცვლადია. Coup–Contrecoup. ნეირ. სიკვდ. ½ = DAI ← MRI. ← ← კ-ია ← ←</div>
+          <div class="mini-label" style="color:var(--red);">პირველადი დაზიანება — ტრავმის მომენტში</div>
+          <div class="mini-body">დაზიანება ხდება უშუალოდ ტრავმის მომენტში და შეუქცევადია: დიფუზური აქსონური დაზიანება, ნაჭდევები (კონტუზია), ლაცერაცია (ნაკაწრები ქსოვილში). სამედიცინო ჩარევით ვერ აღმოვაცილებთ უკან, შესაძლებელია მხოლოდ პრევენცია (ჩაფხუტი, უსაფრთხოების ღვედი). „Coup-Contrecoup“ მექანიზმი — დარტყმა ერთ წერტილში, დაზიანება ასევე საპირისპირო მხარეს ტვინის ქანაობის გამო თავის ქალაში. დიფუზური აქსონური დაზიანება შეადგენს მძიმე თავის ტვინის ტრავმების ნახევარს და ჩვეულებრივ საჭიროებს მაგნიტურ-რეზონანსულ გამოსახულებას ვიზუალიზაციისთვის (კომპიუტერული ტომოგრაფია შესაძლოა ნორმალური იყოს).</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--amber);">
-          <div class="mini-label" style="color:var(--amber);">Secondary Injury — პრევენირებადია!</div>
-          <div class="mini-body">ჰიპოქსია (PaO₂ &lt;60) + ჰიპოტ. (სისტ. &lt;90) + ↑ ICP + ჰიპოგლ. + ჰიპოთ. + აციდ. + Seizure. ყველა ↑ სიკვდ.</div>
+          <div class="mini-label" style="color:var(--amber);">მეორადი დაზიანება — ეს არის ის, რასაც ჩვენ ვაკონტროლებთ!</div>
+          <div class="mini-body">ვითარდება პირველადი დაზიანების შემდეგ, საათების ან დღეების განმავლობაში, და სამედიცინო ჩარევით პრევენციადია. გამომწვევი ფაქტორები: ჟანგბადდეფიციტი (არტერიული ჟანგბადის წნევა &lt;60), ჰიპოტენზია (სისტოლური წნევა &lt;90), თავის ტვინში წნევის მომატება, ჰიპერთერმია (ცხელება), ჰიპონატრემია (ნატრიუმის დაკლება), ჰიპერგლიკემია/ჰიპოგლიკემია, კრუნჩხვა. ყველა ეს ფაქტორი ამატებს დაზიანებულ ქსოვილს და უარესებს გამოსავალს — ATLS-ის მთელი მართვის სტრატეგია მიმართულია ამ ფაქტორების პრევენციისკენ.</div>
         </div>
       </div>
       <div class="purple-box box mt10">
-        <div class="box-title">Monroe-Kellie Doctrine — ICP-ის ბალანსი</div>
+        <div class="box-title">მონრო-კელის დოქტრინა — თავის ტვინში წნევის ფიზიკა</div>
         <div class="box-body">
-          ქალა = ტვინი + CSF (ზურგ-ტვინ. სითხ.) + სისხლი = <strong>კონსტანტი მოცულობა.</strong><br>
-          ↑ ერთი კომ-ი (ოდემა, ჰ-ომა) → ↑ ICP → ↓ CPP → ↓ ი-ქ. → Secondary Injury<br>
-          <strong>CPP (Cerebral Perfusion Pressure — ცერებ. პერფ. წნ.) = MAP – ICP ≥ 60–70 mmHg</strong><br>
-          MAP ↑ ←→ ICP ↓ → CPP ↑ → ↑ ი-ქ.
+          თავის ქალის ღრუს შემცველობა = ტვინის ქსოვილი + ცერებროსპინალური სითხე + სისხლი = <strong>ფიქსირებული მოცულობა (თავის ქალა მყარია, არ ფართოვდება).</strong><br>
+          ერთ-ერთი კომპონენტის გაზრდა (სისხლჩაქცევა, შეშუპება) → თავდაპირველად სხვა კომპონენტები კომპენსირებენ (ცერებროსპინალური სითხის გამოდევნა) → კომპენსაციის ზღვრის გადაჭარბებისას → ↑ თავის ტვინში წნევა (ICP) → ↓ თავის ტვინის პერფუზიის წნევა → ↓ ქსოვილის სისხლით მომარაგება → მეორადი დაზიანება<br>
+          <strong>თავის ტვინის პერფუზიის წნევა = საშუალო არტერიული წნევა − თავის ტვინში წნევა ≥ 60–70 მმ ვწყ. სვ.</strong><br>
+          ანუ: საშუალო არტერიული წნევის მატება ან თავის ტვინში წნევის შემცირება → პერფუზიის წნევის გაუმჯობესება → ეს არის მართვის ორი ძირითადი ბერკეტი.
         </div>
       </div>
     </div>
 
     <div class="section-head"><h2>კლასიფიკაცია</h2></div>
     <div class="card">
-      <div class="card-title">TBI — GCS-ით კლასიფ. <span class="badge badge-red">ზეპ.!</span></div>
+      <div class="card-title">თავის ტვინის ტრავმა — გლასგოს კომის შკალის (GCS) მიხედვით <span class="badge badge-red">ზეპირად!</span></div>
       <div class="row row-3">
         <div class="mini-card" style="border-left:3px solid var(--green);">
-          <div class="mini-label" style="color:var(--green);">მსუბუქი TBI</div>
+          <div class="mini-label" style="color:var(--green);">მსუბუქი ხარისხის ტრავმა</div>
           <div class="mini-val" style="color:var(--green);">GCS 13–15</div>
-          <div class="mini-body">CT ≥1 კ-ი ← LOC ← PTA. Obs 24სთ. Discharge GCS 15 + CT ნ.</div>
+          <div class="mini-body">კომპიუტერული ტომოგრაფია ≥1 დროებითი ცნობიერების დაკარგვის ან ამნეზიის შემთხვევაში. დაკვირვება 24 საათის განმავლობაში. გაწერა GCS 15 + ტომოგრაფია ნორმაზე.</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--amber);">
-          <div class="mini-label" style="color:var(--amber);">შუალედური TBI</div>
+          <div class="mini-label" style="color:var(--amber);">საშუალო ხარისხის ტრავმა</div>
           <div class="mini-val" style="color:var(--amber);">GCS 9–12</div>
-          <div class="mini-body">CT → ICU. ნ-ქ. კ-ია. ICP მ-ბ. ← სავ.</div>
+          <div class="mini-body">კომპიუტერული ტომოგრაფია → საინტენსიური თერაპიის განყოფილებაში დაკვირვება. ნევროქირურგის კონსულტაცია. თავის ტვინში წნევის მონიტორინგი საჭიროებისამებრ.</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--red);">
-          <div class="mini-label" style="color:var(--red);">მძიმე TBI</div>
+          <div class="mini-label" style="color:var(--red);">მძიმე ხარისხის ტრავმა</div>
           <div class="mini-val" style="color:var(--red);">GCS ≤8</div>
-          <div class="mini-body">RSI + CT + ICP მ-ბ. ნეირ. სასწ.</div>
+          <div class="mini-body">ინტუბაცია სასწრაფო თანმიმდევრობით + კომპიუტერული ტომოგრაფია + თავის ტვინში წნევის მონიტორინგი. სასწრაფო ნევროქირურგის ჩართვა.</div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">GCS — Glasgow Coma Scale სკალა (3–15) <span class="badge badge-blue">მინ. 3 — მაქს. 15</span></div>
+      <div class="card-title">გლასგოს კომის შკალა — ქულათა დიაპაზონი 3–15 <span class="badge badge-blue">3 ღრმა კომა ← → 15 ნორმა</span></div>
       <div class="tablewrap">
         <table class="data">
-          <tr><th>კომპონენტი</th><th>პასუხი</th><th>ქულა</th></tr>
-          <tr><td rowspan="4" style="font-weight:700;vertical-align:middle;">Eye (E) — თვალი</td><td>სპონტანური გახელება</td><td class="c1">4</td></tr>
-          <tr><td>ხმაზე გახელება</td><td class="c2">3</td></tr>
-          <tr><td>ტკივილზე გახელება</td><td class="c3">2</td></tr>
-          <tr><td>არ იხელება</td><td class="c4">1</td></tr>
-          <tr><td rowspan="5" style="font-weight:700;vertical-align:middle;">Verbal (V) — მეტყველება</td><td>ორიენტირებული</td><td class="c1">5</td></tr>
-          <tr><td>დეზორიენტირებული</td><td class="c2">4</td></tr>
-          <tr><td>ცალკეული სიტყვები</td><td class="c3">3</td></tr>
-          <tr><td>ბგერები</td><td class="c3">2</td></tr>
-          <tr><td>არ ლაპარაკობს</td><td class="c4">1</td></tr>
-          <tr><td rowspan="6" style="font-weight:700;vertical-align:middle;">Motor (M) — მოტორ.</td><td>ბრძანებებს ასრულებს</td><td class="c1">6</td></tr>
-          <tr><td>ლოკალიზებს ტკივ.</td><td class="c1">5</td></tr>
-          <tr><td>იწყვეტება ტკ-ისგ.</td><td class="c2">4</td></tr>
-          <tr><td>Decorticate (Flexion)</td><td class="c3">3</td></tr>
-          <tr><td>Decerebrate (Extension)</td><td class="c4">2</td></tr>
-          <tr><td>არ მოძრაობს</td><td class="c4">1</td></tr>
+          <tr><th>კომპონენტი</th><th>პასუხის ტიპი</th><th>ქულა</th></tr>
+          <tr><td rowspan="4" style="font-weight:700;vertical-align:middle;">თვალები (E)</td><td>სპონტანურად იხსნება</td><td class="c1">4</td></tr>
+          <tr><td>ხმაზე იხსნება</td><td class="c2">3</td></tr>
+          <tr><td>ტკივილზე იხსნება</td><td class="c3">2</td></tr>
+          <tr><td>არ იხსნება</td><td class="c4">1</td></tr>
+          <tr><td rowspan="5" style="font-weight:700;vertical-align:middle;">ხმოვანი პასუხი (V)</td><td>ორიენტირებული საუბარი</td><td class="c1">5</td></tr>
+          <tr><td>დაბნეული საუბარი</td><td class="c2">4</td></tr>
+          <tr><td>შეუსაბამო სიტყვები</td><td class="c3">3</td></tr>
+          <tr><td>გაუგებარი ბგერები</td><td class="c3">2</td></tr>
+          <tr><td>არანაირი პასუხი</td><td class="c4">1</td></tr>
+          <tr><td rowspan="6" style="font-weight:700;vertical-align:middle;">საავი პასუხი (M)</td><td>ბრძანებას ემორჩილება</td><td class="c1">6</td></tr>
+          <tr><td>ტკივილს ლოკალიზებულად პასუხობს</td><td class="c1">5</td></tr>
+          <tr><td>ტკივილს გაურკვევლად (ფლექსიით) ერიდება</td><td class="c2">4</td></tr>
+          <tr><td>დეკორტიკაციული ფლექსია (მოღუნვა)</td><td class="c3">3</td></tr>
+          <tr><td>დეცერებრაციული ექსტენზია (გაშლა)</td><td class="c4">2</td></tr>
+          <tr><td>არანაირი მოძრაობა</td><td class="c4">1</td></tr>
         </table>
       </div>
     </div>
 
     <div class="section-head"><h2>ინტრაკრანიალური ჰემატომები</h2></div>
     <div class="card">
-      <div class="card-title">ჰემატომები — CT-ზე ნიშნები <span class="badge badge-red">CT!</span></div>
+      <div class="card-title">ჰემატომების ტიპები — კომპიუტერული ტომოგრაფიის ნიშნები <span class="badge badge-red">CT გადამწყვეტია!</span></div>
 
       <div class="injury-box box">
-        <div class="box-title">Epidural Hematoma (EDH) — ეპიდურალური ჰემატომა</div>
-        <div class="box-body">CT: Biconvex/Lenticular (ორმხრ. ამობ.), Hyperdense. „Lucid Interval" — ბ-ა, შემდ. ↓ GCS. MMA (Middle Meningeal Artery) გლეჯა (Temporal bone Fx). ახ-ი, კ-ი!</div>
-        <div class="box-tx"><strong>🏥:</strong> GCS ↓ → გადაუდ. ოპ. Burr Hole — ი-ში 30 წ. Herniation ← ← EDH.</div>
+        <div class="box-title">ეპიდურალური ჰემატომა (Epidural Hematoma)</div>
+        <div class="box-body">ტომოგრაფიაზე: ორმხრივ-ამოზნექილი (ბიკონვექსური), ლინზისმაგვარი ფორმის, მკვრივი (ჰიპერდენსური) წანაზარდი. „ნათელი ინტერვალი“ — პაციენტი თავდაპირველად ცნობიერია, შემდეგ გონება უარესდება — კლასიკური ნიშანი. გამოწვეულია შუა მენინგეალური არტერიის გაგლეჯით (ჩვეულებრივ საფეთქლის ძვლის მოტეხილობასთან ერთად). ახალგაზრდა ასაკში უფრო ხშირია. სწრაფად პროგრესირებადია!</div>
+        <div class="box-tx"><strong>🏥:</strong> გონების დაქვეითება → გადაუდებელი ოპერაცია (ხვრელის გახსნა თავის ქალაში — Burr Hole). ოპერაცია 30 წუთის განმავლობაში გადამწყვეტია. დროულად ოპერირებული შემთხვევები პროგნოზით საუკეთესოა ყველა ინტრაკრანიალურ ჰემატომას შორის.</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">Subdural Hematoma (SDH) — სუბდურალური ჰემატომა</div>
-        <div class="box-body">CT: Crescent (ნახევარმთვ.), Midline Shift. Bridging Veins-ის გლეჯა. Elder (ატ. ↑!), ალკ. სიმ. &gt;5mm, Midline Shift &gt;10mm → ოპ.</div>
-        <div class="box-tx"><strong>🏥:</strong> მ-ი → კ-ატ. მ-ბ; ქ-ი → ოპ. (ცუდი პ-ი).</div>
+        <div class="box-title">სუბდურალური ჰემატომა (Subdural Hematoma)</div>
+        <div class="box-body">ტომოგრაფიაზე: ნახევარმთვარისებური (ნამგლისებური) ფორმის წანაზარდი, რომელიც გადადის შუახაზის (midline) საზღვარს. გამოწვეულია „დამაკავშირებელი ვენების“ (Bridging Veins) გაგლეჯით. ხანდაზმულებში უფრო ხშირია (ტვინის ატროფიის გამო ვენები უფრო დაჭიმულია), ასევე ალკოჰოლზე ან ანტიკოაგულანტებზე დამოკიდებულ პაციენტებში. სიგანე &gt;5მმ ან შუახაზის გადაადგილება &gt;10მმ → ოპერაციის ჩვენება.</div>
+        <div class="box-tx"><strong>🏥:</strong> მცირე ზომის → კონსერვატიული მართვა და დაკვირვება; მნიშვნელოვანი ზომის ან გონების სწრაფი დაქვეითება → გადაუდებელი ოპერაცია (კრანიოტომია). პროგნოზი შედარებით უარესია ეპიდურალურ ჰემატომასთან შედარებით, რადგან თანმხლები ტვინის ქსოვილის დაზიანებაც ხშირია.</div>
       </div>
 
       <div class="warn-box box">
-        <div class="box-title">Subarachnoid Hemorrhage (SAH) — სუბარაქნოიდული სისხლჩაქცევა</div>
-        <div class="box-body">CT: ღაribelles-ებში Hyperdense. Vasospasm (3–14 დ.). ← Cerebral Edema. TXA ✘ SAH-ში!</div>
-        <div class="box-tx"><strong>🏥:</strong> Nimodipine 60 მგ q4h (Vasospasm ↓), ჰ-ი-ა, ← ← ←.</div>
+        <div class="box-title">სუბარაქნოიდული სისხლდენა (Subarachnoid Hemorrhage)</div>
+        <div class="box-body">ტომოგრაფიაზე: მკვრივი (ჰიპერდენსური) ნაერთი თავის ტვინის ხალიჩისებურ სივრცეებში (ნაოჭებში). გვიანდელი გართულება — სისხლძარღვის სპაზმი (ვაზოსპაზმი), ვითარდება დაზიანებიდან 3–14 დღეში და იწვევს იშემიურ ინსულტს. თავის ტვინის შეშუპებაც ხშირი თანმხლები გართულებაა.</div>
+        <div class="box-tx"><strong>🏥:</strong> ნიმოდიპინი 60 მგ პერორალურად ყოველ 4 საათში (ამცირებს ვაზოსპაზმის რისკს), ჰიდრაცია, წნევის კონტროლი, ნევროლოგიური მონიტორინგი.</div>
       </div>
 
       <div class="injury-box box">
-        <div class="box-title">Diffuse Axonal Injury (DAI) — დიფუზური აქსონური დაზიანება</div>
-        <div class="box-body">CT: ხშირად ნორმალური პირველ საათებში. MRI: Petechiae თეთრ მატერიაში (Corpus Callosum, Brainstem). ↓ GCS ← ← ← Decel/Rotational. ↓ GCS-ი, CT ნ-ი = DAI ეჭვი.</div>
-        <div class="box-tx"><strong>🏥:</strong> ICP ↓, ნ-ო პ-ე, ← ←. ც. პ-ი ↓.</div>
+        <div class="box-title">დიფუზური აქსონური დაზიანება (Diffuse Axonal Injury)</div>
+        <div class="box-body">ტომოგრაფიაზე ხშირად ნორმალურია ან მინიმალური ცვლილებებით — ეს არ ნიშნავს, რომ დაზიანება არ არსებობს! მაგნიტურ-რეზონანსულ გამოსახულებაზე ვლინდება წვრილი წერტილოვანი სისხლჩაქცევები (Petechiae) თეთრი ნივთიერების ფარგლებში — კორძისებურ სხეულში (Corpus Callosum) და ღეროში (Brainstem). გამოწვეულია ტვინის სწრაფი შენელება-ბრუნვითი (Rotational/Deceleration) ძალებით ავტოავარიის ან სიმაღლიდან ვარდნისას. გონების დაქვეითება დაუყოვნებლივ ვითარდება ტრავმის მომენტში (განსხვავებით ეპიდურალური ჰემატომისგან, სადაც „ნათელი ინტერვალია“).</div>
+        <div class="box-tx"><strong>🏥:</strong> არ არსებობს ქირურგიული მკურნალობა — მართვა მხოლოდ თავის ტვინში წნევის კონტროლი და ნევროლოგიური დაცვაა (იხილეთ ქვემოთ TBI მართვა). პროგნოზი ცვალებადია — მძიმე შემთხვევებში ხანგრძლივი კომა და მაღალი სიკვდილიანობა.</div>
       </div>
     </div>
 
-    <div class="section-head"><h2>ICP ↑ / Herniation — ჰერნიაცია</h2></div>
+    <div class="section-head"><h2>თავის ტვინში წნევის მომატება / ჰერნიაცია</h2></div>
     <div class="card">
-      <div class="card-title">Herniation-ის ნიშნები <span class="badge badge-red">სასწ.!</span></div>
+      <div class="card-title">ტვინის ჰერნიაციის (გამოთხელების) ნიშნები <span class="badge badge-red">სასწრაფოა!</span></div>
       <div class="injury-box box">
-        <div class="box-title">Cushing's Triad — გვიანი, კრიტიკული ნიშანი ❗</div>
-        <div class="box-body">↑ სისტ. წნ. (Wide Pulse Pressure) + ბრადიკარდია + არარეგ. სუნთქვა (Cheyne-Stokes). Herniation-ის ბ. ← ← სასწ. ი-ბ!</div>
+        <div class="box-title">კუშინგის ტრიადა — ჰერნიაციის გვიანი, კრიტიკული ნიშანი</div>
+        <div class="box-body">სამი ერთდროული ნიშანი: <strong>(1) არტერიული წნევის მომატება</strong> ფართო პულსური წნევით (სისტოლურისა და დიასტოლურის სხვაობის ზრდა), <strong>(2) გულის ცემის შემცირება (ბრადიკარდია)</strong>, <strong>(3) სუნთქვის რიტმის დარღვევა</strong> (მაგ. Cheyne-Stokes ტიპის სუნთქვა — სუნთქვის სიხშირისა და სიღრმის ციკლური ცვალებადობა). ეს არის ცენტრალური ნერვული სისტემის ცდა, შეინარჩუნოს თავის ტვინის პერფუზია მკვეთრად მომატებული თავის ტვინში წნევის პირობებში. კუშინგის ტრიადის გამოჩენისთანავე — ეს ჰერნიაციის გადაუდებელი ნიშანია, საჭიროა დაუყოვნებლივი ჩარევა!</div>
       </div>
       <div class="row row-2 mt8">
-        <div class="mini-card"><div class="mini-label">Uncal (Transtentorial) Herniation</div><div class="mini-body">↓ GCS → CN III ipsil. (↑ გუგა, Fixed) → Decerebrate → სიკ-ი. ← Mannitol + ი-ა + CT + ნეირ.</div></div>
-        <div class="mini-card"><div class="mini-label">Tonsillar Herniation</div><div class="mini-body">ტ-ი ღ. → FM-ში → ბ-ია, Resp. Arrest. ← სასწ. Mannitol + ინტ. + CT.</div></div>
+        <div class="mini-card"><div class="mini-label">უნკალური (ტრანსტენტორიალური) ჰერნიაცია</div><div class="mini-body">გონების დაქვეითება → იმავე მხარეს III ნერვის (Oculomotor) ჩაჭყლეტა (გუგა ფართოვდება, ფიქსირებული, შუქზე არ რეაგირებს) → დეცერებრაციული პოზა → სიკვდილი ღეროს ჩაჭყლეტის გამო, თუ ჩარევა არ მოხდება. გადაუდებელი მართვა: მანიტოლი + ჰიპერვენტილაცია + გადაუდებელი ტომოგრაფია და ნევროქირურგიული ჩარევა.</div></div>
+        <div class="mini-card"><div class="mini-label">ტონზილარული (ცერებელუმის ნუშისებრების) ჰერნიაცია</div><div class="mini-body">ცერებელუმის ქვედა ნაწილი იჭყლიტება თავის ქალის ფუძის დიდ ხვრელში (Foramen Magnum) → სასუნთქი ცენტრის ჩაჭყლეტა → ბრადიკარდია, სუნთქვის გაჩერება. გადაუდებელი მართვა: მანიტოლი + ინტუბაცია + გადაუდებელი ტომოგრაფია.</div></div>
       </div>
     </div>
 
-    <div class="section-head"><h2>TBI მართვა</h2></div>
+    <div class="section-head"><h2>თავის ტვინის ტრავმის მართვა</h2></div>
     <div class="card">
-      <div class="card-title">TBI — ATLS მ-ბ. <span class="badge badge-teal">პ-ბი</span></div>
-      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>A/B — ოქსიგენაცია!</strong> SpO₂ ≥95%. PaO₂ ≥60. ✘ ჰიპოქსია! Secondary Injury ← ← ←.</div></div>
-      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>BP — სისხლის წნევა!</strong> სისტ. ≥90 (&lt;50 წ.) / ≥100–110 (≥50 წ.). MAP ≥80. ✘ Permissive Hypo TBI-ში! ← ← ← Secondary Injury.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ICP ↑ მართ.</strong> HOB 30° → Mannitol 0.5–1 გ/კგ IV → 3% HTS 250 მლ → PaCO₂ 35–40. Herniation → PaCO₂ 30–35 (მ-ლ., &lt;30 წ.).</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ინტ.</strong> GCS ≤8 → RSI. Lidocaine 1.5 მგ/კგ IV (ICP spike ↓). PaCO₂ 35–40.</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Seizure პ-ია.</strong> Levetiracetam 1 გ IV ან Phenytoin. 7 დ-ე. GCS ≤8 → ← ← ←.</div></div>
-      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Glucose (გლუკოზა).</strong> ↓ GCS ← → IV D50W (ჰ-გ-ია). &gt;180 = Secondary ↑↑.</div></div>
+      <div class="card-title">თავის ტვინის ტრავმა — ATLS-ის მართვის პრინციპები <span class="badge badge-teal">პრინციპები</span></div>
+      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>სასუნთქი გზა და სუნთქვა — ჟანგბადდეფიციტი მკვეთრად ამძიმებს გამოსავალს!</strong> ჟანგბადით გაჯერება ≥95%, არტერიული ჟანგბადის წნევა ≥60 მმ ვწყ. სვ. ნებისმიერი ეპიზოდი ჟანგბადდეფიციტისა მკვეთრად ზრდის მეორად დაზიანებას — ეს ერთ-ერთი ყველაზე ძირეული, პრევენციადი ფაქტორია მთელ თავის ტვინის ტრავმის მართვაში.</div></div>
+      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>არტერიული წნევა — ჰიპოტენზია მკვეთრად ამძიმებს გამოსავალს!</strong> სისტოლური წნევა ≥90 მმ ვწყ. სვ. (50 წლამდე) / ≥100–110 (50 წლის ზემოთ). საშუალო არტერიული წნევა ≥80. ნებადართული ჰიპოტენზიის პრინციპი თავის ტვინის ტრავმისას უკუნაჩვენებია — წნევის შენარჩუნება პრიორიტეტულია, რათა თავის ტვინის პერფუზია არ შემცირდეს და მეორადი დაზიანება არ გაღრმავდეს.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>თავის ტვინში წნევის მომატების მართვა.</strong> საწოლის თავის ნაწილი 30°-ით ამაღლებული → მანიტოლი 0.5–1 გ/კგ ვენაში → ან 3%-იანი ჰიპერტონული ხსნარი 250 მლ → სისხლში ნახშირორჟანგის წნევის შენარჩუნება 35–40 მმ ვწყ. სვ. დონეზე. ჰიპერვენტილაცია (ნახშირორჟანგის წნევა 30–35-მდე დაწევა) მხოლოდ ჰერნიაციის გადაუდებელი ეჭვისას, მაქსიმუმ 30 წუთის განმავლობაში.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ინტუბაცია.</strong> გლასგოს კომის შკალის ქულა ≤8 → ინტუბაცია სასწრაფო თანმიმდევრობით. ლიდოკაინი 1.5 მგ/კგ ვენაში წინასწარ (ამცირებს ლარინგოსკოპიაზე თავის ტვინში წნევის მომატებულ პასუხს). ვენტილაციის პარამეტრები ისე ვარეგულირებთ, რომ ნახშირორჟანგის წნევა შენარჩუნდეს 35–40 დონეზე.</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>კრუნჩხვის პრევენცია.</strong> ლევეტირაცეტამი 1 გრამი ვენაში ან ფენიტოინი — 7 დღის განმავლობაში, განსაკუთრებით გლასგოს კომის შკალის ქულა ≤8 ან ღია (პენეტრაციული) ტრავმის შემთხვევაში. კრუნჩხვა მკვეთრად ზრდის ჟანგბადის მოთხოვნილებას და თავის ტვინში წნევას.</div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>გლუკოზის კონტროლი.</strong> გონების დაქვეითება ყოველთვის საჭიროებს გლუკოზის გამოკვლევას — დაბალი გლუკოზის შემთხვევაში ვენაში 50%-იანი გლუკოზის ხსნარი (ჰიპოგლიკემია იმიტირებს თავის ტვინის ტრავმის ნიშნებს). გლუკოზის დონე &gt;180 ასევე უარყოფითად მოქმედებს — მეორად დაზიანებას ამძიმებს. მიზანი ნორმოგლიკემიის შენარჩუნებაა.</div></div>
     </div>
 
-    <div class="section-head"><h2>Skull Fractures — ქალის მოტეხ.</h2></div>
+    <div class="section-head"><h2>თავის ქალის მოტეხილობები</h2></div>
     <div class="card">
-      <div class="card-title">Skull Fractures — CT</div>
+      <div class="card-title">თავის ქალის მოტეხილობების ტიპები — ტომოგრაფიული შეფასება</div>
       <div class="safe-box box">
-        <div class="box-title">Linear (ხაზობ.) — ყველაზე ხშირი</div>
-        <div class="box-body">CT: Hypodense ხაზი. Temporal → MMA → EDH! ← ←</div>
+        <div class="box-title">წილადი (ხაზობრივი) მოტეხილობა</div>
+        <div class="box-body">ტომოგრაფიაზე: ხაზისებური, ნაკლებად მკვრივი (ჰიპოდენსური) ხაზი ძვალში. საფეთქლის ძვლის მოტეხილობისას — განსაკუთრებული ყურადღება, რადგან აქ გადის შუა მენინგეალური არტერია → ეპიდურალური ჰემატომის რისკი მკვეთრად მაღალია.</div>
       </div>
       <div class="injury-box box">
-        <div class="box-title">Depressed (ჩავარდ.) — ≥ ქ-ის სისქე</div>
-        <div class="box-body">Open → ინფ. ↑. Seizure ← ← ↑↑.</div>
-        <div class="box-tx"><strong>🏥:</strong> Open Depressed → გადაუდ. ოპ.</div>
+        <div class="box-title">ჩაცვენილი (Depressed) მოტეხილობა</div>
+        <div class="box-body">ძვლის ნაკაწრები ჩაცვენილია ტვინისკენ, სიგანე ≥ ძვლის სიმძლავრის ტოლი ან მეტი. ღია (კანის დაზიანებით თანმხლები) ჩაცვენილი მოტეხილობისას — ინფექციისა და კრუნჩხვის რისკი მკვეთრად მაღალია.</div>
+        <div class="box-tx"><strong>🏥:</strong> ღია ჩაცვენილი მოტეხილობა → გადაუდებელი ოპერაცია (ნაკაწრების აწევა და გასუფთავება).</div>
       </div>
       <div class="warn-box box">
-        <div class="box-title">Basilar Skull Fracture — ქ-ის ბ-ის მ-ბ.</div>
-        <div class="box-body">Battle's Sign (Retroauricular — ყ-ს ძ-ის ქვ. ძ-ი), Raccoon Eyes (Periorbital — ა-ვ. ირ.), CSF Otorrhea/Rhinorrhea (ყ-დ/ც-დ CSF), Hemotympanum. CT.</div>
-        <div class="box-tx"><strong>⚠️ NGT კ-ინდ. → OGT!</strong> ≈4–8 კვ-ში გ-ება.</div>
+        <div class="box-title">თავის ქალის ფუძის მოტეხილობა (Basilar Skull Fracture)</div>
+        <div class="box-body">კლასიკური ნიშნები: ბეტლის ნიშანი (სისხლჩაქცევა ყურის უკან, mastoid-ის ზონაში), „ენოტის თვალები“ (ორმხრივი პერიორბიტალური სისხლჩაქცევა), ცერებროსპინალური სითხის გამოდენა ცხვირიდან ან ყურიდან, ჰემოტიმპანუმი (სისხლი ყურის ბარაბანქალის უკან). დასტურდება კომპიუტერული ტომოგრაფიით.</div>
+        <div class="box-tx"><strong>⚠️ კონტრინდიკაცია:</strong> ცხვირ-კუჭის მილის (ნაზოგასტრალური ზონდის) ჩადგმა ცხვირით კატეგორიულად უკუნაჩვენებია — ზონდს შესაძლოა გადასცა მოტეხილი ფუძის ხვრელით პირდაპირ თავის ტვინში! გამოყენებული უნდა იქნას პირით ჩასადგმელი ზონდი (ოროგასტრალური ზონდი — OGT) ამის ნაცვლად. დაზიანება ჩვეულებრივ 4–8 კვირაში თვითნებურად ხორცირდება.</div>
       </div>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">TBI — სცენ-ზე ალ. <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>Airway!</strong> GCS ≤8 → RSI. Lidocaine ← ← (ICP spike ↓). Jaw-thrust (C-spine!). SpO₂ ≥95%.</div></div>
-      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>BP სისტ. ≥90!</strong> IV + სითხ. (ბ-ი ← ←). ✘ Permissive Hypo TBI-ში!</div></div>
-      <div class="step-row"><div class="step-num warn">3</div><div class="step-text"><strong>Herniation:</strong> Fixed ↑ გ-ა + Cushing's → Mannitol 1 გ/კგ IV + + სასწ. ტ-ი.</div></div>
-      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>Seizure:</strong> Midazolam 5 მგ IM/IV → Lorazepam → Keppra. C-spine!</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Load and Go → CT.</strong> ← ←, ← ←, → Secondary Injury ↑↑.</div></div>
+      <div class="card-title">თავის ტვინის ტრავმა — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>სასუნთქი გზის უზრუნველყოფა პრიორიტეტულია!</strong> გლასგოს კომის შკალის ქულა ≤8 → ინტუბაცია სასწრაფო თანმიმდევრობით. ლიდოკაინი წინასწარ (თავის ტვინში წნევის სკაჩკის შემცირებისთვის). ქვედა ყბის წაწევა (კისრის ხერხემლის დაცვით). ჟანგბადით გაჯერება ≥95%-ის შენარჩუნება.</div></div>
+      <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>არტერიული წნევის შენარჩუნება — არ ვითმენთ ჰიპოტენზიას!</strong> სისტოლური წნევა ≥90-ის შენარჩუნება. ვენური წვდომა + სითხის ბოლუსები საჭიროებისამებრ. ნებადართული ჰიპოტენზია (Permissive Hypotension) თავის ტვინის ტრავმისას არ გამოიყენება!</div></div>
+      <div class="step-row"><div class="step-num warn">3</div><div class="step-text"><strong>ჰერნიაციის ნიშნებზე:</strong> ფიქსირებული, ფართოვებული გუგა + კუშინგის ტრიადა → მანიტოლი 1 გ/კგ ვენაში + ჰიპერვენტილაცია (მხოლოდ ამ შემთხვევაში) + სასწრაფო ტრანსპორტირება ნევროქირურგიული დახმარების მისაწვდომად.</div></div>
+      <div class="step-row"><div class="step-num warn">4</div><div class="step-text"><strong>კრუნჩხვის შემთხვევაში:</strong> მიდაზოლამი 5 მგ კუნთში ან ვენაში → ალტერნატივად ლორაზეპამი → შემდგომ ლევეტირაცეტამი სტაციონარში. კისრის ხერხემლის დაცვა კრუნჩხვის დროსაც აუცილებელია!</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>აიკიდე და გაიქეცი → კომპიუტერული ტომოგრაფია გადამწყვეტია.</strong> ჟანგბადდეფიციტი, ჰიპოტენზია და ადგილზე გაჭიანურებული მართვა ყველა ერთად ზრდიან მეორად დაზიანებას — ტრანსპორტირება ტრავმის ცენტრში არ ჭიანურდება.</div></div>
     </div>
+
   </div><!-- /head -->
 
-  <!-- ══ SPINE / NECK ══ -->
+  <!-- ══════════════ SPINE / NECK ══════════════ -->
   <div id="spine" class="page">
+
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
-      <div class="card-title">SCI — Primary vs Secondary Spinal Cord Injury</div>
+      <div class="card-title">ხერხემლის ტვინის დაზიანება — პირველადი vs მეორადი</div>
       <div class="purple-box box">
-        <div class="box-title">ზურგის ტვინის დაზიანების მექანიზმი</div>
+        <div class="box-title">ხერხემლის ტვინის დაზიანების მექანიზმი</div>
         <div class="box-body">
-          <strong>Primary SCI:</strong> მომენტალური ი-ბ. (კ-სია, ლ-ა, ი-ქ.) → ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←ნ-ი ← ← ← ← ←<br><br>
-          <strong>Secondary SCI:</strong> ჰ-ქ. (SpO₂↓) + ჰ-ტ. (MAP &lt;85) + ო-ა + ჰ-მ → ↑ ← ←. MAP ≥85–90 7 დ!<br><br>
-          <strong>Neurogenic Shock (ნეიროგ. შოკი):</strong> T6 ← ← SCI → ← ← ← ↓ → ბრად. + ჰიპოტ. (≠ ჰ-ვ.!). IV + Norepinephrine.
+          <strong>პირველადი დაზიანება:</strong> უშუალო მექანიკური ზემოქმედება (კომპრესია, გადაჭიმვა, გაჭდევა) ხერხემლის ტვინის ქსოვილზე ტრავმის მომენტში — მოტეხილობით, ამოვარდნით ან წანაცვლებით გამოწვეული. ეს დაზიანება შეუქცევადია სამედიცინო ჩარევით.<br><br>
+          <strong>მეორადი დაზიანება:</strong> ვითარდება პირველადი დაზიანების შემდეგ საათების-დღეების განმავლობაში და, თავის ტვინის დაზიანების ანალოგიურად, პრევენციადია: ჟანგბადდეფიციტი (ჟანგბადით გაჯერების შემცირება), ჰიპოტენზია (საშუალო არტერიული წნევა &lt;85 მმ ვწყ. სვ.), შეშუპება, ჰიპერთერმია → ყველა მათგანი ამძიმებს ხერხემლის ტვინის ქსოვილის იშემიას. <strong>საშუალო არტერიული წნევის შენარჩუნება ≥85–90 მმ ვწყ. სვ. 7 დღის განმავლობაში</strong> ამცირებს მეორად დაზიანებას.<br><br>
+          <strong>ნეიროგენული შოკი:</strong> T6 დონის ზემოთ ხერხემლის ტვინის დაზიანებისას, სიმპათიკური ნერვული ტონუსის სრულ დაკარგვას მივყავართ — სისხლძარღვების გაფართოება + გულის ცემის შემცირება (ბრადიკარდია). ეს მკვეთრად განსხვავდება ჰიპოვოლემიური (სისხლდენით გამოწვეული) შოკისგან, სადაც პულსი მაღალია! მართვა: ვენური სითხეები + ნორეპინეფრინი (სისხლძარღვების შემკვრელი მედიკამენტი) წნევის შესანარჩუნებლად.
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">Incomplete SCI Syndromes — არასრული SCI სინდრომები <span class="badge badge-amber">კ-ა ← ← ←</span></div>
+      <div class="card-title">არასრული ხერხემლის ტვინის სინდრომები <span class="badge badge-amber">ნევროლოგიური სურათები</span></div>
       <div class="row row-2">
-        <div class="mini-card"><div class="mini-label">Central Cord Syndrome — ცენტრ. კ.</div><div class="mini-body">ხელები &gt; ფეხები სუსტია. Proprioception ← ←. ↑ ← Hyperextension. საუკ. Prognosis.</div></div>
-        <div class="mini-card"><div class="mini-label">Anterior Cord Syndrome — წინა კ.</div><div class="mini-body">↓ მოტ. + ↓ Pain/Temp. ← ← Proprioception. ↑ ← Flexion/ACA. ცუდი Prognosis.</div></div>
-        <div class="mini-card"><div class="mini-label">Brown-Séquard Syndrome — ნახევ. კ.</div><div class="mini-body">Ipsilateral: ↓ მოტ. + ↓ Proprioception. Contralateral: ↓ Pain + ↓ Temp. საუკ. Prognosis (Penetrating).</div></div>
-        <div class="mini-card"><div class="mini-label">Conus Medullaris / Cauda Equina</div><div class="mini-body">ბუტ. + Bowel/Bladder ↓ (Saddle Anesthesia). Foley!</div></div>
+        <div class="mini-card"><div class="mini-label">ცენტრალური ხერხემლის ტვინის სინდრომი (Central Cord)</div><div class="mini-body">ხელების ფუნქცია უფრო მძიმედ ზიანდება, ვიდრე ფეხების (ხელები &gt; ფეხები). ხშირად ხანდაზმულებში, კისრის ჰიპერექსტენზიის (კისრის უკან გადახრის) მექანიზმით, არსებული კისრის ხერხემლის ცვლილებების ფონზე (სპონდილოზი). პროგნოზი შედარებით კარგია — ხშირად ნაწილობრივი აღდგენა.</div></div>
+        <div class="mini-card"><div class="mini-label">წინა ხერხემლის ტვინის სინდრომი (Anterior Cord)</div><div class="mini-body">საავი ფუნქციის დაკარგვა + ტკივილისა და ტემპერატურის შეგრძნების დაკარგვა. ღრმა შეგრძნება (პროპრიოცეფცია) ნაწლავის უკანა სვეტებში შენარჩუნებულია. გამოწვეულია წინა ხერხემლის ტვინის არტერიის დაზიანებით (იშემია) — ხშირად აორტის პათოლოგიასთან ან ხერხემლის ფლექსიური ტრავმასთან ერთად. პროგნოზი შედარებით ცუდია.</div></div>
+        <div class="mini-card"><div class="mini-label">ბრაუნ-სეკარის სინდრომი (Brown-Séquard)</div><div class="mini-body">ხერხემლის ტვინის ნახევრის (ერთი მხარის) დაზიანება, ჩვეულებრივ ღია (პენეტრაციული) ტრავმისას. იმავე მხარეს: საავი ფუნქციის და ღრმა შეგრძნების დაკარგვა. საპირისპირო მხარეს: ტკივილისა და ტემპერატურის შეგრძნების დაკარგვა (რადგან ეს ბოლქვები ხერხემლის ტვინში გადასაჯვარდება). პროგნოზი ყველაზე ხშირად საუკეთესოა არასრულ სინდრომებში.</div></div>
+        <div class="mini-card"><div class="mini-label">კონუსის/ცხენისკუდის სინდრომი (Conus Medullaris / Cauda Equina)</div><div class="mini-body">ხერხემლის ტვინის ან ნერვების ბოლქვების დაზიანება ლუმბარულ-საკრალურ დონეზე. ნიშნები: საშარდე ბუშტის და ნაწლავის ფუნქციის დაკარგვა (შარდისა და განავლის შეუკავებლობა ან შეკავება), „იარაღის" (Saddle) ზონაში შეგრძნების დაკარგვა, ფეხების სიმეტრიული ან ასიმეტრიული სისუსტე. გადაუდებელი ვითარებაა — საჭიროებს გადაუდებელ ნევროქირურგიულ შეფასებას. ფოლის კათეტერის ჩადგმა აუცილებელია საშარდე ბუშტის გადაჭიმვის თავიდან აცილებლად.</div></div>
       </div>
     </div>
 
-    <div class="section-head"><h2>C-Spine Clearance — კ-ხ. გ-ა</h2></div>
+    <div class="section-head"><h2>კისრის ხერხემლის გასუფთავება</h2></div>
     <div class="card">
-      <div class="card-title">C-Spine Clearance — NEXUS / Canadian <span class="badge badge-amber">C-Collar</span></div>
+      <div class="card-title">კისრის ხერხემლის გასუფთავება — NEXUS კრიტერიუმები <span class="badge badge-amber">ხერხემლის საყელური</span></div>
       <div class="warn-box box">
-        <div class="box-title">NEXUS — 5 კ-ი (ყველა (+) → C-spine Clear!)</div>
-        <div class="box-body">1. ანალგ. ↓ (ა-ი ← ← ← ← 2. ნ-ი ← ← 3. ინ-ა ← ← ← 4. ← ← ← ← 5. VAS 0 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←-ა.</div>
+        <div class="box-title">NEXUS — 5 კრიტერიუმი (ყველა დადებითი → ხერხემალი თავისუფლად შესაძლოა გასუფთავდეს)</div>
+        <div class="box-body">
+          <strong>1. ხერხემლის შუახაზზე ტკივილის არარსებობა</strong> — პალპაციით (ხელით შემოწმებით) ხერხემლის ხერხემლის წანაზარდების გასწვრივ ტკივილი არ აღინიშნება.<br>
+          <strong>2. ნევროლოგიური დეფიციტის არარსებობა</strong> — კიდურებში სისუსტე, შეგრძნების დარღვევა ან რეფლექსების ცვლილება არ აღინიშნება.<br>
+          <strong>3. ცნობიერების ნორმალური დონე</strong> — გონება სრულად გამოკვეთილია, ალკოჰოლის ან ნარკოტიკის გავლენის ნიშანი არ აღინიშნება.<br>
+          <strong>4. ინტოქსიკაციის არარსებობა.</strong><br>
+          <strong>5. ყურადღების გადასატანი მტკივნეული დაზიანების არარსებობა (Distracting Injury)</strong> — სხვა მძიმე, ტკივილით გამოვლენილი დაზიანება (მაგ. გრძელი ძვლის მოტეხილობა), რომელიც პაციენტს ხერხემლის ტკივილისგან ყურადღებას აფანტავს.<br><br>
+          ყველა ხუთივე კრიტერიუმის დაკმაყოფილებისას ხერხემალი კლინიკურად შესაძლოა გასუფთავდეს ხერხემლის საყელურის გარეშე. ერთ-ერთის დარღვევისას — ხერხემლის საყელური ინარჩუნებს, საჭიროა ვიზუალური დიაგნოსტიკა (კომპიუტერული ტომოგრაფია).
+        </div>
       </div>
       <div class="injury-box box" style="margin-top:8px;">
-        <div class="box-title">⚠️ RSI + C-spine: Inline Stabilization!</div>
-        <div class="box-body">1 ა-ი ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←). C-collar ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←!</div>
+        <div class="box-title">⚠️ ინტუბაცია + კისრის ხერხემლის დაცვა: ხერხის სწორხაზობრივი ფიქსაცია</div>
+        <div class="box-body">ერთი გუნდის წევრი დგება პაციენტის თავთან და ხერხემლის ღერძულ პოზიციას ხელით ინარჩუნებს ორივე ხელით (Manual In-Line Stabilization) მთელი ინტუბაციის პროცესის განმავლობაში — წინასწარ მოხსნილია ხერხემლის საყელურის წინა ნაწილი ინტუბაციის გასაადვილებლად, ხელით ფიქსაცია მაშინ ანაცვლებს მექანიკურ საყელურს. ინტუბაციის დასრულების შემდეგ ხერხემლის საყელური ხელახლა იდება. ეს ტექნიკა უზრუნველყოფს ხერხემლის დაცვას ისე, რომ არ შეუშალოს ხელი ხორხის ვიზუალიზაციას ან ინტუბაციის ხელსაწყოს გადასატანად.</div>
       </div>
     </div>
 
-    <div class="section-head"><h2>SCI მართვა</h2></div>
+    <div class="section-head"><h2>ხერხემლის ტვინის დაზიანების მართვა</h2></div>
     <div class="card">
-      <div class="card-title">SCI — ATLS მ-ბ.</div>
+      <div class="card-title">ხერხემლის ტვინის დაზიანება — ATLS-ის მართვის პრინციპები</div>
       <ul class="list">
-        <li><strong>MAP ≥85–90 mmHg</strong> 7 დ. განმ. (IV ± Norepinephrine)</li>
-        <li><strong>Methylprednisolone</strong> — ❌ ATLS 2013+: არ რეკ. (NASCIS III კვლ. ✗)</li>
-        <li><strong>T4 ← ← SCI</strong> → ნ-ი-ქ. → Foley!</li>
-        <li><strong>Autonomic Dysreflexia</strong> (T6 ← ←): ↑ BP + ← ← → ← ← (← ←, Foley ← ←)</li>
-        <li><strong>DVT პ-ია</strong>: LMWH + Compression. SCI = ↑↑ VTE</li>
-        <li><strong>Ileus / Urinary Retention</strong> — ← ← ← ←</li>
+        <li><strong>საშუალო არტერიული წნევა ≥85–90 მმ ვწყ. სვ.</strong> 7 დღის განმავლობაში მეორადი იშემიური დაზიანების პრევენციისთვის (ვენური სითხეები ± ნორეპინეფრინი)</li>
+        <li><strong>მეთილპრედნიზოლონი (კორტიკოსტეროიდი)</strong> — ❌ თანამედროვე ATLS გაიდლაინებში (2013 წლის შემდეგ) რუტინულად <span class="red">არ გამოიყენება</span> (NASCIS III კვლევის შემდგომი ანალიზებით სარგებელი არ დადასტურდა, ხოლო გართულებების — ინფექციის, ჭრილობის შეხორცების დარღვევის — რისკი მაღალია)</li>
+        <li><strong>T6 დონის ზემოთ ხერხემლის ტვინის დაზიანება</strong> → ვენური სითხეები + ნორეპინეფრინი ნეიროგენული შოკის წინააღმდეგ → ფოლის (საშარდე) კათეტერის დაუყოვნებლივი ჩადგმა საშარდე ბუშტის რეტენციის თავიდან აცილებლად</li>
+        <li><strong>ავტონომიური დისრეფლექსია</strong> (T6 დონის ზემოთ ქრონიკული დაზიანების მქონეებში): არტერიული წნევის მკვეთრი მომატება + ძლიერი თავის ტკივილი — გამოწვეულია ხშირად საშარდე ბუშტის გადავსებით ან ნაწლავის გადატანითი ციტაცით → მართვა: გამომწვევი ფაქტორის (ფოლის კათეტერის შეკავება, ნაწლავის გადატანის) მოძებნა და მოხსნა</li>
+        <li><strong>ღრმა ვენების თრომბოზის პრევენცია</strong> — დაბალმოლეკულური ჰეპარინი + კომპრესიული წინდები. ხერხემლის ტვინის დაზიანება მკვეთრად ზრდის ვენური თრომბოემბოლიის რისკს უმოძრაობის გამო</li>
+        <li><strong>ნაწლავის გადანაცილების შეფერხება (Ileus) / შარდის რეტენცია</strong> — ხშირი ადგილზევე, საჭიროებს ფოლის კათეტერსა და ნაზოგასტრალურ ზონდს დეკომპრესიისთვის</li>
       </ul>
     </div>
 
-    <div class="section-head"><h2>Neck Zones + Injury</h2></div>
+    <div class="section-head"><h2>კისრის ანატომიური ზონები და დაზიანება</h2></div>
     <div class="card">
-      <div class="card-title">კ-ის ზ-ები — Zone System <span class="badge badge-blue">Penetrating</span></div>
+      <div class="card-title">კისრის ღია (პენეტრაციული) დაზიანების ანატომიური ზონები <span class="badge badge-blue">პენეტრაციული ტრავმა</span></div>
       <div class="row row-3">
-        <div class="mini-card" style="border-left:3px solid var(--green);"><div class="mini-label" style="color:var(--green);">Zone I</div><div class="mini-body">Clavicle → Cricoid. aorta, subclavian, lung apex. CT Angio.</div></div>
-        <div class="mini-card" style="border-left:3px solid var(--amber);"><div class="mini-label" style="color:var(--amber);">Zone II</div><div class="mini-body">Cricoid → Mandible ← ←. Carotid, jugular. Direct Exploration.</div></div>
-        <div class="mini-card" style="border-left:3px solid var(--red);"><div class="mini-label" style="color:var(--red);">Zone III</div><div class="mini-body">Mandible → Skull. Distal carotid. CT Angio + ← ←.</div></div>
+        <div class="mini-card" style="border-left:3px solid var(--green);"><div class="mini-label" style="color:var(--green);">I ზონა</div><div class="mini-body">ხორთუმის ბორცვიდან რკალისებრ ხრტილამდე. რისკის ქვეშ: აორტა, ხორთუმისქვედა (Subclavian) სისხლძარღვები, ფილტვის წვერი. შესაფასებლად — კომპიუტერული ტომოგრაფიის ანგიოგრაფია.</div></div>
+        <div class="mini-card" style="border-left:3px solid var(--amber);"><div class="mini-label" style="color:var(--amber);">II ზონა</div><div class="mini-body">რკალისებრი ხრტილიდან ქვედა ყბამდე — ყველაზე ხშირად დაზიანებული ზონა. რისკის ქვეშ: საძილური არტერია (Carotid), ლავიწის ვენა (Jugular). მართვა: უშუალო ქირურგიული გადასინჯვა.</div></div>
+        <div class="mini-card" style="border-left:3px solid var(--red);"><div class="mini-label" style="color:var(--red);">III ზონა</div><div class="mini-body">ქვედა ყბიდან თავის ქალის ფუძემდე. რისკის ქვეშ: საძილური არტერიის დისტალური ნაწილი — ანატომიურად ძნელად ხელმისაწვდომი ქირურგიულად. შესაფასებლად — კომპიუტერული ტომოგრაფიის ანგიოგრაფია + ინტერვენციული რადიოლოგია.</div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">Blunt Neck Injury — ← ← ← ← ← ← <span class="badge badge-red">← ← ←</span></div>
+      <div class="card-title">დახურული (Blunt) კისრის ტრავმა <span class="badge badge-red">დაამახსოვრე</span></div>
       <div class="injury-box box">
-        <div class="box-title">Laryngeal Fracture — ხორხის მოტეხ.</div>
-        <div class="box-body">ხ-ი ხ-ა, ხ-ა ↓, SubQ Emphysema, Tender Larynx, Hemoptysis. RSI → ← ← ← ← → Surgical Airway!</div>
-        <div class="box-tx">Awake Tracheostomy ← ←. ✘ RSI Blind Attempts!</div>
+        <div class="box-title">ხორხის მოტეხილობა (Laryngeal Fracture)</div>
+        <div class="box-body">ნიშნები: ხმის ცვლილება ან სრული უხმობა, სუნთქვის გართულება, კანქვეშა ემფიზემა, ხორხის მტკივნეულობა პალპაციით, ჰემოპტიზი (სისხლის ამოხველება). ინტუბაცია ძალიან რთული ან საშიში შესაძლოა იქნას ანატომიის დარღვევის გამო → ხშირად საჭიროებს ქირურგიულ სასუნთქ გზას.</div>
+        <div class="box-tx">სასწავო, გონებაზე მყოფ პაციენტში — გონებამყოფი (Awake) ტრაქეოსტომია ადგილზე ხედვის კონტროლით, ვიდრე ბრმად RSI-ის მცდელობა, რომელსაც შესაძლოა მოჰყვეს ანატომიის სრული დაკარგვა.</div>
       </div>
       <div class="warn-box box">
-        <div class="box-title">BCVI — Blunt Cerebrovascular Injury</div>
-        <div class="box-body">Denver Screening: GCS&lt;8 + ← ←, C1–C3 Fx, Horner's, ← ← Stroke, Zone I–III Penet. → CT Angio. Anticoag (Heparin) ← ← ← ←.</div>
+        <div class="box-title">BCVI — დახურული ცერებროვასკულური დაზიანება (Blunt Cerebrovascular Injury)</div>
+        <div class="box-body">დენვერის სკრინინგის კრიტერიუმები: გლასგოს კომის შკალის ქულა &lt;8 უხსნადი თავის ტვინის ტრავმის ფონზე, C1–C3 დონის ხერხემლის მოტეხილობა, ჰორნერის სინდრომი (გუგის შევიწროება + ქუთუთოს ჩავარდნა), ახალი ინსულტისმაგვარი ნევროლოგიური ნიშანი, კისრის I–III ზონის ღია ტრავმა → კომპიუტერული ტომოგრაფიის ანგიოგრაფია. დადასტურებისას — ანტიკოაგულაცია (ჰეპარინი) ან ანტითრომბოციტური თერაპია ინსულტის პრევენციისთვის.</div>
       </div>
     </div>
 
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
-      <div class="card-title">Spine/Neck — სცენ-ზე <span class="badge badge-green">🚑 ადგილზე</span></div>
-      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>C-Spine!</strong> Jaw-thrust. C-Collar + Log-Roll. ✘ ← ← ← ← ←.</div></div>
-      <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>Neurogenic Shock:</strong> ← ← + ← ← (≠ ← ← ← ← ←!). IV NaCl 0.9% 500 მლ + Norepinephrine ← ←. ✘ ← ←!</div></div>
-      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>Airway:</strong> Laryngeal Fx → Surgical Airway. RSI 1 ← ← → ✘ → Cric.</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>MAP ≥85:</strong> IV + სითხ. MAP მ-ბ. Foley → U/O.</div></div>
-      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Spine Board:</strong> ← ← ← ←. ✘ Traction. ✘ ← ← ← ←. Log-Roll.</div></div>
+      <div class="card-title">ხერხემალი/კისერი — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
+      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>კისრის ხერხემლის დაცვა პირველივე წამიდან!</strong> ქვედა ყბის წაწევა (არა თავის გადახრა). ხერხემლის საყელური + ჯერ ერთი, ერთიანი მოძრაობით გადაბრუნება (Log-Roll), მკაცრად კოორდინირებული გუნდის მიერ. ხერხემლის ღერძული პოზიციის დარღვევას არასოდეს არ ვუშვებთ.</div></div>
+      <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>ნეიროგენული შოკის ეჭვისას:</strong> არტერიული წნევის დაცემა + გულის ცემის შემცირება (ბრადიკარდია) — ეს არ არის ჰიპოვოლემიური შოკი! ვენური ფიზიოლოგიური ხსნარი 500 მლ + ნორეპინეფრინი საჭიროებისამებრ. ნებისმიერი ცივი, ოფლიანი კანის ან ტაქიკარდიის ჯერ ვეჭვობთ ჰიპოვოლემიურ შოკზე — განასხვავება კრიტიკულია.</div></div>
+      <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>სასუნთქი გზა:</strong> ხორხის მოტეხილობის ეჭვისას → მზადყოფნა ქირურგიული სასუნთქი გზისთვის. ინტუბაცია ერთი მცდელობა → წარუმატებლობისას → კრიკოთირეოიდოტომიის გადასვლა, ყოვნება არ შეიძლება.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>საშუალო არტერიული წნევა ≥85:</strong> ვენური წვდომა + სითხეები საჭიროებისამებრ. წნევის მუდმივი მონიტორინგი. ფოლის კათეტერი → შარდის გამოყოფის მონიტორირება.</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>სატრანსპორტო ხერხემლის დაფა:</strong> სრული სხეულის ფიქსაცია ქამრებითა და თავის ბლოკებით. ხერხემლის ხელით გაჭიმვა (Traction) არასოდეს არ გამოვიყენებთ. პოზიციის შეცვლა მხოლოდ ერთიანი, კოორდინირებული Log-Roll-ით.</div></div>
     </div>
+
   </div><!-- /spine -->
 
-  <!-- ══ TRIAGE ══ -->
+  <!-- ══════════════ TRIAGE ══════════════ -->
   <div id="triage" class="page">
+
     <div class="section-head"><h2>ტრიაჟის ტიპები</h2></div>
     <div class="card">
-      <div class="card-title">Multiple vs Mass Casualties</div>
+      <div class="card-title">მრავალი დაზარალებული vs მასობრივი დაზარალებულობა</div>
       <div class="row row-2">
         <div class="mini-card" style="border-left:3px solid var(--green);">
-          <div class="mini-label" style="color:var(--green);">Multiple Casualties — მრავლობითი</div>
-          <div class="mini-body">პაციენტების რაოდენობა &lt; გამ. შეს-ბ. → ყველა სხვა-სხვ. უსტდ. ← ← ←, ← ← — ← ← ← ← ←.</div>
+          <div class="mini-label" style="color:var(--green);">მრავალი დაზარალებული (Multiple Casualties)</div>
+          <div class="mini-body">დაზარალებულთა რაოდენობა არ აჭარბებს ხელმისაწვდომი სამედიცინო რესურსების (პერსონალი, ტრანსპორტი, საავადმყოფოს ადგილები) რაოდენობას. შესაძლებელია სტანდარტული ATLS პრიორიტეტიზაცია — ყველაზე მძიმე პაციენტი ექიმდება ჯერ, რესურსების შეზღუდვის გათვალისწინების გარეშე.</div>
         </div>
         <div class="mini-card" style="border-left:3px solid var(--red);">
-          <div class="mini-label" style="color:var(--red);">Mass Casualties (MCI) — მასობრივი</div>
-          <div class="mini-body">პაციენტების რ-ა &gt; გამ. შეს-ბ. → ყველაზე დიდი სარგებლის პრინ. ← ← ← ← ← ← ← ←.</div>
+          <div class="mini-label" style="color:var(--red);">მასობრივი დაზარალებულობა (Mass Casualty Incident, MCI)</div>
+          <div class="mini-body">დაზარალებულთა რაოდენობა აჭარბებს ხელმისაწვდომი რესურსების შესაძლებლობას. პრიორიტეტიზაცია იცვლება — მიზანია მაქსიმალური რაოდენობის ადამიანის გადარჩენა, არა ერთი ყველაზე მძიმე პაციენტისთვის ყველა რესურსის მიმართვა. გადადის „START“-ისმაგვარი სისტემებზე, რომლებიც სწრაფ, მასობრივ კატეგორიზაციას უზრუნველყოფენ.</div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">START ტრიაჟი <span class="badge badge-gray">START System</span></div>
+      <div class="card-title">START — სწრაფი ტრიაჟის სისტემა <span class="badge badge-gray">Simple Triage And Rapid Treatment</span></div>
       <div class="triage-grid">
-        <div class="triage-item t-red"><div class="t-num">I</div><div class="t-name">Immediate (სასწ.)</div><div class="t-desc">სიცოცხ. საფრ. → ← ← ← ←, ← ← ← ←. → სასწ. ← ←.</div></div>
-        <div class="triage-item t-yellow"><div class="t-num">II</div><div class="t-name">Delayed (გადავ.)</div><div class="t-desc">სტ-ია, 30–60 ← ← ← ← ← → ← ← ← ←.</div></div>
-        <div class="triage-item t-green"><div class="t-num">III</div><div class="t-name">Minor (მინ.)</div><div class="t-desc">"Walking Wounded" → ← ← ← ← ← ← ←.</div></div>
-        <div class="triage-item t-black"><div class="t-num">0</div><div class="t-name">Expectant / Dead</div><div class="t-desc">← ← ← ← ← ← ← ← ← ←. ← ← ← ←.</div></div>
+        <div class="triage-item t-red"><div class="t-num">I</div><div class="t-name">გადაუდებელი (Immediate)</div><div class="t-desc">სასიცოცხლოდ საშიში მდგომარეობა, რომელიც დაუყოვნებლივ ჩარევას საჭიროებს (სასუნთქი გზის ობსტრუქცია, მასიური სისხლდენა, შოკი). → ექიმდება პირველი, ან გადასატანი ჯერ.</div></div>
+        <div class="triage-item t-yellow"><div class="t-num">II</div><div class="t-name">გადავადებული (Delayed)</div><div class="t-desc">სერიოზული, მაგრამ სიცოცხლისთვის უშუალო საფრთხის გარეშე დაზიანება, რომელსაც 30–60 წუთამდე ჩარევის გადავადება არ აზიანებს. → ექიმდება მეორე რიგში.</div></div>
+        <div class="triage-item t-green"><div class="t-num">III</div><div class="t-name">მსუბუქი (Minor)</div><div class="t-desc">„მოსიარულე დაზარალებულები“ (Walking Wounded) — დამოუკიდებლად მოძრაობენ, მინორული დაზიანებები. → ექიმდება ბოლოს, საჭიროებისამებრ ჯგუფურად მიიყვანენ თავად.</div></div>
+        <div class="triage-item t-black"><div class="t-num">0</div><div class="t-name">მოლოდინში / გარდაცვლილი (Expectant / Dead)</div><div class="t-desc">დაზიანება შეუთანხმებელია არსებულ რესურსებთან, გადარჩენის შესაძლებლობა მინიმალურია, ან სასიცოცხლო ნიშნები არ ვლინდება. → არ ექიმდება აქტიურად, რესურსები სხვაგან მიემართება.</div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">Field Triage Decision Scheme — 4 საფეხური</div>
-      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>სასიც. ნიშნები:</strong> GCS &lt;14, სისტ. &lt;90 mmHg, RR &lt;10 ან &gt;29/წთ → Trauma Center.</div></div>
-      <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>ანატომ. მ-ბ.:</strong> Penetrating head/trunk, Flail Chest, 2+ Long Bone Fx, Crush, Burn &gt;10%, Amputation → Trauma Center.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>მ-ნ. სიჩქ.:</strong> ← ← ←, ← ← ← ←, ← ← &gt;6 მ, ← ← &gt;30 კმ/სთ → TC ← ←.</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>სპ. ← ← ←:</strong> ← ← &gt;55, ← ← ← ←, ← ← ← ←, ← ← &gt;20 ← ←, → TC ← ← ←.</div></div>
+      <div class="card-title">ველზე ტრიაჟის გადაწყვეტილების სქემა — 4 საფეხური</div>
+      <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>ფიზიოლოგიური კრიტერიუმები:</strong> გლასგოს კომის შკალის ქულა &lt;14, სისტოლური წნევა &lt;90 მმ ვწყ. სვ., სუნთქვის სიხშირე &lt;10 ან &gt;29 წუთში (ან მექანიკურ ვენტილაციაზე ყოფნა) → პირდაპირ ტრავმის ცენტრში.</div></div>
+      <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>ანატომიური კრიტერიუმები:</strong> თავის ან ტანის ღია (პენეტრაციული) ტრავმა, „მფარდი“ გულმკერდი, ≥2 გრძელი ძვლის მოტეხილობა, ჭყლეტითი დაზიანება, &gt;10% სხეულის ფართობის დამწვრობა, ამპუტაცია → პირდაპირ ტრავმის ცენტრში.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>დაზიანების მექანიზმის კრიტერიუმები:</strong> ავტომობილიდან ჩამოგდება, ავტომობილში გადახედვის ჩავარდნა, ვარდნა &gt;6 მეტრიდან, ავარია ≥30 კმ/სთ შესაკრებად სიჩქარეზე → ტრავმის ცენტრში ტრანსპორტირების მაღალი ალბათობა.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>სპეციალური მოსაზრებები:</strong> ასაკი &gt;55 წელი, ბავშვები, ანტიკოაგულანტებზე ან სისხლის შემთხელ პრეპარატებზე ყოფნა, ორსულობა &gt;20 კვირა, ჯავშანქვეშ (Burns) დამატებითი ფაქტორების ერთობლიობა → ინდივიდუალური შეფასებით ტრავმის ცენტრში მიყვანის გადაწყვეტილება.</div></div>
     </div>
+
   </div><!-- /triage -->
 
 </div><!-- /view-reference -->
 
-<!-- ════ VIEW 2: TEAM PROTOCOL ════ -->
+<!-- ════════════════════════════════════════
+     VIEW 2: TEAM PROTOCOL
+     ════════════════════════════════════════ -->
 <div id="view-team" class="hidden-section">
 
   <div class="navscroll" id="navscroll-team">
     <button class="navchip active" data-target="team-roles" data-group="team">როლები</button>
-    <button class="navchip" data-target="team-p1" data-group="team">ფაზა 1 — მიახლ.</button>
+    <button class="navchip" data-target="team-p1" data-group="team">ფაზა 1 — მიახლოება</button>
     <button class="navchip" data-target="team-p2" data-group="team">ფაზა 2 — X·A</button>
     <button class="navchip" data-target="team-p3" data-group="team">ფაზა 3 — B</button>
     <button class="navchip" data-target="team-p4" data-group="team">ფაზა 4 — C</button>
-    <button class="navchip" data-target="team-p5" data-group="team">ფაზა 5 — D·E·Log-Roll</button>
-    <button class="navchip" data-target="team-p6" data-group="team">ფაზა 6 — ევაკ.</button>
-    <button class="navchip" data-target="team-rules" data-group="team">ოქროს წესები</button>
+    <button class="navchip" data-target="team-p5" data-group="team">ფაზა 5 — D·E·გადაბრუნება</button>
+    <button class="navchip" data-target="team-p6" data-group="team">ფაზა 6 — ევაკუაცია</button>
+    <button class="navchip" data-target="team-rules" data-group="team">გუნდის წესები</button>
   </div>
 
   <!-- ROLES -->
   <div id="team-roles" class="page active">
-    <div class="section-head"><h2>4 როლი — ყველას განსაზღვრული ადგილი და ფუნქცია</h2></div>
+    <div class="section-head"><h2>4 როლი — ოთხკაციანი ტრავმის გუნდი</h2></div>
     <div class="card">
-      <div class="card-title">როლები + პოზიციები სცენაზე</div>
+      <div class="card-title">როლები და მათი პასუხისმგებლობა</div>
       <div class="role-grid">
-        <div class="role-card role-tl">
-          <div class="role-name">🔵 TL — გუნდის ლიდერი</div>
-          <div class="role-text">დგას გვერდიდან, 1.5 მ-ზე. არ ეხება პაციენტს. უსმენს მოხსენებებს, ახამებს სტატუსს, მართავს დროს, იღებს გადაწყვეტილებებს, რეკავს კლინიკაში.</div>
-        </div>
-        <div class="role-card role-a">
-          <div class="role-name">🟢 A — სასუნთქი გზები (Airway)</div>
-          <div class="role-text">პაციენტის თავთან. ატარებს მანუალური ფიქსაციას. მართავს Airway-ს (OPA, BMV, ინტ.). Log-Roll-ზე ითვლის და მართავს. ბოლო შვება, სანამ თავის ბლოკები არ დადგება.</div>
-        </div>
-        <div class="role-card role-pa">
-          <div class="role-name">🔴 PA — პირველადი შემფასებელი</div>
-          <div class="role-text">პაციენტის მარჯვენა მხარეს. მხოლოდ სხეულის შეფასება — X, B-ს შეფასება, ჭრილობები, ნახვევები, ტურნიკეტი, მუცელი/მენჯი, E — გახდა. გადააქვს მაკრატელი + ტურნიკეტი.</div>
-        </div>
-        <div class="role-card role-m">
-          <div class="role-name">🟡 M — მედიკოსი (Medic)</div>
-          <div class="role-text">„პაციენტის მარჩენა მხარე" — ჩანთა, ვენა, სითხე, წამლები, მონიტ., OPA, BMV. დაფის მოტანა. თერმო-პლედი. ყველა ინვენტარი.</div>
-        </div>
+        <div class="role-card role-tl"><div class="role-name">🔵 TL — გუნდის ლიდერი</div><div class="role-text">წარმართავს მთლიან პროცესს, აფასებს გარემოს უსაფრთხოებას, ანაწილებს როლებს. ✘ ხელით პაციენტს არ ეხება. ხმამაღლა აცხადებს გადაწყვეტილებებს, აჯამებს ფაზებს, იღებს „Load and Go“ გადაწყვეტილებას, აკონტროლებს დროს, აწარმოებს კომუნიკაციას სტაციონართან.</div></div>
+        <div class="role-card role-a"><div class="role-name">🟢 A — სასუნთქი გზებისა და კისრის მართველი</div><div class="role-text">პირველი მიდის თავთან, აკეთებს ხერხემლის მანუალურ ფიქსაციას. ხსნის სასუნთქ გზას, ატარებს ვენტილაციას (OPA/BVM). ხელმძღვანელობს Log-Roll-ს. არასოდეს არ უშვებს ხელს თავს, სანამ თავის ბლოკები არ დაიდება.</div></div>
+        <div class="role-card role-pa"><div class="role-name">🔴 PA — პირველადი შემფასებელი</div><div class="role-text">ათვალიერებს და ფასებს პაციენტის სხეულს — კატასტროფული სისხლდენა (X), B-ის ფასების დამატებითი ნაწილი (გულმკერდი), პულსი/კანი, მუცელი/მენჯი, E (გახდა). მუშაობს მხოლოდ პაციენტის სხეულზე: დათვალიერება + ნახვევები.</div></div>
+        <div class="role-card role-m"><div class="role-name">🟡 M — მედიკოსი / ლოგისტიკა</div><div class="role-text">"მუშაობს იარაღებთან" — ჩანთა, ვენური წვდომა, წამლები, მონიტორი, OPA, BVM-ის მიწოდება. მოაქვს სატრანსპორტო დაფა და თერმო-პლედი. ეწევა ლოგისტიკურ მხარდაჭერას ყველა ფაზაში.</div></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-title">პოზიციები სცენაზე</div>
+      <div class="card-title">საწყისი პოზიციონირება მისვლის მომენტში</div>
       <div class="mini-card" style="text-align:center;padding:16px;font-family:var(--mono);font-size:13px;line-height:2.2;">
-        <div style="color:var(--blue);font-weight:700;">[ TL — გვერდიდან, 1.5 მ ]</div>
-        <div style="color:var(--green);font-weight:700;">[ A — თავთან ]</div>
+        <div style="color:var(--blue);font-weight:700;">[ TL — შეფასება, 5 მ-დან ]</div>
+        <div style="color:var(--green);font-weight:700;">[ A — თავის მხარეს ]</div>
         <div style="color:var(--text-faint);">── პაციენტი ──</div>
         <div style="display:flex;justify-content:center;gap:50px;">
           <span style="color:var(--red);font-weight:700;">[ PA — მარჯვნივ ]</span>
@@ -1024,233 +1055,123 @@ table.data tr:last-child td { border-bottom: none; }
         </div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title">რას მოაქვს ვინ სცენაზე</div>
-      <div class="row row-2">
-        <div class="mini-card">
-          <div class="mini-label" style="color:var(--red);">PA — მაკრატელი + ტურნიკეტი</div>
-          <div class="mini-body">X-ის კონტ. + E-სთვის ჩქარი გახდა</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-label" style="color:var(--amber);">M — სამედიცინო ჩანთა</div>
-          <div class="mini-body">ვენის კომპლ., მონიტ., BMV, OPA, ასპ., სითხე</div>
-        </div>
-      </div>
-    </div>
-  </div><!-- /team-roles -->
+  </div>
 
   <!-- PHASE 1 -->
   <div id="team-p1" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">0:00 – 0:30 წმ.</div><div class="phase-title">ფაზა 1 — მიახლოება + პირველი შეფასება</div></div>
+      <div class="phase-header"><div class="phase-time">0:00 – 0:30 წ.</div><div class="phase-title">ფაზა 1 — მიახლოება და გარემოს შეფასება</div></div>
       <div class="phase-body">
-        <div class="sync-note">ყველა ერთად 5 წამიანი — TL პირველ სიტყვას ამბობს. ყველა ისმენს!</div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — პირველი სიტყვა</div>
-          <div class="phase-row-text">სცენა შეაფასა ბ-ბ-ი და ამბობს:</div>
-          <div class="phase-row-speech">„ყველა გამართულია. სცენა უსაფრთხოა [ან: სცენა ✘ — ფარული საფრთხე]. [1] პაციენტი ვხედავ. PA, M — მოდით. A, მოდი — მართავ. ყველამ ისმინეთ!"</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — თავის ფიქსაცია</div>
-          <div class="phase-row-text">TL-ის სიგნალზე — Jaw-thrust + inline სტაბ. ✘ კოლარი ჯერ — A-ს ხელი ჯობია.</div>
-        </div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA — პირველი მიახლოება</div>
-          <div class="phase-row-text">მარჯვნიდან მიდის. X: მაკრ. + ტურნ. — მზადაა.</div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — ჩანთა + მომზადება</div>
-          <div class="phase-row-text">ჩანთა იხსნება. M: ვენა + სითხე მზადაა. BMV + O₂ მოამზადა A-სთვის.</div>
-        </div>
+        <div class="sync-note">ეს ფაზა იწყება შემთხვევის ადგილზე მისვლამდე 5 მეტრით ადრე — TL პირველი აფასებს სიტუაციას. გუნდი ჯერ ჯერობით პაციენტს არ ეხება!</div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — გარემოს შეფასება</div><div class="phase-row-text">აფასებს გარემოს უსაფრთხოებას და ტრავმის მექანიზმს. ხმამაღლა აცხადებს:</div><div class="phase-row-speech">„გარემო უსაფრთხოა. ტრავმის მექანიზმია [მაგ. სიმაღლიდან ვარდნა]. გვყავს [1] პაციენტი. გუნდო, ხელთათმანები, სათვალეები დონეზეა. დავიკავოთ პოზიციები!“</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — მიახლოება თავისკენ</div><div class="phase-row-text">მიდის პირდაპირ პაციენტის თავისკენ. ✘ პაციენტის სხეულს არ ეხება, უვლის გარშემო.</div></div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA — მიახლოება მარჯვნივ</div><div class="phase-row-text">მიდის პაციენტის მარჯვენა მხარეს. მზადყოფნაში: მაკრატელი + ტურნიკეტი — ხელის გაშლის მანძილზე.</div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — მიახლოება მარცხნივ</div><div class="phase-row-text">მიდის პაციენტის მარცხენა მხარეს. მზადყოფნაში: ძირითადი სამედიცინო ჩანთა (ვენის კომპლექტი, მონიტორი, ამბუს ტომარა).</div></div>
       </div>
     </div>
-  </div><!-- /team-p1 -->
+  </div>
 
   <!-- PHASE 2 -->
   <div id="team-p2" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">0:30 – 1:30</div><div class="phase-title">ფაზა 2 — X (სისხლდენის კ.) + A (Airway)</div></div>
+      <div class="phase-header"><div class="phase-time">0:30 – 1:30</div><div class="phase-title">ფაზა 2 — X (კატასტროფული სისხლდენა) + A (სასუნთქი გზა)</div></div>
       <div class="phase-body">
-        <div class="sync-note">X და A პარალელურად — ✘ ელოდება ერთი მეორეს!</div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — AVPU + სასუნთქი გზა</div>
-          <div class="phase-row-text">Inline სტაბ., AVPU სწრაფი:</div>
-          <div class="phase-row-speech">„გამიგე!" → „სად ხარ?"</div>
-        </div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA — X სისხლდენის კ.</div>
-          <div class="phase-row-text">ყველა კიდური სწრაფი ვიზ. — ← ← ← ← ← ← ← ←.<br>✦ სისხლ.: <em>„Tourniquet! [კიდ.]!"</em> → ← ←.<br>✦ ✘ სისხლ.: <em>„X — გ-ია!"</em></div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — ← ← ← ←</div>
-          <div class="phase-row-text">✦ ← ← ← → ← ← ← ←!<br>✦ A ← ← „სასუნთქი პრ." → M ← ← ← ← OPA + ← ← ← ← A-ს.</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — Airway მართვა</div>
-          <div class="phase-row-text">Jaw-thrust → სუქცია → OPA → </div>
-          <div class="phase-row-speech">„Airway გ-ია. სუნთქვა ← ← ← ←! A ← ← ← ←."</div>
-        </div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — ← ← ←</div>
-          <div class="phase-row-speech">„X ← A ← ← ←. ← ← ← B-← ←!"</div>
-        </div>
+        <div class="sync-note">პაციენტთან მისვლის შემდეგ მოქმედება იწყება ერთდროულად — ✘ ერთმანეთს არ ველოდებით!</div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — თავის ფიქსაცია</div><div class="phase-row-text">დაუყოვნებლივ მუხლს დგამს თავთან, ხელებით აკეთებს ხერხემლის მანუალურ ფიქსაციას. AVPU შემოწმება:</div><div class="phase-row-speech">„თავი დაფიქსირებულია!“ → „გესმით ჩემი?“</div></div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA — X (კატასტროფული სისხლდენა)</div><div class="phase-row-text">წამებში ათვალიერებს პაციენტს თავიდან ფეხებამდე ფატალური სისხლდენის აღმოსაჩენად.<br>✦ თუ სისხლდენაა: <em>„კატასტროფული სისხლდენაა! ვადებ ტურნიკეტს!“</em> → ადებს ტურნიკეტს.<br>✦ თუ სისხლდენა არ არის: <em>„X სუფთაა!“</em> → გადადის სასუნთქი გზის შემდგომ ფასებაზე.</div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — ჩანთის გახსნა</div><div class="phase-row-text">✦ ხსნის ჩანთას, ტურნიკეტის დადების შემთხვევაში იწერს დროს!<br>✦ A-ს „ხრიალის“ ან გონების დაკარგვის შეტყობინებისას — M მომენტალურად აწვდის A-ს ოროფარინგეალურ მილს (OPA) და ასპირატორს.</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — სასუნთქი გზის ჩხორელ</div><div class="phase-row-text">ქვედა ყბის წინ წაწევა (Jaw-Thrust), პირის გასუფთავება ასპირატორით, OPA-ს ჩადგმა საჭიროებისას. </div><div class="phase-row-speech">„მილი ჩადგმულია, სასუნთქი გზები გამავალია! (A მიღწეულია)“</div></div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — ჯამვა</div><div class="phase-row-speech">„X და A სტაბილურია. გადავდივართ B-ზე!“</div></div>
       </div>
     </div>
-  </div><!-- /team-p2 -->
+  </div>
 
   <!-- PHASE 3 -->
   <div id="team-p3" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">1:30 – 3:00</div><div class="phase-title">ფაზა 3 — B (სუნთქვის შეფასება)</div></div>
+      <div class="phase-header"><div class="phase-time">1:30 – 3:00</div><div class="phase-title">ფაზა 3 — B (სუნთქვა და ვენტილაცია)</div></div>
       <div class="phase-body">
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — BMV მომზ.</div>
-          <div class="phase-row-text">BMV O₂ 15ლ/წთ-ზე → გადაწოდება A-ს.</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — BMV ვენტ.</div>
-          <div class="phase-row-text">2-ადამ. BMV. 1 ← ← ← 6 ← ← ←. E-C grip.</div>
-        </div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA — B შეფასება</div>
-          <div class="phase-row-text">სუნთქვა შ-ა. RR, SpO₂, ← ← ← ←. ← ← ← × 4 (MCL ×2, AAL ×2).<br>✦ Tension PTX → M ← ← ← ←, PA ← ← ← ← 14G.<br>✦ ← ← → PA ← ← ← ←.</div>
-          <div class="phase-row-speech">„სუნთქვა ← ← ← ←." ← ← „Tension PTX!"</div>
-        </div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — B → C</div>
-          <div class="phase-row-speech">„B ← ← ←. M, PA — C-← ←!"</div>
-        </div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — ვენტილაციის მზადება</div><div class="phase-row-text">მომენტალურად აერთებს ამბუს ტომარას ჟანგბადის ბალონზე (მაღალი ნაკადით) და გადასცემს A-ს.</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — ვენტილაცია</div><div class="phase-row-text">თავს უჭირავს მუხლებით/იდაყვებით და ორივე ხელით იწყებს ვენტილაციას ამბუს ტომრით (1 ჩაბერვა ყოველ 6 წამში). „E-C“ ხელჭიდი.</div></div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA — B-ის შეფასება</div><div class="phase-row-text">ჭრის პაციენტის ტანსაცმელს. ათვალიერებს გულმკერდს (ჭრილობები, ასიმეტრია), ხელით სინჯავს ნეკნებს (კრეპიტაცია), ფონენდოსკოპით უსმენს ფილტვებს ოთხ წერტილში.<br>✦ თუ ნორმაშია: ხმამაღლა აღნიშნავს შედეგს.<br>✦ თუ დაჭიმული პნევმოთორაქსია → M ეგიდან აწვდის დეკომპრესიის ნემსს, PA აკეთებს ჩხვლეტას.<br>✦ ღია ჭრილობის შემთხვევაში → PA ადებს ოკლუზიურ (ჰერმეტულ) ნახვევს.</div><div class="phase-row-speech">„სუნთქვა სიმეტრიულია ორმხრივად, ჭრილობები არ არის“ ან „გვაქვს დაჭიმული პნევმოთორაქსი!“</div></div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — B → C-ზე გადასვლა</div><div class="phase-row-speech">„B სტაბილურია. მედიკოსო, შემფასებელო — გადადით C-ზე!“</div></div>
       </div>
     </div>
-  </div><!-- /team-p3 -->
+  </div>
 
   <!-- PHASE 4 -->
   <div id="team-p4" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">3:00 – 5:00</div><div class="phase-title">ფაზა 4 — C (ცირკ. შეფ. + ვენა)</div></div>
+      <div class="phase-header"><div class="phase-time">3:00 – 5:00</div><div class="phase-title">ფაზა 4 — C (ცირკულაცია და შოკი)</div></div>
       <div class="phase-body">
-        <div class="sync-note">PA და M ერთდ. → ← ← ← ← — ← ← ← ← ← ← ← ← ←!</div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA — პულსი + C შეფ.</div>
-          <div class="phase-row-text">პულსი (სარ./ფ-ბ.). ← ← (← /← ←).</div>
-          <div class="phase-row-speech">„← ← ← ←, ← ← ← ← — ← ←!"</div>
-          <div class="phase-row-text" style="margin-top:5px;">→ ← ← ← (← /← ←) → ← ← (← ←?). ← ← ← → ← ← ← ← ←.</div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — ვენა + მ-ბ.</div>
-          <div class="phase-row-text">14–16G IV → სითხ. → ← ← ←. → Pulse Ox + BP.</div>
-          <div class="phase-row-speech">„ვენა ← ←, BP 90/60, SpO₂ 96%."</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — ← ← ← ←</div>
-          <div class="phase-row-text">← ← ← ←, ← ← ← ←. ✘ ← ← ← C-ს.</div>
-        </div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — Load and Go!</div>
-          <div class="phase-row-speech">„← ← ← ← ←, ← ← ← ←. <strong>LOAD AND GO!</strong> ← ← ← ← ← ←."</div>
-        </div>
+        <div class="sync-note">PA და M მუშაობენ პარალელურად — ერთმანეთის საქმეს არ ხედავენ, თითო ცალკეულ ამოცანაზეა ფოკუსირებული!</div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA — პულსი + C-ის შეფასება</div><div class="phase-row-text">აფასებს პულსს მაჯაზე (სიხშირე, ავსებადობა) და კანის მდგომარეობას (თბილი/ცივი).</div><div class="phase-row-speech">„პულსი რადიალური შესუსტებულია, კანი ცივი — გვაქვს შოკი“</div><div class="phase-row-text" style="margin-top:5px;">→ ამოწმებს მუცელს (რბილი/მყარი) და მენჯს (სტაბილურია თუ არა). მენჯის მოძრაობისას → ითხოვს მენჯის ფიქსატორს.</div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — ვენა + მონიტორი</div><div class="phase-row-text">პოულობს ვენას, აყენებს მსხვილ კათეტერს (14–16G), იღებს სისხლს (საჭიროებისას) → აერთებს გადასხმას (რინგერი). მომენტალურად აკრავს პულსოქსიმეტრს და წნევის მანჟეტს.</div><div class="phase-row-speech">„ვენა გახსნილია, სითხე მიდის. წნევა 90/60, სატურაცია 96%.“</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — უცვლელად თავთან</div><div class="phase-row-text">აგრძელებს ხერხემლის ფიქსაციასა და ვენტილაციას. ✘ არ გადადის C-ის შემფასებლად.</div></div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — გადაწყვეტილების მომენტი!</div><div class="phase-row-speech">„პაციენტი არასტაბილურია, მძიმე ტრავმაა. გადაწყვეტილება: <strong>Load and Go!</strong> ვამზადებთ სატრანსპორტო დაფას.“</div></div>
       </div>
     </div>
-  </div><!-- /team-p4 -->
+  </div>
 
   <!-- PHASE 5 -->
   <div id="team-p5" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">5:00 – 7:00</div><div class="phase-title">ფაზა 5 — D, E + Log-Roll</div></div>
+      <div class="phase-header"><div class="phase-time">5:00 – 7:00</div><div class="phase-title">ფაზა 5 — D, E + გადაბრუნება (Log-Roll)</div></div>
       <div class="phase-body">
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — D (GCS + გუგები)</div>
-          <div class="phase-row-text">GCS სწ-ი. TL-ს ამბობს.</div>
-          <div class="phase-row-speech">„GCS 7, გუგები ← ← ← ←."</div>
-        </div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA — E (სრ. გახდა)</div>
-          <div class="phase-row-text">სრული გახდა + ← ← ← ←. ← ← ← ← ← ← ←.</div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — Spine Board მომზ.</div>
-          <div class="phase-row-text">← ← Spine Board, ← ← ← ← ← ← ← ← (← ← ←).</div>
-        </div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — D (ნევროლოგია)</div><div class="phase-row-text">ამოწმებს გუგებს (ანიზოკორია). TL აფასებს გლასგოს კომის შკალას.</div><div class="phase-row-speech">„GCS არის 7, გუგები რეაგირებს.“</div></div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA — E (გახდა)</div><div class="phase-row-text">ჭრის დარჩენილ ტანსაცმელს, რათა სრულად გააშიშვლოს პაციენტი. ამოწმებს კიდურების მოტეხილობებს.</div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — სატრანსპორტო დაფა</div><div class="phase-row-text">მოაქვს გრძელი ხერხემლის სატრანსპორტო დაფა (Spine Board) და დებს პაციენტის იმ მხარეს, სადაც თავად დგას.</div></div>
       </div>
     </div>
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">პარალელ.</div><div class="phase-title">Log-Roll — 4-ადამ. მ.</div></div>
+      <div class="phase-header"><div class="phase-time">გადაბრუნება</div><div class="phase-title">Log-Roll — ხერხემლის გადასინჯვა</div></div>
       <div class="phase-body">
-        <div class="sync-note">A ითვლის, TL და PA მარჯვ. (ანუ ← ← ← ←). ← ← ← ← ← ←!</div>
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA + M — ← ← ←</div>
-          <div class="phase-row-text">← ← ← ← ← ←. PA: ← ← M: ← ← + ← ← ←. ← ← ← ← ← ←.</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — ← ← + ← ← ←</div>
-          <div class="phase-row-speech">„გუნდი — მზად. ← ← — ← ← — ← ← — ← ←..."</div>
-          <div class="phase-row-text" style="margin-top:5px;">ბ-ს ← ← ← ← ← ← ← ←.</div>
-        </div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — ← ← ← ← ←</div>
-          <div class="phase-row-text">← ← ← → TL/PA ← ← ← ← ← ← ←.</div>
-          <div class="phase-row-speech">„← ← ← ← ←, ← ← ← ← ← ←!"</div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — ← ← ← ←</div>
-          <div class="phase-row-text">← ← ← ←, ← ← ← ← ← ← ← ← ← ← ←.</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — ← ← ← ←</div>
-          <div class="phase-row-speech">„← ← ← ← ← ← ← ←. ← ← — ← ← — ← ← — ← ←..."</div>
-        </div>
+        <div class="sync-note">A მართავს მთლიან გადაბრუნებას, TL ან PA ამოწმებს ხერხემალს. ერთიანი, კოორდინირებული მოძრაობა!</div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA + M — გადაბრუნების პოზიცია</div><div class="phase-row-text">დგებიან პაციენტის მარჯვენა მხარეს ერთად. PA: მხარი + მენჯი. M: ფეხები. ხელები მზადყოფნაშია.</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — ბრძანებები + თავის ბრუნვა</div><div class="phase-row-speech">„გადავაბრუნებთ ჩემს თვლაზე გვერდზე, რათა შევამოწმოთ ზურგი. სამი-ოთხი...“</div><div class="phase-row-text" style="margin-top:5px;">გუნდი აბრუნებს პაციენტს, A ატრიალებს თავს სხეულთან სინქრონულად.</div></div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — ხერხემლის გასინჯვა</div><div class="phase-row-text">სანამ პაციენტი გვერდზეა, სასწრაფოდ უსვამს ხელს ხერხემალზე თავიდან კუდუსუნამდე.</div><div class="phase-row-speech">„ხერხემალი სწორია, დაზიანება არ არის!“</div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — დაფის შეცურება</div><div class="phase-row-text">მეორე ხელით სწრაფად შეაცურებს დაფას პაციენტის ქვეშ, სანამ პაციენტი გვერდზე ჩერდება.</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — დაბრუნება დაფაზე</div><div class="phase-row-speech">„ვაბრუნებთ ზურგზე დაფაზე, სამი-ოთხი...“ (პაციენტი წვება დაფაზე)</div></div>
       </div>
     </div>
-  </div><!-- /team-p5 -->
+  </div>
 
   <!-- PHASE 6 -->
   <div id="team-p6" class="page">
     <div class="phase-block">
-      <div class="phase-header"><div class="phase-time">7:00 – 8:00</div><div class="phase-title">ფაზა 6 — ევაკ. + ჩ-ბა</div></div>
+      <div class="phase-header"><div class="phase-time">7:00 – 8:00</div><div class="phase-title">ფაზა 6 — ფიქსაცია და ევაკუაცია</div></div>
       <div class="phase-body">
-        <div class="phase-row phase-pa">
-          <div class="phase-row-who">PA + M — ← ← ← ←</div>
-          <div class="phase-row-text">← ← ← ←: 1. ← ← ← ← 2. ← ← ← 3. ← ← ← ←. (← ← ← ← ←)</div>
-        </div>
-        <div class="phase-row phase-a">
-          <div class="phase-row-who">A — ← ← ← ← ←</div>
-          <div class="phase-row-text">M ← ← Head Blocks. A ← ← + ← ← ←. <strong>← ← ← ← ← A ← ← ← ← ← ← ← ← ← ← ←!</strong></div>
-        </div>
-        <div class="phase-row phase-m">
-          <div class="phase-row-who">M — ← ← ← ← ←</div>
-          <div class="phase-row-text">← ← ← ← ← ← (← ← ← ← ← ←).</div>
-        </div>
-        <div class="phase-row phase-tl">
-          <div class="phase-row-who">TL — MIST ჩ-ბა (Radio)</div>
-          <div class="phase-row-speech">„[მ-ი], [დ-ბ.], GCS [X], სასიც. ნ-ბ. [← ← ←], [← ← ← ←]. ← ← ← ← + ← ← ← ← ←."</div>
-        </div>
+        <div class="phase-row phase-pa"><div class="phase-row-who">PA + M — ფიქსაცია ქამრებით</div><div class="phase-row-text">სწრაფად აკრავენ პაციენტს დაფაზე სპეციალური ქამრებით: 1. გულმკერდი 2. მენჯი 3. ფეხები. (ეთვალისწინება ლოგიკურ თანმიმდევრობას)</div></div>
+        <div class="phase-row phase-a"><div class="phase-row-who">A — თავის ბლოკები</div><div class="phase-row-text">M აწვდის თავის ბლოკებს (Head Blocks). A ადებს მათ თავზე და ამაგრებს ქამრით. <strong>მხოლოდ ამის შემდეგ შეუძლია A-ს პირველად გაუშვას ხელი პაციენტის თავს!</strong></div></div>
+        <div class="phase-row phase-m"><div class="phase-row-who">M — გადაცივების პრევენცია</div><div class="phase-row-text">სასწრაფოდ აფარებს პაციენტს თერმო-პლედს (ჰიპოთერმიის პრევენცია).</div></div>
+        <div class="phase-row phase-tl"><div class="phase-row-who">TL — სტაციონარისთვის შეტყობინება</div><div class="phase-row-speech">„შემოგვყავს [ასაკი/სქესი], [მექანიზმი], GCS [X], [ჩატარებული ჩარევები] [დადებული ტურნიკეტი/დეკომპრესია], [სასიცოცხლო ნიშნები]. გადასცემთ საოპერაციოს და ტრავმა-გუნდს.“</div></div>
       </div>
     </div>
-  </div><!-- /team-p6 -->
+  </div>
 
   <!-- RULES -->
   <div id="team-rules" class="page">
-    <div class="section-head"><h2>ოქროს წესები — გუნდური მ-ბ.</h2></div>
+    <div class="section-head"><h2>გუნდის წესები — ოქროს პრინციპები</h2></div>
     <div class="card">
-      <div class="card-title">4 ← ← ← ← ← ← <span class="badge badge-red">← ← ← ← ←</span></div>
+      <div class="card-title">4 ძირეული წესი <span class="badge badge-red">დაიმახსოვრე</span></div>
       <ul class="list">
-        <li><strong>A</strong> ← ← ← ← ← ← ← ← ← ← ← ← ←, ← ← Head Blocks ← ← ←. ← ←: TL/M ← ← ← ← ← ← ← ←.</li>
-        <li><strong>PA</strong> ← ← ← ← ← ← ←: X, B ← ← ←, ← ← ←, ← ← ←, E. ← ← + ← ← = M-ს ← ←.</li>
-        <li><strong>M</strong> = "← ← ← ← ← ←." ← ← ←, ← ← ←, ← ← ←, OPA, BMV, ← ← ←, ← ← ← ←.</li>
-        <li><strong>TL</strong> ← ← ← ← ← ←. ← ← ← ← ←, ← ← ←, ← ← ← ←.</li>
-        <li>← ← ← ← ← — <strong>← ← ← ← ← ← ←</strong>. TL ← ← ← ← ← ← ← ←.</li>
-        <li><strong>Load and Go</strong> — ← ← ← ← 8–10 ← ←. ← ← + ← ← + ← ← = ← ← ←.</li>
-        <li>← ← ← ← ← ← — <strong>← ← ← ← ←</strong>. M ← ← ← ← ← ←.</li>
+        <li><strong>A</strong> არასოდეს არ უშვებს ხელს თავიდან, სანამ თავის ბლოკები არ დაიდება. გამონაკლისი: ინტუბაციის საჭიროებისას ფიქსაციას დროებით გადაიბარებს TL ან M წინა მხრიდან.</li>
+        <li><strong>PA</strong> მუშაობს მხოლოდ პაციენტის სხეულზე: X (კატასტროფული სისხლდენა), B-ის დამატებითი ფასება, C-ის შეფასება, მენჯი, E (გახდა). სხეულის ფასება და დათვალიერება = PA-ს მოვალეობა.</li>
+        <li><strong>M</strong> = "მუშაობს იარაღებთან." ჩანთა, ვენა, მონიტორი, OPA, BVM, წამლები, სატრანსპორტო დაფა.</li>
+        <li><strong>TL</strong> არასოდეს არ ეხება ხელით პაციენტს. იღებს გადაწყვეტილებებს, ანაწილებს როლებს, აკონტროლებს დროს.</li>
+        <li>ფაზებს შორის გადასვლა — <strong>მხოლოდ ხმამაღალი დადასტურებით</strong>. TL აცხადებს ყოველი ფაზის დასასრულს ხმამაღლა.</li>
+        <li><strong>Load and Go</strong> — სცენაზე არ ვჩერდებით 8–10 წუთზე მეტ ხანს. სასუნთქი გზის + სუნთქვის + სისხლის მიმოქცევის (ABC) დასტაბილურება პრიორიტეტულია, დანარჩენი — ტრანსპორტირებისას.</li>
+        <li>ერთიანი, კოორდინირებული გადაბრუნება — <strong>Log-Roll მხოლოდ A-ს ბრძანებით</strong>. M ან PA არასოდეს არ ბრუნავს ცალკე, A-ს ხმის გარეშე.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">გამოყ. სიტ-ბი <span class="badge badge-blue">კ-ი</span></div>
+      <div class="card-title">სტანდარტული ფრაზები კომუნიკაციისთვის <span class="badge badge-blue">პროტოკოლი</span></div>
       <div class="row row-2">
-        <div class="mini-card"><div class="mini-label">PA-ს / M-ს ← ← ←</div><div class="mini-body">„X ← ← ←!" / „Tension PTX!" / „A ← ← ←!" / „B ← ← ←!"</div></div>
-        <div class="mini-card"><div class="mini-label">TL-ის ← ← ←</div><div class="mini-body">„B ← ← ←. C-← ←!" / „<strong>Load and Go!</strong>" / „← ← ← ← ← ←?"</div></div>
+        <div class="mini-card"><div class="mini-label">გადაუდებელი შეტყობინება</div><div class="mini-body">„X დადასტურდა!“ / „დაჭიმული პნევმოთორაქსია!“ / „A მიღწეულია!“ / „B სტაბილურია!“</div></div>
+        <div class="mini-card"><div class="mini-label">TL-ის ბრძანებები</div><div class="mini-body">„B სტაბილურია. C-ზე გადადით!“ / „<strong>Load and Go!</strong>“ / „ვაკონტროლებთ დროს?“</div></div>
       </div>
     </div>
-  </div><!-- /team-rules -->
+  </div>
 
 </div><!-- /view-team -->
 
@@ -1261,6 +1182,7 @@ table.data tr:last-child td { border-bottom: none; }
 </div>
 
 <script>
+// Reference nav chips
 document.querySelectorAll('#view-reference .navchip').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#view-reference .navchip').forEach(c => c.classList.remove('active'));
@@ -1272,6 +1194,7 @@ document.querySelectorAll('#view-reference .navchip').forEach(btn => {
   });
 });
 
+// Team nav chips
 document.querySelectorAll('#view-team .navchip').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#view-team .navchip').forEach(c => c.classList.remove('active'));
@@ -1283,6 +1206,7 @@ document.querySelectorAll('#view-team .navchip').forEach(btn => {
   });
 });
 
+// Tab bar
 document.querySelectorAll('.tabbar-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tabbar-btn').forEach(b => b.classList.remove('active'));
