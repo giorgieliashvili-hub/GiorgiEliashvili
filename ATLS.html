@@ -453,52 +453,428 @@ table.data tr:last-child td { border-bottom: none; }
 
   </div><!-- /airway -->
 
+bash
+
+mkdir -p /home/claude /mnt/user-data/outputs
+cat > /home/claude/shock-section.html << 'HTMLEOF'
   <!-- ══════════════ SHOCK ══════════════ -->
   <div id="shock" class="page">
 
     <div class="section-head"><h2>პათოფიზიოლოგია</h2></div>
     <div class="card">
       <div class="card-title">შოკის განმარტება და მექანიზმი</div>
-      <div class="card-sub">შოკი — ორგანოების არაადეკვატური სისხლით მომარაგება და ქსოვილების ჟანგბადდეფიციტი. ეს არ არის მხოლოდ დაბალი არტერიული წნევა — ნორმალური წნევის მქონე პაციენტი შესაძლოა შოკის კომპენსაციის ფაზაში იყოს.</div>
+      <div class="card-sub">შოკი — ორგანოების არაადეკვატური სისხლით მომარაგება და ქსოვილების ჟანგბადდეფიციტი უჯრედულ დონეზე. ჟანგბადის მიწოდება ვერ აკმაყოფილებს მოთხოვნას → ანაერობული მეტაბოლიზმი → რძემჟავა-მჟავიანობა → უჯრედული სიკვდილი. ეს არ არის მხოლოდ დაბალი არტერიული წნევა — ნორმალური წნევის მქონე პაციენტი შესაძლოა შოკის კომპენსაციის ფაზაში იყოს.</div>
       <div class="purple-box box">
         <div class="box-title">სისხლის მიმოქცევის ფიზიოლოგია</div>
-        <div class="box-body"><strong>გულის წუთმოცულობა = გულის ცემის სიხშირე × ინსულტური მოცულობა</strong><br><br>ინსულტური მოცულობა (ერთ შეკუმშვაზე გამოდენილი სისხლის მოცულობა) განისაზღვრება სამი ფაქტორით:<br>• <strong>წინასატვირთი მოცულობა (Preload)</strong> — ვენური სისხლის დაბრუნება გულში; სისხლდენა → წინასატვირთის შემცირება → ინსულტური მოცულობის შემცირება → გულის წუთმოცულობის შემცირება<br>• <strong>შემდგომი წინაღობა (Afterload)</strong> — პერიფერიული სისხლძარღვების წინაღობა; გაფართოება → წინაღობის შემცირება → წუთმოცულობის შემცირება<br>• <strong>კონტრაქტილობა</strong> — გულის კუნთის შეკუმშვის ძალა; გულის კონტუზია (დარტყმითი დაზიანება) → კონტრაქტილობის შემცირება → წუთმოცულობის შემცირება<br><br>კომპენსაციის ფაზაში: ჯერ მატულობს გულის ცემის სიხშირე (ადრეული კომპენსაცია), შემდეგ ვითარდება სისხლძარღვების შევიწროება (კანი ცივდება, ოფლიანობს), და მხოლოდ გვიან ეცემა არტერიული წნევა. <strong>არტერიული წნევა ეცემა მხოლოდ მე-4 კლასის სისხლდენაში (სისხლის მოცულობის 30-40%-ზე მეტი დაკარგვისას).</strong></div>
+        <div class="box-body"><strong>გულის წუთმოცულობა = გულის ცემის სიხშირე × ინსულტური მოცულობა</strong><br><br>ინსულტური მოცულობა განისაზღვრება სამი ფაქტორით:<br>• <strong>წინასატვირთი მოცულობა (Preload)</strong> — ვენური სისხლის დაბრუნება გულში<br>• <strong>შემდგომი წინაღობა (Afterload/SVR)</strong> — პერიფერიული სისხლძარღვების წინაღობა<br>• <strong>კონტრაქტილობა</strong> — გულის კუნთის შეკუმშვის ძალა<br><br>თითოეული შოკის ტიპი დაზიანებას აყენებს ამ სამეულის სხვადასხვა კომპონენტს — ეს განსაზღვრავს მათ განსხვავებულ კლინიკურ სურათსა და მკურნალობას.</div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>შოკის ოთხი ტიპი ტრავმაში</h2></div>
+    <div class="card">
+      <div class="card-title">სწრაფი მიმოხილვა — ოთხივე ტიპი ერთ შეხედვაში</div>
+      <div class="row row-2">
+        <div class="mini-card" style="border-left:3px solid var(--red);">
+          <div class="mini-label" style="color:var(--red);">🔴 ჰემორაგიული (ჰიპოვოლემიური)</div>
+          <div class="mini-body">ყველაზე ხშირი. „ავზი ცარიელია“ — სისხლი დაიკარგა.<br><span class="badge badge-red" style="margin-top:4px;">ტაქიკარდია</span> <span class="badge badge-red">ცივი კანი</span> <span class="badge badge-red">ვენები ჩავარდნილია</span></div>
+        </div>
+        <div class="mini-card" style="border-left:3px solid var(--amber);">
+          <div class="mini-label" style="color:var(--amber);">🟠 ობსტრუქციული</div>
+          <div class="mini-body">„ავზი სავსეა, მაგრამ გზა ჩაკეტილია“ — მექანიკური ბლოკი.<br><span class="badge badge-amber" style="margin-top:4px;">დაჭიმული PTX</span> <span class="badge badge-amber">ტამპონადა</span> <span class="badge badge-amber">ვენები გადავსებული</span></div>
+        </div>
+        <div class="mini-card" style="border-left:3px solid var(--blue);">
+          <div class="mini-label" style="color:var(--blue);">🔵 ნეიროგენული</div>
+          <div class="mini-body">„ავზი გაიფართოვდა“ — სიმპათიკური ტონუსის სრული დაკარგვა.<br><span class="badge badge-blue" style="margin-top:4px;">ბრადიკარდია</span> <span class="badge badge-blue">თბილი კანი</span> <span class="badge badge-blue">T6-ის ზემოთ SCI</span></div>
+        </div>
+        <div class="mini-card" style="border-left:3px solid var(--green);">
+          <div class="mini-label" style="color:var(--green);">🟢 კარდიოგენური</div>
+          <div class="mini-body">„ტუმბო გაფუჭდა“ — გულის კუნთის პირდაპირი დაზიანება.<br><span class="badge badge-green" style="margin-top:4px;">ვენები გადავსებული</span> <span class="badge badge-green">ხიხინი ფილტვებში</span> <span class="badge badge-green">BCI / ინფარქტი</span></div>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">შოკის ტიპები ტრავმაში</div>
-      <ul class="list">
-        <li><strong>ჰიპოვოლემიური (სისხლის ან სითხის დანაკარგით გამოწვეული, ყველაზე ხშირი)</strong> — სისხლდენა ან სითხის დანაკარგი → წინასატვირთის შემცირება. ნიშნები: გულის ცემის გახშირება, სისხლძარღვების შევიწროება (ცივი, ოფლიანი კანი), არტერიული წნევის დაცემა (გვიანი ნიშანი).</li>
-        <li><strong>ობსტრუქციული</strong> — დაჭიმული (ტენზიური) პნევმოთორაქსი, გულის გარსში სისხლის დაგროვება (ტამპონადა), მასიური ფილტვის სისხლძარღვის ემბოლია → ვენური დაბრუნების მექანიკური დაბლოკვა. ნიშნები: კისრის ვენების გადავსება + არტერიული წნევის დაცემა.</li>
-        <li><strong>კარდიოგენური (გულის წარმოშობის)</strong> — გულის კუნთის კონტუზია, მწვავე ინფარქტი, გულის ხალთის გაგლეჯა → კონტრაქტილობის შემცირება. ნიშნები: წნევის დაცემა + ორმხრივი ხიხინი ფილტვებში.</li>
-        <li><strong>ნეიროგენული</strong> — ზედა გულმკერდის ან კისრის ხერხემლის დაზიანება (T4–T6 დონის ზემოთ) → სიმპათიკური ნერვული ტონუსის სრული დაკარგვა → სისხლძარღვების გაფართოება + გულის ცემის შემცირება. <em>კლასიკური კომბინაცია: დაბალი წნევა + დაბალი პულსი (განსხვავებით ჰიპოვოლემიური შოკისგან, სადაც პულსი მაღალია)</em></li>
-        <li><strong>სეპტიკური (ინფექციური წარმოშობის)</strong> — ტრავმაში შედარებით იშვიათი; ჩვეულებრივ ვლინდება 6 საათზე მეტი დროის შემდეგ → პერიფერიული წინაღობის შემცირება + სისხლძარღვების განფანტული გაფართოება. ნიშნები: თბილი, წითელი კანი — კლასიკურისგან განსხვავებული სურათი.</li>
-      </ul>
-    </div>
-
-    <div class="section-head"><h2>კლასიფიკაცია</h2></div>
-    <div class="card">
-      <div class="card-title">სისხლდენის კლასიფიკაცია (ATLS-ის მიხედვით) <span class="badge badge-red">ზეპირად!</span></div>
-      <div class="card-sub">გათვლილია 70 კილოგრამის სტანდარტული მოზრდილისთვის, საერთო სისხლის მოცულობა დაახლოებით 5 ლიტრი.</div>
+      <div class="card-title">შოკის ტიპების შედარება — საძირკველი ცხრილი <span class="badge badge-red">ზეპირად!</span></div>
       <div class="tablewrap">
         <table class="data">
-          <tr><th>პარამეტრი</th><th class="c1">I კლასი</th><th class="c2">II კლასი</th><th class="c3">III კლასი</th><th class="c4">IV კლასი</th></tr>
-          <tr><td>სისხლის დანაკარგი</td><td class="c1">&lt;750 მლ / &lt;15%</td><td class="c2">750–1500 მლ / 15–30%</td><td class="c3">1500–2000 მლ / 31–40%</td><td class="c4">&gt;2000 მლ / &gt;40%</td></tr>
-          <tr><td>პულსი (დარტყმა/წთ)</td><td class="c1">&lt;100</td><td class="c2">100–120</td><td class="c3">120–140</td><td class="c4">&gt;140 (ბრადიკარდია ტერმინალურ ფაზაში)</td></tr>
-          <tr><td>არტერიული წნევა (სისტოლური)</td><td class="c1">ნორმა</td><td class="c2">ნორმა</td><td class="c3">დაბალი (საწყისთან შედარებით)</td><td class="c4">დაბალი &lt;90 მმ ვწყ. სვ.</td></tr>
-          <tr><td>პულსური წნევა (სისტოლურისა და დიასტოლურის სხვაობა)</td><td class="c1">ნორმა ან მაღალი</td><td class="c2">დაბალი</td><td class="c3">დაბალი</td><td class="c4">ძალიან დაბალი (ვიწროვდება)</td></tr>
-          <tr><td>სუნთქვის სიხშირე (წუთში)</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
-          <tr><td>შარდის გამოყოფა (მლ/სთ)</td><td class="c1">&gt;30</td><td class="c2">20–30</td><td class="c3">5–15</td><td class="c4">უმნიშვნელო</td></tr>
-          <tr><td>გონებრივი მდგომარეობა</td><td class="c1">მცირედი შფოთვა</td><td class="c2">შფოთვა</td><td class="c3">შფოთვა / დაბნეულობა</td><td class="c4">დაბნეულობა / ლეთარგია</td></tr>
-          <tr><td>სითხური მართვა</td><td class="c1">კრისტალოიდი (1 ლიტრი)</td><td class="c2">კრისტალოიდი + შესაძლო სისხლის ჩასხმა</td><td class="c3">კრისტალოიდი + ერითროციტული მასა</td><td class="c4">მასიური ტრანსფუზიის პროტოკოლი (1:1:1)</td></tr>
+          <tr><th>პარამეტრი</th><th class="c4">🔴 ჰემორაგიული</th><th class="c3">🟠 ობსტრუქციული</th><th class="c1" style="color:var(--blue);">🔵 ნეიროგენული</th><th class="c1">🟢 კარდიოგენული</th></tr>
+          <tr><td>Preload (წინასატვირთი)</td><td class="c4">↓↓</td><td class="c4">↓↓</td><td class="c3">↓</td><td class="c4">↑↑ (გუბდება)</td></tr>
+          <tr><td>Afterload / SVR</td><td class="c3">↑↑ (კომპენსაცია)</td><td class="c3">↑↑ (კომპენსაცია)</td><td class="c4">↓↓↓</td><td class="c3">↑↑ (კომპენსაცია)</td></tr>
+          <tr><td>კონტრაქტილობა</td><td>ნორმა</td><td>ნორმა</td><td>ნორმა / ↓</td><td class="c4">↓↓↓</td></tr>
+          <tr><td>გულის ცემის სიხშირე</td><td class="c4">↑↑ ტაქიკარდია</td><td class="c4">↑↑ ტაქიკარდია</td><td class="c3">↓ ბრადიკარდია!</td><td class="c4">↑↑ ტაქიკარდია</td></tr>
+          <tr><td>კისრის ვენები (JVD)</td><td class="c1">ჩავარდნილი ↓</td><td class="c4">გადავსებული ↑</td><td class="c1">ჩავარდნილი ↓</td><td class="c4">გადავსებული ↑</td></tr>
+          <tr><td>კანი</td><td>ცივი, ფერმკრთალი</td><td>ცივი, ცისფერი</td><td class="c3">თბილი, ვარდისფერი!</td><td>ცივი, ოფლიანი</td></tr>
+          <tr><td>ფილტვები</td><td>სუფთა</td><td>სუფთა / გაუგონარი</td><td>სუფთა</td><td class="c4">ხიხინი / Rales!</td></tr>
+          <tr><td>სითხის როლი</td><td class="c1">✅ პირველი ხაზი</td><td class="c3">⚡ მხოლოდ დროებითი ხიდი</td><td class="c3">⚠️ ფრთხილად, მცირედ</td><td class="c4">❌ საფრთხეშია!</td></tr>
+          <tr><td>მთავარი მკურნალობა</td><td>სისხლდენის გაჩერება + სისხლი</td><td>დეკომპრესია / დრენაჟი</td><td>ვაზოპრესორები</td><td>ინოტროპები</td></tr>
         </table>
       </div>
-      <div class="warn-box box mt10">
-        <div class="box-title">⚠️ კომპენსაციის „ფარდა“</div>
-        <div class="box-body">ახალგაზრდა, ფიზიკურად აქტიური პაციენტი შესაძლოა გულის ცემის გახშირებითა და სისხლძარღვების შევიწროებით 30%-მდე სისხლის დაკარგვას ანაზღაურებდეს — წნევა ნორმალურია, პირველი შეხედვით „სტაბილური“ ჩანს. <strong>პულსური წნევის ვიწროვება ადრეული კომპენსაციის ნიშანია.</strong> ბეტა-ბლოკატორზე მყოფი ან ხანდაზმული პაციენტი ვერ ახდენს გულის ცემის გახშირებას — ეს არღვევს კლასიფიკაციის სიზუსტეს.</div>
-      </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- ACCORDION — დეტალური განხილვა -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="section-head"><h2>დეტალური განხილვა — ტიპის მიხედვით</h2></div>
+    <div class="card-sub" style="margin:-4px 0 10px;">დააწკაპუნე თითოეულზე სრული პათოფიზიოლოგია, კლასიფიკაცია და მართვის სქემის გასახსნელად.</div>
+
+    <!-- 1. HEMORRHAGIC -->
+    <div class="accordion-item" style="border-left:3px solid var(--red);">
+      <button class="accordion-btn" onclick="toggleAcc('shock-hemorrhagic')">
+        <span>🔴 ჰემორაგიული (ჰიპოვოლემიური) შოკი</span>
+        <span class="acc-arrow" id="arrow-shock-hemorrhagic">▼</span>
+      </button>
+      <div class="accordion-body" id="body-shock-hemorrhagic">
+
+        <div class="injury-box box">
+          <div class="box-title">⚡ ტრავმული სიკვდილიანობის #1 მიზეზი</div>
+          <div class="box-body">„Stop the Bleeding First!“ — სისხლდენის გაჩერება ყოველთვის უსწრებს ნებისმიერ სხვა ჩარევას. სითხის ან სისხლის გადასხმა ხდება დამხმარე ღონისძიება, არა მთავარი მკურნალობა.</div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">პათოფიზიოლოგია</h3>
+        <div class="card">
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">სისხლის დაკარგვა → <strong>წინასატვირთის შემცირება</strong> (ვენური დაბრუნება ↓)</div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">წინასატვირთის შემცირება → <strong>გულის წუთმოცულობის შემცირება</strong> (ინსულტური მოცულობა ↓)</div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">წუთმოცულობის შემცირება → <strong>სიმპათიკური აქტივაცია</strong>: სტრესის ჰორმონების გამოთავისუფლება → ტაქიკარდია + სისხლძარღვების შევიწროება (კანი, კუნთი, ნაწლავის ორგანოები „გამოირთვება“ პრიორიტეტული ორგანოების სასარგებლოდ)</div></div>
+          <div class="step-row"><div class="step-num crit">4</div><div class="step-text">კომპენსაცია ამოიწურება → <strong>ანაერობული მეტაბოლიზმი</strong> → რძემჟავას მჟავიანობა → მრავლობითი ორგანოს უკმარისობა</div></div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">ATLS კლასიფიკაცია — I–IV კლასი</h3>
+        <div class="warn-box box">
+          <div class="box-title">⚠️ ოქროს წესი</div>
+          <div class="box-body">არტერიული წნევის დაცემა — შოკის <strong>გვიანი</strong> ნიშანია! ახალგაზრდა, ჯანმრთელი პაციენტი 30%-მდე სისხლის დაკარგვას ანაზღაურებს ნორმალური წნევით. ყურადღება გაამახვილე გულის ცემის სიხშირესა და ფსიქიკურ სტატუსზე, არა მხოლოდ წნევაზე!</div>
+        </div>
+        <div class="tablewrap">
+          <table class="data">
+            <tr><th>პარამეტრი</th><th class="c1">I კლასი</th><th class="c2">II კლასი</th><th class="c3">III კლასი</th><th class="c4">IV კლასი</th></tr>
+            <tr><td>სისხლის დანაკარგი</td><td class="c1">&lt;15% (&lt;750 მლ)</td><td class="c2">15–30% (750–1500 მლ)</td><td class="c3">30–40% (1500–2000 მლ)</td><td class="c4">&gt;40% (&gt;2000 მლ)</td></tr>
+            <tr><td>გულის ცემის სიხშირე</td><td class="c1">&lt;100</td><td class="c2">&gt;100</td><td class="c3">&gt;120</td><td class="c4">&gt;140</td></tr>
+            <tr><td>არტერიული წნევა</td><td class="c1">ნორმა</td><td class="c2">ნორმა</td><td class="c3">↓ დაქვეითება</td><td class="c4">↓↓ მკვეთრად</td></tr>
+            <tr><td>პულსური წნევა</td><td class="c1">ნორმა / ↑</td><td class="c2">↓</td><td class="c3">↓</td><td class="c4">↓↓ ვიწროვდება</td></tr>
+            <tr><td>სუნთქვის სიხშირე</td><td class="c1">14–20</td><td class="c2">20–30</td><td class="c3">30–40</td><td class="c4">&gt;35</td></tr>
+            <tr><td>შარდის გამოყოფა</td><td class="c1">&gt;30 მლ/სთ</td><td class="c2">20–30 მლ/სთ</td><td class="c3">5–15 მლ/სთ</td><td class="c4">პრაქტიკულად 0</td></tr>
+            <tr><td>ფსიქიკური სტატუსი</td><td class="c1">მცირედი შფოთვა</td><td class="c2">საშუალო შფოთვა</td><td class="c3">დაბნეულობა</td><td class="c4">ლეთარგია / კომა</td></tr>
+            <tr><td>ბაზური დეფიციტი</td><td class="c1">0 – (−2)</td><td class="c2">(−2) – (−6)</td><td class="c3">(−6) – (−10)</td><td class="c4">≤(−10)</td></tr>
+            <tr><td>ტრანსფუზია</td><td class="c1">არა</td><td class="c2">შესაძლოა</td><td class="c3">დიახ</td><td class="c4">მასიური ტრანსფუზიის პროტოკოლი!</td></tr>
+          </table>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">🛑 ლეტალური ტრიადა (Lethal Triad)</h3>
+        <div class="injury-box box">
+          <div class="box-title">⚠️ ამ ციკლის ჩართვა = სიკვდილის რისკის მკვეთრი ზრდა</div>
+          <div class="box-body">
+            <div class="row row-2" style="margin-top:6px;">
+              <div>
+                <strong>❄️ სხეულის გადაცივება</strong> — თრგუნავს კოაგულაციის ფერმენტებს → კოაგულოპათია ↑<br><br>
+                <strong>🔴 მჟავიანობა</strong> — ქსოვილების ჟანგბადდეფიციტი → გულის კუნთის შეკუმშვადობა ↓
+              </div>
+              <div>
+                <strong>🩸 კოაგულოპათია (შედედების დარღვევა)</strong> — სისხლის დანაკარგი + სითხის გადახარბება → შედედება ვერ ხორციელდება<br><br>
+                <span style="color:var(--text-faint);font-size:11.5px;">სამივე ერთმანეთს ამძიმებს — მანკიერი წრე!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">მართვა — თანამედროვე პრინციპები</h3>
+        <div class="warn-box box">
+          <div class="box-title">❌ „2 ლიტრი ფიზიოლოგიური ხსნარი ჭავლით“ = მოძველებული მიდგომა!</div>
+          <div class="box-body">კრისტალოიდების ჭარბი გადასხმა ახდენს ახლადჩამოყალიბებული თრომბების „გარეცხვას“ + დილუციურ კოაგულოპათიას + სხეულის გადაცივებას.</div>
+        </div>
+
+        <div class="step-row"><div class="step-num crit">1</div><div class="step-text"><strong>🛑 სისხლდენის გაჩერება — პირველი ნაბიჯი!</strong><br>
+          • კიდური: ტურნიკეტი ან პირდაპირი ზეწოლა<br>
+          • მენჯი: მენჯის ფიქსატორი (2–3 ლიტრამდე სისხლის დანაკარგი!)<br>
+          • შინაგანი: ლაპაროტომია / თორაკოტომია / ანგიოემბოლიზაცია
+        </div></div>
+
+        <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>💉 ნებადართული ჰიპოტენზია</strong><br>
+          სანამ სისხლდენა ქირურგიულად არ შეჩერდება: სისტოლური წნევა <strong>80–90 მმ ვწყ. სვ.</strong> (საშუალო არტერიული წნევა ~65)<br>
+          <span class="amber">⚠️ გამონაკლისი თავის ტვინის ტრავმისას: სისტოლური წნევა &gt;110 მმ ვწყ. სვ. — ტვინს პერფუზია სჭირდება!</span>
+        </div></div>
+
+        <div class="step-row"><div class="step-num warn">3</div><div class="step-text"><strong>🩸 ჰემოსტატიკური (დაბალანსებული) რეანიმაცია</strong><br>
+          III/IV კლასი → მასიური ტრანსფუზიის პროტოკოლი:<br>
+          • <strong>1:1:1</strong> თანაფარდობა — ერითროციტული მასა : ახლადგაყინული პლაზმა : თრომბოციტები<br>
+          • მთლიანი სისხლი (Whole Blood) — ოქროს სტანდარტი, სადაც ხელმისაწვდომია<br>
+          • ტრანექსამის მჟავა: ტრავმიდან <strong>პირველ 3 საათში!</strong> 1გ ვენაში ნელა (10 წუთი) → 1გ ინფუზიით 8 საათში<br>
+          <span class="red">⚠️ 3 საათის შემდეგ ტრანექსამის მჟავა ზრდის სიკვდილიანობას!</span>
+        </div></div>
+
+        <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>🌡️ პაციენტის გათბობა</strong><br>
+          თბილი საბნები + სითხის გამათბობელი მოწყობილობები — ლეტალური ტრიადის პრევენცია.
+        </div></div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">ფლუიდოთერაპიაზე პასუხი</h3>
+        <div class="tablewrap">
+          <table class="data">
+            <tr><th>პასუხის ტიპი</th><th class="c1">სწრაფი პასუხი</th><th class="c2">გარდამავალი პასუხი</th><th class="c4">პასუხი არ არსებობს</th></tr>
+            <tr><td>სასიცოცხლო ნიშნები</td><td class="c1">ნორმალდება → სტაბილური</td><td class="c2">გაუმჯობესება → ისევ ↓</td><td class="c4">არ იცვლება / უარესდება</td></tr>
+            <tr><td>სავარაუდო დანაკარგი</td><td>&lt;15%</td><td>15–40%</td><td class="c4">&gt;40%</td></tr>
+            <tr><td>სისხლის მზაობა</td><td>Cross-match</td><td>Type-specific</td><td class="c4">O− გადაუდებლად!</td></tr>
+            <tr><td>ოპერაცია?</td><td>შესაძლოა</td><td>სავარაუდოდ</td><td class="c4">გადაუდებელი!</td></tr>
+          </table>
+        </div>
+
+        <div class="pitfall"><div class="pitfall-q">⚠️ ვაზოპრესორები ჰემორაგიული შოკის პირველ ხაზად</div><div class="pitfall-a">✓ დაუშვებელია! ქსოვილების პერფუზია კიდევ უფრო გაუარესდება — სისხლის მოცულობის შევსება და სისხლდენის გაჩერებაა საჭირო, არა სისხლძარღვების შევიწროება</div></div>
+        <div class="pitfall"><div class="pitfall-q">⚠️ სისხლდენა გრძელდება, მაგრამ ვაგრძელებთ მხოლოდ სითხის გადასხმას</div><div class="pitfall-a">✓ პაციენტი ვერ გადარჩება მხოლოდ სითხით — „Stop the Bleeding First!“ ანუ ქირურგიული/ინტერვენციული კონტროლი წინ უსწრებს ყველაფერს</div></div>
+
+      </div><!-- /body-shock-hemorrhagic -->
+    </div><!-- /accordion-item -->
+
+
+    <!-- 2. OBSTRUCTIVE -->
+    <div class="accordion-item" style="border-left:3px solid var(--amber);">
+      <button class="accordion-btn" onclick="toggleAcc('shock-obstructive')">
+        <span>🟠 ობსტრუქციული შოკი — დაჭიმული პნევმოთორაქსი და გულის ტამპონადა</span>
+        <span class="acc-arrow" id="arrow-shock-obstructive">▼</span>
+      </button>
+      <div class="accordion-body" id="body-shock-obstructive">
+
+        <div class="injury-box box">
+          <div class="box-title">⚡ „დროის ბომბი“ — წამები წყვეტს ყველაფერს</div>
+          <div class="box-body">სითხის გადასხმა <strong>არ მუშაობს</strong> ამ შოკის ტიპში — საჭიროა მექანიკური ბლოკის დაუყოვნებლივი გათავისუფლება, არა მოცულობის შევსება.</div>
+        </div>
+
+        <div class="blue-box box">
+          <div class="box-title">💡 მთავარი განსხვავება ჰემორაგიული შოკისგან</div>
+          <div class="box-body">ჰემორაგიული შოკი: „ავზი ცარიელია“ → კისრის ვენები ჩავარდნილია (ჯოულარული ვენების დაცემა)<br>ობსტრუქციული შოკი: „ავზი სავსეა, გზა ჩაკეტილია“ → <strong>კისრის ვენები გადავსებულია</strong></div>
+        </div>
+
+        <h3 style="font-size:14px;margin:18px 0 8px;color:var(--text-dim);">🚨 ა) დაჭიმული პნევმოთორაქსი (Tension Pneumothorax)</h3>
+        <div class="card">
+          <div class="card-title" style="font-size:13.5px;">პათოფიზიოლოგია</div>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">ფილტვის ან გულმკერდის კედლის დაზიანება → <strong>ცალმხრივი სარქველის</strong> ეფექტი: ჰაერი შემოდის, ვერ გამოდის</div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">პლევრის ღრუში წნევა მატულობს → ფილტვი ნაწილობრივ ან სრულად ჩაცვენილია</div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>შუასაყისის (Mediastinum) გადახრა</strong> საპირისპირო მხარეს → ღრუ ვენის გადახარშვა</div></div>
+          <div class="step-row"><div class="step-num crit">4</div><div class="step-text">ღრუ ვენა გადახარული → წინასატვირთის მკვეთრი შემცირება → წუთმოცულობის მკვეთრი შემცირება → <strong>ობსტრუქციული შოკი</strong></div></div>
+        </div>
+
+        <div class="row row-2 mt10">
+          <div class="mini-card">
+            <div class="mini-label">ნიშნები</div>
+            <div class="mini-body">გულის ცემის გახშირება + წნევის დაცემა, <strong>გაუგონარი სუნთქვითი ხმები</strong> ერთ მხარეს, <strong>ტიმპანული</strong> ხმა პერკუსიაზე, <strong>ხორხის გადახრა</strong> საპირისპირო მხარეს (გვიანი, ყურდაცემა!), კისრის ვენების გადავსება, კანქვეშა ემფიზემა (კრაწუნი), ჟანგბადით გაჯერების შემცირება, ციანოზი (გვიანი)</div>
+          </div>
+          <div class="mini-card" style="border-left:3px solid var(--amber);">
+            <div class="mini-label" style="color:var(--amber);">⚡ მართვა — კლინიკური დიაგნოზია!</div>
+            <div class="mini-body"><span class="red">რენტგენს არასოდეს ველოდებით!</span><br>
+            <strong>1.</strong> ნემსით დეკომპრესია — 14–16G კათეტერი, <strong>5-ე ნეკნთაშუა სივრცე, შუა საქვედავქედის ხაზზე</strong> (ძველი მეთოდი — 2-ე ნეკნთაშუა სივრცე შუასაკისებრ ხაზზე — ნაკლებად ეფექტურია სქელი კუნთის გამო). ჰაერის სტვენა ნემსიდან = წარმატება.<br>
+            <strong>2.</strong> თითით თორაკოსტომია — თუ ნემსი არ მუშაობს<br>
+            <strong>3.</strong> მკერდის მილი (28–32 Fr) — 5-ე ნეკნთაშუა სივრცეში, შემდგომში სავალდებულო</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:18px 0 8px;color:var(--text-dim);">🚨 ბ) გულის ტამპონადა (Cardiac Tamponade)</h3>
+        <div class="card">
+          <div class="card-title" style="font-size:13.5px;">პათოფიზიოლოგია</div>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">ღია ან დახურული ტრავმა → სისხლი გროვდება გულის გარსში (პერიკარდიუმში)</div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">100–150 მლ-ც კი საკმარისია — გულის გარსის ღრუში წნევა მატულობს (პერიკარდიუმის ბუშტი მყარია, არ იჭიმება სწრაფად!)</div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">გულის გარეგანი შეკუმშვა → <strong>დიასტოლა ვერ ხორციელდება</strong> სრულად → სისხლი ვერ ვაჩერდება გულში → წინასატვირთის მკვეთრი შემცირება</div></div>
+          <div class="step-row"><div class="step-num crit">4</div><div class="step-text">წუთმოცულობის მკვეთრი შემცირება → ობსტრუქციული შოკი. ტაქიკარდია — კომპენსაციის მცდელობა (არაეფექტური, რადგან გულში სისხლი მცირეა)</div></div>
+        </div>
+
+        <div class="card mt10">
+          <div class="card-title" style="font-size:13.5px;">ბეკის ტრიადა (Beck's Triad) — გულის ტამპონადის სავიზიტო ბარათი</div>
+          <div class="row row-3">
+            <div class="mini-card"><div class="mini-label">1</div><div class="mini-body"><strong>გაყუჩული გულის ხმები</strong> — სითხის ფენა ჩახშობს ხმას</div></div>
+            <div class="mini-card"><div class="mini-label">2</div><div class="mini-body"><strong>ჰიპოტენზია</strong> — გულის წუთმოცულობის შემცირების შედეგი</div></div>
+            <div class="mini-card"><div class="mini-label">3</div><div class="mini-body"><strong>კისრის ვენების გადავსება</strong> — გული ვერ იღებს სისხლს</div></div>
+          </div>
+          <div class="warn-box box mt10" style="margin-bottom:0;">
+            <div class="box-body">⚠️ სამივე ნიშანი ერთდროულად ყოველთვის არ ვლინდება (≤33%-ში)! დამატებითი ნიშნები: კუსმაულის ნიშანი (ჩასუნთქვისას ვენების კიდევ უფრო გადავსება) + პულსიელექტრული აქტივობა (PEA).</div>
+          </div>
+        </div>
+
+        <div class="row row-2 mt10">
+          <div class="mini-card">
+            <div class="mini-label">🔍 დიაგნოსტიკა</div>
+            <div class="mini-body"><strong>ექოსკოპია (FAST)</strong> — 90–95% სიზუსტით აღმოაჩენს გულის გარსის სითხეს. ექოკარდიოგრაფია / POCUS. პულსიელექტრული აქტივობის (PEA) დროს ტამპონადა ყოველთვის გამოირიცხება.</div>
+          </div>
+          <div class="mini-card" style="border-left:3px solid var(--red);">
+            <div class="mini-label" style="color:var(--red);">⚡ მართვა</div>
+            <div class="mini-body"><strong>გადაუდებელი თორაკოტომია/სტერნოტომია</strong> — ოქროს სტანდარტი. <strong>პერიკარდიოცენტეზი</strong> — დროებითი ხიდი, სუბქსიფოიდული მიდგომით; 10–20 მლ-ის ამოღებაც მნიშვნელოვან გაუმჯობესებას იძლევა. ვენური სითხეები — წნევის დროებითი ამაღლება.</div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:18px 0 8px;color:var(--text-dim);">დაჭიმული პნევმოთორაქსი vs გულის ტამპონადა</h3>
+        <div class="tablewrap">
+          <table class="data">
+            <tr><th>ნიშანი</th><th>დაჭიმული პნევმოთორაქსი</th><th>გულის ტამპონადა</th></tr>
+            <tr><td>სუნთქვითი ხმები</td><td class="c4">გაუგონარია — ერთ მხარეს</td><td>ორმხრივად ნორმალური</td></tr>
+            <tr><td>პერკუსია</td><td class="c3">ტიმპანული</td><td>ნორმალური</td></tr>
+            <tr><td>ხორხი</td><td class="c4">გადახრილი</td><td>შუახაზზე</td></tr>
+            <tr><td>კისრის ვენები</td><td class="c3">გადავსებული ↑</td><td class="c3">გადავსებული ↑</td></tr>
+            <tr><td>გულის ხმები</td><td>ნორმალური</td><td class="c3">გაყუჩული</td></tr>
+            <tr><td>წნევა/პულსი</td><td class="c4">↓წნევა + ↑პულსი</td><td class="c4">↓წნევა + ↑პულსი</td></tr>
+            <tr><td>მართვა</td><td class="c4">ნემსით დეკომპრესია — პირველი!</td><td>პერიკარდიოცენტეზი / თორაკოტომია</td></tr>
+          </table>
+        </div>
+
+        <div class="blue-box box mt10">
+          <div class="box-body">💡 პულსიელექტრული აქტივობა (PEA) = დაჭიმული პნევმოთორაქსი + ტამპონადა + მკვეთრი ჰიპოვოლემია — სამივე უნდა გამოირიცხოს გადაუდებლად!</div>
+        </div>
+
+      </div><!-- /body-shock-obstructive -->
+    </div><!-- /accordion-item -->
+
+
+    <!-- 3. NEUROGENIC -->
+    <div class="accordion-item" style="border-left:3px solid var(--blue);">
+      <button class="accordion-btn" onclick="toggleAcc('shock-neurogenic')">
+        <span>🔵 ნეიროგენული შოკი — ხერხემლის ტვინის დაზიანება</span>
+        <span class="acc-arrow" id="arrow-shock-neurogenic">▼</span>
+      </button>
+      <div class="accordion-body" id="body-shock-neurogenic">
+
+        <div class="blue-box box">
+          <div class="box-title">⚡ ერთადერთი შოკი ბრადიკარდიით, ჰიპოტენზიითა და თბილი კანით</div>
+          <div class="box-body">სრულიად განსხვავებული ფიზიოლოგია დანარჩენი სამისგან — ნუ ჩათვალო ავტომატურად ჰიპოვოლემიურად!</div>
+        </div>
+
+        <div class="purple-box box">
+          <div class="box-title">💡 მარტივი მეტაფორა</div>
+          <div class="box-body">სხვა შოკის ტიპებში: სისხლის <strong>მოცულობა</strong> იყო პრობლემა.<br>ნეიროგენულში: მოცულობა <strong>იგივეა</strong>, მაგრამ სისხლძარღვების კალაპოტი კატასტროფულად გაფართოვდა → სისხლი გუბდება პერიფერიაში.</div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">პათოფიზიოლოგია</h3>
+        <div class="card">
+          <div class="card-sub" style="margin-bottom:8px;">წინაპირობა: ხერხემლის ტვინის დაზიანება <strong>T6 დონეზე ან ზემოთ</strong></div>
+          <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>სიმპათიკური ბლოკადა</strong> — ხერხემლის ტვინი წყვეტს სიმპათიკურ სიგნალებს სისხლძარღვებამდე</div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>მასიური სისხლძარღვების გაფართოება</strong> — შემდგომი წინაღობის მკვეთრი შემცირება (განსაკუთრებით ქვედა კიდურებში და მუცლის ღრუში)</div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">სისხლი გუბდება პერიფერიაზე → წინასატვირთის შემცირება → წუთმოცულობის შემცირება</div></div>
+          <div class="step-row"><div class="step-num crit">4</div><div class="step-text"><strong>პარადოქსული ბრადიკარდია!</strong> — T1–T4 დონის დაზიანებისას, გულის სიმპათიკური ინერვაცია იკარგვა, ვაგუსის (პარასიმპათიკური ნერვის) გავლენა დომინირებს → გულის ცემის სიხშირის შემცირება</div></div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">კლინიკური პორტრეტი — საპირისპირო ნიშნები!</h3>
+        <div class="row row-2">
+          <div class="mini-card" style="border-left:3px solid var(--red);">
+            <div class="mini-label" style="color:var(--red);">❌ არ არის (განსხვავებით ჰემორაგიული შოკისგან)</div>
+            <div class="mini-body">ტაქიკარდია — <strong>ბრადიკარდიაა!</strong><br>ცივი, ფერმკრთალი კანი — <strong>თბილი, ვარდისფერი!</strong><br>ოფლიანობა — <strong>მშრალი კანი!</strong></div>
+          </div>
+          <div class="mini-card" style="border-left:3px solid var(--blue);">
+            <div class="mini-label" style="color:var(--blue);">✅ კლასიკური ნიშნები</div>
+            <div class="mini-body"><strong>ჰიპოტენზია + ბრადიკარდია</strong> — „თბილი შოკი“. თბილი, მშრალი, ვარდისფერი კანი. <strong>პოიკილოთერმია</strong> — სხეულის ტემპერატურა გარემოს ტემპერატურას იღებს. ფლაკიდური დამბლა და შეგრძნების დაკარგვა (ხერხემლის ტვინის დაზიანების ნევროლოგიური ნიშნები).</div>
+          </div>
+        </div>
+
+        <div class="warn-box box mt10">
+          <div class="box-title">🛑 სპინალური შოკი vs. ნეიროგენული შოკი — არ აგვერიოს!</div>
+          <div class="box-body">
+            <div class="row row-2" style="margin-top:6px;">
+              <div><strong>ნეიროგენული შოკი</strong> — ჰემოდინამიკური პრობლემაა: წნევის და გულის ცემის შემცირება, ავტონომიური ნერვული სისტემის მოშლის გამო.</div>
+              <div><strong>სპინალური შოკი</strong> — ნევროლოგიური ფენომენია: ყველა რეფლექსის, ტონუსისა და მგრძნობელობის დროებითი დაკარგვა. ბულბოკავერნოზული რეფლექსის დაბრუნება მისი დასასრულის ნიშანია.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">ჰემოდინამიკური პარამეტრები</h3>
+        <div class="tablewrap">
+          <table class="data">
+            <tr><th>პარამეტრი</th><th>სტატუსი</th><th>მიზეზი</th></tr>
+            <tr><td>Preload (წინასატვირთი)</td><td class="c3">↓</td><td>სისხლი გუბდება ქვედა კიდურებში, ვენური დაბრუნება შემცირებული</td></tr>
+            <tr><td>Afterload (SVR)</td><td class="c4">↓↓↓ კატასტროფული</td><td>სიმპათიკური ტონუსი გაქრა → სისხლძარღვები მოდუნებულია</td></tr>
+            <tr><td>კონტრაქტილობა</td><td>ნორმა / ↓</td><td>სიმპათიკური სტიმულაცია არ ხდება</td></tr>
+            <tr><td>გულის ცემის სიხშირე</td><td class="c4">↓ ბრადიკარდია!</td><td>ვაგუსის უპირატესი დომინირება</td></tr>
+            <tr><td>კისრის ვენები</td><td class="c1">ჩავარდნილია</td><td>სისხლი პერიფერიაშია, ვენური დაბრუნება დაბალია</td></tr>
+          </table>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">მართვა</h3>
+        <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ხერხემლის იმობილიზაცია</strong> — ხერხემლის საყელური + სატრანსპორტო დაფა; დამატებითი დაზიანების თავიდან აცილება პრიორიტეტია.</div></div>
+        <div class="step-row"><div class="step-num warn">2</div><div class="step-text"><strong>სითხე — ფრთხილად!</strong> კრისტალოიდის გადასხმა გაფართოებული სისხლძარღვების კალაპოტის შესავსებად, მაგრამ ჭარბი მოცულობით გადატვირთვის და ფილტვის შეშუპების რისკი — საჭიროებისას გადადით ვაზოპრესორებზე.</div></div>
+        <div class="step-row"><div class="step-num crit">3</div><div class="step-text"><strong>ვაზოპრესორები — მთავარი იარაღი!</strong><br>
+          • <strong>ნორეპინეფრინი (1-ლი არჩევანი)</strong> — α₁ ეფექტი (სისხლძარღვის შევიწროება) + β₁ ეფექტი (გულის ცემის სიხშირისა და კონტრაქტილობის გაზრდა)<br>
+          • ფენილეფრინი — წმინდა α₁ ეფექტი, ტაქიკარდიის გარეშე; ბრადიკარდიული პაციენტისთვის ნაკლებად შესაფერისი
+        </div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ბრადიკარდიის მართვა:</strong> ატროპინი 0.5–1 მგ ვენაში → კარდიოსტიმულატორი (Pacemaker) საჭიროებისას.</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>საშუალო არტერიული წნევის სამიზნე:</strong> <span class="mono">85–90 მმ ვწყ. სვ.</span> — შენარჩუნებული <strong>7 დღის განმავლობაში</strong>, ხერხემლის ტვინის იშემიური მეორადი დაზიანების შესამცირებლად.</div></div>
+
+        <div class="pitfall"><div class="pitfall-q">⚠️ ნეიროგენული შოკის ბრადიკარდია + ჰიპოტენზია — ავტომატურად ჰიპოვოლემიური?</div><div class="pitfall-a">✓ არა! ეს განსხვავებული მექანიზმია. თუმცა ხერხემლის ტვინის ტრავმა ხშირად თანმხლები ტრავმის (მაგ. სისხლდენის) გვერდით არსებობს — ორივე შოკი ერთდროულად შესაძლოა იყოს, საჭიროებენ ცალკეულ შეფასებას</div></div>
+
+      </div><!-- /body-shock-neurogenic -->
+    </div><!-- /accordion-item -->
+
+
+    <!-- 4. CARDIOGENIC -->
+    <div class="accordion-item" style="border-left:3px solid var(--green);">
+      <button class="accordion-btn" onclick="toggleAcc('shock-cardiogenic')">
+        <span>🟢 კარდიოგენური შოკი — გულის კუნთის ტრავმული დაზიანება</span>
+        <span class="acc-arrow" id="arrow-shock-cardiogenic">▼</span>
+      </button>
+      <div class="accordion-body" id="body-shock-cardiogenic">
+
+        <div class="injury-box box">
+          <div class="box-title">⚡ „ტუმბო გაფუჭდა“ — გული პირდაპირ დაზიანებულია</div>
+          <div class="box-body"><strong>სითხის გადასხმა = საფრთხეა!</strong> ფილტვის შეშუპება გაღრმავდება — ეს ერთადერთი შოკის ტიპია, სადაც სითხის ემპირიული გადასხმა აშკარად საზიანოა.</div>
+        </div>
+
+        <div class="blue-box box">
+          <div class="box-title">💡 მთავარი განსხვავება ობსტრუქციული შოკისგან</div>
+          <div class="box-body">ობსტრუქციული შოკი: გზა ჩაკეტილია, თვითონ გული ჯანმრთელია → კისრის ვენების გადავსება + სუფთა ფილტვები<br>კარდიოგენური შოკი: გული თვითონაა დაზიანებული, წნევა „უკან“ გროვდება → კისრის ვენების გადავსება + <strong>ხიხინი/Rales ფილტვებში!</strong></div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">მიზეზები ტრავმაში</h3>
+        <div class="row row-2">
+          <div class="mini-card" style="border-left:3px solid var(--amber);">
+            <div class="mini-label" style="color:var(--amber);">ყველაზე ხშირი მიზეზები</div>
+            <div class="mini-body"><strong>გულის კუნთის დახურული დაზიანება (BCI)</strong> — საჭის/მართულის დარტყმა, ავტოავარია; სიჩქარის მექანიზმი. ტრავმული მექანიზმი: მკერდზე პირდაპირი დარტყმა; სიჩქარის ცვლილება &gt;20 კმ/სთ. ტრავმული ინფარქტი — კორონარული არტერიის გაგლეჯა ან ოკლუზია. გულის სარქვლის მექანიკური გასკდომა.</div>
+          </div>
+          <div class="mini-card" style="border-left:3px solid var(--red);">
+            <div class="mini-label" style="color:var(--red);">პათოფიზიოლოგია — „უკან მიმართული უკმარისობა“</div>
+            <div class="mini-body">
+              <div class="step-row" style="margin-bottom:6px;"><div class="step-num">1</div><div class="step-text">გულის კუნთის დაზიანება → <strong>კონტრაქტილობის</strong> მკვეთრი შემცირება</div></div>
+              <div class="step-row" style="margin-bottom:6px;"><div class="step-num">2</div><div class="step-text">წუთმოცულობის შემცირება → სისხლი „დაიჭერა“ → წინასატვირთის მკვეთრი ზრდა</div></div>
+              <div class="step-row" style="margin-bottom:6px;"><div class="step-num">3</div><div class="step-text">ფილტვის წინა წნევა იმატებს → სითხე ალვეოლებში → <strong>ფილტვის შეშუპება!</strong></div></div>
+              <div class="step-row"><div class="step-num crit">4</div><div class="step-text">ორგანოები ↓ პერფუზია → შემდგომი წინაღობის ზრდა → გული ვერ ძლევს გადატვირთულ წინაღობას → ციკლის გაღრმავება</div></div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">კლინიკური ნიშნები — სამი განმასხვავებელი</h3>
+        <div class="card">
+          <div class="row row-2">
+            <div>
+              <p>✅ <strong>კისრის ვენების გადავსება</strong> — წნევის უკან გროვება (ჰემორაგიულ შოკს ეს არ ახასიათებს!)</p>
+              <p class="mt8">✅ <strong>ხიხინი/Rales ფილტვებში</strong> — ფილტვის შეშუპება; ხშირად ჟანგბადით გაჯერების შემცირებასთან ერთად (ობსტრუქციულ შოკს ეს არ ახასიათებს!)</p>
+            </div>
+            <div>
+              <p>✅ <strong>ეკგ-ის ცვლილებები</strong> — სინუსური ტაქიკარდია, საფეთქლის ფიბრილაცია, ექსტრასისტოლები, კონების ბლოკადა, ST-სეგმენტის ცვლილებები</p>
+              <p class="mt8">+ ჰიპოტენზია + ტაქიკარდია + ცივი/ფერმკრთალი კანი (ჰემორაგიული შოკის მსგავსად — განასხვავება ვენების მდგომარეობით!)</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">ჰემოდინამიკური პარამეტრები</h3>
+        <div class="tablewrap">
+          <table class="data">
+            <tr><th>პარამეტრი</th><th>სტატუსი</th><th>მიზეზი</th></tr>
+            <tr><td>Preload (წინასატვირთი)</td><td class="c4">↑↑↑ (გროვდება)</td><td>გული ვერ იცავს ვენურ შემოდინებას, ცენტრალური ვენური წნევა ↑</td></tr>
+            <tr><td>Afterload (SVR)</td><td class="c3">↑↑ (კომპენსაცია)</td><td>კომპენსატორული სისხლძარღვების შევიწროება ორგანოთა შესარჩუნებლად</td></tr>
+            <tr><td>კონტრაქტილობა</td><td class="c4">↓↓↓ კრიტიკული!</td><td>გულის კუნთის პირდაპირი დაზიანება/ნეკროზი</td></tr>
+            <tr><td>წუთმოცულობა</td><td class="c4">↓↓↓</td><td>დაზიანებული კუნთის პუმპირების შეუძლებლობა</td></tr>
+            <tr><td>კისრის ვენები</td><td class="c4">↑↑ გადავსებული</td><td>სისხლი ვერ გადადის წინ, გროვდება უკან</td></tr>
+          </table>
+        </div>
+
+        <h3 style="font-size:14px;margin:14px 0 8px;color:var(--text-dim);">მართვა — „ინოტროპები არის მთავარი იარაღი“</h3>
+        <div class="injury-box box">
+          <div class="box-body">❌ სითხეების დამატებითი გადასხმა = პოტენციურად საზიანო! ფილტვის შეშუპება კიდევ უფრო გაღრმავდება.</div>
+        </div>
+
+        <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>ჟანგბადი + ვენტილაცია</strong> — ჟანგბადით გაჯერება &gt;95%; CPAP/BiPAP ფილტვის შეშუპებისთვის; ინტუბაცია ფრთხილად — დადებითი წნევის ვენტილაცია (PEEP-ის ზრდა) ამცირებს წუთმოცულობას, ფრთხილად ვმართავთ.</div></div>
+        <div class="step-row"><div class="step-num crit">2</div><div class="step-text"><strong>ინოტროპები — პირველი ხაზი!</strong><br>
+          • <strong>დობუტამინი (1-ლი არჩევანი)</strong> — β₁ ეფექტი → კონტრაქტილობის ზრდა + შემდგომი წინაღობის შემცირება; წუთმოცულობას მნიშვნელოვნად ზრდის<br>
+          • მილრინონი — ფოსფოდიესტერაზა-3 ინჰიბიტორი; დობუტამინის ალტერნატივა, ასევე სისხლძარღვების დამატებითი გაფართოებითაც<br>
+          • ნორეპინეფრინი (სისტოლური წნევა &lt;70–80, დობუტამინი არაეფექტური) — α₁ + β₁ ეფექტის კომბინაცია
+        </div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>მონიტორინგი:</strong> ეკგ 6–8 საათში; ტროპონინის გაზომვა; <strong>ექოკარდიოგრაფია/POCUS გადაუდებლად</strong> — გულის ამოტუმბვის ფრაქცია, კონტუზიის ზონა, სარქვლის დაზიანება, ნაკარგვა.</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ანგიოპლასტიკა/ბაიპასი/ბუშტუკოვანი ტუმბო (IABP)</strong> — დადასტურებული ტრავმული ინფარქტი + კარდიოგენული შოკი → კათეტერული ლაბორატორია გადაუდებლად.</div></div>
+
+        <div class="pitfall"><div class="pitfall-q">⚠️ ყველა ბლანტ ტრავმის პაციენტს ეკგ აკეთებენ, მაგრამ მონიტორირება ჩერდება ერთჯერადი ჩაწერით</div><div class="pitfall-a">✓ გულის კუნთის დახურული დაზიანების (BCI) ეჭვისას — 24 საათის უწყვეტი ეკგ მონიტორირება საჭიროა (არითმიის რისკი!). ერთჯერადი ნორმალური ეკგ-ი არ ნიშნავს „ნორმალურს“!</div></div>
+
+      </div><!-- /body-shock-cardiogenic -->
+    </div><!-- /accordion-item -->
+
 
     <div class="section-head"><h2>სისხლდენის ლოკალიზაცია</h2></div>
     <div class="card">
@@ -512,47 +888,47 @@ table.data tr:last-child td { border-bottom: none; }
       </div>
     </div>
 
-    <div class="section-head"><h2>მართვა</h2></div>
-    <div class="card">
-      <div class="card-title">ზიანის კონტროლის რეანიმაცია</div>
-      <ul class="list">
-        <li><strong>ნებადართული ჰიპოტენზია (ოდნავი დაბალი წნევა)</strong> — სისტოლური წნევა 80–90 მმ ვწყ. სვ. მისაღებია, სანამ სისხლდენა ქირურგიულად არ შეჩერდება. გადაჭარბებული კრისტალოიდური სითხის შეყვანა ახდენს ახლად ჩამოყალიბებული თრომბების „გარეცხვას“, სისხლძარღვების გაფართოებას, სხეულის გადაცივებას და კოაგულაციის (სისხლის შედედების) დარღვევას. <span class="red">თავის ტვინის თანმხლები ტრავმისას ნებადართული ჰიპოტენზია უკუნაჩვენებია! სისტოლური წნევა ≥90, საშუალო არტერიული წნევა ≥80 თავის ტვინის ტრავმისას.</span></li>
-        <li><strong>ტრანექსამის მჟავა (სისხლდენის შემაჩერებელი მედიკამენტი)</strong> — 1 გრამი ვენაში 10 წუთის განმავლობაში, შემდეგ 1 გრამი 8 საათის განმავლობაში. <span class="amber">ეფექტურია მხოლოდ დაზიანებიდან 3 საათის განმავლობაში მიცემისას!</span> ამის შემდეგ ეფექტი ან ნეიტრალურია ან რისკიც კი იზრდება (თრომბოზის რისკი). დადასტურებულია CRASH-2 კვლევით.</li>
-        <li><strong>მასიური ტრანსფუზიის პროტოკოლი</strong> — ერითროციტული მასა : ახლადგაყინული პლაზმა : თრომბოციტები = 1:1:1 (ზიანის კონტროლის პრინციპით). ≥10 ერთეული 24 საათში ან კლინიკურ ნიშნებზე დაყრდნობით ≥4 ერთეული/საათში. გამოიყენება ABC ანგარიში და შოკის ინდექსი შესაფასებლად.</li>
-        <li><strong>კალციუმი</strong> — ახლადგაყინული პლაზმის დიდი მოცულობის გადასხმისას, კონსერვანტში არსებული ციტრატი აკავშირებს კალციუმის იონებს → კალციუმის ქლორიდი 1 გრამი ვენაში ბოლუსით (იონიზებული კალციუმი &lt;1.1 მმოლ/ლ-ზე). გულის კუნთის ფუნქცია მცირდება კალციუმის გარეშე.</li>
-        <li><strong>სხეულის გადაცივების პრევენცია</strong> — ტემპერატურა &lt;35°C → კოაგულაცია მკვეთრად ეცემა („მომაკვდინებელი სამეული“: გადაცივება + მჟავიანობა + კოაგულოპათია). ყველა ვენური სითხე 39°C-მდე გათბობილი, თბილი საბანი, გარემოს ტემპერატურის მომატება.</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class="card-title">სითხით რეაგირების სამი პატერნი</div>
-      <div class="row" style="gap:8px;">
-        <div class="mini-card" style="border-left:3px solid var(--green);">
-          <div style="font-size:13px;font-weight:700;color:var(--green);">სწრაფი პასუხი</div>
-          <div class="mini-body">I კლასი (&lt;15%). კრისტალოიდი 500–1000 მლ → მაჩვენებლები ნორმალდება. გადასასხმელი სისხლის ჯგუფის შესარჩევი ანალიზი მზადყოფნაშია, ოპერაცია ნაკლებად სავარაუდოა.</div>
-        </div>
-        <div class="mini-card" style="border-left:3px solid var(--amber);">
-          <div style="font-size:13px;font-weight:700;color:var(--amber);">გარდამავალი პასუხი</div>
-          <div class="mini-body">II–III კლასი (15–40%). მაჩვენებლები სწორდება, მაგრამ სითხის შეჩერებისას უარესდება. საჭიროა კრისტალოიდი + ერითროციტული მასა. ოპერაცია ან ინტერვენციული რადიოლოგია სავარაუდოდ საჭირო იქნება — გადაუდებლად მზადება.</div>
-        </div>
-        <div class="mini-card" style="border-left:3px solid var(--red);">
-          <div style="font-size:13px;font-weight:700;color:var(--red);">პასუხი არ არსებობს</div>
-          <div class="mini-body">IV კლასი (&gt;40%). საჭიროა მასიური ტრანსფუზიის პროტოკოლის დაუყოვნებლივ ჩართვა და გადაუდებელი ოპერაცია ან ემბოლიზაცია. გასათვალისწინებელია ობსტრუქციული შოკის შესაძლებლობა (ტამპონადა, დაჭიმული პნევმოთორაქსი) — ეს განსხვავებულ მართვას მოითხოვს.</div>
-        </div>
-      </div>
-    </div>
-
     <div class="section-head"><h2>პრეჰოსპიტალური მართვა</h2></div>
     <div class="card">
       <div class="card-title">შოკი — სცენაზე ალგორითმი <span class="badge badge-green">🚑 ადგილზე</span></div>
       <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>სასუნთქი გზა და სუნთქვა:</strong> ჟანგბადით გაჯერება ≥95%, ინტუბაცია გლასგოს კომის შკალის ქულა ≤8-ისას. ჟანგბადდეფიციტი ზრდის ტვინის მეორად დაზიანებას.</div></div>
-      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>სისხლის მიმოქცევა — სისხლდენის კონტროლი:</strong> გარეთა სისხლდენაზე → პირდაპირი წნევა, ტურნიკეტი კიდურებზე. მენჯის ტრავმაზე → მენჯის ფიქსატორი (დადებული დიდი ხორთუმის გამოწეულობის დონეზე). ექოსკოპია და კომპიუტერული ტომოგრაფია ადგილზე არ კეთდება.</div></div>
-      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>ვენური წვდომა:</strong> ორი 14–16G ზომის ვენური კათეტერი. სითხე 500 მლ ბოლუსით (ბოლუსი ანუ ერთბაშად სითხის შეყვანა), საჭიროებისას გამეორება. თავის ტვინის ტრავმისას სისტოლური წნევა ≥90 უნდა იყოს; სხვა შემთხვევაში 80–90 (ნებადართული ჰიპოტენზიის პრინციპით).</div></div>
-      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ტრანექსამის მჟავა:</strong> თუ სავარაუდო სისხლდენა &lt;3 საათისაა → 1 გრამი ვენაში ბოლუსით სცენაზე. სასწრაფოდ ტრანსპორტირება.</div></div>
-      <div class="step-row"><div class="step-num crit">5</div><div class="step-text"><strong>აიკიდე და გაიქეცი (Load and Go):</strong> შოკის ნიშნებზე ადგილზე 8–10 წუთზე მეტი არ ჩერდები — ტრანსპორტირება ტრავმის ცენტრში. მართვის გაგრძელება გზაში.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>შოკის ტიპის სწრაფი დიფერენცირება:</strong> კისრის ვენების მდგომარეობა (ჩავარდნილი → ჰემორაგიული/ნეიროგენული; გადავსებული → ობსტრუქციული/კარდიოგენული) + გულის ცემის სიხშირე (ტაქიკარდია vs ბრადიკარდია) + კანის ტემპერატურა (ცივი vs თბილი) — ეს სამი პარამეტრი წამებში მიგვაყვანს სავარაუდო დიაგნოზთან.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>სისხლის მიმოქცევა — სისხლდენის კონტროლი:</strong> გარეთა სისხლდენაზე → პირდაპირი წნევა, ტურნიკეტი კიდურებზე. მენჯის ტრავმაზე → მენჯის ფიქსატორი. ექოსკოპია და კომპიუტერული ტომოგრაფია ადგილზე არ კეთდება.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>ვენური წვდომა:</strong> ორი 14–16G ზომის ვენური კათეტერი. სითხის რაოდენობა შოკის ტიპზე დამოკიდებული: ჰემორაგიულში — ბოლუსით; ობსტრუქციულში — დროებითი ხიდი; ნეიროგენულში — ფრთხილად; კარდიოგენულში — საფრთხეშია!</div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>ტრანექსამის მჟავა:</strong> ჰემორაგიული შოკისთვის, თუ სავარაუდო სისხლდენა &lt;3 საათისაა → 1 გრამი ვენაში ბოლუსით სცენაზე.</div></div>
+      <div class="step-row"><div class="step-num crit">6</div><div class="step-text"><strong>აიკიდე და გაიქეცი (Load and Go):</strong> შოკის ნიშნებზე ადგილზე 8–10 წუთზე მეტი არ ჩერდები — ტრანსპორტირება ტრავმის ცენტრში. მართვის გაგრძელება გზაში.</div></div>
     </div>
 
   </div><!-- /shock -->
+
+  <!-- ═══ SHOCK ACCORDION — STYLES + JS (ერთხელ უნდა იყოს ფაილში) ═══ -->
+  <style>
+    .accordion-item { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 10px; overflow: hidden; }
+    .accordion-btn { width: 100%; background: var(--bg-raised); color: var(--text); border: none; padding: 14px 16px; text-align: left; font-size: 14.5px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: inherit; transition: background 0.15s; }
+    .accordion-btn:hover { background: var(--bg-input); }
+    .accordion-btn.open { border-bottom: 1px solid var(--line); }
+    .acc-arrow { font-size: 11px; color: var(--text-faint); transition: transform 0.25s; flex-shrink: 0; }
+    .acc-arrow.rotated { transform: rotate(180deg); }
+    .accordion-body { display: none; padding: 16px; }
+    .accordion-body.open { display: block; animation: shockAccFade 0.2s ease; }
+    @keyframes shockAccFade { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  </style>
+  <script>
+    function toggleAcc(id) {
+      const body = document.getElementById('body-' + id);
+      const arrow = document.getElementById('arrow-' + id);
+      const btn = body.previousElementSibling;
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      arrow.classList.toggle('rotated', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+    }
+  </script>
+HTMLEOF
+wc -l /home/claude/shock-section.html
+echo "---check leftover broken chars---"
+grep -c "← ←" /home/claude/shock-section.html || echo "clean"
+cp /home/claude/shock-section.html /mnt/user-data/outputs/shock-section.html
 
   <!-- ══════════════ THORACIC ══════════════ -->
   <div id="thoracic" class="page">
