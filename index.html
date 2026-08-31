@@ -24,6 +24,8 @@
   --slate: #8090a8;
   --red: #b05050;
   --red-dim: rgba(176,80,80,0.12);
+  --green: #5a9a6f;
+  --green-dim: rgba(90,154,111,0.13);
   --text: #d8dde8;
   --text2: #7a8498;
   --text3: #3d4558;
@@ -181,6 +183,15 @@ main {
   color:var(--blue2);margin-bottom:0.85rem;
   display:flex;align-items:center;gap:0.5rem;
   border-bottom:1px solid var(--border);padding-bottom:0.6rem;
+}
+.subgroup-label {
+  font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text3);margin:0.9rem 0 0.35rem;padding-top:0.6rem;border-top:1px dashed var(--border);
+}
+.subgroup-label:first-child { margin-top:0;padding-top:0;border-top:none; }
+.subgroup-label.bonus { color:var(--blue2); }
+.locked-note {
+  font-size:0.68rem;color:var(--text3);padding:0.5rem 0.5rem 0.75rem;line-height:1.5;font-weight:400;
 }
 
 /* CHECKLIST */
@@ -473,7 +484,7 @@ main {
   <div class="card" style="padding:0 0.75rem;">
     <div class="time-row"><div class="t-time">07:00</div><div><div class="t-title">💧 გაღვიძება + 500 მლ წყალი</div><div class="t-desc">მაღვიძარა სხვა ოთახში. წყალი — მოამზადე წინა ღამეს.</div></div><span class="t-tag tag-g">სხეული</span></div>
     <div class="time-row"><div class="t-time">07:05</div><div><div class="t-title">☀️ მზის შუქი — 10 წთ</div><div class="t-desc">გარეთ ან ფანჯარასთან. ტელეფონი — გვერდზე.</div></div><span class="t-tag tag-a">ნეირო</span></div>
-    <div class="time-row"><div class="t-time">07:15</div><div><div class="t-title">🏃 სირბილი — 20–30 წთ Zone 2</div><div class="t-desc">ლაპარაკი შეგიძლია — სწორი ტემპია. BDNF იზრდება.</div></div><span class="t-tag tag-g">სხეული</span></div>
+    <div class="time-row"><div class="t-time">07:15</div><div><div class="t-title">🏃 სირბილი — 20–30 წთ Zone 2 (kvira 5 dghe)</div><div class="t-desc">ლაპარაკი შეგიძლია — სწორი ტემპია. 2 დღე დასვენება კვირაში.</div></div><span class="t-tag tag-g">სხეული</span></div>
     <div class="time-row"><div class="t-time">07:50</div><div><div class="t-title">🚿 შხაპი — ბოლო 30 წამი ცივი</div><div class="t-desc">ნოეპინეფრინი +300%. ტვინი სრულად გაიღვიძებს.</div></div><span class="t-tag tag-a">ნეირო</span></div>
     <div class="time-row"><div class="t-time">08:20</div><div><div class="t-title">☕ საუზმე + ყავა</div><div class="t-desc">ყავა 90 წთ გაღვიძებიდან — ადენოზინი გაიწმინდება.</div></div><span class="t-tag tag-g">კვება</span></div>
     <div class="time-row"><div class="t-time">08:40</div><div><div class="t-title">🧘 მედიტაცია + აფირმ. — 15 წთ</div><div class="t-desc">10 წთ სუნთქვა, 5 წთ — სარკის წინ.</div></div><span class="t-tag tag-b">გონება</span></div>
@@ -608,36 +619,42 @@ main {
 <!-- MORE -->
 <div id="tab-more" class="section">
   <div class="hero">
-    <div class="hero-eyebrow">21 ივლისი → 16 აგვისტო</div>
+    <div class="hero-eyebrow">1 სექტემბერი → 31 დეკემბერი</div>
     <h1>გეგმა</h1>
-    <p>27 დღე. ყველაფერი ეხლა.</p>
+    <p>~4 თვე Step 1-მდე. თანდათანობითი ჩართვა.</p>
   </div>
   <div style="border-left:2px solid var(--primary);padding:0.7rem 1rem;background:var(--primary-dim2);border-radius:0 6px 6px 0;margin-bottom:1.25rem;font-family:'Crimson Pro',serif;font-size:1rem;color:var(--text2);font-style:italic;line-height:1.6;">
-    "ყველა ჩვევა ერთდროულად = წარუმატებლობა. 1 ჩვევა × 21 დღე = ავტომატიზმი."
+    "ყველა ჩვევა ერთდროულად = წარუმატებლობა. Core ჩვევები დღე 1-დან, ბონუს ჩვევები — თანდათან."
   </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--primary)"></div>კვ.1 — 21–27 ივლისი · საძირკველი</div>
+  <div class="month-head"><div class="m-dot" style="background:var(--primary)"></div>კვ.1 — 1–7 სექტემბერი · Core</div>
   <div class="wp-cells" style="margin-bottom:0.5rem;">
-    <div class="wp-cell"><strong>ჩვევები</strong>გაღვიძება 07:00 · წყალი · მზე · სირბილი · ძილი 23:00</div>
-    <div class="wp-cell"><strong>სწავლა</strong>ახალი ბლოკი დილით · გამეორება შუადღეს · 4×90 წთ</div>
+    <div class="wp-cell"><strong>Core (დღე 1-დან)</strong>წყალი · სირბილი (5×/კვირა) · სწავლა 2×90 წთ · ძილი · დეტოქსი 20:00</div>
+    <div class="wp-cell"><strong>ჯერ არა</strong>ცივი შხაპი, მედიტაცია, NSDR, ინგლისური, დღიური — ჯერ არ ემატება</div>
   </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.2 — 28 ივლ–3 აგვ · სიღრმე</div>
+  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.2 — 8–14 სექტ. · +დღიური</div>
   <div class="wp-cells" style="margin-bottom:0.5rem;">
     <div class="wp-cell"><strong>+ დღიური</strong>მენტ. ჯანმ. ყოველ საღამოს 21:00</div>
-    <div class="wp-cell"><strong>+ ინგლ.</strong>45 წთ/დღე. Podcast + სიტყვები</div>
+    <div class="wp-cell"><strong>რჩება</strong>ყველა Core ჩვევა უცვლელად გრძელდება</div>
   </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.3 — 4–10 აგვ · სიმყარე</div>
+  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.3 — 15–21 სექტ. · +NSDR</div>
   <div class="wp-cells" style="margin-bottom:0.5rem;">
     <div class="wp-cell"><strong>+ NSDR</strong>NSDR 20 წთ ყოველ შუადღეს</div>
-    <div class="wp-cell"><strong>+ დეტოქსი</strong>20:00 Hard Cutoff — გამონაკლისი არ არის</div>
+    <div class="wp-cell"><strong>რჩება</strong>Core + დღიური გრძელდება</div>
   </div>
 
-  <div class="month-head"><div class="m-dot" style="background:var(--red)"></div>კვ.4 — 11–16 აგვ · სრული სისტემა</div>
+  <div class="month-head"><div class="m-dot" style="background:var(--blue2)"></div>კვ.4 — 22–28 სექტ. · +ცივი შხაპი</div>
   <div class="wp-cells" style="margin-bottom:0.5rem;">
-    <div class="wp-cell"><strong>სრული</strong>ყველა ბლოკი სტაბილურად. არ გამოტოვო.</div>
-    <div class="wp-cell"><strong>შეფასება</strong>კვირის მიმოხილვა · მომავლის გეგმა</div>
+    <div class="wp-cell"><strong>+ ცივი შხაპი</strong>ბოლო 30 წამი შხაპში ცივი წყალი</div>
+    <div class="wp-cell"><strong>რჩება</strong>Core + დღიური + NSDR</div>
+  </div>
+
+  <div class="month-head"><div class="m-dot" style="background:var(--red)"></div>კვ.5+ — 29 სექტ.-დან · +მედიტ. / +ინგლ.</div>
+  <div class="wp-cells" style="margin-bottom:0.5rem;">
+    <div class="wp-cell"><strong>+ მედიტაცია/აფირმ.</strong>15 წთ დილას</div>
+    <div class="wp-cell"><strong>+ ინგლისური</strong>45 წთ საღამოს — ბოლო ჩვევა რომ ემატება</div>
   </div>
 
   <div class="hero" style="margin-top:2rem;">
@@ -652,12 +669,11 @@ main {
   <div class="rule no"><div class="rule-icon">☕</div><div class="rule-body"><strong>ყავა 90 წუთამდე გაღვიძებიდან</strong><span>ადენოზინი ვერ გაიწმინდა = შუადღის კრახი.</span></div></div>
   <div class="rule no"><div class="rule-icon">📱</div><div class="rule-body"><strong>ტელეფონი 20:00 შემდეგ</strong><span>მელატონინი ბლოკირდება. ძილი ნადგურდება.</span></div></div>
 
-  <div class="block-head">✅ სავალდებულო</div>
+  <div class="block-head">✅ სავალდებულო (Core)</div>
   <div class="rule yes"><div class="rule-icon">💧</div><div class="rule-body"><strong>2+ ლ წყალი</strong><span>გაღვიძებისთანავე.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">🏃</div><div class="rule-body"><strong>სირბილი — მინ. 20 წთ Zone 2</strong><span>ყოველ დღე. არარსებული ამინდი არ მიიღება.</span></div></div>
+  <div class="rule yes"><div class="rule-icon">🏃</div><div class="rule-body"><strong>სირბილი — მინ. 20 წთ Zone 2, კვირაში 5 დღე</strong><span>2 დღე დასვენება — არა ყოველდღე, დაზიანების პრევენციისთვის.</span></div></div>
   <div class="rule yes"><div class="rule-icon">💤</div><div class="rule-body"><strong>ძილი — 7+ საათი, ერთ დროს</strong><span>კვირაშიც. ყველაზე მნიშვნელოვანი ფაქტორი.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">✍️</div><div class="rule-body"><strong>დღიური — ყოველ საღამოს 21:00</strong><span>3 წინადადება კმარა. მაგრამ ყოველ დღე.</span></div></div>
-  <div class="rule yes"><div class="rule-icon">🇬🇧</div><div class="rule-body"><strong>ინგლისური — 45 წთ საღამოს</strong><span>Podcast + სიტყვები. ყოველ დღე.</span></div></div>
+  <div class="rule yes"><div class="rule-icon">📖</div><div class="rule-body"><strong>სწავლა — 2×90 წთ, დღე 1-დან</strong><span>Step 1 — მთავარი პრიორიტეტი.</span></div></div>
 
   <div class="block-head">⚠️ Never Miss Twice</div>
   <div class="rule warn"><div class="rule-icon">1️⃣</div><div class="rule-body"><strong>ერთხელ გამოტოვე → ნორმაა</strong><span>ეს ადამიანია.</span></div></div>
@@ -704,24 +720,37 @@ main {
 
 <script>
 // ── CONSTANTS ──────────────────────────────────────────────
-// Program runs July 21 → August 16, 2026 (starts tomorrow, 27 days)
-const FIXED_START  = new Date('2026-07-21T00:00:00');
-const TOTAL_DAYS   = 27;
+// Program runs Sep 1 -> Dec 31, 2026 (~4 months, 122 days)
+const FIXED_START  = new Date('2026-09-01T00:00:00');
+const TOTAL_DAYS   = 122;
 
-const HABITS = [
+// CORE habits: active from Day 1, non-negotiable
+const CORE_HABITS = [
   {id:'water',   label:'💧 წყალი (500 მლ)'},
-  {id:'sun',     label:'☀️ მზის შუქი (10 წთ)'},
-  {id:'run',     label:'🏃 სირბილი Zone 2'},
-  {id:'shower',  label:'🚿 ცივი შხაპი'},
-  {id:'med',     label:'🧘 მედიტაცია + აფირმ.'},
+  {id:'run',     label:'🏃 სირბილი Zone 2 (5×/კვირა)'},
   {id:'study1',  label:'📖 სწავლა #1 (90 წთ)'},
-  {id:'nsdr',    label:'😴 NSDR (20 წთ)'},
   {id:'study2',  label:'📖 სწავლა #2 (90 წთ)'},
-  {id:'english', label:'🇬🇧 ინგლისური (45 წთ)'},
   {id:'detox',   label:'📵 დეტოქსი 20:00'},
-  {id:'journal', label:'✍️ დღიური + მენტ.'},
   {id:'sleep',   label:'💤 ძილი 23:00-მდე'},
 ];
+
+// BONUS habits: unlock progressively, one every ~7 days, so nothing is
+// permanently missing — everything is in the app, just introduced gradually
+const BONUS_HABITS = [
+  {id:'journal', label:'✍️ დღიური + მენტ.',       unlockDay:8},
+  {id:'nsdr',    label:'😴 NSDR (20 წთ)',          unlockDay:15},
+  {id:'shower',  label:'🚿 ცივი შხაპი',            unlockDay:22},
+  {id:'med',     label:'🧘 მედიტაცია + აფირმ.',     unlockDay:29},
+  {id:'sun',     label:'☀️ მზის შუქი (10 წთ)',      unlockDay:29},
+  {id:'english', label:'🇬🇧 ინგლისური (45 წთ)',     unlockDay:36},
+];
+
+const HABITS = [...CORE_HABITS, ...BONUS_HABITS]; // full list, used by tracker (shows history for all)
+
+function activeHabitsForDay(day) {
+  const unlocked = BONUS_HABITS.filter(h => day >= h.unlockDay);
+  return { core: CORE_HABITS, bonus: unlocked, upcoming: BONUS_HABITS.filter(h => day < h.unlockDay) };
+}
 
 const AFFIRMS = [
   {text:"ჩემი ტვინი ყოველ დღე უფრო ძლიერი ხდება",sub:"BDNF იზრდება — ნეიროპლასტიკობა რეალობაა",when:"🌅 ყოველ დილა"},
@@ -731,7 +760,7 @@ const AFFIRMS = [
   {text:"მე ვარ სისტემა — არა განწყობა",sub:"Discipline = Freedom. ემოცია გადის, ჩვევა რჩება.",when:"😔 მოტივაციის ვარდნისას"},
   {text:"ყოველი გამოტოვება ასწავლის, არა ანადგურებს",sub:"Never Miss Twice. ხვალ — სრულად.",when:"😟 გამოტოვების შემდეგ"},
   {text:"ინგლისური ყოველ დღე — ნეირონები მყარდება",sub:"Myelin გამოიმუშავება გამეორებით",when:"🇬🇧 ინგლისურამდე"},
-  {text:"22 წლის ვარ. ყველა ცვლილება ახლა ხდება",sub:"ნეიროპლასტიკობა მაქსიმუმზეა 18–25 წლამდე",when:"🌅 ყოველ დილა"},
+  {text:"ყოველი ცვლილება ახლა ხდება — ეტაპობრივად, მდგრადად",sub:"ერთი ჩვევა × თანმიმდევრობა = ავტომატიზმი",when:"🌅 ყოველ დილა"},
 ];
 
 const DAYS = ['ორ','სამ','ოთხ','ხუთ','პარ','შაბ','კვ'];
@@ -830,19 +859,44 @@ function initToday() {
   buildChecklist(); updateScore(); showTodayAffirm();
 }
 
-// ── CHECKLIST ──────────────────────────────────────────────
+// ── CHECKLIST (progressive core/bonus) ──────────────────────
 function buildChecklist() {
+  const day = dayNumber();
+  const { core, bonus, upcoming } = activeHabitsForDay(day);
   const tc = (getS().checks || {})[todayKey()] || {};
   const el = document.getElementById('checklist');
   el.innerHTML = '';
-  HABITS.forEach(h => {
+
+  const renderItem = (h) => {
     const done = tc[h.id] || false;
     const d = document.createElement('div');
     d.className = 'check-item' + (done ? ' done' : '');
     d.innerHTML = `<div class="check-box">${done ? '✓' : ''}</div><span class="check-text">${h.label}</span>`;
     d.onclick = () => toggleHabit(h.id);
     el.appendChild(d);
-  });
+  };
+
+  const coreLabel = document.createElement('div');
+  coreLabel.className = 'subgroup-label';
+  coreLabel.textContent = '◆ Core — არასდროს გამოტოვება';
+  el.appendChild(coreLabel);
+  core.forEach(renderItem);
+
+  if (bonus.length) {
+    const bonusLabel = document.createElement('div');
+    bonusLabel.className = 'subgroup-label bonus';
+    bonusLabel.textContent = '◇ ბონუსი — უკვე ჩართული';
+    el.appendChild(bonusLabel);
+    bonus.forEach(renderItem);
+  }
+
+  if (upcoming.length) {
+    const next = upcoming.sort((a,b)=>a.unlockDay-b.unlockDay)[0];
+    const note = document.createElement('div');
+    note.className = 'locked-note';
+    note.textContent = `🔒 შემდეგი ჩვევა ემატება დღე ${next.unlockDay}-ზე: ${next.label}`;
+    el.appendChild(note);
+  }
 }
 
 function toggleHabit(id) {
@@ -854,9 +908,12 @@ function toggleHabit(id) {
 }
 
 function updateScore() {
+  const day = dayNumber();
+  const { core, bonus } = activeHabitsForDay(day);
+  const activeIds = [...core, ...bonus].map(h => h.id);
   const tc = (getS().checks || {})[todayKey()] || {};
-  const done = Object.values(tc).filter(Boolean).length;
-  document.getElementById('s-score').textContent = Math.round(done / HABITS.length * 100) + '%';
+  const done = activeIds.filter(id => tc[id]).length;
+  document.getElementById('s-score').textContent = (activeIds.length ? Math.round(done / activeIds.length * 100) : 0) + '%';
 }
 
 // ── TIMER ──────────────────────────────────────────────────
@@ -1029,7 +1086,9 @@ function initTracker() {
   document.getElementById('wk-label').textContent = monday.getDate()+' '+months[monday.getMonth()]+' – '+end.getDate()+' '+months[end.getMonth()];
   document.getElementById('wh').innerHTML = '<div></div>' + DAYS.map(d => `<div class="wh-day">${d}</div>`).join('');
   const wb = document.getElementById('wb'); wb.innerHTML = '';
-  HABITS.forEach(h => {
+  // Tracker shows every habit that has been unlocked as of "today" so history stays visible
+  const visibleHabits = HABITS.filter(h => !h.unlockDay || dayNumber() >= h.unlockDay);
+  visibleHabits.forEach(h => {
     const row = document.createElement('div'); row.className = 'week-row';
     row.innerHTML = `<div class="wr-label">${h.label}</div>`;
     for (let i = 0; i < 7; i++) {
@@ -1058,9 +1117,11 @@ function renderWeekStats() {
   let done = 0, possible = 0;
   for (let i = 0; i < 7; i++) {
     const day = new Date(monday.getTime() + i * 86400000), dk = day.toISOString().slice(0,10);
+    const dayNum = Math.max(1, Math.floor((day - FIXED_START) / 86400000) + 1);
     const dc = (s.checks || {})[dk] || {};
-    done += HABITS.filter(h => dc[h.id]).length;
-    if (day <= new Date()) possible += HABITS.length;
+    const activeForThatDay = [...CORE_HABITS, ...BONUS_HABITS.filter(h => dayNum >= h.unlockDay)];
+    done += activeForThatDay.filter(h => dc[h.id]).length;
+    if (day <= new Date()) possible += activeForThatDay.length;
   }
   const pct = possible > 0 ? Math.round(done / possible * 100) : 0;
   document.getElementById('week-stats').innerHTML = `
